@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="Inter,-apple-system,Segoe UI,Arial,sans-serif">
+  <rect width="800" height="500" rx="10" fill="#fafbfc"/>
+  <rect width="800" height="32" rx="10" fill="#eaedf1"/>
+  <rect y="22" width="800" height="10" fill="#eaedf1"/>
+  <circle cx="18" cy="16" r="5" fill="#ff5f56"/><circle cx="38" cy="16" r="5" fill="#ffbd2e"/><circle cx="58" cy="16" r="5" fill="#27c93f"/>
+  <rect x="100" y="8" width="300" height="16" rx="8" fill="#fff"/>
+  <text x="110" y="20" font-size="10" fill="#7b8699">🔒 biostream.bio</text>
+  <rect y="32" width="800" height="24" fill="#1f1b4f"/>
+  <text x="400" y="48" text-anchor="middle" font-size="11" fill="#fff" font-weight="500">Today's deal sale off 30% + Free Shipping · Hurry Up →</text>
+  <rect y="56" width="800" height="54" fill="#fff"/>
+  <g transform="translate(36,68)">
+    <rect width="32" height="32" rx="4" fill="none" stroke="#3b3fa0" stroke-width="2"/>
+    <text x="16" y="22" text-anchor="middle" font-size="18" fill="#3b3fa0" font-weight="700">B</text>
+    <text x="0" y="46" font-size="8" fill="#3b3fa0" font-weight="700" letter-spacing="1">BIOSTREAM</text>
+  </g>
+  <g font-size="11" fill="#2a2a3c" font-weight="500">
+    <text x="220" y="90">Skin Care</text><text x="290" y="90">Bundles</text><text x="360" y="90">Bio Brands</text>
+    <text x="440" y="90">Roll On</text><text x="500" y="90">Makeup</text><text x="560" y="90">All Products</text>
+  </g>
+  <text x="400" y="160" text-anchor="middle" font-size="22" fill="#3b3fa0" font-weight="700">Biostream Categories</text>
+  <rect x="340" y="170" width="120" height="2" fill="#3b3fa0"/>
+  <g transform="translate(70,200)"><rect width="150" height="150" rx="75" fill="none" stroke="#e5e7eb"/><circle cx="75" cy="70" r="34" fill="#3b3fa0"/><text x="75" y="76" text-anchor="middle" font-size="16" fill="#fff" font-weight="700">NEW</text><text x="75" y="175" text-anchor="middle" font-size="12" fill="#2a2a3c" font-weight="600">New Arrivals</text></g>
+  <g transform="translate(240,200)"><rect width="150" height="150" rx="75" fill="none" stroke="#e5e7eb"/><rect x="40" y="40" width="70" height="60" rx="6" fill="#a8d5e2" stroke="#3b3fa0"/><text x="75" y="72" text-anchor="middle" font-size="9" fill="#1f1b4f" font-weight="700">BIO</text><text x="75" y="85" text-anchor="middle" font-size="9" fill="#1f1b4f" font-weight="700">BUNDLES</text><text x="75" y="175" text-anchor="middle" font-size="12" fill="#2a2a3c" font-weight="600">Bundles</text></g>
+  <g transform="translate(410,200)"><rect width="150" height="150" rx="75" fill="none" stroke="#e5e7eb"/><rect x="55" y="32" width="18" height="70" rx="4" fill="#2d8659"/><rect x="78" y="38" width="18" height="64" rx="4" fill="#4fb27e"/><text x="75" y="175" text-anchor="middle" font-size="12" fill="#2a2a3c" font-weight="600">Skin Care</text></g>
+  <g transform="translate(580,200)"><rect width="150" height="150" rx="75" fill="none" stroke="#e5e7eb"/><rect x="48" y="36" width="16" height="66" rx="3" fill="#121212"/><rect x="68" y="40" width="18" height="62" rx="3" fill="#d4a574"/><rect x="90" y="44" width="16" height="58" rx="3" fill="#8b6234"/><text x="75" y="175" text-anchor="middle" font-size="12" fill="#2a2a3c" font-weight="600">Makeup</text></g>
+  <text x="400" y="410" text-anchor="middle" font-size="20" fill="#3b3fa0" font-weight="700">Bio Brands</text>
+  <g transform="translate(70,430)"><rect width="210" height="55" rx="6" fill="#f0f0f2"/><text x="14" y="22" font-size="10" fill="#121212" font-weight="700">KOLAGRA</text><text x="14" y="36" font-size="8" fill="#6b6b78">RICH IN VITAMINS</text></g>
+  <g transform="translate(295,430)"><rect width="210" height="55" rx="6" fill="#bbdcec"/><text x="14" y="22" font-size="10" fill="#1f1b4f" font-weight="700">HYDRENSA</text><text x="14" y="36" font-size="8" fill="#2a2a3c">HYDRA LIPID</text></g>
+  <g transform="translate(520,430)"><rect width="210" height="55" rx="6" fill="#6e1f2f"/><text x="105" y="34" text-anchor="middle" font-size="18" fill="#fff" font-style="italic" font-family="Georgia,serif">AnaStream</text></g>
+</svg>

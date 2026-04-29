@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="Tahoma,Arial,sans-serif">
+  <rect width="800" height="500" rx="10" fill="#ffffff"/>
+  <rect width="800" height="32" rx="10" fill="#eaedf1"/><rect y="22" width="800" height="10" fill="#eaedf1"/>
+  <circle cx="18" cy="16" r="5" fill="#ff5f56"/><circle cx="38" cy="16" r="5" fill="#ffbd2e"/><circle cx="58" cy="16" r="5" fill="#27c93f"/>
+  <rect x="100" y="8" width="280" height="16" rx="8" fill="#fff"/>
+  <text x="110" y="20" font-size="10" fill="#7b8699">🔒 garageilla.com</text>
+  <rect y="32" width="800" height="28" fill="#111"/>
+  <rect x="350" y="38" width="100" height="18" rx="4" fill="#22c55e"/>
+  <text x="400" y="51" text-anchor="middle" font-size="9" fill="#fff" font-weight="600">▶  نزل التطبيق</text>
+  <text x="530" y="51" font-size="11" fill="#fff">نزل تطبيق جراچ الي واستمتع بأسعار مميزة</text>
+  <rect y="60" width="800" height="70" fill="#e8f5e8"/>
+  <g transform="translate(725,90)">
+    <text font-size="22" fill="#0b8a3a" font-weight="900" font-style="italic" text-anchor="start">جراچ</text>
+    <text y="22" font-size="14" fill="#0b8a3a" font-weight="900" text-anchor="start">الي</text>
+  </g>
+  <rect x="250" y="80" width="360" height="32" rx="16" fill="#fff" stroke="#d1d5db"/>
+  <circle cx="270" cy="96" r="6" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
+  <path d="M275 102 l5 5" stroke="#9ca3af" stroke-width="1.5"/>
+  <text x="595" y="100" font-size="11" fill="#9ca3af" text-anchor="end">بتدور علي ايه؟</text>
+  <rect x="100" y="80" width="130" height="32" rx="4" fill="#0b1a1a"/>
+  <text x="165" y="100" text-anchor="middle" font-size="11" fill="#fff" font-weight="600">← أطلب عرض سعر</text>
+  <g transform="translate(45,90)">
+    <path d="M0,0 l20,0 l3,12 l-5,0 z" fill="none" stroke="#0b1a1a" stroke-width="1.5"/>
+    <circle cx="8" cy="-6" r="5" fill="#c2342b"/>
+    <text x="8" y="-3" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">0</text>
+    <text x="28" y="7" font-size="11" fill="#0b1a1a">سلة الشراء</text>
+  </g>
+  <rect y="130" width="800" height="40" fill="#fff"/>
+  <g fill="#0b1a1a" font-size="12">
+    <text x="720" y="156" text-anchor="end">العروض</text>
+    <rect x="673" y="160" width="48" height="2" fill="#c2342b"/>
+    <text x="640" y="156" text-anchor="end">قطع غيار</text>
+    <text x="560" y="156" text-anchor="end">زيوت</text>
+    <text x="500" y="156" text-anchor="end">فلاتر</text>
+    <text x="430" y="156" text-anchor="end">بطاريات</text>
+    <text x="350" y="156" text-anchor="end">كاوتشات</text>
+  </g>
+  <g transform="translate(40,190)">
+    <rect width="720" height="280" rx="8" fill="#f7faf7" stroke="#e5e7eb"/>
+    <g transform="translate(20,20)" fill="#22c55e">
+      <path d="M0,0 l30,20 l-30,20 l30,20 l-30,20 l30,20 l-30,20 l30,20 l-30,20 l30,20 l-30,20 l30,20 z" stroke="#111" stroke-width="1"/>
+    </g>
+    <g transform="translate(160,70)">
+      <rect y="140" width="340" height="20" fill="#d2b48c"/>
+      <rect x="20" y="60" width="140" height="80" fill="#d4dce3" stroke="#4a5568"/>
+      <rect x="160" y="80" width="34" height="60" fill="#c8d1da" stroke="#4a5568"/>
+      <rect x="165" y="88" width="24" height="24" fill="#fff" stroke="#4a5568"/>
+      <circle cx="55" cy="150" r="14" fill="#1f2937"/>
+      <circle cx="130" cy="150" r="14" fill="#1f2937"/>
+      <circle cx="180" cy="150" r="14" fill="#1f2937"/>
+      <g transform="translate(210,138)">
+        <rect width="52" height="40" fill="#fff" stroke="#111"/>
+        <rect x="6" y="-4" width="10" height="4" fill="#111"/>
+        <rect x="36" y="-4" width="10" height="4" fill="#111"/>
+        <text x="26" y="22" text-anchor="middle" font-size="8" fill="#0b8a3a" font-weight="800">CHLORIDE</text>
+      </g>
+      <g transform="translate(270,118)"><rect width="28" height="60" rx="4" fill="#e63946"/><text x="14" y="20" text-anchor="middle" font-size="5" fill="#fff" font-weight="700">Shell</text></g>
+      <g transform="translate(305,120)"><rect width="28" height="58" rx="4" fill="#fff" stroke="#111"/><rect x="3" y="6" width="22" height="18" fill="#d81b60"/><text x="14" y="18" text-anchor="middle" font-size="6" fill="#fff" font-weight="700">Mobil</text></g>
+      <g transform="translate(0,90)">
+        <circle cx="30" cy="55" r="45" fill="#111"/>
+        <circle cx="30" cy="55" r="22" fill="#4a5568"/>
+        <circle cx="30" cy="55" r="10" fill="#111"/>
+      </g>
+    </g>
+    <g fill="#0b8a3a" font-weight="800">
+      <text x="690" y="60" font-size="22" text-anchor="end">كل اللي بتدور عليه</text>
+      <text x="690" y="88" font-size="22" text-anchor="end">في "جراچ إلى"</text>
+    </g>
+    <text x="690" y="116" font-size="16" fill="#111" font-weight="600" text-anchor="end">قطع غيار أصلية 100٪!</text>
+  </g>
+</svg>

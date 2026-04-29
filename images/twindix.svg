@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="Inter,-apple-system,Segoe UI,Arial,sans-serif">
+  <defs>
+    <linearGradient id="twBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbfcff"/><stop offset="0.4" stop-color="#e6ecff"/><stop offset="1" stop-color="#d7e0fd"/></linearGradient>
+    <linearGradient id="twBtn" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6177c8"/><stop offset="1" stop-color="#8a9bdb"/></linearGradient>
+  </defs>
+  <rect width="800" height="500" rx="10" fill="url(#twBg)"/>
+  <rect width="800" height="32" rx="10" fill="#eaedf1"/><rect y="22" width="800" height="10" fill="#eaedf1"/>
+  <circle cx="18" cy="16" r="5" fill="#ff5f56"/><circle cx="38" cy="16" r="5" fill="#ffbd2e"/><circle cx="58" cy="16" r="5" fill="#27c93f"/>
+  <rect x="100" y="8" width="300" height="16" rx="8" fill="#fff"/>
+  <text x="110" y="20" font-size="10" fill="#7b8699">🔒 twindix.com</text>
+  <rect x="36" y="50" width="728" height="54" rx="27" fill="#ffffff" opacity="0.85" stroke="#e6ecff"/>
+  <g transform="translate(60,70)">
+    <text font-size="14" fill="#1f3b8a" font-weight="800" letter-spacing="2">TWINDIX</text>
+    <text y="10" font-size="5" fill="#1f3b8a" font-weight="700" letter-spacing="1.4">GLOBAL INC.</text>
+    <text y="18" font-size="4" fill="#1f3b8a" letter-spacing="1">SINCE 2016</text>
+  </g>
+  <g fill="#1f3b8a" font-size="9" font-weight="500">
+    <text x="240" y="82">About Us</text><text x="290" y="82">Assessment</text><text x="355" y="82">The Prize</text>
+    <text x="404" y="82">What's Twindix?</text><text x="477" y="82">How Assessment Works</text>
+  </g>
+  <rect x="590" y="62" width="58" height="28" rx="14" fill="none" stroke="#1f3b8a" stroke-width="1.2"/>
+  <text x="619" y="80" text-anchor="middle" font-size="10" fill="#1f3b8a">Contact</text>
+  <rect x="656" y="62" width="54" height="28" rx="14" fill="#1f3b8a"/>
+  <text x="683" y="80" text-anchor="middle" font-size="10" fill="#fff">Login</text>
+  <g transform="translate(55,170)">
+    <text font-size="28" font-weight="800"><tspan fill="#4a5aa8">Find Fit </tspan><tspan fill="#889dcd">&amp; Build Your Team</tspan></text>
+    <text y="38" font-size="22" font-weight="700"><tspan fill="#4a5aa8">Right People ..  </tspan><tspan fill="#889dcd">Right Place</tspan></text>
+    <text y="86" font-size="11" fill="#4a5aa8">Whether you're choosing a career or choosing the right people,</text>
+    <text y="102" font-size="11" fill="#4a5aa8">Twindix helps you understand abilities, match them to the right</text>
+    <text y="118" font-size="11" fill="#4a5aa8">roles, and move forward with certainty and purpose.</text>
+    <rect y="146" width="180" height="36" rx="18" fill="url(#twBtn)"/>
+    <text y="170" x="90" text-anchor="middle" font-size="11" fill="#fff">Get The Assessment  »</text>
+  </g>
+  <g transform="translate(555,165)">
+    <g transform="rotate(6 120 110)">
+      <rect x="24" y="0" width="210" height="210" rx="6" fill="#fff" stroke="#c9d3ef"/>
+      <rect x="36" y="14" width="90" height="8" rx="2" fill="#d7deef"/>
+      <rect x="36" y="28" width="160" height="4" rx="2" fill="#e6ebf6"/>
+    </g>
+    <rect x="0" y="10" width="230" height="210" rx="6" fill="#fff" stroke="#b8c5e7"/>
+    <text x="14" y="28" font-size="8" fill="#4a5aa8" font-weight="700">JOB BAR</text>
+    <rect x="14" y="32" width="70" height="2" fill="#8b96c3"/>
+    <g transform="translate(68,125)">
+      <circle r="46" fill="#fff" stroke="#b8c5e7"/>
+      <path d="M0,0 L46,0 A46,46 0 0,1 14,44 Z" fill="#9bd4b1"/>
+      <path d="M0,0 L14,44 A46,46 0 0,1 -36,29 Z" fill="#f2c48e"/>
+      <path d="M0,0 L-36,29 A46,46 0 0,1 -45,-9 Z" fill="#eb9aaa"/>
+      <path d="M0,0 L-45,-9 A46,46 0 0,1 -14,-44 Z" fill="#c7c9e9"/>
+      <path d="M0,0 L-14,-44 A46,46 0 0,1 46,0 Z" fill="#e8cf8a"/>
+      <circle r="14" fill="#fff" stroke="#b8c5e7"/>
+    </g>
+    <g font-size="7" fill="#2a2a3c">
+      <rect x="145" y="55" width="70" height="15" rx="3" fill="#eaf4ed"/><text x="150" y="65">Thinking Jobs</text>
+      <rect x="145" y="75" width="80" height="15" rx="3" fill="#fff2e0"/><text x="150" y="85">Communication</text>
+      <rect x="145" y="95" width="60" height="15" rx="3" fill="#fdeef1"/><text x="150" y="105">Effort Jobs</text>
+      <rect x="145" y="115" width="70" height="15" rx="3" fill="#eff0fb"/><text x="150" y="125">Serving Jobs</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="Georgia,'Times New Roman',serif">
+  <defs>
+    <linearGradient id="cBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbf6ee"/><stop offset="1" stop-color="#efe7d8"/></linearGradient>
+    <linearGradient id="cMtn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a6f80"/><stop offset="0.4" stop-color="#3a4858"/><stop offset="0.7" stop-color="#1a2638"/></linearGradient>
+    <linearGradient id="cSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f5670"/><stop offset="0.5" stop-color="#a47c5e"/><stop offset="1" stop-color="#e6b88a"/></linearGradient>
+    <linearGradient id="cClouds" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfe4ec" stop-opacity="0.95"/><stop offset="1" stop-color="#a7b1c0" stop-opacity="0.85"/></linearGradient>
+    <clipPath id="cardClip"><rect x="500" y="100" width="270" height="320" rx="12"/></clipPath>
+  </defs>
+  <rect width="800" height="500" rx="10" fill="url(#cBg)"/>
+  <rect width="800" height="32" rx="10" fill="#eaedf1"/><rect y="22" width="800" height="10" fill="#eaedf1"/>
+  <circle cx="18" cy="16" r="5" fill="#ff5f56"/><circle cx="38" cy="16" r="5" fill="#ffbd2e"/><circle cx="58" cy="16" r="5" fill="#27c93f"/>
+  <rect x="100" y="8" width="320" height="16" rx="8" fill="#fff"/>
+  <text x="110" y="20" font-family="Inter,Arial,sans-serif" font-size="10" fill="#7b8699">🔒 thecoringinstitute.com</text>
+  <g font-family="Inter,Arial,sans-serif">
+    <g transform="translate(48,52)">
+      <circle cx="14" cy="14" r="12" fill="none" stroke="#1f3a37" stroke-width="1.5"/>
+      <circle cx="14" cy="14" r="7" fill="none" stroke="#1f3a37" stroke-width="1.2"/>
+      <circle cx="14" cy="14" r="2.5" fill="#1f3a37"/>
+      <text x="36" y="13" font-family="Georgia,serif" font-size="18" fill="#1a2638" font-style="italic">coring</text>
+      <text x="36" y="26" font-size="7" fill="#1f3a37" letter-spacing="2" font-weight="600">INSTITUTE</text>
+    </g>
+    <g fill="#3a4858" font-size="11">
+      <rect x="285" y="46" width="50" height="22" rx="11" fill="#dfe4dc"/>
+      <text x="310" y="61" text-anchor="middle" font-weight="500" fill="#1a2638">Home</text>
+      <text x="358" y="61">Services</text><text x="416" y="61">Coaches</text>
+      <text x="478" y="61">Methodology</text><text x="560" y="61">Essays</text><text x="606" y="61">About</text>
+    </g>
+    <rect x="650" y="48" width="32" height="22" rx="6" fill="none" stroke="#c8d0c8"/>
+    <text x="666" y="63" font-size="11" fill="#3a4858" text-anchor="middle">AR</text>
+    <rect x="690" y="46" width="120" height="26" rx="13" fill="#1a2638"/>
+    <text x="750" y="63" font-size="11" fill="#fff" text-anchor="middle">Book a discovery call</text>
+  </g>
+  <g transform="translate(60,160)" font-family="Inter,Arial,sans-serif">
+    <line x1="0" y1="0" x2="22" y2="0" stroke="#1f3a37" stroke-width="1.5"/>
+    <text x="30" y="4" font-size="10" fill="#1f3a37" letter-spacing="2" font-weight="600">THE CORING INSTITUTE</text>
+  </g>
+  <g transform="translate(60,200)">
+    <text font-size="40" fill="#0e1623">Life isn't a <tspan font-style="italic" fill="#1f3a37">problem</tspan> to</text>
+    <text y="46" font-size="40" fill="#0e1623">solve.</text>
+    <text y="108" font-size="40" fill="#0e1623">It's a self to <tspan font-style="italic" fill="#1f3a37">discover.</tspan></text>
+  </g>
+  <g transform="translate(60,360)" font-family="Inter,Arial,sans-serif">
+    <text font-size="11" fill="#3a4858">A six-stage methodology that helps you understand</text>
+    <text y="16" font-size="11" fill="#3a4858">yourself deeply — then build a life aligned with who you</text>
+    <text y="32" font-size="11" fill="#3a4858">actually are, not someone else's definition of success.</text>
+  </g>
+  <g transform="translate(60,420)" font-family="Inter,Arial,sans-serif">
+    <rect width="140" height="32" rx="16" fill="#0e1623"/>
+    <text x="70" y="20" text-anchor="middle" fill="#fff" font-size="11" font-weight="500">Explore the work →</text>
+    <rect x="150" width="170" height="32" rx="16" fill="none" stroke="#0e1623"/>
+    <text x="235" y="20" text-anchor="middle" fill="#0e1623" font-size="11" font-weight="500">About the methodology</text>
+  </g>
+  <g transform="translate(60,470)" font-family="Inter,Arial,sans-serif" fill="#3a4858" font-size="10">
+    <text x="0" y="0">✓ Grounded in positive psychology</text>
+    <text x="200" y="0">✓ Available in Arabic &amp; English</text>
+  </g>
+  <rect x="500" y="100" width="270" height="320" rx="12" fill="url(#cSky)"/>
+  <g clip-path="url(#cardClip)">
+    <rect x="500" y="100" width="270" height="180" fill="url(#cSky)"/>
+    <ellipse cx="600" cy="285" rx="80" ry="14" fill="url(#cClouds)"/>
+    <ellipse cx="700" cy="290" rx="80" ry="14" fill="url(#cClouds)"/>
+    <ellipse cx="640" cy="298" rx="100" ry="16" fill="url(#cClouds)"/>
+    <path d="M500,315 L548,250 L580,275 L620,235 L660,275 L700,245 L740,285 L770,260 L770,420 L500,420 Z" fill="url(#cMtn)"/>
+    <path d="M610,250 l10,15 l-20,0 z" fill="rgba(255,255,255,0.85)"/>
+    <path d="M695,255 l8,12 l-16,0 z" fill="rgba(255,255,255,0.7)"/>
+  </g>
+  <g transform="translate(485,360)" font-family="Inter,Arial,sans-serif">
+    <rect width="220" height="92" rx="6" fill="#fbf6ee" stroke="#e6dfd0"/>
+    <text x="14" y="20" font-size="9" fill="#3a4858" letter-spacing="2" font-weight="600">WHAT CORING ISN'T</text>
+    <text x="14" y="42" font-family="Georgia,serif" font-size="11" font-style="italic" fill="#0e1623">"Not therapy. Not a script.</text>
+    <text x="14" y="58" font-family="Georgia,serif" font-size="11" font-style="italic" fill="#0e1623">A structured methodology</text>
+    <text x="14" y="74" font-family="Georgia,serif" font-size="11" font-style="italic" fill="#0e1623">for self-understanding."</text>
+  </g>
+</svg>
