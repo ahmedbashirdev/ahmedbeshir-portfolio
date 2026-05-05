@@ -98,6 +98,16 @@
   .tech-logo.shopify { background: var(--grad-shopify); color: #fff; }
   .tech-logo.laravel { background: var(--grad-laravel); color: #fff; }
   .tech-item small { display: block; font-size: 12px; color: var(--muted); font-weight: 500; }
+  /* Trusted by strip */
+  .trusted-by { padding: 50px 0 56px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--bg-soft); }
+  .trusted-label { text-align: center; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .25em; color: var(--muted); margin: 0 0 26px; }
+  .trusted-logos { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 22px 32px; }
+  .logo-tag { font-family: 'Inter',-apple-system,sans-serif; font-size: 15px; color: var(--ink); letter-spacing: -0.005em; opacity: 0.55; transition: opacity .2s, transform .2s; cursor: default; }
+  .logo-tag:hover { opacity: 1; transform: translateY(-1px); }
+  .logo-tag.company { font-weight: 700; }
+  .logo-tag.client { font-weight: 500; font-style: italic; color: var(--ink-soft); }
+  .logo-divider { width: 1px; height: 20px; background: var(--line-strong); }
+  @media (max-width: 768px) { .logo-divider { display: none; } .trusted-logos { gap: 14px 22px; } .logo-tag { font-size: 13.5px; } }
   section { padding: 100px 0; }
   .section-head { margin-bottom: 48px; max-width: 740px; }
   .section-head .kicker { font-size: 13px; font-weight: 700; color: var(--brand-1); text-transform: uppercase; letter-spacing: .15em; margin-bottom: 14px; display: block; }
@@ -112,7 +122,10 @@
   .service-icon { width: 52px; height: 52px; border-radius: 14px; background: var(--svc-grad, var(--grad-accent)); display: grid; place-items: center; color: #fff; margin-bottom: 20px; box-shadow: 0 8px 20px color-mix(in srgb, var(--svc-color, var(--brand-1)) 40%, transparent); }
   .service-icon svg { width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 2; }
   .service h3 { font-size: 18px; margin-bottom: 8px; }
-  .service p { font-size: 14.5px; margin: 0; color: var(--ink-soft); }
+  .service p { font-size: 14.5px; margin: 0 0 14px; color: var(--ink-soft); }
+  .service-price { display: inline-flex; align-items: baseline; gap: 6px; padding-top: 12px; border-top: 1px dashed var(--line); margin-top: auto; font-size: 13px; color: var(--muted); font-weight: 500; }
+  .service-price strong { font-size: 16px; color: var(--ink); font-weight: 700; }
+  .service { display: flex; flex-direction: column; }
   .service.s1 { --svc-grad: var(--grad-shopify); --svc-color: var(--shopify); }
   .service.s2 { --svc-grad: linear-gradient(135deg, #0891b2, #6366f1); --svc-color: #0891b2; }
   .service.s3 { --svc-grad: var(--grad-laravel); --svc-color: var(--laravel); }
@@ -173,8 +186,14 @@
   .contact-card > * { position: relative; z-index: 1; }
   .contact-card h2 { color: #fff; font-size: clamp(28px, 3.6vw, 40px); margin-bottom: 14px; }
   .contact-card p { color: rgba(255,255,255,.88); margin-bottom: 28px; font-size: 17px; }
-  .contact-card .btn { background: #fff; color: var(--ink) !important; box-shadow: 0 10px 24px rgba(0,0,0,.2); }
-  .contact-card .btn:hover { background: #f3f4fa; color: var(--ink) !important; }
+  .contact-card .btn { box-shadow: 0 10px 24px rgba(0,0,0,.2); }
+  .contact-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 8px; }
+  .contact-card .btn.primary-cta { background: #fff; color: var(--ink) !important; }
+  .contact-card .btn.primary-cta:hover { background: #f3f4fa; color: var(--ink) !important; }
+  .contact-card .btn.whatsapp-cta { background: #25D366; color: #fff !important; }
+  .contact-card .btn.whatsapp-cta:hover { background: #1FA855; color: #fff !important; }
+  .contact-card .btn.ghost-light { background: rgba(255,255,255,.12); color: #fff !important; border: 1px solid rgba(255,255,255,.3); box-shadow: none; }
+  .contact-card .btn.ghost-light:hover { background: rgba(255,255,255,.22); color: #fff !important; }
   .contact-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; margin-top: 32px; font-size: 14px; }
   .contact-list a { color: rgba(255,255,255,.92); }
   .contact-list a:hover { color: #fff; }
@@ -223,9 +242,9 @@
   <div class="container">
     <div class="hero-grid">
       <div>
-        <span class="eyebrow reveal"><span class="eyebrow-dot"></span> Available for Shopify & Laravel projects</span>
-        <h1 class="reveal">Senior web developer.<br/><span class="grad">Shopify &amp; Laravel specialist.</span></h1>
-        <p class="hero-lede reveal">I build bilingual (AR/EN) Shopify storefronts, custom Laravel apps, and internal tools that teams actually use. 10+ years shipping e-commerce, dashboards, and APIs — currently at Twindix.</p>
+        <span class="eyebrow reveal"><span class="eyebrow-dot"></span> Booking projects · Available now</span>
+        <h1 class="reveal">I build bilingual<br/><span class="grad">Shopify &amp; Laravel</span> — shipped.</h1>
+        <p class="hero-lede reveal">Production-ready storefronts and platforms in weeks, not months. 10+ years for MENA brands — recent work spans <strong>Coring Institute</strong>, <strong>Biostream</strong>, <strong>The Catch</strong>, <strong>Khyoot Masrya</strong>, and the full <strong>Twindix</strong> product suite.</p>
         <div class="hero-actions reveal">
           <a href="#contact" class="btn">Start a project →</a>
           <a href="Ahmed_Beshir_Resume.pdf" class="btn ghost" download>Download CV (PDF)</a>
@@ -262,6 +281,24 @@
   </div>
 </header>
 
+<section class="trusted-by reveal">
+  <div class="container">
+    <p class="trusted-label">Built for &amp; trusted by brands and teams across MENA</p>
+    <div class="trusted-logos">
+      <span class="logo-tag company">Twindix</span>
+      <span class="logo-tag company">Illa Holding</span>
+      <span class="logo-tag company">ConvertedIn</span>
+      <span class="logo-tag company">Pan Arab Media</span>
+      <span class="logo-divider"></span>
+      <span class="logo-tag client">Biostream</span>
+      <span class="logo-tag client">The Catch</span>
+      <span class="logo-tag client">Khyoot Masrya</span>
+      <span class="logo-tag client">Garageilla</span>
+      <span class="logo-tag client">Coring Institute</span>
+    </div>
+  </div>
+</section>
+
 <section id="services">
   <div class="container">
     <div class="section-head reveal">
@@ -270,10 +307,10 @@
       <p>Four focused offerings — each one I've delivered end-to-end, many times over, for clients in Egypt, Saudi Arabia, and beyond.</p>
     </div>
     <div class="services-grid">
-      <div class="service s1 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 7h18l-2 12H5L3 7z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg></div><h3>Bilingual Shopify stores (AR/EN)</h3><p>End-to-end setup: theme, RTL/LTR switching, checkout, payments, shipping, SEO — production-ready in a short sprint.</p></div>
-      <div class="service s2 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 8h16M8 4v16"/></svg></div><h3>Shopify theme customization</h3><p>Liquid theme work — custom sections, advanced product pages, integrations with apps and third-party APIs, Figma-to-storefront.</p></div>
-      <div class="service s3 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-6"/><path d="M14 5h6v6"/></svg></div><h3>Laravel &amp; custom web apps</h3><p>Multi-tenant SaaS, internal dashboards, ticketing systems, admin panels, reporting tools — clean APIs, solid architecture, maintainable code.</p></div>
-      <div class="service s4 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div><h3>API integration &amp; automation</h3><p>Connect Shopify, Laravel, CRMs, WhatsApp, Telegram, payment gateways. Webhook pipelines, bots, AI-assisted tooling that saves real hours.</p></div>
+      <div class="service s1 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 7h18l-2 12H5L3 7z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg></div><h3>Bilingual Shopify stores (AR/EN)</h3><p>End-to-end setup: theme, RTL/LTR switching, checkout, payments, shipping, SEO — production-ready in a short sprint.</p><div class="service-price">Starting at <strong>$600</strong></div></div>
+      <div class="service s2 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 8h16M8 4v16"/></svg></div><h3>Shopify theme customization</h3><p>Liquid theme work — custom sections, advanced product pages, integrations with apps and third-party APIs, Figma-to-storefront.</p><div class="service-price">Starting at <strong>$300</strong></div></div>
+      <div class="service s3 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-6"/><path d="M14 5h6v6"/></svg></div><h3>Laravel &amp; custom web apps</h3><p>Multi-tenant SaaS, internal dashboards, ticketing systems, admin panels, reporting tools — clean APIs, solid architecture, maintainable code.</p><div class="service-price">Starting at <strong>$1,500</strong></div></div>
+      <div class="service s4 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div><h3>API integration &amp; automation</h3><p>Connect Shopify, Laravel, CRMs, WhatsApp, Telegram, payment gateways. Webhook pipelines, bots, AI-assisted tooling that saves real hours.</p><div class="service-price">Starting at <strong>$250</strong></div></div>
     </div>
   </div>
 </section>
@@ -286,8 +323,8 @@
       <p>Bilingual Shopify storefronts and Laravel-powered platforms I've shipped or rebuilt — across e-commerce, SaaS, and internal tools.</p>
     </div>
     <div class="filter-bar reveal" role="tablist">
-      <button class="filter-btn active" data-filter="all">All <span class="count">11</span></button>
-      <button class="filter-btn" data-filter="shopify">🛍️ Shopify stores <span class="count">5</span></button>
+      <button class="filter-btn active" data-filter="all">All <span class="count">10</span></button>
+      <button class="filter-btn" data-filter="shopify">🛍️ Shopify stores <span class="count">4</span></button>
       <button class="filter-btn" data-filter="platforms">⚡ Platforms &amp; apps <span class="count">6</span></button>
     </div>
     <div class="projects-grid" id="projectsGrid">
@@ -295,7 +332,6 @@
       <a href="https://thecatchofficial.com" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/thecatch.svg" alt="The Catch Official bilingual Shopify store preview" loading="lazy"/></div><div class="project-body"><span class="tag">Bilingual AR/EN · Live</span><h3>The Catch Official</h3><p>New Shopify store delivered end-to-end with a custom bilingual theme, checkout tweaks, and a responsive, conversion-focused UI.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>JavaScript</span><span>Responsive</span></div></div></a>
       <a href="https://khyootmasrya.com" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/khyoot.svg" alt="Khyoot Masrya Egyptian apparel Shopify store preview" loading="lazy"/></div><div class="project-body"><span class="tag">Bilingual AR/EN · Live · New</span><h3>Khyoot Masrya</h3><p>A freshly launched Shopify store for an Egyptian apparel brand — custom theme, Arabic-first UX, men's / women's / kids / home categories, and a clean conversion flow.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>RTL</span><span>Apparel</span></div></div></a>
       <a href="https://garageilla.com" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/garageilla.svg" alt="Garageilla Shopify automotive storefront preview" loading="lazy"/></div><div class="project-body"><span class="tag">Illa Holding · Shopify · Live</span><h3>Garageilla</h3><p>Shopify storefront customized to the brand and Figma designs, plus a custom Request-an-Offer form routed directly to the commercial team.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>Custom form</span><span>RTL</span></div></div></a>
-      <a href="https://www.aloraiman.com" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/aloraiman.jpg" alt="Al Oraiman Perfumes bilingual Shopify storefront preview" loading="lazy"/></div><div class="project-body"><span class="tag">Bilingual AR/EN · Live · Currency switcher</span><h3>Al Oraiman Perfumes</h3><p>A bilingual (Arabic + English) Shopify storefront for a luxury perfumes brand. Custom theme, RTL/LTR switching, plus a custom-coded multi-currency switcher integrated with a live FX-rates API so prices flip cleanly across markets.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>RTL</span><span>FX API</span><span>Custom JS</span></div></div></a>
       <a href="https://thecoringinstitute.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel · Filament</span><img src="images/coring.svg" alt="Coring Institute bilingual coaching platform preview" loading="lazy"/></div><div class="project-body"><span class="tag">From scratch · Bilingual AR/EN · Live</span><h3>Coring Institute — Bilingual Coaching Platform</h3><p>Full bilingual (AR/EN) coaching platform built from scratch on Laravel 11 + Filament. Public marketing site with services and coach profiles, end-to-end booking flow, and a real Zoom + Google Calendar integration that auto-creates meetings on confirmation.</p><div class="project-stack"><span>Laravel 11</span><span>Filament 3</span><span>Tailwind RTL</span><span>Zoom OAuth</span><span>Google Calendar</span><span>Spatie</span></div></div></a>
       <a href="https://twindix.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel</span><img src="images/twindix.svg" alt="Twindix main platform homepage preview" loading="lazy"/></div><div class="project-body"><span class="tag">Twindix · Platform · Refactor</span><h3>Twindix — Main Dashboard &amp; Platform</h3><p>Rebuilt and refactored the core dashboard powering Twindix's product suite (assessments, reports, job-fit analysis) — fixed long-standing architectural issues and hardened the API.</p><div class="project-stack"><span>Laravel</span><span>REST API</span><span>MySQL</span><span>Refactor</span></div></div></a>
       <a href="https://academicfinder.twindix.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel · AI</span><img src="images/academic-finder.svg" alt="Twindix Academic Finder login preview" loading="lazy"/></div><div class="project-body"><span class="tag">Twindix · From scratch · Live</span><h3>Academic Finder</h3><p>AI-assisted career &amp; college recommendation tool. Students answer a guided question flow and the system surfaces the best-fit programs, wired into the main Twindix dashboard.</p><div class="project-stack"><span>Laravel</span><span>AI</span><span>Questionnaire</span><span>Recommendations</span></div></div></a>
@@ -346,8 +382,21 @@
   <div class="container">
     <div class="contact-card reveal">
       <h2>Have a project in mind?</h2>
-      <p>I'm currently taking on a limited number of Shopify and Laravel engagements. If you've got a storefront to launch or a dashboard to rebuild, let's talk.</p>
-      <a href="mailto:info@ahmedbeshir.com" class="btn">Email info@ahmedbeshir.com →</a>
+      <p>Tell me about it — Shopify storefront, Laravel platform, API integration, or something I haven't seen before. Pick whichever channel works for you.</p>
+      <div class="contact-actions">
+        <a href="https://calendly.com/ahmedbeshir/30min" target="_blank" rel="noopener" class="btn primary-cta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Book a 30-min call
+        </a>
+        <a href="https://wa.me/201023116122?text=Hi%20Ahmed%2C%20I%27d%20like%20to%20discuss%20a%20project%20with%20you." target="_blank" rel="noopener" class="btn whatsapp-cta">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          WhatsApp
+        </a>
+        <a href="mailto:info@ahmedbeshir.com?subject=Project%20inquiry%20%E2%80%94%20Ahmed%20Beshir&body=Hi%20Ahmed%2C%0A%0AProject%20type%3A%20%5BShopify%20store%20%2F%20Laravel%20app%20%2F%20API%20%2F%20Other%5D%0ABudget%20range%3A%20%5B%24%5D%0ATimeline%3A%20%5BWhen%5D%0A%0ABrief%3A%0A" class="btn ghost-light">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email
+        </a>
+      </div>
       <div class="contact-list">
         <a href="mailto:info@ahmedbeshir.com">info@ahmedbeshir.com</a>
         <a href="tel:+201023116122">+20 102 311 6122</a>
