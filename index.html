@@ -249,10 +249,11 @@
   .skill-group ul { margin: 0; padding: 0; list-style: none; }
   .skill-group li { font-size: 14px; color: var(--ink-soft); padding: 7px 0; border-bottom: 1px dashed var(--line); }
   .skill-group li:last-child { border-bottom: 0; }
-  .timeline { border-left: 2px solid var(--line); padding-left: 28px; }
+  .timeline { position: relative; padding-left: 28px; --tl-top: 14px; --tl-bottom: 14px; isolation: isolate; }
+  .timeline::before { content: ''; position: absolute; left: -.5px; top: var(--tl-top); bottom: var(--tl-bottom); width: 3px; background: linear-gradient(to bottom, var(--line-strong) 7px, transparent 7px) repeat-y; background-size: 100% 14px; pointer-events: none; z-index: 1; }
   .timeline-item { position: relative; padding-bottom: 34px; }
   .timeline-item:last-child { padding-bottom: 0; }
-  .timeline-item::before { content: ''; position: absolute; left: -35px; top: 6px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg-card); border: 3px solid var(--brand-1); }
+  .timeline-item::before { content: ''; position: absolute; left: -35px; top: 6px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg-card); border: 3px solid var(--brand-1); z-index: 3; }
   .timeline-item.current::before { background: var(--grad-accent); border-color: transparent; box-shadow: 0 0 0 5px color-mix(in srgb, var(--brand-1) 20%, transparent); }
   .timeline-item h4 { font-size: 17px; margin-bottom: 2px; }
   .timeline-item .meta { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
@@ -449,14 +450,24 @@
   @media (max-width: 1024px) { .bento { grid-template-columns: repeat(2, 1fr); } .b-big, .b-wide { grid-column: span 2; } .b-tall { grid-row: span 1; } .b-big { grid-row: span 2; } }
   @media (max-width: 600px) { .bento { grid-template-columns: 1fr; } .b-big, .b-wide, .b-tall { grid-column: span 1; grid-row: span 1; } }
 
-  /* Scroll-driven timeline progress bar */
-  .timeline { position: relative; }
-  .timeline::after { content: ''; position: absolute; left: -2px; top: 0; width: 2px; height: 0; background: var(--grad-accent); border-radius: 2px; pointer-events: none; }
-  @supports (animation-timeline: scroll()) {
-    .timeline::after { height: 100%; transform-origin: top; transform: scaleY(0); animation: timeline-fill linear both; animation-timeline: view(); animation-range: contain 0% contain 100%; }
+  /* Scroll-driven timeline progress overlay (sits on top of the dashed line, but below circles) */
+  .timeline::after { content: ''; position: absolute; left: -.5px; top: var(--tl-top); bottom: var(--tl-bottom); width: 3px; background: var(--grad-accent); border-radius: 3px 3px 0 0; pointer-events: none; transform-origin: top; transform: scaleY(0); z-index: 2; }
+  @supports (animation-timeline: view()) {
+    .timeline::after { animation: timeline-fill linear both; animation-timeline: view(); animation-range: contain 0% contain 100%; }
     @keyframes timeline-fill { to { transform: scaleY(1); } }
-    .timeline-item { animation: tl-reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
-    @keyframes tl-reveal { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+    /* Items light up as scroll passes them — dim at first, bright when reached */
+    .timeline-item { animation: tl-light linear both; animation-timeline: view(); animation-range: entry 0% entry 90%; }
+    @keyframes tl-light {
+      0% { opacity: 0; transform: translateY(24px); filter: saturate(.4); }
+      55% { opacity: .45; transform: none; filter: saturate(.6); }
+      100% { opacity: 1; transform: none; filter: saturate(1); }
+    }
+    /* Circle gets a soft glow ring once scroll reaches it */
+    .timeline-item:not(.current)::before { animation: tl-circle linear both; animation-timeline: view(); animation-range: entry 55% entry 85%; }
+    @keyframes tl-circle {
+      from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand-1) 0%, transparent); border-color: color-mix(in srgb, var(--brand-1) 50%, var(--line-strong)); }
+      to { box-shadow: 0 0 0 5px color-mix(in srgb, var(--brand-1) 18%, transparent); border-color: var(--brand-1); }
+    }
   }
 
   /* View Transitions API — cross-document smooth language switch */
@@ -473,7 +484,6 @@
 </style>
 </head>
 <body>
-<a href="#main" class="skip-link">Skip to content</a>
 <nav class="nav" id="nav">
   <div class="container nav-inner">
     <a href="#" class="brand"><span class="brand-mark">AB</span>Ahmed Beshir</a>
@@ -1096,7 +1106,29 @@
     setTimeout(begin, 2800);
   })();
 
-  /* 5. Animated stat counters */
+  /* 5. Timeline line: calc top/bottom so line spans first→last circle center */
+  (function () {
+    const timelines = document.querySelectorAll('.timeline');
+    if (!timelines.length) return;
+    const compute = () => {
+      timelines.forEach(t => {
+        const items = t.querySelectorAll('.timeline-item');
+        if (items.length < 2) return;
+        const tRect = t.getBoundingClientRect();
+        const firstRect = items[0].getBoundingClientRect();
+        const lastRect = items[items.length - 1].getBoundingClientRect();
+        const lineTop = Math.round((firstRect.top - tRect.top) + 14);
+        const lineBottom = Math.round(tRect.bottom - (lastRect.top + 14)) + 3;
+        t.style.setProperty('--tl-top', Math.max(0, lineTop) + 'px');
+        t.style.setProperty('--tl-bottom', Math.max(0, lineBottom) + 'px');
+      });
+    };
+    compute();
+    window.addEventListener('resize', () => requestAnimationFrame(compute));
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(compute);
+  })();
+
+  /* 6. Animated stat counters */
   (function () {
     const els = document.querySelectorAll('.bento-stat .num[data-count]');
     if (!els.length || reduced) return;
