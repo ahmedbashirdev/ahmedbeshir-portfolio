@@ -149,6 +149,7 @@
   .hero { padding: 72px 0 80px; position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(800px circle at 85% 0%, rgba(236,72,153,.18), transparent 45%), radial-gradient(900px circle at 0% 60%, rgba(124,58,237,.16), transparent 50%), radial-gradient(700px circle at 100% 100%, rgba(245,158,11,.14), transparent 50%); }
   .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: start; }
+  .hero-grid > * { min-width: 0; }
   .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: color-mix(in srgb, var(--brand-1) 12%, transparent); color: var(--brand-1); font-size: 13px; font-weight: 600; margin-bottom: 22px; border: 1px solid color-mix(in srgb, var(--brand-1) 20%, transparent); }
   [data-theme="dark"] .eyebrow { background: rgba(124,58,237,.18); }
   .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.22); }
