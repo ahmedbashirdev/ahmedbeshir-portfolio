@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /Ahmed_Beshir_Resume.docx
+
+Sitemap: https://ahmedbeshir.com/sitemap.xml

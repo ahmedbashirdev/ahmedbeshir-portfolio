@@ -19,6 +19,11 @@
 <meta property="og:image:alt" content="Ahmed Beshir — Senior Web Developer, Shopify & Laravel Specialist" />
 <meta property="og:site_name" content="ahmedbeshir.com" />
 <meta property="og:locale" content="en_US" />
+<meta property="og:locale:alternate" content="ar_EG" />
+<link rel="alternate" hreflang="en" href="https://ahmedbeshir.com/" />
+<link rel="alternate" hreflang="ar" href="https://ahmedbeshir.com/ar/" />
+<link rel="alternate" hreflang="x-default" href="https://ahmedbeshir.com/" />
+<link rel="canonical" href="https://ahmedbeshir.com/" />
 
 <!-- Twitter / X card -->
 <meta name="twitter:card" content="summary_large_image" />
@@ -29,6 +34,53 @@
 
 <!-- Generic description (fallback for older crawlers and SEO) -->
 <meta name="theme-color" content="#7c3aed" />
+
+<!-- JSON-LD: Person + ProfessionalService -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://ahmedbeshir.com/#person",
+      "name": "Ahmed Beshir",
+      "alternateName": "أحمد بشير",
+      "url": "https://ahmedbeshir.com/",
+      "image": "https://ahmedbeshir.com/images/ahmed.jpg",
+      "jobTitle": "Senior Web Developer — Shopify & Laravel Specialist",
+      "knowsLanguage": ["en", "ar"],
+      "knowsAbout": ["Shopify", "Liquid", "Laravel", "Filament", "PHP", "REST APIs", "Bilingual AR/EN", "RTL", "MENA E-commerce"],
+      "address": { "@type": "PostalAddress", "addressLocality": "Cairo", "addressCountry": "EG" },
+      "email": "info@ahmedbeshir.com",
+      "telephone": "+20-109-080-1084",
+      "sameAs": [
+        "https://www.linkedin.com/in/ahmedhasbeshir/",
+        "https://github.com/ahmedbashirdev"
+      ]
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://ahmedbeshir.com/#service",
+      "name": "Ahmed Beshir — Shopify & Laravel Development",
+      "url": "https://ahmedbeshir.com/",
+      "image": "https://ahmedbeshir.com/images/og-image.jpg",
+      "priceRange": "$$",
+      "areaServed": ["Egypt", "Saudi Arabia", "United Arab Emirates", "MENA", "Worldwide"],
+      "serviceType": ["Shopify development", "Laravel development", "API integration", "Bilingual AR/EN storefronts"],
+      "provider": { "@id": "https://ahmedbeshir.com/#person" },
+      "address": { "@type": "PostalAddress", "addressLocality": "Cairo", "addressCountry": "EG" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://ahmedbeshir.com/#website",
+      "url": "https://ahmedbeshir.com/",
+      "name": "Ahmed Beshir — Senior Web Developer",
+      "inLanguage": ["en", "ar"],
+      "publisher": { "@id": "https://ahmedbeshir.com/#person" }
+    }
+  ]
+}
+</script>
 <style>
   :root {
     --bg: #fbfbfd; --bg-soft: #f3f4fa; --bg-card: #ffffff;
@@ -60,8 +112,15 @@
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { margin: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; transition: background .3s, color .3s; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *,*::before,*::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
   a { color: var(--brand-1); text-decoration: none; }
   a:hover { text-decoration: underline; }
+  /* Accessibility: visible focus ring */
+  :focus-visible { outline: 3px solid var(--brand-1); outline-offset: 3px; border-radius: 6px; }
+  .btn:focus-visible { outline-offset: 4px; }
+  /* Skip-to-content link */
+  .skip-link { position: absolute; top: -40px; left: 16px; background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; z-index: 100; transition: top .2s; }
+  .skip-link:focus { top: 16px; text-decoration: none; }
   img { max-width: 100%; display: block; }
   h1, h2, h3, h4 { color: var(--ink); line-height: 1.15; margin: 0 0 .5em; letter-spacing: -0.02em; }
   p { margin: 0 0 1em; color: var(--ink-soft); }
@@ -89,7 +148,7 @@
   .nav-toggle svg { width: 24px; height: 24px; stroke: currentColor; }
   .hero { padding: 72px 0 80px; position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(800px circle at 85% 0%, rgba(236,72,153,.18), transparent 45%), radial-gradient(900px circle at 0% 60%, rgba(124,58,237,.16), transparent 50%), radial-gradient(700px circle at 100% 100%, rgba(245,158,11,.14), transparent 50%); }
-  .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: start; }
   .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: color-mix(in srgb, var(--brand-1) 12%, transparent); color: var(--brand-1); font-size: 13px; font-weight: 600; margin-bottom: 22px; border: 1px solid color-mix(in srgb, var(--brand-1) 20%, transparent); }
   [data-theme="dark"] .eyebrow { background: rgba(124,58,237,.18); }
   .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.22); }
@@ -99,7 +158,8 @@
   .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
   .hero-meta { display: flex; flex-wrap: wrap; gap: 32px; padding-top: 28px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
   .hero-meta strong { color: var(--ink); font-weight: 700; display: block; font-size: 16px; margin-bottom: 2px; }
-  .hero-portrait-wrap { position: relative; display: grid; place-items: center; }
+  .hero-portrait-wrap { position: relative; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+  .portrait-anchor { position: relative; width: 100%; max-width: 380px; display: block; }
   .hero-portrait { width: 100%; max-width: 380px; aspect-ratio: 1; border-radius: 28px; overflow: hidden; position: relative; background: var(--bg-soft); box-shadow: 0 30px 80px rgba(124,58,237,.25); transform: rotate(-2deg); transition: transform .4s; }
   .hero-portrait:hover { transform: rotate(0deg) scale(1.02); }
   .hero-portrait img { width: 100%; height: 100%; object-fit: cover; }
@@ -224,6 +284,55 @@
     .hero-grid { grid-template-columns: 1fr; gap: 40px; }
     .hero-portrait { max-width: 320px; }
   }
+  /* Language switcher */
+  .lang-switch { display: inline-flex; align-items: center; gap: 4px; padding: 4px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 999px; font-size: 13px; font-weight: 600; }
+  .lang-switch a { padding: 6px 12px; border-radius: 999px; color: var(--ink-soft); transition: background .2s, color .2s; }
+  .lang-switch a:hover { text-decoration: none; color: var(--ink); }
+  .lang-switch a.active { background: var(--bg-card); color: var(--ink); box-shadow: var(--shadow-sm); }
+  /* Why work with me */
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .why-card { padding: 28px; border-radius: var(--radius); background: var(--bg-card); border: 1px solid var(--line); position: relative; overflow: hidden; transition: transform .25s, box-shadow .25s, border-color .25s; }
+  .why-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .why-card-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--grad-accent); display: grid; place-items: center; color: #fff; margin-bottom: 16px; box-shadow: 0 8px 20px rgba(124,58,237,.25); }
+  .why-card-icon svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; }
+  .why-card.w2 .why-card-icon { background: var(--grad-shopify); box-shadow: 0 8px 20px rgba(149,191,71,.3); }
+  .why-card.w3 .why-card-icon { background: var(--grad-laravel); box-shadow: 0 8px 20px rgba(255,45,32,.3); }
+  .why-card.w4 .why-card-icon { background: linear-gradient(135deg, #f59e0b, #ec4899); box-shadow: 0 8px 20px rgba(245,158,11,.3); }
+  .why-card h3 { font-size: 17px; margin-bottom: 6px; }
+  .why-card p { font-size: 14.5px; margin: 0; }
+  /* Process */
+  #process { background: var(--bg-soft); }
+  .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; counter-reset: step; }
+  .process-step { padding: 28px; background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius); position: relative; transition: transform .25s, box-shadow .25s; }
+  .process-step:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .process-step::before { counter-increment: step; content: counter(step, decimal-leading-zero); position: absolute; top: 18px; right: 22px; font-size: 28px; font-weight: 800; color: var(--brand-1); opacity: .35; letter-spacing: -0.04em; }
+  .process-step h3 { font-size: 17px; margin-bottom: 6px; padding-right: 56px; }
+  .process-step p { font-size: 14.5px; margin: 0 0 8px; }
+  .process-step .meta { font-size: 12px; font-weight: 600; color: var(--brand-1); text-transform: uppercase; letter-spacing: .1em; }
+  /* FAQ */
+  .faq-list { max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  .faq-item { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: border-color .2s, box-shadow .2s; }
+  .faq-item[open] { border-color: var(--line-strong); box-shadow: var(--shadow-sm); }
+  .faq-item summary { list-style: none; padding: 20px 24px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-weight: 600; font-size: 16px; color: var(--ink); }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; font-size: 24px; color: var(--brand-1); font-weight: 400; line-height: 1; transition: transform .2s; }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item .faq-body { padding: 0 24px 22px; color: var(--ink-soft); font-size: 15px; line-height: 1.7; }
+  .faq-item .faq-body p { margin: 0 0 10px; }
+  .faq-item .faq-body p:last-child { margin: 0; }
+  /* Footer enrichment */
+  .footer-grid { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+  .footer-col h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--ink); margin-bottom: 14px; }
+  .footer-col ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col li a { color: var(--ink-soft); font-size: 14px; }
+  .footer-col li a:hover { color: var(--ink); text-decoration: none; }
+  .footer-about p { font-size: 14px; margin: 0 0 14px; max-width: 320px; }
+  .footer-social { display: flex; gap: 10px; }
+  .footer-social a { width: 36px; height: 36px; border-radius: 50%; background: var(--bg-soft); display: grid; place-items: center; color: var(--ink-soft); transition: background .2s, color .2s; border: 1px solid var(--line); }
+  .footer-social a:hover { background: var(--brand-1); color: #fff; border-color: var(--brand-1); }
+  .footer-social svg { width: 16px; height: 16px; }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--muted); }
+  @media (max-width: 920px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 768px) {
     .nav-links { display: none; position: absolute; top: 72px; left: 0; right: 0; background: var(--bg-card); flex-direction: column; padding: 16px 24px; border-bottom: 1px solid var(--line); gap: 16px; }
     .nav-links.open { display: flex; }
@@ -234,19 +343,151 @@
     .filter-btn { flex: 1; justify-content: center; padding: 10px 14px; }
     .filter-btn .count { display: none; }
     .contact-card { padding: 50px 24px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
   }
+
+  /* ========== MODERN ADDITIONS ========== */
+
+  /* Cursor-aware hero gradient */
+  .hero { --mx: 50%; --my: 30%; }
+  .hero::before { background:
+    radial-gradient(600px circle at var(--mx) var(--my), rgba(124,58,237,.28), transparent 45%),
+    radial-gradient(800px circle at 85% 0%, rgba(236,72,153,.16), transparent 45%),
+    radial-gradient(900px circle at 0% 60%, rgba(124,58,237,.14), transparent 50%),
+    radial-gradient(700px circle at 100% 100%, rgba(245,158,11,.12), transparent 50%);
+    transition: background .15s ease-out;
+  }
+
+  /* Marquee — infinite scrolling strip */
+  .marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%); }
+  .marquee-track { display: flex; gap: 48px; width: max-content; animation: marquee var(--marquee-duration, 40s) linear infinite; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  /* Stack tags marquee */
+  .stack-marquee { padding: 28px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--bg-card); }
+  .stack-marquee .marquee-track { gap: 12px; --marquee-duration: 60s; }
+  .stack-tag { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; background: var(--bg-soft); border: 1px solid var(--line); font-size: 14px; font-weight: 600; color: var(--ink-soft); white-space: nowrap; }
+  .stack-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand-1); }
+  .stack-tag.s2 .dot { background: var(--shopify); }
+  .stack-tag.s3 .dot { background: var(--laravel); }
+  .stack-tag.s4 .dot { background: #0891b2; }
+  .stack-tag.s5 .dot { background: #f59e0b; }
+
+  /* Hero code-editor mockup */
+  .hero-code { width: 100%; max-width: 540px; border-radius: 14px; overflow: hidden; background: #0b0d20; border: 1px solid #1f2348; box-shadow: 0 25px 60px rgba(11,16,39,.35); font-family: 'SF Mono', 'Menlo', 'Monaco', 'Cascadia Code', Consolas, monospace; }
+  [data-theme="dark"] .hero-code { background: #07091a; border-color: #1d2247; }
+  .hero-code-bar { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: linear-gradient(180deg, #1a1d3a, #14172e); border-bottom: 1px solid #1f2348; }
+  .hero-code-dots { display: flex; gap: 6px; }
+  .hero-code-dots span { width: 11px; height: 11px; border-radius: 50%; }
+  .hero-code-dots span:nth-child(1) { background: #ff5f56; }
+  .hero-code-dots span:nth-child(2) { background: #ffbd2e; }
+  .hero-code-dots span:nth-child(3) { background: #27c93f; }
+  .hero-code-file { font-size: 12px; color: #8591a8; font-family: 'Inter', sans-serif; }
+  .hero-code-body { padding: 16px 20px; font-size: 13px; line-height: 1.7; color: #c9d0e0; counter-reset: line; height: 320px; overflow: hidden; }
+  .hero-code-body .ln { display: block; position: relative; padding-left: 28px; min-height: 1.7em; white-space: pre; }
+  .hero-code-body .ln::before { counter-increment: line; content: counter(line); position: absolute; left: 0; width: 20px; text-align: right; color: #4a5180; font-variant-numeric: tabular-nums; user-select: none; }
+  .hero-code-body .k { color: #c084fc; }     /* keyword */
+  .hero-code-body .s { color: #5eead4; }     /* string */
+  .hero-code-body .f { color: #fbbf24; }     /* function */
+  .hero-code-body .c { color: #6c7397; font-style: italic; } /* comment */
+  .hero-code-body .v { color: #f472b6; }     /* variable */
+  .hero-code-body .t { color: #60a5fa; }     /* type */
+  .hero-code-body .caret { display: inline-block; width: 8px; height: 1.05em; background: #c084fc; vertical-align: -2px; margin-left: 1px; animation: blink 1s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* Magnetic button — uses CSS transforms set by JS */
+  .magnetic { transition: transform .25s cubic-bezier(.2,.7,.3,1.3); will-change: transform; }
+  .magnetic-inner { display: inline-flex; align-items: center; gap: 8px; transition: transform .25s cubic-bezier(.2,.7,.3,1.3); }
+
+  /* 3D tilt project cards — robust border-radius clipping during transforms */
+  .project { isolation: isolate; clip-path: inset(0 round var(--radius)); transition: transform .25s cubic-bezier(.2,.7,.3,1), box-shadow .25s; will-change: transform; backface-visibility: hidden; }
+  .project[data-tilt] { transition: transform .15s ease-out, box-shadow .25s; }
+  .project:hover { border-color: var(--line); }
+
+  /* Bento Grid for skills */
+  .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(160px, auto); gap: 16px; }
+  .bento-card { position: relative; padding: 28px; border-radius: var(--radius); background: var(--bg-card); border: 1px solid var(--line); overflow: hidden; transition: transform .25s, box-shadow .25s, border-color .25s; display: flex; flex-direction: column; gap: 12px; }
+  .bento-card::before { content: ''; position: absolute; inset: 0; background: var(--bento-grad, transparent); opacity: 0; transition: opacity .3s; pointer-events: none; }
+  .bento-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: transparent; }
+  .bento-card:hover::before { opacity: .08; }
+  .bento-card > * { position: relative; z-index: 1; }
+  .bento-card h3 { font-size: 17px; margin: 0; letter-spacing: -0.01em; }
+  .bento-card .bento-meta { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--brand-1); }
+  .bento-card.b-shopify { --bento-grad: var(--grad-shopify); }
+  .bento-card.b-shopify .bento-meta { color: var(--shopify-deep); }
+  .bento-card.b-laravel { --bento-grad: var(--grad-laravel); }
+  .bento-card.b-laravel .bento-meta { color: var(--laravel); }
+  .bento-card.b-frontend { --bento-grad: linear-gradient(135deg,#0891b2,#6366f1); }
+  .bento-card.b-frontend .bento-meta { color: #0891b2; }
+  .bento-card.b-data { --bento-grad: linear-gradient(135deg,#f59e0b,#ec4899); }
+  .bento-card.b-data .bento-meta { color: #f59e0b; }
+  .bento-card.b-tools { --bento-grad: linear-gradient(135deg,#22c55e,#0891b2); }
+  .bento-card.b-tools .bento-meta { color: #22c55e; }
+  .bento-card.b-ai { --bento-grad: linear-gradient(135deg,#7c3aed,#ec4899); }
+  /* sizes */
+  .b-wide { grid-column: span 2; }
+  .b-tall { grid-row: span 2; }
+  .b-big { grid-column: span 2; grid-row: span 2; }
+  .b-full { grid-column: 1 / -1; }
+  /* live elements inside bento */
+  .bento-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; color: var(--ink-soft); }
+  .bento-list li { display: flex; align-items: center; gap: 8px; }
+  .bento-list li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: .5; flex-shrink: 0; }
+  .bento-stat { display: flex; align-items: baseline; gap: 8px; margin-top: auto; }
+  .bento-stat .num { font-size: 36px; font-weight: 800; line-height: 1; letter-spacing: -0.03em; background: var(--bento-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .bento-stat .label { font-size: 13px; color: var(--ink-soft); }
+  .bento-pulse { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: rgba(34,197,94,.12); color: #16a34a; font-size: 11px; font-weight: 700; align-self: flex-start; }
+  [data-theme="dark"] .bento-pulse { background: rgba(34,197,94,.2); color: #4ade80; }
+  .bento-pulse::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 30%, transparent); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.4); opacity: .6; } }
+  .bento-bars { display: flex; gap: 4px; align-items: flex-end; height: 38px; margin-top: auto; }
+  .bento-bar { flex: 1; background: var(--bento-grad); border-radius: 3px 3px 0 0; opacity: .85; }
+  .bento-brands { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--line); }
+  .brand-chip { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--bg-soft); color: var(--ink-soft); border: 1px solid var(--line); white-space: nowrap; }
+  .bento-card.b-shopify .brand-chip { color: var(--shopify-deep); border-color: color-mix(in srgb, var(--shopify) 30%, var(--line)); }
+  [data-theme="dark"] .bento-card.b-shopify .brand-chip { color: var(--shopify); }
+  @media (max-width: 1024px) { .bento { grid-template-columns: repeat(2, 1fr); } .b-big, .b-wide { grid-column: span 2; } .b-tall { grid-row: span 1; } .b-big { grid-row: span 2; } }
+  @media (max-width: 600px) { .bento { grid-template-columns: 1fr; } .b-big, .b-wide, .b-tall { grid-column: span 1; grid-row: span 1; } }
+
+  /* Scroll-driven timeline progress bar */
+  .timeline { position: relative; }
+  .timeline::after { content: ''; position: absolute; left: -2px; top: 0; width: 2px; height: 0; background: var(--grad-accent); border-radius: 2px; pointer-events: none; }
+  @supports (animation-timeline: scroll()) {
+    .timeline::after { height: 100%; transform-origin: top; transform: scaleY(0); animation: timeline-fill linear both; animation-timeline: view(); animation-range: contain 0% contain 100%; }
+    @keyframes timeline-fill { to { transform: scaleY(1); } }
+    .timeline-item { animation: tl-reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+    @keyframes tl-reveal { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  }
+
+  /* View Transitions API — cross-document smooth language switch */
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .35s; }
+  ::view-transition-old(root) { animation: vt-fade-out .35s ease both; }
+  ::view-transition-new(root) { animation: vt-fade-in .35s ease both; }
+  @keyframes vt-fade-out { to { opacity: 0; transform: translateY(-8px); } }
+  @keyframes vt-fade-in { from { opacity: 0; transform: translateY(8px); } }
+  /* Named transitions on key elements for continuity */
+  .brand { view-transition-name: brand; }
+  .hero h1 { view-transition-name: hero-title; }
+  .lang-switch { view-transition-name: lang-switch; }
 </style>
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to content</a>
 <nav class="nav" id="nav">
   <div class="container nav-inner">
     <a href="#" class="brand"><span class="brand-mark">AB</span>Ahmed Beshir</a>
     <div class="nav-links" id="navLinks">
       <a href="#services">Services</a><a href="#projects">Projects</a>
-      <a href="#experience">Experience</a><a href="#skills">Skills</a>
-      <a href="#contact" class="btn">Hire me</a>
+      <a href="#process">Process</a>
+      <a href="#experience">Experience</a><a href="#faq">FAQ</a>
+      <a href="#contact" class="btn magnetic"><span class="magnetic-inner">Get a quote</span></a>
     </div>
     <div style="display:flex;align-items:center;gap:10px">
+      <div class="lang-switch" aria-label="Language">
+        <a href="index.html" class="active" hreflang="en" aria-current="page">EN</a>
+        <a href="ar/index.html" hreflang="ar">عربي</a>
+      </div>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
         <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -256,28 +497,41 @@
   </div>
 </nav>
 
+<main id="main">
 <header class="hero">
   <div class="container">
     <div class="hero-grid">
       <div>
-        <span class="eyebrow reveal"><span class="eyebrow-dot"></span> Booking projects · Available now</span>
+        <span class="eyebrow reveal"><span class="eyebrow-dot"></span> Available now · Open to full-time &amp; freelance · Replies in ~2h</span>
         <h1 class="reveal">I build bilingual<br/><span class="grad">Shopify &amp; Laravel</span> — shipped.</h1>
-        <p class="hero-lede reveal">Production-ready storefronts and platforms in weeks, not months. 10+ years for MENA brands — recent work spans <strong>Coring Institute</strong>, <strong>Biostream</strong>, <strong>The Catch</strong>, <strong>Khyoot Masrya</strong>, and the full <strong>Twindix</strong> product suite.</p>
+        <p class="hero-lede reveal">Production-ready storefronts and platforms in weeks, not months. 10+ years for MENA brands — recent work spans <strong>Coring Institute</strong>, <strong>Biostream</strong>, <strong>The Catch</strong>, <strong>Khyoot Masrya</strong>, and the full <strong>Twindix</strong> product suite. <strong>Can start within 3 days.</strong></p>
         <div class="hero-actions reveal">
-          <a href="#contact" class="btn">Start a project →</a>
+          <a href="#contact" class="btn magnetic"><span class="magnetic-inner">Get a quote in 24h →</span></a>
           <a href="Ahmed_Beshir_Resume.pdf" class="btn ghost" download>Download CV (PDF)</a>
-          <a href="Ahmed_Beshir_Resume.docx" class="btn ghost" download style="font-size:13px;padding:8px 16px">.docx</a>
+          <a href="https://github.com/ahmedbashirdev" target="_blank" rel="noopener" class="btn ghost" style="font-size:13px;padding:8px 16px">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.16c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.78.42-1.3.76-1.6-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.41 1.02.01 2.04.14 3 .41 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.19.7.8.58A12 12 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
         </div>
         <div class="hero-meta reveal">
           <div><strong>10+ years</strong>building for the web</div>
           <div><strong>Shopify + Laravel</strong>full-stack specialist</div>
-          <div><strong>Cairo, Egypt</strong>working remote-friendly</div>
+          <div><strong>AR + EN fluent</strong>Cairo · remote worldwide</div>
         </div>
       </div>
       <div class="hero-portrait-wrap reveal">
-        <div class="hero-portrait"><img src="images/ahmed.jpg" alt="Ahmed Beshir — senior web developer"/></div>
-        <span class="hero-badge tr"><span class="chip shopify">S</span> Shopify expert</span>
-        <span class="hero-badge bl"><span class="chip laravel">L</span> Laravel specialist</span>
+        <div class="portrait-anchor">
+          <div class="hero-portrait"><img src="images/ahmed.jpg" alt="Ahmed Beshir — senior web developer in Cairo" width="380" height="380" fetchpriority="high" decoding="async"/></div>
+          <span class="hero-badge tr"><span class="chip shopify">S</span> Shopify expert</span>
+          <span class="hero-badge bl"><span class="chip laravel">L</span> Laravel specialist</span>
+        </div>
+        <div class="hero-code reveal" id="heroCode" aria-label="Sample code from Coring Institute project">
+          <div class="hero-code-bar">
+            <div class="hero-code-dots"><span></span><span></span><span></span></div>
+            <span class="hero-code-file">BookingObserver.php — Coring Institute</span>
+          </div>
+          <div class="hero-code-body" id="heroCodeBody"></div>
+        </div>
       </div>
     </div>
     <div class="tech-banner reveal">
@@ -302,7 +556,9 @@
 <section class="trusted-by reveal">
   <div class="container">
     <p class="trusted-label">Built for &amp; trusted by brands and teams across MENA</p>
-    <div class="trusted-logos">
+  </div>
+  <div class="marquee" style="--marquee-duration: 45s">
+    <div class="marquee-track">
       <span class="logo-tag company">Twindix</span>
       <span class="logo-tag company">Illa Holding</span>
       <span class="logo-tag company">ConvertedIn</span>
@@ -311,8 +567,87 @@
       <span class="logo-tag client">Biostream</span>
       <span class="logo-tag client">The Catch</span>
       <span class="logo-tag client">Khyoot Masrya</span>
-      <span class="logo-tag client">Garageilla</span>
-      <span class="logo-tag client">Coring Institute</span>
+      <span class="logo-divider"></span>
+      <!-- duplicate for seamless loop -->
+      <span class="logo-tag company" aria-hidden="true">Twindix</span>
+      <span class="logo-tag company" aria-hidden="true">Illa Holding</span>
+      <span class="logo-tag company" aria-hidden="true">ConvertedIn</span>
+      <span class="logo-tag company" aria-hidden="true">Pan Arab Media</span>
+      <span class="logo-divider" aria-hidden="true"></span>
+      <span class="logo-tag client" aria-hidden="true">Biostream</span>
+      <span class="logo-tag client" aria-hidden="true">The Catch</span>
+      <span class="logo-tag client" aria-hidden="true">Khyoot Masrya</span>
+      <span class="logo-divider" aria-hidden="true"></span>
+    </div>
+  </div>
+</section>
+
+<div class="stack-marquee" aria-label="Tech stack">
+  <div class="marquee">
+    <div class="marquee-track">
+      <span class="stack-tag s2"><span class="dot"></span>Shopify</span>
+      <span class="stack-tag s2"><span class="dot"></span>Liquid</span>
+      <span class="stack-tag s3"><span class="dot"></span>Laravel 11</span>
+      <span class="stack-tag s3"><span class="dot"></span>Filament</span>
+      <span class="stack-tag s4"><span class="dot"></span>REST APIs</span>
+      <span class="stack-tag s4"><span class="dot"></span>MySQL</span>
+      <span class="stack-tag s5"><span class="dot"></span>Tailwind</span>
+      <span class="stack-tag"><span class="dot"></span>PHP 8.3</span>
+      <span class="stack-tag"><span class="dot"></span>Python</span>
+      <span class="stack-tag s2"><span class="dot"></span>Bilingual AR/EN</span>
+      <span class="stack-tag s4"><span class="dot"></span>Zoom OAuth</span>
+      <span class="stack-tag s4"><span class="dot"></span>Google Calendar</span>
+      <span class="stack-tag s5"><span class="dot"></span>Webhooks</span>
+      <span class="stack-tag"><span class="dot"></span>Telegram Bots</span>
+      <span class="stack-tag s3"><span class="dot"></span>Spatie</span>
+      <!-- duplicate -->
+      <span class="stack-tag s2" aria-hidden="true"><span class="dot"></span>Shopify</span>
+      <span class="stack-tag s2" aria-hidden="true"><span class="dot"></span>Liquid</span>
+      <span class="stack-tag s3" aria-hidden="true"><span class="dot"></span>Laravel 11</span>
+      <span class="stack-tag s3" aria-hidden="true"><span class="dot"></span>Filament</span>
+      <span class="stack-tag s4" aria-hidden="true"><span class="dot"></span>REST APIs</span>
+      <span class="stack-tag s4" aria-hidden="true"><span class="dot"></span>MySQL</span>
+      <span class="stack-tag s5" aria-hidden="true"><span class="dot"></span>Tailwind</span>
+      <span class="stack-tag" aria-hidden="true"><span class="dot"></span>PHP 8.3</span>
+      <span class="stack-tag" aria-hidden="true"><span class="dot"></span>Python</span>
+      <span class="stack-tag s2" aria-hidden="true"><span class="dot"></span>Bilingual AR/EN</span>
+      <span class="stack-tag s4" aria-hidden="true"><span class="dot"></span>Zoom OAuth</span>
+      <span class="stack-tag s4" aria-hidden="true"><span class="dot"></span>Google Calendar</span>
+      <span class="stack-tag s5" aria-hidden="true"><span class="dot"></span>Webhooks</span>
+      <span class="stack-tag" aria-hidden="true"><span class="dot"></span>Telegram Bots</span>
+      <span class="stack-tag s3" aria-hidden="true"><span class="dot"></span>Spatie</span>
+    </div>
+  </div>
+</div>
+
+<section id="why">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Why work with me</span>
+      <h2>Senior, <span class="grad">bilingual</span>, ships fast.</h2>
+      <p>What you actually get when you bring me on — beyond a tech stack list.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card w1 reveal">
+        <div class="why-card-icon"><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.4 9.3 8 10 4.6-.7 8-5 8-10V6l-8-4z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h3>Production track record</h3>
+        <p>Apps and stores running in the wild for real MENA brands — Coring Institute, Biostream, Garageilla, the Twindix suite. No tutorial-only experience.</p>
+      </div>
+      <div class="why-card w2 reveal">
+        <div class="why-card-icon"><svg viewBox="0 0 24 24"><path d="M3 12h18M3 12a9 9 0 0 1 18 0M3 12a9 9 0 0 0 18 0"/><path d="M12 3v18"/></svg></div>
+        <h3>Native bilingual delivery</h3>
+        <p>Arabic-first UX with proper RTL — not a Google-translated layer on top. International clients hire me specifically for this.</p>
+      </div>
+      <div class="why-card w3 reveal">
+        <div class="why-card-icon"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3>End-to-end ownership</h3>
+        <p>Discovery, design adaptation, build, deploy, and post-launch support. You don't have to coordinate three people to ship one feature.</p>
+      </div>
+      <div class="why-card w4 reveal">
+        <div class="why-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <h3>Fast, predictable delivery</h3>
+        <p>Most Shopify projects ship in 2–4 weeks; Laravel apps in 4–8. AI-assisted workflows mean tighter timelines without cutting corners.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -325,10 +660,42 @@
       <p>Four focused offerings — each one I've delivered end-to-end, many times over, for clients in Egypt, Saudi Arabia, and beyond.</p>
     </div>
     <div class="services-grid">
-      <div class="service s1 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 7h18l-2 12H5L3 7z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg></div><h3>Bilingual Shopify stores (AR/EN)</h3><p>End-to-end setup: theme, RTL/LTR switching, checkout, payments, shipping, SEO — production-ready in a short sprint.</p><div class="service-price">Starting at <strong>$600</strong></div></div>
-      <div class="service s2 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 8h16M8 4v16"/></svg></div><h3>Shopify theme customization</h3><p>Liquid theme work — custom sections, advanced product pages, integrations with apps and third-party APIs, Figma-to-storefront.</p><div class="service-price">Starting at <strong>$300</strong></div></div>
-      <div class="service s3 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-6"/><path d="M14 5h6v6"/></svg></div><h3>Laravel &amp; custom web apps</h3><p>Multi-tenant SaaS, internal dashboards, ticketing systems, admin panels, reporting tools — clean APIs, solid architecture, maintainable code.</p><div class="service-price">Starting at <strong>$1,500</strong></div></div>
-      <div class="service s4 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div><h3>API integration &amp; automation</h3><p>Connect Shopify, Laravel, CRMs, WhatsApp, Telegram, payment gateways. Webhook pipelines, bots, AI-assisted tooling that saves real hours.</p><div class="service-price">Starting at <strong>$250</strong></div></div>
+      <div class="service s1 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 7h18l-2 12H5L3 7z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg></div><h3>Bilingual Shopify stores (AR/EN)</h3><p>End-to-end setup: theme, RTL/LTR switching, checkout, payments, shipping, SEO — production-ready in a short sprint.</p><div class="service-price">From <strong>$600</strong> · 2–3 weeks</div></div>
+      <div class="service s2 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 8h16M8 4v16"/></svg></div><h3>Shopify theme customization</h3><p>Liquid theme work — custom sections, advanced product pages, integrations with apps and third-party APIs, Figma-to-storefront.</p><div class="service-price">From <strong>$300</strong> · 1–2 weeks</div></div>
+      <div class="service s3 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-6"/><path d="M14 5h6v6"/></svg></div><h3>Laravel &amp; custom web apps</h3><p>Multi-tenant SaaS, internal dashboards, ticketing systems, admin panels, reporting tools — clean APIs, solid architecture, maintainable code.</p><div class="service-price">From <strong>$800</strong> · 4–8 weeks</div></div>
+      <div class="service s4 reveal"><div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div><h3>API integration &amp; automation</h3><p>Connect Shopify, Laravel, CRMs, WhatsApp, Telegram, payment gateways. Webhook pipelines, bots, AI-assisted tooling that saves real hours.</p><div class="service-price">From <strong>$250</strong> · 3 days to 1 week</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">How I work</span>
+      <h2>A simple, <span class="grad">predictable</span> process.</h2>
+      <p>Four short stages — clear deliverables, no surprises, and you stay in the loop the whole way.</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-step reveal">
+        <div class="meta">~2 days</div>
+        <h3>Discovery &amp; scope</h3>
+        <p>30-min call, written brief, fixed scope, fixed price, fixed timeline. You'll know exactly what you're getting before signing.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="meta">3–10 days</div>
+        <h3>Design &amp; setup</h3>
+        <p>Theme, base architecture, environments, brand integration. I work from your Figma or build a clean baseline if you don't have one.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="meta">main build</div>
+        <h3>Build &amp; iterate</h3>
+        <p>Weekly demo links, Slack/WhatsApp updates, and staging URL throughout. You catch issues early instead of at handoff.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="meta">launch + 2 weeks</div>
+        <h3>Launch &amp; support</h3>
+        <p>QA, production deploy, post-launch support window included. After that, retainer or per-task — your call.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -346,15 +713,15 @@
       <button class="filter-btn" data-filter="platforms">⚡ Platforms &amp; apps <span class="count">6</span></button>
     </div>
     <div class="projects-grid" id="projectsGrid">
-      <a href="https://biostream.bio" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/biostream.jpg" alt="Biostream Shopify storefront preview" loading="lazy"/></div><div class="project-body"><span class="tag">Bilingual AR/EN · Live</span><h3>Biostream</h3><p>Full theme rebuild for a bilingual health-tech storefront with RTL/LTR switching, localized navigation, and optimized product pages.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>RTL</span><span>i18n</span></div></div></a>
-      <a href="https://thecatchofficial.com" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/thecatch.jpg" alt="The Catch Official bilingual Shopify store preview" loading="lazy"/></div><div class="project-body"><span class="tag">Bilingual AR/EN · Live</span><h3>The Catch Official</h3><p>New Shopify store delivered end-to-end with a custom bilingual theme, checkout tweaks, and a responsive, conversion-focused UI.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>JavaScript</span><span>Responsive</span></div></div></a>
-      <a href="https://khyootmasrya.com" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/khyoot.jpg" alt="Khyoot Masrya Egyptian apparel Shopify store preview" loading="lazy"/></div><div class="project-body"><span class="tag">Bilingual AR/EN · Live · New</span><h3>Khyoot Masrya</h3><p>A freshly launched Shopify store for an Egyptian apparel brand — custom theme, Arabic-first UX, men's / women's / kids / home categories, and a clean conversion flow.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>RTL</span><span>Apparel</span></div></div></a>
-      <a href="https://garageilla.com" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/garageilla.jpg" alt="Garageilla Shopify automotive storefront preview" loading="lazy"/></div><div class="project-body"><span class="tag">Illa Holding · Shopify · Live</span><h3>Garageilla</h3><p>Shopify storefront customized to the brand and Figma designs, plus a custom Request-an-Offer form routed directly to the commercial team.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>Custom form</span><span>RTL</span></div></div></a>
-      <a href="https://thecoringinstitute.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel · Filament</span><img src="images/coring.jpg" alt="Coring Institute bilingual coaching platform preview" loading="lazy"/></div><div class="project-body"><span class="tag">From scratch · Bilingual AR/EN · Live</span><h3>Coring Institute — Bilingual Coaching Platform</h3><p>Full bilingual (AR/EN) coaching platform built from scratch on Laravel 11 + Filament. Public marketing site with services and coach profiles, end-to-end booking flow, and a real Zoom + Google Calendar integration that auto-creates meetings on confirmation.</p><div class="project-stack"><span>Laravel 11</span><span>Filament 3</span><span>Tailwind RTL</span><span>Zoom OAuth</span><span>Google Calendar</span><span>Spatie</span></div></div></a>
-      <a href="https://twindix.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel</span><img src="images/twindix.svg" alt="Twindix main platform homepage preview" loading="lazy"/></div><div class="project-body"><span class="tag">Twindix · Platform · Refactor</span><h3>Twindix — Main Dashboard &amp; Platform</h3><p>Rebuilt and refactored the core dashboard powering Twindix's product suite (assessments, reports, job-fit analysis) — fixed long-standing architectural issues and hardened the API.</p><div class="project-stack"><span>Laravel</span><span>REST API</span><span>MySQL</span><span>Refactor</span></div></div></a>
-      <a href="https://academicfinder.twindix.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel · AI</span><img src="images/academic-finder.svg" alt="Twindix Academic Finder login preview" loading="lazy"/></div><div class="project-body"><span class="tag">Twindix · From scratch · Live</span><h3>Academic Finder</h3><p>AI-assisted career &amp; college recommendation tool. Students answer a guided question flow and the system surfaces the best-fit programs, wired into the main Twindix dashboard.</p><div class="project-stack"><span>Laravel</span><span>AI</span><span>Questionnaire</span><span>Recommendations</span></div></div></a>
-      <a href="https://proposal.twindix.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel</span><img src="images/proposal.svg" alt="Twindix Proposal Builder preview" loading="lazy"/></div><div class="project-body"><span class="tag">Twindix · From scratch · Live</span><h3>Proposal Builder</h3><p>Bilingual (AR/EN) self-service tool where clients pick services and quantities, approve online, and automatically receive a signed PDF contract stamped with the company seal.</p><div class="project-stack"><span>Laravel</span><span>PDF</span><span>E-signature</span><span>Bilingual</span></div></div></a>
-      <div class="project reveal" data-type="platforms"><div class="project-thumb"><span class="platform-badge laravel">Laravel</span><img src="images/twindix-performance.svg" alt="Twindix Performance Indicator sprint dashboard preview" loading="lazy"/></div><div class="project-body"><span class="tag">Twindix · From scratch</span><h3>Performance Indicator</h3><p>Sprint dashboard and ticketing system — real-time sprint health, KPI cards (alert response, red flags, delivery, comments), and cross-team task tracking in one place.</p><div class="project-stack"><span>Laravel</span><span>Dashboards</span><span>KPIs</span><span>Workflow</span></div></div></div>
+      <a href="https://biostream.bio" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/biostream.jpg" alt="Biostream Shopify storefront preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Bilingual AR/EN · Live</span><h3>Biostream</h3><p>Full theme rebuild for a bilingual health-tech storefront with RTL/LTR switching, localized navigation, and optimized product pages.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>RTL</span><span>i18n</span></div></div></a>
+      <a href="https://thecatchofficial.com" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/thecatch.jpg" alt="The Catch Official bilingual Shopify store preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Bilingual AR/EN · Live</span><h3>The Catch Official</h3><p>New Shopify store delivered end-to-end with a custom bilingual theme, checkout tweaks, and a responsive, conversion-focused UI.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>JavaScript</span><span>Responsive</span></div></div></a>
+      <a href="https://khyootmasrya.com" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/khyoot.jpg" alt="Khyoot Masrya Egyptian apparel Shopify store preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Bilingual AR/EN · Live · New</span><h3>Khyoot Masrya</h3><p>A freshly launched Shopify store for an Egyptian apparel brand — custom theme, Arabic-first UX, men's / women's / kids / home categories, and a clean conversion flow.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>RTL</span><span>Apparel</span></div></div></a>
+      <a href="https://garageilla.com" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/garageilla.jpg" alt="Garageilla Shopify automotive storefront preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Illa Holding · Shopify · Live</span><h3>Garageilla</h3><p>Shopify storefront customized to the brand and Figma designs, plus a custom Request-an-Offer form routed directly to the commercial team.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>Custom form</span><span>RTL</span></div></div></a>
+      <a href="https://thecoringinstitute.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel · Filament</span><img src="images/coring.jpg" alt="Coring Institute bilingual coaching platform preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">From scratch · Bilingual AR/EN · Live</span><h3>Coring Institute — Bilingual Coaching Platform</h3><p>Full bilingual (AR/EN) coaching platform built from scratch on Laravel 11 + Filament. Public marketing site with services and coach profiles, end-to-end booking flow, and a real Zoom + Google Calendar integration that auto-creates meetings on confirmation.</p><div class="project-stack"><span>Laravel 11</span><span>Filament 3</span><span>Tailwind RTL</span><span>Zoom OAuth</span><span>Google Calendar</span><span>Spatie</span></div></div></a>
+      <a href="https://twindix.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel</span><img src="images/twindix.svg" alt="Twindix main platform homepage preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Twindix · Platform · Refactor</span><h3>Twindix — Main Dashboard &amp; Platform</h3><p>Rebuilt and refactored the core dashboard powering Twindix's product suite (assessments, reports, job-fit analysis) — fixed long-standing architectural issues and hardened the API.</p><div class="project-stack"><span>Laravel</span><span>REST API</span><span>MySQL</span><span>Refactor</span></div></div></a>
+      <a href="https://academicfinder.twindix.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel · AI</span><img src="images/academic-finder.svg" alt="Twindix Academic Finder login preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Twindix · From scratch · Live</span><h3>Academic Finder</h3><p>AI-assisted career &amp; college recommendation tool. Students answer a guided question flow and the system surfaces the best-fit programs, wired into the main Twindix dashboard.</p><div class="project-stack"><span>Laravel</span><span>AI</span><span>Questionnaire</span><span>Recommendations</span></div></div></a>
+      <a href="https://proposal.twindix.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel</span><img src="images/proposal.svg" alt="Twindix Proposal Builder preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Twindix · From scratch · Live</span><h3>Proposal Builder</h3><p>Bilingual (AR/EN) self-service tool where clients pick services and quantities, approve online, and automatically receive a signed PDF contract stamped with the company seal.</p><div class="project-stack"><span>Laravel</span><span>PDF</span><span>E-signature</span><span>Bilingual</span></div></div></a>
+      <div class="project reveal" data-type="platforms"><div class="project-thumb"><span class="platform-badge laravel">Laravel</span><img src="images/twindix-performance.jpg" alt="Twindix Performance Indicator sprint dashboard preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Twindix · From scratch</span><h3>Performance Indicator</h3><p>Sprint dashboard and ticketing system — real-time sprint health, KPI cards (alert response, red flags, delivery, comments), and cross-team task tracking in one place.</p><div class="project-stack"><span>Laravel</span><span>Dashboards</span><span>KPIs</span><span>Workflow</span></div></div></div>
       <div class="project reveal" data-type="platforms"><div class="project-thumb" style="background:linear-gradient(135deg,#1e3a8a,#2563eb);display:grid;place-items:center"><span class="platform-badge python">Python · Bot</span><svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" style="width:70%;height:70%;object-fit:contain"><rect x="10" y="10" width="180" height="110" rx="8" fill="rgba(255,255,255,.08)"/><circle cx="60" cy="65" r="22" fill="rgba(255,255,255,.9)"/><path d="M52 58 l 8 -6 l 16 12 l -8 4 l -2 8 l -8 -4 l -6 6 z" fill="#1e3a8a"/><rect x="100" y="45" width="70" height="40" rx="4" fill="rgba(255,255,255,.75)"/><rect x="108" y="53" width="40" height="3" rx="1" fill="#1e3a8a"/><rect x="108" y="60" width="50" height="3" rx="1" fill="#2563eb"/><rect x="108" y="67" width="30" height="3" rx="1" fill="#2563eb"/></svg></div><div class="project-body"><span class="tag">Illa Holding · Automation</span><h3>Front-Door Ticketing</h3><p>Telegram-bot ticketing + live dashboard connecting customer reps and driver assistants, built in Python with AI-assisted pair programming.</p><div class="project-stack"><span>Python</span><span>Telegram Bot API</span><span>Dashboard</span></div></div></div>
     </div>
   </div>
@@ -385,13 +752,109 @@
       <h2>What I <span class="grad">work with</span>.</h2>
       <p>The tools I reach for by default — shaped by a decade of shipping real products.</p>
     </div>
-    <div class="skills-grid">
-      <div class="skill-group g1 reveal"><h3>🛍️ E-commerce</h3><ul><li>Shopify (Liquid, theme dev, apps)</li><li>Bilingual AR/EN storefronts · RTL</li><li>Magento · WordPress · PrestaShop</li></ul></div>
-      <div class="skill-group g2 reveal"><h3>⚙️ Backend</h3><ul><li>PHP · Laravel 11 (Filament, Nova, Telescope)</li><li>Python · Spatie packages</li><li>REST APIs · Auth · Payments · Queues</li></ul></div>
-      <div class="skill-group g3 reveal"><h3>🎨 Frontend</h3><ul><li>HTML · CSS · Bootstrap · Tailwind</li><li>JavaScript · jQuery · AJAX</li><li>Liquid templates · Responsive UI</li></ul></div>
-      <div class="skill-group g4 reveal"><h3>🔗 Data &amp; APIs</h3><ul><li>MySQL · JSON</li><li>RESTful API design &amp; integration</li><li>Zoom OAuth · Google Calendar · Webhooks</li></ul></div>
-      <div class="skill-group g5 reveal"><h3>🛠️ Tooling</h3><ul><li>Git · Debugging · Message queues</li><li>Payment integration · SEO</li><li>Secure coding · Scalable architecture</li></ul></div>
-      <div class="skill-group g6 reveal"><h3>🤖 AI-assisted dev</h3><ul><li>Pair programming with modern AI tools</li><li>Faster delivery, cleaner code</li><li>Automation where it pays off</li></ul></div>
+    <div class="bento">
+      <!-- Big primary: Shopify -->
+      <div class="bento-card b-shopify b-big reveal">
+        <span class="bento-meta">Primary stack</span>
+        <h3>🛍️ Shopify · Liquid · Themes</h3>
+        <p style="margin:0;font-size:14px;color:var(--ink-soft)">Bilingual AR/EN storefronts, custom Liquid themes, app integrations, conversion-focused checkouts.</p>
+        <ul class="bento-list">
+          <li>Liquid theme development &amp; sections</li>
+          <li>Bilingual RTL/LTR architecture</li>
+          <li>Checkout customization &amp; payment gateways</li>
+          <li>Shopify Apps &amp; webhooks</li>
+        </ul>
+        <div class="bento-brands" aria-label="Storefronts shipped">
+          <span class="brand-chip">Biostream</span>
+          <span class="brand-chip">The Catch</span>
+          <span class="brand-chip">Khyoot</span>
+          <span class="brand-chip">Garageilla</span>
+        </div>
+      </div>
+
+      <!-- Big primary: Laravel -->
+      <div class="bento-card b-laravel b-big reveal">
+        <span class="bento-meta">Primary stack</span>
+        <h3>⚙️ Laravel 11 · Filament · APIs</h3>
+        <p style="margin:0;font-size:14px;color:var(--ink-soft)">Multi-tenant SaaS, internal dashboards, ticketing systems, and clean REST APIs with deep third-party integrations.</p>
+        <ul class="bento-list">
+          <li>Filament 3 admin &amp; Nova</li>
+          <li>Spatie packages · Telescope</li>
+          <li>Multi-tenant SaaS architecture</li>
+          <li>REST APIs · Auth · Queues</li>
+        </ul>
+        <span class="bento-pulse">Currently shipping</span>
+      </div>
+
+      <!-- Frontend -->
+      <div class="bento-card b-frontend reveal">
+        <span class="bento-meta">Frontend</span>
+        <h3>🎨 Modern UI</h3>
+        <ul class="bento-list">
+          <li>Tailwind · Vanilla CSS</li>
+          <li>JavaScript · Alpine</li>
+          <li>Responsive · Accessible</li>
+        </ul>
+      </div>
+
+      <!-- Data & APIs -->
+      <div class="bento-card b-data reveal">
+        <span class="bento-meta">Integrations</span>
+        <h3>🔗 APIs &amp; webhooks</h3>
+        <ul class="bento-list">
+          <li>Zoom OAuth · Google Calendar</li>
+          <li>WhatsApp · Telegram bots</li>
+          <li>Payment gateways</li>
+        </ul>
+      </div>
+
+      <!-- AI-assisted (wide, sits on bottom row) -->
+      <div class="bento-card b-ai b-wide reveal">
+        <span class="bento-meta">Modern workflow</span>
+        <h3>🤖 AI-assisted dev</h3>
+        <p style="margin:0;font-size:14px;color:var(--ink-soft)">Pair programming with modern AI tools — faster delivery, cleaner code, automation where it pays off.</p>
+        <span class="bento-pulse">Daily driver</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--bg-soft)">
+  <div class="container">
+    <div class="section-head reveal" style="margin-left:auto;margin-right:auto;text-align:center">
+      <span class="kicker">Common questions</span>
+      <h2>FAQ.</h2>
+      <p>The questions clients usually ask before we start — answered upfront.</p>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item reveal" open>
+        <summary>How fast can you start, and how do you reply?</summary>
+        <div class="faq-body"><p>I can usually start within <strong>3 days</strong> of a signed scope. WhatsApp / email replies typically within ~2 hours during Cairo working hours (GMT+2 / GMT+3 DST), and same-day otherwise.</p></div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>How long does a typical project take?</summary>
+        <div class="faq-body"><p>Shopify stores: <strong>2–4 weeks</strong> from kickoff to launch. Theme customization: <strong>1–2 weeks</strong>. Laravel apps: <strong>4–8 weeks</strong> for a focused MVP, longer for multi-tenant SaaS. API integrations and automations: <strong>3 days to a week</strong>.</p></div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Are you available full-time, or only freelance?</summary>
+        <div class="faq-body"><p>Both. I'm currently <strong>open to full-time roles (remote or Cairo)</strong> and to freelance / contract work. If you're hiring, send the JD via email and I'll reply with my notice period and availability.</p></div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>How do payments work?</summary>
+        <div class="faq-body"><p>For freelance: a 50% deposit on signing, 50% on delivery. Larger projects can be split across milestones. I send a simple written agreement covering scope, timeline, and payment terms — bank transfer or InstaPay.</p></div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>What's included after launch?</summary>
+        <div class="faq-body"><p>Every project includes a <strong>2-week post-launch window</strong> for bug fixes and small tweaks at no extra cost. After that, I offer monthly retainers or pay-per-task — whichever fits how often you need changes.</p></div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Do you work alone or with a team?</summary>
+        <div class="faq-body"><p>Most projects I deliver end-to-end on my own — that's why I can move fast. For larger builds I bring in trusted designers / QA / DevOps as needed, but you always have one point of contact: me.</p></div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>What if my project isn't Shopify or Laravel?</summary>
+        <div class="faq-body"><p>I also work with WordPress, Magento, PrestaShop, and Python (Telegram bots, automations). If a tool isn't a fit for what you need, I'll tell you upfront — even if it means recommending someone else.</p></div>
+      </details>
     </div>
   </div>
 </section>
@@ -400,7 +863,7 @@
   <div class="container">
     <div class="contact-card reveal">
       <h2>Have a project in mind?</h2>
-      <p>Tell me about it — Shopify storefront, Laravel platform, API integration, or something I haven't seen before. Pick whichever channel works for you.</p>
+      <p>Tell me about it — Shopify storefront, Laravel platform, API integration, or full-time role. <strong>Replies within ~2 hours</strong>, and I can usually start within 3 days.</p>
       <div class="contact-actions">
         <a href="https://calendly.com/ahmedbeshir-info/30min" target="_blank" rel="noopener" class="btn primary-cta">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -417,19 +880,63 @@
       </div>
       <div class="contact-list">
         <a href="mailto:info@ahmedbeshir.com">info@ahmedbeshir.com</a>
-        <a href="tel:+201023116122">+20 102 311 6122</a>
+        <a href="tel:+201090801084">+20 109 080 1084</a>
         <a href="https://www.linkedin.com/in/ahmedhasbeshir/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/ahmedbashirdev" target="_blank" rel="noopener">GitHub</a>
         <a href="Ahmed_Beshir_Resume.pdf" download>CV (PDF)</a>
         <a href="Ahmed_Beshir_Resume.docx" download>CV (.docx)</a>
       </div>
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="container">
-    <div>© <span id="year"></span> Ahmed Beshir · Cairo, Egypt</div>
-    <div><a href="mailto:info@ahmedbeshir.com">info@ahmedbeshir.com</a></div>
+    <div class="footer-grid">
+      <div class="footer-col footer-about">
+        <div class="brand" style="margin-bottom:14px"><span class="brand-mark">AB</span>Ahmed Beshir</div>
+        <p>Senior web developer in Cairo. Building bilingual Shopify storefronts and Laravel platforms for MENA brands and remote teams worldwide.</p>
+        <div class="footer-social">
+          <a href="https://github.com/ahmedbashirdev" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.16c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.78.42-1.3.76-1.6-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.41 1.02.01 2.04.14 3 .41 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.19.7.8.58A12 12 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
+          <a href="https://www.linkedin.com/in/ahmedhasbeshir/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.36 4.26 5.43v6.31zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+          <a href="https://wa.me/201023116122" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></a>
+          <a href="mailto:info@ahmedbeshir.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Bilingual Shopify stores</a></li>
+          <li><a href="#services">Theme customization</a></li>
+          <li><a href="#services">Laravel web apps</a></li>
+          <li><a href="#services">API &amp; automation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Site</h4>
+        <ul>
+          <li><a href="#why">Why work with me</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="ar/index.html" hreflang="ar">العربية</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:info@ahmedbeshir.com">info@ahmedbeshir.com</a></li>
+          <li><a href="tel:+201090801084">+20 109 080 1084</a></li>
+          <li><a href="https://calendly.com/ahmedbeshir-info/30min" target="_blank" rel="noopener">Book a call</a></li>
+          <li><a href="Ahmed_Beshir_Resume.pdf" download>CV (PDF)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span id="year"></span> Ahmed Beshir · Cairo, Egypt (GMT+2) · English &amp; Arabic</div>
+      <div>Available for full-time &amp; freelance · <a href="mailto:info@ahmedbeshir.com">info@ahmedbeshir.com</a></div>
+    </div>
   </div>
 </footer>
 
@@ -466,6 +973,156 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  /* Safety fallback: if IO doesn't fire within 2.5s (e.g. tab loaded in background),
+     reveal everything so content never stays invisible */
+  setTimeout(() => { document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in')); }, 2500);
+
+  /* ========== MODERN INTERACTIONS ========== */
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* 1. Cursor-aware hero gradient */
+  (function () {
+    if (reduced || !fine) return;
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    let raf = 0, mx = 50, my = 30;
+    const update = () => { hero.style.setProperty('--mx', mx + '%'); hero.style.setProperty('--my', my + '%'); raf = 0; };
+    hero.addEventListener('pointermove', (e) => {
+      const r = hero.getBoundingClientRect();
+      mx = ((e.clientX - r.left) / r.width) * 100;
+      my = ((e.clientY - r.top) / r.height) * 100;
+      if (!raf) raf = requestAnimationFrame(update);
+    });
+    hero.addEventListener('pointerleave', () => { mx = 50; my = 30; if (!raf) raf = requestAnimationFrame(update); });
+  })();
+
+  /* 2. 3D tilt on project cards */
+  (function () {
+    if (reduced || !fine) return;
+    const MAX = 6; // degrees
+    document.querySelectorAll('#projectsGrid .project').forEach(card => {
+      let raf = 0, rx = 0, ry = 0, ts = 1;
+      card.dataset.tilt = '1';
+      const apply = () => { card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale(${ts})`; raf = 0; };
+      card.addEventListener('pointermove', (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - .5;
+        const py = (e.clientY - r.top) / r.height - .5;
+        ry = px * MAX * 2; rx = -py * MAX * 2; ts = 1.02;
+        if (!raf) raf = requestAnimationFrame(apply);
+      });
+      card.addEventListener('pointerleave', () => { rx = 0; ry = 0; ts = 1; if (!raf) raf = requestAnimationFrame(apply); });
+    });
+  })();
+
+  /* 3. Magnetic buttons */
+  (function () {
+    if (reduced || !fine) return;
+    document.querySelectorAll('.magnetic').forEach(btn => {
+      const inner = btn.querySelector('.magnetic-inner') || btn;
+      let raf = 0, tx = 0, ty = 0, ix = 0, iy = 0;
+      const apply = () => { btn.style.transform = `translate(${tx}px, ${ty}px)`; inner.style.transform = `translate(${ix}px, ${iy}px)`; raf = 0; };
+      btn.addEventListener('pointermove', (e) => {
+        const r = btn.getBoundingClientRect();
+        const px = (e.clientX - r.left - r.width / 2) / r.width;
+        const py = (e.clientY - r.top - r.height / 2) / r.height;
+        tx = px * 12; ty = py * 8;
+        ix = px * 4; iy = py * 3;
+        if (!raf) raf = requestAnimationFrame(apply);
+      });
+      btn.addEventListener('pointerleave', () => { tx = ty = ix = iy = 0; if (!raf) raf = requestAnimationFrame(apply); });
+    });
+  })();
+
+  /* 4. Code typewriter */
+  (function () {
+    const body = document.getElementById('heroCodeBody');
+    if (!body) return;
+    const lines = [
+      ['c', '// Coring Institute — auto-create Zoom + Calendar on booking'],
+      ['k', 'class ', 't', 'BookingObserver'],
+      [' ', '{'],
+      ['  ', 'k', 'public function ', 'f', 'created', '(', 't', 'Booking', ' ', 'v', '$booking', '): ', 't', 'void'],
+      ['  ', '{'],
+      ['    ', 'v', '$meeting', ' = ', 't', 'ZoomService', '::', 'f', 'createMeeting', '(['],
+      ['      ', 's', "'topic'", '      => ', 'v', '$booking', '->coach->name,'],
+      ['      ', 's', "'start_time'", ' => ', 'v', '$booking', '->scheduled_at,'],
+      ['    ', ']);'],
+      [''],
+      ['    ', 'v', '$booking', '->update(['],
+      ['      ', 's', "'zoom_url'", ' => ', 'v', '$meeting', '->join_url,'],
+      ['    ', ']);'],
+      [''],
+      ['    ', 't', 'GoogleCalendar', '::', 'f', 'createEvent', '(', 'v', '$booking', ');'],
+      ['  ', '}'],
+      ['}']
+    ];
+    const buildLine = (parts) => {
+      const ln = document.createElement('span'); ln.className = 'ln';
+      for (let i = 0; i < parts.length; i++) {
+        const t = parts[i];
+        if (['k','s','f','c','v','t'].includes(t)) {
+          const span = document.createElement('span'); span.className = t; span.textContent = parts[++i] || ''; ln.appendChild(span);
+        } else {
+          ln.appendChild(document.createTextNode(t));
+        }
+      }
+      return ln;
+    };
+    if (reduced) {
+      lines.forEach(p => body.appendChild(buildLine(p)));
+      return;
+    }
+    // Render all lines but only the last one shows a caret while typing
+    const start = () => {
+      let i = 0;
+      const tick = () => {
+        if (i >= lines.length) return;
+        body.appendChild(buildLine(lines[i]));
+        i++;
+        setTimeout(tick, 90 + Math.random() * 60);
+      };
+      tick();
+    };
+    const codeEl = document.getElementById('heroCode');
+    let started = false;
+    const begin = () => { if (started) return; started = true; start(); };
+    const cio = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { begin(); cio.disconnect(); } });
+    }, { threshold: 0.4 });
+    cio.observe(codeEl);
+    /* Safety fallback */
+    setTimeout(begin, 2800);
+  })();
+
+  /* 5. Animated stat counters */
+  (function () {
+    const els = document.querySelectorAll('.bento-stat .num[data-count]');
+    if (!els.length || reduced) return;
+    const counted = new WeakSet();
+    const animate = (el) => {
+      if (counted.has(el)) return;
+      counted.add(el);
+      const target = parseInt(el.dataset.count, 10);
+      const original = el.textContent.trim();
+      const suffix = (original.match(/[^0-9]+$/) || [''])[0];
+      const dur = 1200; const t0 = performance.now();
+      const step = (t) => {
+        const k = Math.min(1, (t - t0) / dur);
+        const v = Math.round(k * target);
+        el.textContent = v + (k === 1 ? suffix : '');
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const sio = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) animate(e.target); });
+    }, { threshold: 0.5 });
+    els.forEach(el => sio.observe(el));
+    /* Safety fallback */
+    setTimeout(() => els.forEach(animate), 3000);
+  })();
 </script>
 </body>
 </html>
