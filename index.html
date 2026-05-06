@@ -110,8 +110,8 @@
     color-scheme: dark;
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; transition: background .3s, color .3s; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  body { margin: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; transition: background .3s, color .3s; overflow-x: hidden; max-width: 100vw; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *,*::before,*::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
   a { color: var(--brand-1); text-decoration: none; }
   a:hover { text-decoration: underline; }
@@ -158,8 +158,8 @@
   .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
   .hero-meta { display: flex; flex-wrap: wrap; gap: 32px; padding-top: 28px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
   .hero-meta strong { color: var(--ink); font-weight: 700; display: block; font-size: 16px; margin-bottom: 2px; }
-  .hero-portrait-wrap { position: relative; display: flex; flex-direction: column; align-items: center; gap: 24px; }
-  .portrait-anchor { position: relative; width: 100%; max-width: 380px; display: block; }
+  .hero-portrait-wrap { position: relative; display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
+  .portrait-anchor { position: relative; width: 100%; max-width: 380px; display: block; margin: 0 auto; }
   .hero-portrait { width: 100%; max-width: 380px; aspect-ratio: 1; border-radius: 28px; overflow: hidden; position: relative; background: var(--bg-soft); box-shadow: 0 30px 80px rgba(124,58,237,.25); transform: rotate(-2deg); transition: transform .4s; }
   .hero-portrait:hover { transform: rotate(0deg) scale(1.02); }
   .hero-portrait img { width: 100%; height: 100%; object-fit: cover; }
@@ -284,6 +284,8 @@
   @media (max-width: 920px) {
     .hero-grid { grid-template-columns: 1fr; gap: 40px; }
     .hero-portrait { max-width: 320px; }
+    .portrait-anchor { max-width: 320px; }
+    .hero-portrait-wrap { width: 100%; }
   }
   /* Language switcher */
   .lang-switch { display: inline-flex; align-items: center; gap: 4px; padding: 4px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 999px; font-size: 13px; font-weight: 600; }
@@ -339,12 +341,36 @@
     .nav-links.open { display: flex; }
     .nav-toggle { display: inline-flex; }
     .hero { padding: 56px 0 64px; } section { padding: 72px 0; }
-    .hero-meta { gap: 16px 24px; } .tech-banner { padding: 16px 20px; gap: 16px 20px; }
+    .hero-grid > div:first-child { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .hero-lede { margin-left: auto; margin-right: auto; }
+    .hero-actions { justify-content: center; }
+    .hero-meta { gap: 16px 24px; justify-content: center; text-align: center; }
+    .tech-banner { padding: 16px 20px; gap: 16px 20px; justify-content: center; }
+    .hero-portrait-wrap { width: 100%; align-items: center; }
+    .portrait-anchor { max-width: 320px; margin: 0 auto; }
+    .hero-code { width: 100%; max-width: 520px; }
+    .hero-code-body { font-size: 12px; height: 260px; padding: 14px 16px; }
     .filter-bar { width: 100%; justify-content: stretch; }
     .filter-btn { flex: 1; justify-content: center; padding: 10px 14px; }
     .filter-btn .count { display: none; }
     .contact-card { padding: 50px 24px; }
     .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+  @media (max-width: 480px) {
+    .hero-portrait { max-width: 280px; }
+    .portrait-anchor { max-width: 280px; }
+    .hero-badge { font-size: 11px; padding: 8px 12px; }
+    .hero-badge.tr { right: -2px; }
+    .hero-badge.bl { left: -2px; bottom: 14px; }
+    .hero h1 { font-size: clamp(28px, 7.5vw, 36px); line-height: 1.2; word-wrap: break-word; }
+    .hero-lede { font-size: 15px; }
+    .hero .container, .container { padding: 0 18px; }
+    .container { padding-left: max(18px, env(safe-area-inset-left)); padding-right: max(18px, env(safe-area-inset-right)); }
+  }
+  @media (max-width: 360px) {
+    .hero h1 { font-size: 26px; }
+    .hero-portrait { max-width: 240px; }
+    .portrait-anchor { max-width: 240px; }
   }
 
   /* ========== MODERN ADDITIONS ========== */
@@ -395,6 +421,18 @@
   .hero-code-body .t { color: #60a5fa; }     /* type */
   .hero-code-body .caret { display: inline-block; width: 8px; height: 1.05em; background: #c084fc; vertical-align: -2px; margin-left: 1px; animation: blink 1s steps(2) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
+  /* Mobile overrides for hero code editor (must come after base def) */
+  @media (max-width: 768px) {
+    .hero-code { width: 100%; max-width: min(520px, 100%); }
+    .hero-code-body { font-size: 12px; height: 260px; padding: 14px 16px; }
+  }
+  @media (max-width: 480px) {
+    .hero-code { max-width: 100%; }
+    .hero-code-body { font-size: 11px; line-height: 1.6; height: 220px; padding: 12px 14px; }
+    .hero-code-body .ln { padding-left: 24px; }
+    .hero-code-body .ln::before { width: 18px; }
+    .hero-code-file { font-size: 11px; }
+  }
 
   /* Magnetic button — uses CSS transforms set by JS */
   .magnetic { transition: transform .25s cubic-bezier(.2,.7,.3,1.3); will-change: transform; }
@@ -450,11 +488,7 @@
   @media (max-width: 1024px) { .bento { grid-template-columns: repeat(2, 1fr); } .b-big, .b-wide { grid-column: span 2; } .b-tall { grid-row: span 1; } .b-big { grid-row: span 2; } }
   @media (max-width: 600px) { .bento { grid-template-columns: 1fr; } .b-big, .b-wide, .b-tall { grid-column: span 1; grid-row: span 1; } }
 
-  /* Scroll-driven timeline progress overlay (sits on top of the dashed line, but below circles) */
-  .timeline::after { content: ''; position: absolute; left: -.5px; top: var(--tl-top); bottom: var(--tl-bottom); width: 3px; background: var(--grad-accent); border-radius: 3px 3px 0 0; pointer-events: none; transform-origin: top; transform: scaleY(0); z-index: 2; }
   @supports (animation-timeline: view()) {
-    .timeline::after { animation: timeline-fill linear both; animation-timeline: view(); animation-range: contain 0% contain 100%; }
-    @keyframes timeline-fill { to { transform: scaleY(1); } }
     /* Items light up as scroll passes them — dim at first, bright when reached */
     .timeline-item { animation: tl-light linear both; animation-timeline: view(); animation-range: entry 0% entry 90%; }
     @keyframes tl-light {
