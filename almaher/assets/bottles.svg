@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Almaher Perfumes — Realistic Bottle SVG
+  Based on actual product photos: octagonal cut-corner bottle,
+  large white label with Arabic calligraphy, black cylindrical cap.
+  These are FALLBACKS — prefer the real photos in /products/ folder.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+    <!-- Glass + liquid gradients -->
+    <linearGradient id="liquid-amber" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#E8C079"/>
+      <stop offset="50%" stop-color="#D9A858"/>
+      <stop offset="100%" stop-color="#B7873A"/>
+    </linearGradient>
+    <linearGradient id="liquid-deep-amber" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#C99347"/>
+      <stop offset="100%" stop-color="#7E5527"/>
+    </linearGradient>
+    <linearGradient id="liquid-clear" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#F4EFE3"/>
+      <stop offset="100%" stop-color="#E2D8C0"/>
+    </linearGradient>
+    <linearGradient id="liquid-rose" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#E6B5A8"/>
+      <stop offset="100%" stop-color="#A36054"/>
+    </linearGradient>
+    <linearGradient id="liquid-blue" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#9FBFD0"/>
+      <stop offset="100%" stop-color="#4F7B92"/>
+    </linearGradient>
+    <linearGradient id="black-cap" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#3A3530"/>
+      <stop offset="40%" stop-color="#1A1714"/>
+      <stop offset="100%" stop-color="#0E0C0A"/>
+    </linearGradient>
+    <linearGradient id="cap-shine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0)"/>
+      <stop offset="40%" stop-color="rgba(255,255,255,0.18)"/>
+      <stop offset="60%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <linearGradient id="wood-cap" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#E0C28A"/>
+      <stop offset="40%" stop-color="#C19E5E"/>
+      <stop offset="100%" stop-color="#8C6B36"/>
+    </linearGradient>
+    <linearGradient id="brass-ring" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#E5C076"/>
+      <stop offset="100%" stop-color="#9D7A38"/>
+    </linearGradient>
+    <linearGradient id="glass-shine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.45)"/>
+      <stop offset="40%" stop-color="rgba(255,255,255,0.05)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.20)"/>
+    </linearGradient>
+
+    <!-- Reusable label component -->
+    <symbol id="almaher-label" viewBox="0 0 100 130" preserveAspectRatio="none">
+      <rect x="0" y="0" width="100" height="130" rx="2" fill="#FBFAF6" stroke="#E8DDC8" stroke-width="0.4"/>
+      <!-- "الماهر" calligraphy stylized -->
+      <text x="50" y="50" text-anchor="middle" font-family="'Amiri', 'Diwani', serif" font-size="24" font-weight="700" fill="#1F1611">الماهر</text>
+      <text x="50" y="70" text-anchor="middle" font-family="'Amiri', serif" font-size="13" fill="#3E2C20">للعطور</text>
+      <line x1="35" y1="92" x2="65" y2="92" stroke="#C9A66B" stroke-width="0.4"/>
+      <text x="50" y="108" text-anchor="middle" font-family="'Amiri', serif" font-size="8" fill="#6B5A47">عطر</text>
+      <text x="50" y="120" text-anchor="middle" font-family="'Amiri', serif" font-size="7" fill="#6B5A47">١٠٠ مل</text>
+    </symbol>
+
+    <!-- ============================================================
+         Main bottle: octagonal cut-corner with black cylindrical cap
+         (matches real Almaher product photos)
+         ============================================================ -->
+    <symbol id="bottle-luxury" viewBox="0 0 200 320">
+      <!-- Floor shadow -->
+      <ellipse cx="100" cy="307" rx="78" ry="6" fill="rgba(31,22,17,0.18)"/>
+
+      <!-- Bottle body — octagonal with cut corners -->
+      <path d="
+        M 50 110
+        L 60 100
+        L 140 100
+        L 150 110
+        L 150 285
+        L 140 295
+        L 60 295
+        L 50 285
+        Z
+      " fill="url(#liquid-amber)" stroke="#9A7A3D" stroke-width="0.8"/>
+
+      <!-- Glass shine overlay -->
+      <path d="
+        M 50 110
+        L 60 100
+        L 140 100
+        L 150 110
+        L 150 285
+        L 140 295
+        L 60 295
+        L 50 285
+        Z
+      " fill="url(#glass-shine)"/>
+
+      <!-- Inner highlight strip -->
+      <rect x="58" y="108" width="6" height="180" rx="2" fill="rgba(255,255,255,0.32)"/>
+
+      <!-- Spray tube visible inside (subtle vertical line center) -->
+      <line x1="100" y1="100" x2="100" y2="280" stroke="rgba(40,28,18,0.15)" stroke-width="0.6"/>
+
+      <!-- White label centered -->
+      <use href="#almaher-label" x="58" y="155" width="84" height="120"/>
+
+      <!-- Neck -->
+      <rect x="84" y="78" width="32" height="24" fill="url(#liquid-amber)" stroke="#9A7A3D" stroke-width="0.8"/>
+      <rect x="84" y="78" width="32" height="24" fill="url(#glass-shine)"/>
+
+      <!-- Black cylindrical cap -->
+      <rect x="76" y="34" width="48" height="46" rx="2" fill="url(#black-cap)"/>
+      <rect x="76" y="34" width="48" height="46" rx="2" fill="url(#cap-shine)"/>
+      <rect x="76" y="34" width="48" height="3" fill="#0A0908"/>
+      <rect x="76" y="76" width="48" height="4" fill="#0A0908"/>
+    </symbol>
+
+    <!-- Same shape but with deep amber liquid (oud / oriental) -->
+    <symbol id="bottle-oud" viewBox="0 0 200 320">
+      <ellipse cx="100" cy="307" rx="78" ry="6" fill="rgba(31,22,17,0.18)"/>
+      <path d="M 50 110 L 60 100 L 140 100 L 150 110 L 150 285 L 140 295 L 60 295 L 50 285 Z"
+            fill="url(#liquid-deep-amber)" stroke="#5C3D1C" stroke-width="0.8"/>
+      <path d="M 50 110 L 60 100 L 140 100 L 150 110 L 150 285 L 140 295 L 60 295 L 50 285 Z"
+            fill="url(#glass-shine)"/>
+      <rect x="58" y="108" width="6" height="180" rx="2" fill="rgba(255,255,255,0.28)"/>
+      <line x1="100" y1="100" x2="100" y2="280" stroke="rgba(0,0,0,0.18)" stroke-width="0.6"/>
+      <use href="#almaher-label" x="58" y="155" width="84" height="120"/>
+      <rect x="84" y="78" width="32" height="24" fill="url(#liquid-deep-amber)" stroke="#5C3D1C" stroke-width="0.8"/>
+      <rect x="84" y="78" width="32" height="24" fill="url(#glass-shine)"/>
+      <rect x="76" y="34" width="48" height="46" rx="2" fill="url(#black-cap)"/>
+      <rect x="76" y="34" width="48" height="46" rx="2" fill="url(#cap-shine)"/>
+      <rect x="76" y="34" width="48" height="3" fill="#0A0908"/>
+      <rect x="76" y="76" width="48" height="4" fill="#0A0908"/>
+    </symbol>
+
+    <!-- Clear / fresh — for women's perfumes (no color) -->
+    <symbol id="bottle-fresh" viewBox="0 0 200 320">
+      <ellipse cx="100" cy="307" rx="78" ry="6" fill="rgba(31,22,17,0.18)"/>
+      <path d="M 50 110 L 60 100 L 140 100 L 150 110 L 150 285 L 140 295 L 60 295 L 50 285 Z"
+            fill="url(#liquid-clear)" stroke="#B8AC92" stroke-width="0.8"/>
+      <path d="M 50 110 L 60 100 L 140 100 L 150 110 L 150 285 L 140 295 L 60 295 L 50 285 Z"
+            fill="url(#glass-shine)"/>
+      <rect x="58" y="108" width="6" height="180" rx="2" fill="rgba(255,255,255,0.45)"/>
+      <line x1="100" y1="100" x2="100" y2="280" stroke="rgba(0,0,0,0.10)" stroke-width="0.6"/>
+      <use href="#almaher-label" x="58" y="155" width="84" height="120"/>
+      <rect x="84" y="78" width="32" height="24" fill="url(#liquid-clear)" stroke="#B8AC92" stroke-width="0.8"/>
+      <rect x="84" y="78" width="32" height="24" fill="url(#glass-shine)"/>
+      <rect x="76" y="34" width="48" height="46" rx="2" fill="url(#black-cap)"/>
+      <rect x="76" y="34" width="48" height="46" rx="2" fill="url(#cap-shine)"/>
+      <rect x="76" y="34" width="48" height="3" fill="#0A0908"/>
+      <rect x="76" y="76" width="48" height="4" fill="#0A0908"/>
+    </symbol>
+
+    <!-- ============================================================
+         Premium variant: same bottle, wood + brass cap
+         (matches Almaher luxury edition seen in YSL/Burberry photos)
+         ============================================================ -->
+    <symbol id="bottle-premium" viewBox="0 0 200 320">
+      <ellipse cx="100" cy="307" rx="78" ry="6" fill="rgba(31,22,17,0.18)"/>
+      <path d="M 50 110 L 60 100 L 140 100 L 150 110 L 150 285 L 140 295 L 60 295 L 50 285 Z"
+            fill="url(#liquid-clear)" stroke="#B8AC92" stroke-width="0.8"/>
+      <path d="M 50 110 L 60 100 L 140 100 L 150 110 L 150 285 L 140 295 L 60 295 L 50 285 Z"
+            fill="url(#glass-shine)"/>
+      <rect x="58" y="108" width="6" height="180" rx="2" fill="rgba(255,255,255,0.40)"/>
+      <use href="#almaher-label" x="58" y="155" width="84" height="120"/>
+      <!-- Neck -->
+      <rect x="84" y="80" width="32" height="22" fill="url(#liquid-clear)" stroke="#B8AC92" stroke-width="0.8"/>
+      <!-- Brass ring -->
+      <rect x="80" y="74" width="40" height="8" rx="1" fill="url(#brass-ring)"/>
+      <!-- Wood cap (trapezoidal) -->
+      <path d="M 76 74 L 80 38 L 120 38 L 124 74 Z" fill="url(#wood-cap)" stroke="#7A5A2E" stroke-width="0.5"/>
+      <ellipse cx="100" cy="38" rx="20" ry="3" fill="#7A5A2E" opacity="0.6"/>
+      <ellipse cx="100" cy="38" rx="20" ry="3" fill="url(#wood-cap)"/>
+    </symbol>
+
+    <!-- Tester (smaller / travel size) -->
+    <symbol id="bottle-tester" viewBox="0 0 200 320">
+      <ellipse cx="100" cy="307" rx="50" ry="4" fill="rgba(31,22,17,0.16)"/>
+      <path d="M 70 170 L 78 162 L 122 162 L 130 170 L 130 290 L 122 298 L 78 298 L 70 290 Z"
+            fill="url(#liquid-amber)" stroke="#9A7A3D" stroke-width="0.6"/>
+      <path d="M 70 170 L 78 162 L 122 162 L 130 170 L 130 290 L 122 298 L 78 298 L 70 290 Z"
+            fill="url(#glass-shine)"/>
+      <rect x="76" y="172" width="3" height="120" rx="1.5" fill="rgba(255,255,255,0.32)"/>
+      <!-- Mini label -->
+      <rect x="78" y="200" width="44" height="60" rx="1" fill="#FBFAF6" stroke="#E8DDC8" stroke-width="0.3"/>
+      <text x="100" y="225" text-anchor="middle" font-family="serif" font-weight="700" font-size="9" fill="#1F1611">الماهر</text>
+      <text x="100" y="240" text-anchor="middle" font-family="serif" font-size="7" fill="#3E2C20">للعطور</text>
+      <text x="100" y="253" text-anchor="middle" font-family="serif" font-size="5" fill="#6B5A47">عطر ٦ مل</text>
+      <!-- Neck -->
+      <rect x="92" y="148" width="16" height="16" fill="url(#liquid-amber)" stroke="#9A7A3D" stroke-width="0.6"/>
+      <!-- Mini cap -->
+      <rect x="84" y="120" width="32" height="30" rx="1" fill="url(#black-cap)"/>
+      <rect x="84" y="120" width="32" height="3" fill="#0A0908"/>
+    </symbol>
+
+    <!-- Aliases for backward-compat with existing pages -->
+    <symbol id="bottle-classic" viewBox="0 0 200 320"><use href="#bottle-oud"/></symbol>
+    <symbol id="bottle-tall" viewBox="0 0 200 320"><use href="#bottle-luxury"/></symbol>
+    <symbol id="bottle-round" viewBox="0 0 200 320"><use href="#bottle-fresh"/></symbol>
+    <symbol id="bottle-crystal" viewBox="0 0 200 320"><use href="#bottle-fresh"/></symbol>
+  </defs>
+</svg>

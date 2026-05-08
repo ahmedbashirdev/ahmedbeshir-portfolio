@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>إتمام الشراء — الماهر للعطور</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@200;300;400;500;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/design-system.css">
+<style>
+  body { background: var(--off-white); }
+
+  /* Minimal checkout header */
+  .checkout-header {
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+    padding: var(--s-3) 0;
+  }
+  .checkout-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .secure {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--success);
+    font-size: var(--t-xs);
+    font-weight: 600;
+  }
+
+  /* Stepper */
+  .stepper-wrap {
+    background: var(--white);
+    padding: var(--s-4) 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* Layout */
+  .checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+    padding: var(--s-5) 0 var(--s-12);
+  }
+  @media (min-width: 1024px) {
+    .checkout-grid { grid-template-columns: 1fr 380px; gap: var(--s-8); padding: var(--s-8) 0 var(--s-16); }
+  }
+
+  .checkout-section {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: var(--s-5);
+    margin-bottom: var(--s-3);
+  }
+  @media (min-width: 768px) { .checkout-section { padding: var(--s-6); margin-bottom: var(--s-4); } }
+
+  .checkout-section h3 {
+    font-size: var(--t-lg);
+    margin-bottom: var(--s-4);
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+  }
+
+  .checkout-section h3 .num {
+    width: 28px; height: 28px;
+    background: var(--ink);
+    color: var(--white);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: var(--t-xs);
+    font-weight: 700;
+  }
+
+  /* Auth toggle */
+  .auth-toggle {
+    display: flex;
+    gap: 4px;
+    background: var(--paper);
+    padding: 4px;
+    border-radius: var(--radius-pill);
+    margin-bottom: var(--s-4);
+  }
+
+  .auth-toggle button {
+    flex: 1;
+    padding: 10px 14px;
+    background: transparent;
+    border-radius: var(--radius-pill);
+    font-size: var(--t-sm);
+    font-weight: 600;
+    color: var(--ink-500);
+    font-family: inherit;
+    min-height: 40px;
+  }
+
+  .auth-toggle button.active {
+    background: var(--white);
+    color: var(--ink);
+    box-shadow: var(--shadow-1);
+  }
+
+  /* Payment options */
+  .payment-options { display: grid; gap: var(--s-2); }
+
+  .payment-option {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    padding: var(--s-3) var(--s-4);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--t-fast);
+    background: var(--white);
+  }
+
+  .payment-option:hover { border-color: var(--ink); }
+  .payment-option.selected {
+    border-color: var(--ink);
+    background: var(--paper);
+  }
+
+  .payment-option input { width: 18px; height: 18px; accent-color: var(--ink); }
+
+  .payment-option .icon {
+    width: 40px; height: 40px;
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    flex-shrink: 0;
+  }
+
+  .payment-option .info { flex: 1; }
+  .payment-option .info strong { display: block; color: var(--ink); margin-bottom: 2px; font-size: var(--t-sm); }
+  .payment-option .info span { font-size: 11px; color: var(--ink-500); }
+
+  .payment-option .badge-soon {
+    padding: 3px 10px;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+  }
+
+  .payment-option.disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* Shipping options */
+  .shipping-option {
+    padding: var(--s-3) var(--s-4);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--s-2);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--white);
+    gap: var(--s-3);
+  }
+
+  .shipping-option:hover { border-color: var(--ink); }
+  .shipping-option.selected { border-color: var(--ink); background: var(--paper); }
+  .shipping-option .name { font-weight: 600; color: var(--ink); font-size: var(--t-sm); }
+  .shipping-option .eta { font-size: 11px; color: var(--ink-300); }
+
+  /* Summary */
+  .summary-items { margin-bottom: var(--s-4); }
+
+  .summary-item {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: var(--s-3);
+    padding: var(--s-2) 0;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+  }
+  .summary-item:last-child { border-bottom: 0; }
+
+  .summary-item .img {
+    width: 56px; height: 64px;
+    background: var(--paper);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    position: relative;
+  }
+  .summary-item .img img { width: 100%; height: 100%; object-fit: cover; }
+  .summary-item .img .qty {
+    position: absolute;
+    top: -6px;
+    inset-inline-end: -6px;
+    width: 20px; height: 20px;
+    background: var(--ink);
+    color: var(--white);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    border: 2px solid var(--white);
+  }
+
+  .summary-item .name { font-size: var(--t-sm); font-weight: 600; color: var(--ink); }
+  .summary-item .meta { font-size: 10px; color: var(--ink-300); }
+  .summary-item .price { font-size: var(--t-sm); font-weight: 700; color: var(--ink); }
+
+  .confirm-note {
+    background: var(--paper);
+    padding: var(--s-3);
+    border-radius: var(--radius-md);
+    font-size: var(--t-xs);
+    color: var(--ink-700);
+    line-height: 1.6;
+    margin-top: var(--s-3);
+  }
+</style>
+</head>
+<body>
+
+<header class="checkout-header">
+  <div class="container">
+    <a href="home.html" class="brand"><img src="assets/logo-almaher-transparent.png" alt="الماهر للعطور" class="brand-logo"/></a>
+    <div class="secure">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      دفع آمن
+    </div>
+  </div>
+</header>
+
+<div class="stepper-wrap">
+  <div class="container">
+    <div class="stepper">
+      <div class="stepper-step done"><div class="num">✓</div><span>السلة</span></div>
+      <div class="stepper-line"></div>
+      <div class="stepper-step active"><div class="num">٢</div><span>الشحن والدفع</span></div>
+      <div class="stepper-line"></div>
+      <div class="stepper-step"><div class="num">٣</div><span>التأكيد</span></div>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+  <div class="checkout-grid">
+
+    <div>
+
+      <section class="checkout-section">
+        <div class="auth-toggle">
+          <button class="active">طلب كزائر</button>
+          <button>تسجيل دخول</button>
+        </div>
+        <div style="font-size: var(--t-xs); color: var(--ink-500); display: flex; gap: var(--s-2); align-items: center;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          إنشاء حساب يساعدك على تتبع طلباتك
+        </div>
+      </section>
+
+      <section class="checkout-section">
+        <h3><span class="num">١</span> بيانات الاتصال</h3>
+        <div class="field">
+          <label class="label">رقم الجوال</label>
+          <input type="tel" class="input" placeholder="٠١٠٠٠٠٠٠٠٠٠" value="٠١١٢٧٠٤٦٧٥٥">
+        </div>
+        <div class="field">
+          <label class="label">البريد الإلكتروني <span style="color:var(--ink-300); font-weight:400; font-size: var(--t-xs);">(اختياري)</span></label>
+          <input type="email" class="input" placeholder="example@mail.com">
+        </div>
+        <label style="display: flex; gap: var(--s-2); align-items: center; font-size: var(--t-sm); color: var(--ink-500); margin-top: var(--s-2);">
+          <input type="checkbox" style="width:18px; height:18px; accent-color: var(--ink);" checked>
+          أرسلوا لي العروض الجديدة
+        </label>
+      </section>
+
+      <section class="checkout-section">
+        <h3><span class="num">٢</span> عنوان الشحن</h3>
+        <div class="field-row">
+          <div class="field"><label class="label">الاسم الأول</label><input type="text" class="input" placeholder="أحمد"></div>
+          <div class="field"><label class="label">الاسم الأخير</label><input type="text" class="input" placeholder="بشير"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label class="label">المحافظة</label><select class="select"><option>الجيزة</option><option>القاهرة</option><option>الإسكندرية</option><option>الدقهلية</option></select></div>
+          <div class="field"><label class="label">المدينة</label><input type="text" class="input" placeholder="حدائق أكتوبر"></div>
+        </div>
+        <div class="field"><label class="label">العنوان التفصيلي</label><input type="text" class="input" placeholder="الشارع، رقم العقار، الدور، الشقة"></div>
+        <div class="field"><label class="label">علامة مميزة <span style="color:var(--ink-300); font-weight:400; font-size: var(--t-xs);">(اختياري)</span></label><input type="text" class="input" placeholder="بجوار صيدلية النيل"></div>
+        <div class="field"><label class="label">ملاحظات للطلب</label><textarea class="textarea" rows="2" placeholder="أي ملاحظات للمندوب"></textarea></div>
+      </section>
+
+      <section class="checkout-section">
+        <h3><span class="num">٣</span> طريقة الشحن</h3>
+
+        <div class="shipping-option selected">
+          <div><div class="name">شحن قياسي</div><div class="eta">٢-٤ أيام عمل</div></div>
+          <div style="font-weight: 700; color: var(--ink);">٤٥ ج.م</div>
+        </div>
+
+        <div class="shipping-option">
+          <div><div class="name">شحن سريع</div><div class="eta">١-٢ يوم عمل</div></div>
+          <div style="font-weight: 700; color: var(--ink);">٧٥ ج.م</div>
+        </div>
+
+        <div class="shipping-option">
+          <div><div class="name">استلام من الفرع</div><div class="eta">جاهز خلال يوم — حدائق أكتوبر</div></div>
+          <div style="font-weight: 700; color: var(--success);">مجاني</div>
+        </div>
+      </section>
+
+      <section class="checkout-section">
+        <h3><span class="num">٤</span> طريقة الدفع</h3>
+        <div class="payment-options">
+
+          <label class="payment-option selected">
+            <input type="radio" name="payment" checked>
+            <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="2.5"/></svg></div>
+            <div class="info"><strong>الدفع عند الاستلام</strong><span>ادفع نقداً للمندوب</span></div>
+          </label>
+
+          <label class="payment-option disabled">
+            <input type="radio" name="payment" disabled>
+            <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="13" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+            <div class="info"><strong>بطاقة فيزا/ميزة</strong><span>عبر Paymob</span></div>
+            <span class="badge-soon">قريباً</span>
+          </label>
+
+          <label class="payment-option disabled">
+            <input type="radio" name="payment" disabled>
+            <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="3" width="12" height="18" rx="2"/></svg></div>
+            <div class="info"><strong>محفظة فودافون</strong><span>تحويل من محفظتك</span></div>
+            <span class="badge-soon">قريباً</span>
+          </label>
+
+          <label class="payment-option disabled">
+            <input type="radio" name="payment" disabled>
+            <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></div>
+            <div class="info"><strong>فوري</strong><span>ادفع من أي ماكينة فوري</span></div>
+            <span class="badge-soon">قريباً</span>
+          </label>
+
+        </div>
+
+        <div class="confirm-note">
+          📦 سيتم التواصل معك خلال ساعات لتأكيد الطلب. للاستفسارات: واتساب <strong>٠١١٢٧٠٤٦٧٥٥</strong>
+        </div>
+      </section>
+
+      <button class="btn btn-primary btn-lg btn-block">
+        تأكيد الطلب · ٩٩٠ ج.م
+      </button>
+
+      <div style="font-size: 10px; color: var(--ink-300); text-align: center; margin-top: var(--s-3); line-height: 1.6;">
+        بضغطك على "تأكيد الطلب" فأنت توافق على <a href="#" style="color: var(--ink)">الشروط والأحكام</a> و<a href="#" style="color: var(--ink)">سياسة الخصوصية</a>.
+      </div>
+    </div>
+
+    <aside class="summary-panel">
+      <h3>ملخص طلبك</h3>
+
+      <div class="summary-items">
+        <div class="summary-item">
+          <div class="img"><img src="assets/products/almaher-stronger-with-you.jpeg" alt=""/><span class="qty">١</span></div>
+          <div><div class="name">سترونجر وذ يو</div><div class="meta">١٠٠ مل · فاخر</div></div>
+          <div class="price">٤٢٥</div>
+        </div>
+        <div class="summary-item">
+          <div class="img"><img src="assets/products/almaher-eternity.jpeg" alt=""/><span class="qty">٢</span></div>
+          <div><div class="name">توباكو فانيلا</div><div class="meta">٥٠ مل · اقتصادي</div></div>
+          <div class="price">٣٥٠</div>
+        </div>
+        <div class="summary-item">
+          <div class="img"><img src="assets/products/almaher-rose-vanilla.jpeg" alt=""/><span class="qty">١</span></div>
+          <div><div class="name">روز فانيلا</div><div class="meta">٥٠ مل · فاخر</div></div>
+          <div class="price">٢٧٥</div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: var(--s-2) var(--s-3); background: var(--success-bg); color: var(--success); border-radius: var(--radius-md); margin-bottom: var(--s-3); font-size: var(--t-sm);">
+        <span><strong>WELCOME10</strong> مطبّق</span>
+      </div>
+
+      <div class="summary-row"><span>المجموع الفرعي</span><span>١٠٥٠ ج.م</span></div>
+      <div class="summary-row"><span>الخصم</span><span style="color: var(--success)">−١٠٥ ج.م</span></div>
+      <div class="summary-row"><span>الشحن</span><span>٤٥ ج.م</span></div>
+
+      <div class="summary-row total">
+        <span>الإجمالي</span>
+        <span>٩٩٠ ج.م</span>
+      </div>
+
+      <div style="margin-top: var(--s-4); padding-top: var(--s-4); border-top: 1px solid var(--line); display: grid; gap: 8px;">
+        <div style="display:flex; align-items:center; gap: var(--s-2); font-size: var(--t-xs); color: var(--ink-500);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          معاملة آمنة بـ SSL
+        </div>
+        <div style="display:flex; align-items:center; gap: var(--s-2); font-size: var(--t-xs); color: var(--ink-500);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+          إرجاع مجاني خلال ٧ أيام
+        </div>
+        <div style="display:flex; align-items:center; gap: var(--s-2); font-size: var(--t-xs); color: var(--ink-500);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          دعم ٢٤/٧ عبر واتساب
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<footer style="background: var(--white); border-top: 1px solid var(--line); padding: var(--s-5) 0; text-align: center;">
+  <div class="container">
+    <div style="font-size: var(--t-xs); color: var(--ink-300);">© ٢٠٢٦ الماهر للعطور · معاملات محمية بـ SSL</div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.payment-option:not(.disabled)').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      const r = opt.querySelector('input');
+      if (r) r.checked = true;
+    });
+  });
+  document.querySelectorAll('.shipping-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.shipping-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+    });
+  });
+  document.querySelectorAll('.auth-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.auth-toggle button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

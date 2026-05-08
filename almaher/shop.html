@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>تسوّق العطور — الماهر للعطور</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@200;300;400;500;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/design-system.css">
+<style>
+  /* Page banner */
+  .shop-banner {
+    background: var(--paper);
+    padding: var(--s-8) 0;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (min-width: 768px) { .shop-banner { padding: var(--s-12) 0; } }
+
+  .shop-banner h1 {
+    font-size: var(--t-3xl);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--s-2);
+  }
+  @media (min-width: 768px) { .shop-banner h1 { font-size: var(--t-5xl); } }
+
+  .shop-banner p { color: var(--ink-500); font-size: var(--t-sm); }
+
+  /* Layout */
+  .shop-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--s-6);
+    padding: var(--s-6) 0 var(--s-12);
+  }
+  @media (min-width: 1024px) {
+    .shop-layout { grid-template-columns: 260px 1fr; gap: var(--s-8); padding: var(--s-8) 0 var(--s-16); }
+  }
+
+  /* Filters: drawer on mobile, sticky sidebar on desktop */
+  .filters-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    padding: 12px 18px;
+    background: var(--white);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-pill);
+    font-size: var(--t-sm);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  @media (min-width: 1024px) { .filters-toggle { display: none; } }
+
+  .filters-sidebar {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: var(--s-5);
+    height: fit-content;
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .filters-sidebar { display: block; position: sticky; top: 100px; }
+  }
+
+  .filters-sidebar.mobile-open {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    border-radius: 0;
+    border: 0;
+    overflow-y: auto;
+  }
+
+  .filters-sidebar h4 {
+    font-size: var(--t-base);
+    margin-bottom: var(--s-4);
+    padding-bottom: var(--s-3);
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-body);
+    font-weight: 700;
+  }
+
+  .filter-block {
+    padding: var(--s-4) 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .filter-block:last-of-type { border-bottom: 0; }
+
+  .filter-block h5 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-300);
+    margin-bottom: var(--s-3);
+    font-weight: 700;
+    font-family: var(--font-body);
+  }
+
+  .filter-option {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    padding: var(--s-2) 0;
+    cursor: pointer;
+    font-size: var(--t-sm);
+    color: var(--ink-700);
+  }
+  .filter-option:hover { color: var(--ink); }
+
+  .filter-option input[type="checkbox"] {
+    width: 18px; height: 18px;
+    accent-color: var(--ink);
+  }
+
+  .filter-option .count {
+    margin-inline-start: auto;
+    font-size: var(--t-xs);
+    color: var(--ink-300);
+  }
+
+  .clear-all {
+    background: transparent;
+    color: var(--ink);
+    font-size: var(--t-sm);
+    font-weight: 600;
+    padding: 0;
+    margin-top: var(--s-4);
+  }
+
+  .price-inputs {
+    display: flex;
+    gap: var(--s-2);
+    margin-top: var(--s-2);
+  }
+
+  .price-inputs input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    font-size: var(--t-sm);
+    text-align: center;
+    font-family: inherit;
+  }
+
+  /* Toolbar */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-3);
+    margin-bottom: var(--s-4);
+    flex-wrap: wrap;
+  }
+
+  .toolbar .results-count {
+    font-size: var(--t-sm);
+    color: var(--ink-500);
+  }
+
+  .toolbar .results-count strong { color: var(--ink); font-weight: 700; }
+
+  .toolbar select {
+    padding: 10px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-pill);
+    font-size: var(--t-sm);
+    font-family: inherit;
+    background: var(--white);
+    color: var(--ink);
+    min-height: 40px;
+  }
+
+  /* Active filter chips */
+  .active-filters {
+    display: flex;
+    gap: var(--s-2);
+    flex-wrap: wrap;
+    margin-bottom: var(--s-4);
+  }
+
+  .filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-1);
+    padding: 6px 12px;
+    font-size: var(--t-xs);
+    background: var(--ink);
+    color: var(--white);
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+  }
+
+  .filter-chip button {
+    color: var(--ink-200);
+    width: 16px; height: 16px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+  }
+  .filter-chip button:hover { color: var(--white); }
+
+  /* Pagination */
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s-1);
+    margin-top: var(--s-8);
+    flex-wrap: wrap;
+  }
+
+  .pagination button {
+    width: 40px; height: 40px;
+    border: 1px solid var(--line-strong);
+    background: var(--white);
+    border-radius: 50%;
+    color: var(--ink-700);
+    font-weight: 600;
+    transition: all var(--t-fast);
+    font-family: inherit;
+  }
+  .pagination button:hover { border-color: var(--ink); color: var(--ink); }
+  .pagination button.active {
+    background: var(--ink);
+    color: var(--white);
+    border-color: var(--ink);
+  }
+</style>
+</head>
+<body>
+
+<!-- ============== HEADER ============== -->
+<header class="site-header">
+  <div class="topbar">شحن مجاني للطلبات فوق ٧٥٠ ج.م · الدفع عند الاستلام</div>
+  <div class="container">
+    <div class="header-row">
+      <a href="home.html" class="brand"><img src="assets/logo-almaher-transparent.png" alt="الماهر للعطور" class="brand-logo"/></a>
+      <nav>
+        <ul class="nav-list">
+          <li><a href="home.html">الرئيسية</a></li>
+          <li><a href="shop.html" class="active">تسوّق</a></li>
+          <li><a href="shop.html">رجالي</a></li>
+          <li><a href="shop.html">حريمي</a></li>
+          <li><a href="shop.html">عود</a></li>
+          <li><a href="#">قصتنا</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn hide-mobile" aria-label="بحث"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+        <button class="icon-btn hide-mobile" aria-label="حسابي"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></button>
+        <a href="cart.html" class="icon-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-2 11H8L6 6z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg><span class="badge-count">٢</span></a>
+        <button class="menu-toggle" aria-label="القائمة" onclick="toggleDrawer()">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="14" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<div class="mobile-drawer-backdrop" onclick="toggleDrawer()"></div>
+<aside class="mobile-drawer">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: var(--s-6);">
+    <a href="home.html" class="brand"><img src="assets/logo-almaher-transparent.png" alt="الماهر للعطور" class="brand-logo"/></a>
+    <button class="icon-btn" onclick="toggleDrawer()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  </div>
+  <nav>
+    <ul style="list-style:none; display:flex; flex-direction:column; gap: 0;">
+      <li><a href="home.html" style="display:block; padding: var(--s-3) 0; font-size: var(--t-base); border-bottom:1px solid var(--line);">الرئيسية</a></li>
+      <li><a href="shop.html" style="display:block; padding: var(--s-3) 0; font-size: var(--t-base); font-weight:600; color:var(--ink); border-bottom:1px solid var(--line);">تسوّق الكل</a></li>
+      <li><a href="shop.html" style="display:block; padding: var(--s-3) 0; font-size: var(--t-base); border-bottom:1px solid var(--line);">رجالي</a></li>
+      <li><a href="shop.html" style="display:block; padding: var(--s-3) 0; font-size: var(--t-base); border-bottom:1px solid var(--line);">حريمي</a></li>
+      <li><a href="shop.html" style="display:block; padding: var(--s-3) 0; font-size: var(--t-base); border-bottom:1px solid var(--line);">عود وشرقي</a></li>
+      <li><a href="#" style="display:block; padding: var(--s-3) 0; font-size: var(--t-base); border-bottom:1px solid var(--line);">قصتنا</a></li>
+      <li><a href="#" style="display:block; padding: var(--s-3) 0; font-size: var(--t-base);">تواصل</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<!-- ============== BANNER ============== -->
+<section class="shop-banner">
+  <div class="container">
+    <span class="eyebrow">المجموعة الكاملة</span>
+    <h1 style="margin-top: 6px;">تسوّق جميع العطور</h1>
+    <p>اختر من أكثر من ٣٥ عطر فريد، مصنوعة بعناية من أجود الخامات.</p>
+  </div>
+</section>
+
+<!-- ============== SHOP LAYOUT ============== -->
+<main class="container">
+  <div class="shop-layout">
+
+    <!-- Filters -->
+    <aside class="filters-sidebar" id="filtersSidebar">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: var(--s-3);">
+        <h4 style="margin:0; padding:0; border:0;">فلترة النتائج</h4>
+        <button class="icon-btn hide-desktop" onclick="toggleFilters()" aria-label="إغلاق">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="filter-block">
+        <h5>التصنيف</h5>
+        <label class="filter-option"><input type="checkbox" checked> رجالي <span class="count">١٤</span></label>
+        <label class="filter-option"><input type="checkbox"> حريمي <span class="count">١١</span></label>
+        <label class="filter-option"><input type="checkbox"> يونيسكس <span class="count">٤</span></label>
+        <label class="filter-option"><input type="checkbox"> عود وشرقي <span class="count">٨</span></label>
+      </div>
+
+      <div class="filter-block">
+        <h5>عائلة العطر</h5>
+        <label class="filter-option"><input type="checkbox"> شرقي <span class="count">١٢</span></label>
+        <label class="filter-option"><input type="checkbox"> زهري <span class="count">٨</span></label>
+        <label class="filter-option"><input type="checkbox"> وودي <span class="count">٧</span></label>
+        <label class="filter-option"><input type="checkbox"> مائي <span class="count">٤</span></label>
+        <label class="filter-option"><input type="checkbox"> حلو <span class="count">٥</span></label>
+      </div>
+
+      <div class="filter-block">
+        <h5>الحجم</h5>
+        <label class="filter-option"><input type="checkbox"> ٦ مل (تيستر) <span class="count">٣٥</span></label>
+        <label class="filter-option"><input type="checkbox"> ٥٠ مل <span class="count">٣٥</span></label>
+        <label class="filter-option"><input type="checkbox" checked> ١٠٠ مل <span class="count">٣٢</span></label>
+      </div>
+
+      <div class="filter-block">
+        <h5>نوع العبوة</h5>
+        <label class="filter-option"><input type="checkbox"> اقتصادي <span class="count">٣٥</span></label>
+        <label class="filter-option"><input type="checkbox" checked> فاخر <span class="count">٣٢</span></label>
+      </div>
+
+      <div class="filter-block">
+        <h5>السعر</h5>
+        <div class="price-inputs">
+          <input type="text" placeholder="أقل" value="١٠٠">
+          <input type="text" placeholder="أعلى" value="٥٠٠">
+        </div>
+      </div>
+
+      <button class="clear-all">إزالة كل الفلاتر</button>
+
+      <button class="btn btn-primary btn-block hide-desktop" style="margin-top: var(--s-4);" onclick="toggleFilters()">
+        عرض ٣٢ منتج
+      </button>
+    </aside>
+
+    <!-- Results -->
+    <div>
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="results-count">
+          <strong>٣٢</strong> منتج
+        </div>
+        <div style="display: flex; gap: var(--s-2);">
+          <button class="filters-toggle" onclick="toggleFilters()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="10" y2="18"/></svg>
+            فلتر
+          </button>
+          <select>
+            <option>الأحدث</option>
+            <option>الأكثر مبيعاً</option>
+            <option>السعر: من الأقل</option>
+            <option>السعر: من الأعلى</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Active filters -->
+      <div class="active-filters">
+        <span class="filter-chip">رجالي <button>×</button></span>
+        <span class="filter-chip">١٠٠ مل <button>×</button></span>
+        <span class="filter-chip">فاخر <button>×</button></span>
+      </div>
+
+      <!-- Grid -->
+      <div class="products-grid">
+
+        <article class="product-card">
+          <span class="badge">الأكثر مبيعاً</span>
+          <a href="product.html" class="image-wrap"><img src="assets/products/almaher-stronger-with-you.jpeg" alt="سترونجر وذ يو"/></a>
+          <div class="body">
+            <span class="category-tag">رجالي · شرقي</span>
+            <h4 class="name"><a href="product.html">سترونجر وذ يو</a></h4>
+            <div class="text-sm text-muted">عود · مسك · فانيلا</div>
+            <div class="price-row"><span class="price-from">يبدأ من</span><span class="price">١٧٥</span><span class="text-sm text-muted">ج.م</span></div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <span class="badge badge-new">جديد</span>
+          <a href="product.html" class="image-wrap"><img src="assets/products/almaher-acqua-di-gio.jpeg" alt="أكوا دي جيو"/></a>
+          <div class="body">
+            <span class="category-tag">رجالي · مائي</span>
+            <h4 class="name"><a href="product.html">أكوا دي جيو</a></h4>
+            <div class="text-sm text-muted">حمضيات · مسك بحري</div>
+            <div class="price-row"><span class="price-from">يبدأ من</span><span class="price">١٧٥</span><span class="text-sm text-muted">ج.م</span></div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <a href="product.html" class="image-wrap"><img src="assets/products/almaher-montblanc-legend.jpeg" alt="عود فور جريتنس"/></a>
+          <div class="body">
+            <span class="category-tag">عود · شرقي</span>
+            <h4 class="name"><a href="product.html">عود فور جريتنس</a></h4>
+            <div class="text-sm text-muted">عود · زعفران</div>
+            <div class="price-row"><span class="price-from">يبدأ من</span><span class="price">٢٢٥</span><span class="text-sm text-muted">ج.م</span><span class="price-old">٢٧٥</span></div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <a href="product.html" class="image-wrap"><img src="assets/products/almaher-eternity.jpeg" alt="توباكو فانيلا"/></a>
+          <div class="body">
+            <span class="category-tag">يونيسكس · شرقي</span>
+            <h4 class="name"><a href="product.html">توباكو فانيلا</a></h4>
+            <div class="text-sm text-muted">تبغ · فانيلا</div>
+            <div class="price-row"><span class="price-from">يبدأ من</span><span class="price">١٧٥</span><span class="text-sm text-muted">ج.م</span></div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <a href="product.html" class="image-wrap"><img src="assets/products/almaher-invictus.jpeg" alt="سيلفر سنت"/></a>
+          <div class="body">
+            <span class="category-tag">رجالي · منعش</span>
+            <h4 class="name"><a href="product.html">سيلفر سنت</a></h4>
+            <div class="text-sm text-muted">حمضيات · مسك أبيض</div>
+            <div class="price-row"><span class="price-from">يبدأ من</span><span class="price">٣٠٠</span><span class="text-sm text-muted">ج.م</span></div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <span class="badge badge-sale">−٢٠٪</span>
+          <a href="product.html" class="image-wrap"><img src="assets/products/almaher-invictus.jpeg" alt="انفكتوس"/></a>
+          <div class="body">
+            <span class="category-tag">رجالي · فاخر</span>
+            <h4 class="name"><a href="product.html">انفكتوس</a></h4>
+            <div class="text-sm text-muted">جريب فروت · غار</div>
+            <div class="price-row"><span class="price-from">يبدأ من</span><span class="price">٢٠٠</span><span class="text-sm text-muted">ج.م</span><span class="price-old">٢٥٠</span></div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <a href="product.html" class="image-wrap"><img src="assets/products/almaher-cool-water.jpeg" alt="سيجار"/></a>
+          <div class="body">
+            <span class="category-tag">رجالي · وودي</span>
+            <h4 class="name"><a href="product.html">سيجار</a></h4>
+            <div class="text-sm text-muted">تبغ · جلد</div>
+            <div class="price-row"><span class="price-from">يبدأ من</span><span class="price">١٧٥</span><span class="text-sm text-muted">ج.م</span></div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <a href="product.html" class="image-wrap"><img src="assets/products/almaher-cool-water.jpeg" alt="كوول ووتر"/></a>
+          <div class="body">
+            <span class="category-tag">رجالي · مائي</span>
+            <h4 class="name"><a href="product.html">كوول ووتر</a></h4>
+            <div class="text-sm text-muted">حمضيات · ميلون</div>
+            <div class="price-row"><span class="price-from">يبدأ من</span><span class="price">١٧٥</span><span class="text-sm text-muted">ج.م</span></div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <span class="badge">الأكثر مبيعاً</span>
+          <a href="product.html" class="image-wrap"><img src="assets/products/almaher-eternity.jpeg" alt="دانهيل ديزاير بلو"/></a>
+          <div class="body">
+            <span class="category-tag">رجالي · شرقي</span>
+            <h4 class="name"><a href="product.html">دانهيل ديزاير بلو</a></h4>
+            <div class="text-sm text-muted">قرفة · مسك</div>
+            <div class="price-row"><span class="price-from">يبدأ من</span><span class="price">١٧٥</span><span class="text-sm text-muted">ج.م</span></div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <a href="product.html" class="image-wrap"><img src="assets/products/almaher-versace-eros.jpeg" alt="سوفاج"/></a>
+          <div class="body">
+            <span class="category-tag">رجالي · مائي</span>
+            <h4 class="name"><a href="product.html">سوفاج</a></h4>
+            <div class="text-sm text-muted">برغموت · فلفل</div>
+            <div class="price-row"><span class="price-from">يبدأ من</span><span class="price">١٧٥</span><span class="text-sm text-muted">ج.م</span></div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <a href="product.html" class="image-wrap"><img src="assets/products/almaher-montblanc-legend.jpeg" alt="مون بلو ليجند"/></a>
+          <div class="body">
+            <span class="category-tag">رجالي · فاخر</span>
+            <h4 class="name"><a href="product.html">مون بلو ليجند</a></h4>
+            <div class="text-sm text-muted">برغموت · صندل</div>
+            <div class="price-row"><span class="price-from">يبدأ من</span><span class="price">١٧٥</span><span class="text-sm text-muted">ج.م</span></div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <a href="product.html" class="image-wrap"><img src="assets/products/almaher-versace-eros.jpeg" alt="فيرزاتشي ايروس"/></a>
+          <div class="body">
+            <span class="category-tag">رجالي · وودي</span>
+            <h4 class="name"><a href="product.html">فيرزاتشي ايروس</a></h4>
+            <div class="text-sm text-muted">نعناع · فانيلا</div>
+            <div class="price-row"><span class="price-from">يبدأ من</span><span class="price">١٧٥</span><span class="text-sm text-muted">ج.م</span></div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <button>‹</button>
+        <button class="active">١</button>
+        <button>٢</button>
+        <button>٣</button>
+        <button>›</button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ============== FOOTER ============== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="home.html" class="brand" style="margin-bottom: var(--s-4);"><img src="assets/logo-almaher-transparent.png" alt="الماهر للعطور" class="brand-logo"/></a>
+        <p style="font-size: var(--t-sm); color: var(--ink-500); max-width: 300px; line-height: 1.65; margin-top: var(--s-3);">عطور مستوحاة من أرقى الماركات العالمية، مصنوعة في مصر.</p>
+      </div>
+      <div><h4>تسوّق</h4><ul><li><a href="shop.html">جميع العطور</a></li><li><a href="shop.html">رجالي</a></li><li><a href="shop.html">حريمي</a></li><li><a href="shop.html">عود وشرقي</a></li></ul></div>
+      <div><h4>المساعدة</h4><ul><li><a href="#">سياسة الشحن</a></li><li><a href="#">سياسة الإرجاع</a></li><li><a href="#">الأسئلة الشائعة</a></li></ul></div>
+      <div><h4>تواصل</h4><ul><li><a href="https://www.facebook.com/almaherperfumes">فيسبوك</a></li><li><a href="#">انستجرام</a></li><li><a href="#">واتساب</a></li></ul></div>
+    </div>
+    <div class="copyright">© ٢٠٢٦ الماهر للعطور · صُنع بحب في مصر</div>
+  </div>
+</footer>
+
+<script>
+  function toggleDrawer() {
+    document.querySelector('.mobile-drawer').classList.toggle('open');
+    document.querySelector('.mobile-drawer-backdrop').classList.toggle('open');
+    document.body.style.overflow = document.querySelector('.mobile-drawer').classList.contains('open') ? 'hidden' : '';
+  }
+  function toggleFilters() {
+    const sidebar = document.getElementById('filtersSidebar');
+    sidebar.classList.toggle('mobile-open');
+    document.body.style.overflow = sidebar.classList.contains('mobile-open') ? 'hidden' : '';
+  }
+</script>
+
+</body>
+</html>
