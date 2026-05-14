@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agency Admin — Interactive Design Preview</title>
+<style>
+  :root{
+    --indigo:#5B5BD6; --indigo-2:#7C76E8;
+    --ink:#191B26; --muted:#6A6E7E; --faint:#9AA0AE; --line:#E7E8EE; --line-2:#EFF0F4;
+    --bg:#F6F7F9; --card:#FFFFFF; --good:#1A9E62; --warn:#C98A12; --bad:#D5485B;
+    --sidebar:#1C1E2C;
+    --accent:#5B5BD6; --accent-soft:#ECECFB;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-size:13px;line-height:1.5;}
+  button{font-family:inherit;cursor:pointer;}
+  input{font-family:inherit;}
+
+  .ribbon{background:#EEF0F4;border-bottom:1px solid var(--line);color:var(--muted);
+    text-align:center;font-size:11.5px;padding:6px 14px;}
+  .ribbon b{color:var(--ink);font-weight:600;}
+
+  .app{display:flex;min-height:calc(100vh - 29px);width:100%;position:relative;}
+
+  /* ---------- sidebar ---------- */
+  .sidebar{width:248px;background:var(--sidebar);color:#AEB2C4;padding:20px 16px;flex-shrink:0;
+    display:flex;flex-direction:column;transition:left .25s ease;}
+  .brand{display:flex;align-items:center;gap:11px;padding:4px 6px 20px;}
+  .brand .mark{width:34px;height:34px;border-radius:10px;flex-shrink:0;
+    background:linear-gradient(135deg,var(--indigo),var(--indigo-2));}
+  .brand b{color:#fff;font-size:14.5px;font-weight:700;display:block;letter-spacing:-.2px;}
+  .brand span{font-size:11px;color:#6E7288;}
+  .nav-label{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:#565A70;
+    padding:16px 10px 7px;font-weight:700;}
+  .nav button{display:flex;align-items:center;gap:12px;padding:10px 11px;border-radius:10px;width:100%;
+    font-size:13px;color:#AEB2C4;background:none;border:none;margin-bottom:3px;text-align:left;
+    transition:background .15s,color .15s;}
+  .nav button:hover{background:rgba(255,255,255,.055);color:#E4E5EE;}
+  .nav button.active{background:rgba(124,118,232,.22);color:#fff;font-weight:600;}
+  .nav button svg{flex-shrink:0;opacity:.95;}
+  .who{margin-top:auto;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:11px 12px;}
+  .who .av{width:32px;height:32px;border-radius:50%;background:var(--indigo);color:#fff;display:flex;
+    align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;}
+  .who b{color:#fff;font-size:12.5px;display:block;} .who span{color:#6E7288;font-size:11px;}
+
+  /* ---------- main ---------- */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;background:var(--card);
+    border-bottom:1px solid var(--line);padding:16px 28px;gap:14px;position:sticky;top:0;z-index:20;}
+  .topbar-left{display:flex;align-items:center;gap:13px;min-width:0;}
+  .hamburger{display:none;width:38px;height:38px;border:1px solid var(--line);border-radius:10px;
+    background:var(--bg);align-items:center;justify-content:center;flex-shrink:0;}
+  .crumb{font-size:11.5px;color:var(--faint);margin-bottom:3px;}
+  .crumb b{color:var(--muted);font-weight:600;}
+  .topbar h2{font-size:20px;font-weight:800;letter-spacing:-.4px;}
+  .btn{font-size:12.5px;font-weight:600;padding:10px 16px;border-radius:10px;border:1px solid var(--line);
+    background:var(--card);color:var(--ink);white-space:nowrap;transition:background .12s,border-color .12s;}
+  .btn:hover{background:var(--bg);border-color:var(--line);}
+  .btn.primary{background:var(--indigo);color:#fff;border-color:var(--indigo);}
+  .btn.primary:hover{background:#4F4FC9;}
+  .btn.sm{padding:7px 12px;font-size:12px;border-radius:9px;}
+  .btn.ghost{background:none;border-color:transparent;color:var(--muted);}
+  .btn.ghost:hover{background:var(--bg);}
+  .btn.danger{color:var(--bad);border-color:#F2D2D7;}
+  .btn.danger:hover{background:#FCEEF0;}
+
+  .content{padding:26px 28px 40px;}
+  .view{display:none;}
+  .view.active{display:block;animation:fade .28s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .eyebrow{font-size:10.5px;font-weight:700;color:var(--faint);text-transform:uppercase;
+    letter-spacing:.9px;margin:26px 2px 12px;}
+  .eyebrow:first-child{margin-top:0;}
+
+  /* ---------- clients list ---------- */
+  .stats{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 18px;
+    display:flex;align-items:center;gap:12px;min-width:150px;}
+  .stat .sdot{width:9px;height:9px;border-radius:50%;}
+  .stat b{font-size:19px;font-weight:800;letter-spacing:-.4px;}
+  .stat span{font-size:11.5px;color:var(--muted);display:block;}
+  .toolbar{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
+  .search{flex:1;min-width:200px;max-width:380px;display:flex;align-items:center;gap:9px;
+    background:var(--card);border:1px solid var(--line);border-radius:11px;padding:10px 13px;}
+  .search input{border:none;outline:none;font-size:12.5px;width:100%;background:none;color:var(--ink);}
+  .filter{display:flex;background:var(--card);border:1px solid var(--line);border-radius:11px;overflow:hidden;}
+  .filter button{padding:9px 14px;font-size:12px;background:none;border:none;color:var(--muted);font-weight:600;}
+  .filter button.on{background:var(--indigo);color:#fff;}
+
+  .clients{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+  .ccard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;
+    transition:transform .14s,box-shadow .14s,border-color .14s;}
+  .ccard:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(25,27,38,.09);border-color:#DEDFE7;}
+  .ccard.isnew{border-color:var(--good);box-shadow:0 0 0 3px rgba(26,158,98,.13);}
+  .ccard-head{display:flex;align-items:center;gap:13px;margin-bottom:16px;}
+  .ccard-logo{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;
+    justify-content:center;color:#fff;font-weight:800;font-size:17px;flex-shrink:0;letter-spacing:-.5px;}
+  .ccard-head b{font-size:14.5px;font-weight:700;display:block;letter-spacing:-.2px;}
+  .ccard-head span{font-size:11.5px;color:var(--faint);}
+  .srcrow{display:flex;gap:5px;margin-bottom:14px;}
+  .srcrow i{flex:1;height:5px;border-radius:3px;background:var(--line);display:block;}
+  .srcrow i.on{background:var(--good);}
+  .ccard-foot{display:flex;align-items:center;justify-content:space-between;padding-top:13px;
+    border-top:1px solid var(--line-2);}
+  .ccard-foot .meta{font-size:11px;color:var(--faint);}
+  .pill{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;}
+  .pill.live{background:#E4F4EC;color:var(--good);}
+  .pill.setup{background:#FBEFD8;color:var(--warn);}
+
+  /* ---------- panels / forms ---------- */
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-bottom:18px;}
+  .panel-h{font-size:14.5px;font-weight:700;letter-spacing:-.2px;}
+  .panel-sub{font-size:12px;color:var(--muted);margin:3px 0 18px;}
+  .field{margin-bottom:18px;}
+  .field:last-child{margin-bottom:0;}
+  .field > label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;
+    letter-spacing:.5px;display:block;margin-bottom:8px;}
+  .inp{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:13px;
+    outline:none;color:var(--ink);background:var(--card);transition:border-color .12s,box-shadow .12s;}
+  .inp:focus{border-color:var(--indigo);box-shadow:0 0 0 3px var(--accent-soft);}
+  .hint{font-size:11px;color:var(--faint);margin-top:6px;}
+  .sub-row{display:flex;}
+  .sub-row .inp{border-radius:10px 0 0 10px;border-right:none;}
+  .sub-row .suffix{background:var(--bg);border:1px solid var(--line);border-left:none;
+    border-radius:0 10px 10px 0;padding:11px 13px;font-size:12.5px;color:var(--muted);
+    display:flex;align-items:center;white-space:nowrap;}
+
+  .dropzone{border:1.5px dashed var(--line);border-radius:13px;padding:18px;display:flex;
+    align-items:center;gap:15px;background:var(--bg);transition:border-color .12s;}
+  .dropzone:hover{border-color:var(--indigo);}
+  .dropzone .lg{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;
+    justify-content:center;color:#fff;font-weight:800;font-size:19px;flex-shrink:0;background:var(--accent);letter-spacing:-.5px;}
+  .dropzone .dz b{font-size:12.5px;display:block;} .dropzone .dz span{font-size:11px;color:var(--muted);}
+  .dropzone .dz .browse{color:var(--indigo);font-weight:700;}
+
+  .swatches{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .swatch{width:32px;height:32px;border-radius:10px;border:2px solid transparent;position:relative;
+    transition:transform .1s;}
+  .swatch:hover{transform:scale(1.08);}
+  .swatch.on{border-color:var(--ink);}
+  .swatch.on::after{content:"";position:absolute;inset:0;border:2px solid #fff;border-radius:8px;}
+  .swatch-custom{width:32px;height:32px;border-radius:10px;border:1px dashed var(--line);
+    overflow:hidden;background:var(--card);padding:0;display:flex;align-items:center;justify-content:center;}
+  .swatch-custom input{width:46px;height:46px;border:none;margin:-7px;background:none;}
+
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .seg button{padding:9px 15px;font-size:12px;background:var(--card);border:none;color:var(--muted);font-weight:600;}
+  .seg button.on{background:var(--indigo);color:#fff;}
+
+  /* data sources */
+  .ds{display:flex;align-items:center;gap:14px;padding:15px 0;border-bottom:1px solid var(--line-2);flex-wrap:wrap;}
+  .ds:first-of-type{padding-top:0;}
+  .ds:last-child{border-bottom:none;padding-bottom:0;}
+  .ds .ic{width:38px;height:38px;border-radius:11px;background:var(--bg);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:11.5px;color:var(--muted);}
+  .ds .dsmain{flex:1;min-width:150px;}
+  .ds .dsmain b{font-size:13px;font-weight:700;display:block;}
+  .ds .dsmain span{font-size:11.5px;color:var(--muted);}
+  .ds .dsfield{flex-basis:100%;}
+  .ds .dsfield .inp{margin-top:6px;font-size:12px;padding:9px 11px;}
+  .ds .status{font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:20px;
+    background:#EEF0F4;color:var(--muted);}
+  .ds.connected .status{background:#E4F4EC;color:var(--good);}
+  .ds.connected .ic{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);}
+
+  /* wizard */
+  .steps{display:flex;gap:8px;margin-bottom:22px;}
+  .stepi{flex:1;display:flex;align-items:center;gap:9px;padding:11px 14px;border-radius:12px;
+    background:var(--card);border:1px solid var(--line);font-size:12px;color:var(--faint);font-weight:600;}
+  .stepi .n{width:22px;height:22px;border-radius:50%;background:var(--bg);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
+  .stepi.active{border-color:var(--indigo);color:var(--ink);}
+  .stepi.active .n{background:var(--indigo);color:#fff;border-color:var(--indigo);}
+  .stepi.done{color:var(--ink);}
+  .stepi.done .n{background:var(--good);color:#fff;border-color:var(--good);}
+  .step{display:none;} .step.active{display:block;}
+  .wiz-actions{display:flex;justify-content:space-between;gap:10px;margin-top:4px;}
+
+  /* tabs */
+  .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:22px;flex-wrap:wrap;}
+  .tab{padding:11px 15px;font-size:12.5px;font-weight:600;color:var(--muted);background:none;border:none;
+    border-bottom:2px solid transparent;margin-bottom:-1px;}
+  .tab:hover{color:var(--ink);}
+  .tab.on{color:var(--indigo);border-bottom-color:var(--indigo);}
+  .tab-panel{display:none;} .tab-panel.active{display:block;}
+
+  /* settings client header */
+  .cli-head{display:flex;align-items:center;gap:15px;background:var(--card);border:1px solid var(--line);
+    border-radius:16px;padding:18px 22px;margin-bottom:20px;flex-wrap:wrap;}
+  .cli-head .lg{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;
+    justify-content:center;color:#fff;font-weight:800;font-size:20px;background:var(--accent);letter-spacing:-.5px;}
+  .cli-head .nm b{font-size:16px;font-weight:800;letter-spacing:-.3px;display:block;}
+  .cli-head .nm span{font-size:12px;color:var(--faint);}
+  .cli-head .sp{margin-left:auto;display:flex;gap:9px;align-items:center;flex-wrap:wrap;}
+
+  .two{display:grid;grid-template-columns:1.35fr 1fr;gap:20px;align-items:start;}
+  .stick{position:sticky;top:90px;}
+
+  /* live preview blocks */
+  .pv-label{font-size:10.5px;font-weight:700;color:var(--faint);text-transform:uppercase;
+    letter-spacing:.7px;margin-bottom:9px;}
+  .browser{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--card);
+    box-shadow:0 8px 24px rgba(25,27,38,.07);margin-bottom:16px;}
+  .b-url{background:var(--bg);border-bottom:1px solid var(--line);padding:8px 12px;font-size:10.5px;
+    color:var(--muted);display:flex;align-items:center;gap:8px;}
+  .b-url .dots{display:flex;gap:4px;} .b-url .dots i{width:8px;height:8px;border-radius:50%;background:#D7D8E0;}
+  /* login preview */
+  .lp{padding:26px 22px;text-align:center;background:var(--accent-soft);}
+  .lp.bg-solid{background:var(--accent-soft);}
+  .lp.bg-plain{background:var(--card);}
+  .lp.bg-deep{background:var(--accent);}
+  .lp .lp-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 20px;
+    max-width:230px;margin:0 auto;box-shadow:0 6px 18px rgba(25,27,38,.08);}
+  .lp .lp-logo{width:42px;height:42px;border-radius:12px;background:var(--accent);margin:0 auto 12px;
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;letter-spacing:-.5px;}
+  .lp .lp-card b{font-size:13.5px;display:block;}
+  .lp .lp-card .sm{font-size:10.5px;color:var(--muted);margin:3px 0 14px;}
+  .lp .lp-inp{height:30px;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;background:var(--bg);}
+  .lp .lp-btn{height:32px;border-radius:8px;background:var(--accent);color:#fff;font-size:11px;
+    font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:4px;}
+  /* dashboard header preview */
+  .dh{padding:0;}
+  .dh-bar{display:flex;align-items:center;gap:10px;padding:13px 15px;border-bottom:1px solid var(--line);}
+  .dh-logo{width:34px;height:34px;border-radius:10px;background:var(--accent);display:flex;
+    align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;flex-shrink:0;letter-spacing:-.5px;}
+  .dh-bar b{font-size:12.5px;display:block;} .dh-bar span{font-size:10px;color:var(--faint);}
+  .dh-body{padding:14px 15px;}
+  .dh-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+  .dh-kpi{background:var(--bg);border-radius:9px;padding:9px 10px;}
+  .dh-kpi span{font-size:8.5px;color:var(--muted);font-weight:600;display:block;}
+  .dh-kpi b{font-size:13px;}
+  .dh-bar2{height:6px;border-radius:4px;background:var(--accent);margin-bottom:6px;}
+  .dh-bar2.f{opacity:.45;} .dh-bar2.g{opacity:.25;}
+  .pv-explain{background:var(--accent-soft);border-radius:11px;padding:13px 15px;font-size:11.5px;
+    color:var(--ink);line-height:1.55;}
+  .pv-explain b{font-weight:700;}
+
+  /* misc settings rows */
+  .srow{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line-2);}
+  .srow:last-child{border-bottom:none;}
+  .srow .si{flex:1;} .srow .si b{font-size:12.5px;display:block;} .srow .si span{font-size:11px;color:var(--muted);}
+  .toggle{width:40px;height:23px;border-radius:20px;background:var(--line);position:relative;flex-shrink:0;border:none;}
+  .toggle::after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;
+    top:2.5px;left:2.5px;transition:left .15s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+  .toggle.on{background:var(--good);} .toggle.on::after{left:19.5px;}
+
+  .danger-box{border:1px solid #F2D2D7;background:#FDF4F5;border-radius:13px;padding:16px 18px;
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .danger-box .di{flex:1;min-width:160px;} .danger-box .di b{font-size:12.5px;color:var(--bad);display:block;}
+  .danger-box .di span{font-size:11.5px;color:var(--muted);}
+
+  .overlay{display:none;position:fixed;inset:0;background:rgba(25,27,38,.42);z-index:25;}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--ink);color:#fff;font-size:12.5px;font-weight:600;padding:12px 20px;border-radius:11px;
+    opacity:0;transition:.3s;z-index:50;pointer-events:none;display:flex;align-items:center;gap:9px;}
+  .toast::before{content:"✓";width:18px;height:18px;border-radius:50%;background:var(--good);
+    display:flex;align-items:center;justify-content:center;font-size:11px;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  @media(max-width:1040px){
+    .app{display:block;}
+    .sidebar{position:fixed;left:-270px;top:0;bottom:0;z-index:40;width:260px;}
+    .sidebar.open{left:0;box-shadow:0 0 60px rgba(0,0,0,.45);}
+    .overlay.show{display:block;}
+    .hamburger{display:flex;}
+    .two{grid-template-columns:1fr;}
+    .stick{position:static;}
+  }
+  @media(max-width:560px){
+    .content{padding:18px 16px 30px;}
+    .topbar{padding:13px 16px;}
+    .steps{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+<div class="ribbon">Interactive design preview — <b>try it:</b> add a client, open a client's settings, change the branding and watch the live preview.</div>
+
+<div class="app">
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="mark"></div><div><b>YourAgency</b><span>Admin Console</span></div></div>
+    <div class="nav-label">Manage</div>
+    <nav class="nav">
+      <button class="active" data-go="list"><svg width="17" height="17" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="3" width="12" height="3.5" rx="1.2"/><rect x="2.5" y="10" width="12" height="3.5" rx="1.2"/></svg>Clients</button>
+      <button><svg width="17" height="17" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6.5" cy="6" r="2.6"/><path d="M2.3 14c0-2.4 1.9-3.8 4.2-3.8s4.2 1.4 4.2 3.8"/><path d="M11.5 7a2.1 2.1 0 100-4.2"/></svg>Team</button>
+      <button><svg width="17" height="17" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.2" y="4" width="12.6" height="9.5" rx="1.6"/><path d="M2.2 7.4h12.6"/></svg>Billing</button>
+      <button><svg width="17" height="17" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8.5" cy="8.5" r="2.1"/><path d="M8.5 1.7v2.1M8.5 13.2v2.1M1.7 8.5h2.1M13.2 8.5h2.1M3.7 3.7l1.5 1.5M11.8 11.8l1.5 1.5M3.7 13.3l1.5-1.5M11.8 5.2l1.5-1.5"/></svg>Settings</button>
+    </nav>
+    <div class="who"><div class="av">AB</div><div><b>Ahmed Beshir</b><span>Agency owner</span></div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <svg width="18" height="18" viewBox="0 0 18 18" stroke="#191B26" stroke-width="1.8"><path d="M3 5h12M3 9h12M3 13h12"/></svg>
+        </button>
+        <div>
+          <div class="crumb" id="crumb">Admin</div>
+          <h2 id="pageTitle">Clients</h2>
+        </div>
+      </div>
+      <div id="topActions">
+        <button class="btn primary" data-go="add">+ Add new client</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ============ CLIENTS LIST ============ -->
+      <section class="view active" id="view-list">
+        <div class="stats">
+          <div class="stat"><span class="sdot" style="background:var(--good)"></span><div><b>3</b><span>Active clients</span></div></div>
+          <div class="stat"><span class="sdot" style="background:var(--good)"></span><div><b>2</b><span>Live dashboards</span></div></div>
+          <div class="stat"><span class="sdot" style="background:var(--warn)"></span><div><b>1</b><span>In setup</span></div></div>
+        </div>
+        <div class="toolbar">
+          <div class="search">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="#9AA0AE" stroke-width="1.6"><circle cx="6.5" cy="6.5" r="4.2"/><path d="M9.7 9.7l3 3"/></svg>
+            <input type="text" placeholder="Search clients..." />
+          </div>
+          <div class="filter"><button class="on">All</button><button>Live</button><button>Setup</button></div>
+        </div>
+        <div class="clients" id="clientsGrid">
+          <div class="ccard">
+            <div class="ccard-head">
+              <div class="ccard-logo" style="background:#5B5BD6">TN</div>
+              <div><b>TechNova Solutions</b><span>technova.youragency.com</span></div>
+            </div>
+            <div class="srcrow"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+            <div class="ccard-foot">
+              <div><span class="pill live">Live</span> <span class="meta">· synced 2h ago</span></div>
+              <button class="btn sm" data-go="settings" data-client="technova">Manage</button>
+            </div>
+          </div>
+          <div class="ccard">
+            <div class="ccard-head">
+              <div class="ccard-logo" style="background:#DB2777">BC</div>
+              <div><b>BloomCommerce</b><span>bloomcommerce.youragency.com</span></div>
+            </div>
+            <div class="srcrow"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+            <div class="ccard-foot">
+              <div><span class="pill live">Live</span> <span class="meta">· synced 5h ago</span></div>
+              <button class="btn sm" data-go="settings" data-client="bloom">Manage</button>
+            </div>
+          </div>
+          <div class="ccard">
+            <div class="ccard-head">
+              <div class="ccard-logo" style="background:#16A34A">GL</div>
+              <div><b>GreenLeaf Organics</b><span>greenleaf.youragency.com</span></div>
+            </div>
+            <div class="srcrow"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+            <div class="ccard-foot">
+              <div><span class="pill setup">Setup</span> <span class="meta">· 3 sources left</span></div>
+              <button class="btn sm" data-go="settings" data-client="greenleaf">Manage</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ADD NEW CLIENT (wizard) ============ -->
+      <section class="view" id="view-add">
+        <div class="steps">
+          <div class="stepi active" data-stepi="1"><span class="n">1</span> Brand identity</div>
+          <div class="stepi" data-stepi="2"><span class="n">2</span> Data sources</div>
+          <div class="stepi" data-stepi="3"><span class="n">3</span> Client login</div>
+        </div>
+        <div class="two">
+          <div>
+            <!-- step 1 -->
+            <div class="step active" data-step="1">
+              <div class="panel">
+                <div class="panel-h">Brand identity</div>
+                <div class="panel-sub">Name the client and choose how their dashboard is branded. This is what makes it feel like their own product.</div>
+                <div class="field">
+                  <label>Client / brand name</label>
+                  <input type="text" class="inp" id="fName" placeholder="e.g. Apex Finance" />
+                </div>
+                <div class="field">
+                  <label>Subdomain</label>
+                  <div class="sub-row">
+                    <input type="text" class="inp" id="fSub" placeholder="apexfinance" />
+                    <span class="suffix">.youragency.com</span>
+                  </div>
+                  <div class="hint">The client signs in here. Auto-filled from the brand name — editable.</div>
+                </div>
+                <div class="field">
+                  <label>Logo</label>
+                  <div class="dropzone">
+                    <div class="lg" id="dzLogo">AF</div>
+                    <div class="dz"><b><span class="browse">Upload a logo</span> or drag it here</b><span>PNG or SVG · used across the whole dashboard</span></div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Brand colour</label>
+                  <div class="swatches" data-swgroup="add">
+                    <div class="swatch on" data-c="#5B5BD6" style="background:#5B5BD6"></div>
+                    <div class="swatch" data-c="#DB2777" style="background:#DB2777"></div>
+                    <div class="swatch" data-c="#16A34A" style="background:#16A34A"></div>
+                    <div class="swatch" data-c="#0EA5E9" style="background:#0EA5E9"></div>
+                    <div class="swatch" data-c="#EA580C" style="background:#EA580C"></div>
+                    <div class="swatch" data-c="#DC2626" style="background:#DC2626"></div>
+                    <div class="swatch" data-c="#7C3AED" style="background:#7C3AED"></div>
+                    <div class="swatch" data-c="#0D9488" style="background:#0D9488"></div>
+                    <label class="swatch-custom"><input type="color" value="#5B5BD6" data-cpick="add" /></label>
+                  </div>
+                </div>
+              </div>
+              <div class="wiz-actions">
+                <button class="btn ghost" data-go="list">Cancel</button>
+                <button class="btn primary" data-next="2">Continue → Data sources</button>
+              </div>
+            </div>
+            <!-- step 2 -->
+            <div class="step" data-step="2">
+              <div class="panel">
+                <div class="panel-h">Connect data sources</div>
+                <div class="panel-sub">Hook up the tools this client's dashboard pulls from. You can finish this later from the client's settings.</div>
+                <div class="ds connected" data-ds><div class="ic">GSC</div><div class="dsmain"><b>Google Search Console</b><span>Clicks, impressions, queries</span></div><span class="status">Connected</span><button class="btn sm" data-toggle>Disconnect</button><div class="dsfield"><input class="inp" type="text" placeholder="Property URL — https://apexfinance.com" /></div></div>
+                <div class="ds connected" data-ds><div class="ic">GA4</div><div class="dsmain"><b>Google Analytics 4</b><span>Sessions, conversions, channels</span></div><span class="status">Connected</span><button class="btn sm" data-toggle>Disconnect</button><div class="dsfield"><input class="inp" type="text" placeholder="GA4 Property ID — 412998001" /></div></div>
+                <div class="ds connected" data-ds><div class="ic">PSI</div><div class="dsmain"><b>PageSpeed Insights</b><span>Core Web Vitals, performance</span></div><span class="status">Connected</span><button class="btn sm" data-toggle>Disconnect</button></div>
+                <div class="ds" data-ds><div class="ic">AH</div><div class="dsmain"><b>Ahrefs</b><span>Backlinks, referring domains</span></div><span class="status">Not connected</span><button class="btn sm primary" data-toggle>Connect</button><div class="dsfield" style="display:none"><input class="inp" type="text" placeholder="Ahrefs API key" /></div></div>
+                <div class="ds" data-ds><div class="ic">SR</div><div class="dsmain"><b>SEMrush</b><span>Keywords, visibility, site audit</span></div><span class="status">Not connected</span><button class="btn sm primary" data-toggle>Connect</button><div class="dsfield" style="display:none"><input class="inp" type="text" placeholder="SEMrush API key" /></div></div>
+                <div class="ds" data-ds><div class="ic">MC</div><div class="dsmain"><b>Microsoft Clarity</b><span>User behaviour signals</span></div><span class="status">Not connected</span><button class="btn sm primary" data-toggle>Connect</button><div class="dsfield" style="display:none"><input class="inp" type="text" placeholder="Clarity Project ID" /></div></div>
+              </div>
+              <div class="wiz-actions">
+                <button class="btn" data-back="1">← Back</button>
+                <button class="btn primary" data-next="3">Continue → Client login</button>
+              </div>
+            </div>
+            <!-- step 3 -->
+            <div class="step" data-step="3">
+              <div class="panel">
+                <div class="panel-h">Client login</div>
+                <div class="panel-sub">Create the account this client uses to sign in to their branded dashboard.</div>
+                <div class="field"><label>Login email</label><input class="inp" type="email" placeholder="contact@apexfinance.com" /></div>
+                <div class="field"><label>Temporary password</label><input class="inp" type="text" value="Ax9-tempPass" /><div class="hint">The client is asked to change it on first sign-in.</div></div>
+                <div class="srow"><div class="si"><b>Send invite email now</b><span>Emails the client a link to set up their account.</span></div><button class="toggle on" data-tg></button></div>
+              </div>
+              <div class="wiz-actions">
+                <button class="btn" data-back="2">← Back</button>
+                <button class="btn primary" id="createBtn">Create client</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- wizard preview -->
+          <div class="stick">
+            <div class="pv-label">Live preview — client portal</div>
+            <div class="browser">
+              <div class="b-url"><span class="dots"><i></i><i></i><i></i></span><span id="pvUrl">apexfinance.youragency.com</span></div>
+              <div class="dh">
+                <div class="dh-bar"><div class="dh-logo" id="pvLogo">AF</div><div><b id="pvName">Apex Finance</b><span>SEO Performance Dashboard</span></div></div>
+                <div class="dh-body">
+                  <div class="dh-kpis">
+                    <div class="dh-kpi"><span>Clicks</span><b>18.4k</b></div>
+                    <div class="dh-kpi"><span>Sessions</span><b>21.1k</b></div>
+                    <div class="dh-kpi"><span>Avg pos</span><b>12.4</b></div>
+                  </div>
+                  <div class="dh-bar2"></div><div class="dh-bar2 f"></div><div class="dh-bar2 g"></div>
+                </div>
+              </div>
+            </div>
+            <div class="pv-explain">As you fill the form, this updates live — the client's <b>logo, colour and subdomain</b> are saved to their profile and applied automatically everywhere they sign in.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CLIENT SETTINGS ============ -->
+      <section class="view" id="view-settings">
+        <div class="cli-head">
+          <div class="lg" id="setLogo">TN</div>
+          <div class="nm"><b id="setName">TechNova Solutions</b><span id="setSub">technova.youragency.com</span></div>
+          <div class="sp">
+            <span class="pill live">Live</span>
+            <button class="btn sm">View dashboard ↗</button>
+            <button class="btn sm primary" id="saveBtn">Save changes</button>
+          </div>
+        </div>
+        <div class="tabs">
+          <button class="tab on" data-tab="branding">Branding</button>
+          <button class="tab" data-tab="sources">Data sources</button>
+          <button class="tab" data-tab="access">Client access</button>
+          <button class="tab" data-tab="plan">Plan &amp; status</button>
+        </div>
+
+        <!-- branding tab -->
+        <div class="tab-panel active" data-tabp="branding">
+          <div class="two">
+            <div>
+              <div class="panel">
+                <div class="panel-h">Brand identity</div>
+                <div class="panel-sub">Everything here is stored on this client's profile. The platform reads it on their subdomain and themes the whole dashboard — no code, no separate build per client.</div>
+                <div class="field">
+                  <label>Logo</label>
+                  <div class="dropzone"><div class="lg" id="setDzLogo">TN</div><div class="dz"><b><span class="browse">Replace logo</span> or drag a new one</b><span>Shown on the login screen, top bar and exported reports</span></div></div>
+                </div>
+                <div class="field">
+                  <label>Primary colour</label>
+                  <div class="swatches" data-swgroup="set">
+                    <div class="swatch on" data-c="#5B5BD6" style="background:#5B5BD6"></div>
+                    <div class="swatch" data-c="#DB2777" style="background:#DB2777"></div>
+                    <div class="swatch" data-c="#16A34A" style="background:#16A34A"></div>
+                    <div class="swatch" data-c="#0EA5E9" style="background:#0EA5E9"></div>
+                    <div class="swatch" data-c="#EA580C" style="background:#EA580C"></div>
+                    <div class="swatch" data-c="#DC2626" style="background:#DC2626"></div>
+                    <div class="swatch" data-c="#7C3AED" style="background:#7C3AED"></div>
+                    <div class="swatch" data-c="#0D9488" style="background:#0D9488"></div>
+                    <label class="swatch-custom"><input type="color" value="#5B5BD6" data-cpick="set" /></label>
+                  </div>
+                  <div class="hint">Drives buttons, charts, highlights and links across the dashboard.</div>
+                </div>
+                <div class="field">
+                  <label>Login screen background</label>
+                  <div class="seg" id="bgSeg">
+                    <button class="on" data-bg="bg-solid">Brand tint</button>
+                    <button data-bg="bg-plain">Plain white</button>
+                    <button data-bg="bg-deep">Full colour</button>
+                  </div>
+                </div>
+                <div class="field" style="margin-bottom:0;">
+                  <label>Custom domain (optional)</label>
+                  <input class="inp" type="text" placeholder="reports.technova.com" />
+                  <div class="hint">Pro plan — point the client's own domain at their dashboard instead of a subdomain.</div>
+                </div>
+              </div>
+            </div>
+            <div class="stick">
+              <div class="pv-label">Live preview — login screen</div>
+              <div class="browser">
+                <div class="b-url"><span class="dots"><i></i><i></i><i></i></span><span id="setPvUrl1">technova.youragency.com</span></div>
+                <div class="lp bg-solid" id="lpBox">
+                  <div class="lp-card">
+                    <div class="lp-logo" id="lpLogo">TN</div>
+                    <b id="lpName">TechNova Solutions</b>
+                    <div class="sm">Sign in to your dashboard</div>
+                    <div class="lp-inp"></div><div class="lp-inp"></div>
+                    <div class="lp-btn">Sign in</div>
+                  </div>
+                </div>
+              </div>
+              <div class="pv-label">Live preview — dashboard</div>
+              <div class="browser" style="margin-bottom:0;">
+                <div class="b-url"><span class="dots"><i></i><i></i><i></i></span><span id="setPvUrl2">technova.youragency.com</span></div>
+                <div class="dh">
+                  <div class="dh-bar"><div class="dh-logo" id="dhLogo">TN</div><div><b id="dhName">TechNova Solutions</b><span>SEO Performance Dashboard</span></div></div>
+                  <div class="dh-body">
+                    <div class="dh-kpis"><div class="dh-kpi"><span>Clicks</span><b>18.4k</b></div><div class="dh-kpi"><span>Sessions</span><b>21.1k</b></div><div class="dh-kpi"><span>Avg pos</span><b>12.4</b></div></div>
+                    <div class="dh-bar2"></div><div class="dh-bar2 f"></div><div class="dh-bar2 g"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- sources tab -->
+        <div class="tab-panel" data-tabp="sources">
+          <div class="panel">
+            <div class="panel-h">Connected data sources</div>
+            <div class="panel-sub">Manage which tools feed this client's dashboard.</div>
+            <div class="ds connected" data-ds><div class="ic">GSC</div><div class="dsmain"><b>Google Search Console</b><span>Last synced 2 hours ago</span></div><span class="status">Connected</span><button class="btn sm" data-toggle>Disconnect</button></div>
+            <div class="ds connected" data-ds><div class="ic">GA4</div><div class="dsmain"><b>Google Analytics 4</b><span>Last synced 2 hours ago</span></div><span class="status">Connected</span><button class="btn sm" data-toggle>Disconnect</button></div>
+            <div class="ds connected" data-ds><div class="ic">PSI</div><div class="dsmain"><b>PageSpeed Insights</b><span>Last synced today</span></div><span class="status">Connected</span><button class="btn sm" data-toggle>Disconnect</button></div>
+            <div class="ds connected" data-ds><div class="ic">AH</div><div class="dsmain"><b>Ahrefs</b><span>Last synced 6 hours ago</span></div><span class="status">Connected</span><button class="btn sm" data-toggle>Disconnect</button></div>
+            <div class="ds connected" data-ds><div class="ic">SR</div><div class="dsmain"><b>SEMrush</b><span>Last synced 6 hours ago</span></div><span class="status">Connected</span><button class="btn sm" data-toggle>Disconnect</button></div>
+            <div class="ds connected" data-ds><div class="ic">MC</div><div class="dsmain"><b>Microsoft Clarity</b><span>Last synced today</span></div><span class="status">Connected</span><button class="btn sm" data-toggle>Disconnect</button></div>
+          </div>
+        </div>
+
+        <!-- access tab -->
+        <div class="tab-panel" data-tabp="access">
+          <div class="panel">
+            <div class="panel-h">Client login</div>
+            <div class="panel-sub">Who can sign in to this client's dashboard.</div>
+            <div class="field"><label>Login email</label><input class="inp" type="email" value="contact@technova.com" /></div>
+            <div class="srow"><div class="si"><b>Reset password</b><span>Send the client a link to set a new password.</span></div><button class="btn sm">Send reset link</button></div>
+            <div class="srow"><div class="si"><b>Weekly summary email</b><span>Email this client a short performance recap every Monday.</span></div><button class="toggle on" data-tg></button></div>
+            <div class="srow"><div class="si"><b>Allow report downloads</b><span>Let the client export branded PDF reports themselves.</span></div><button class="toggle on" data-tg></button></div>
+          </div>
+        </div>
+
+        <!-- plan tab -->
+        <div class="tab-panel" data-tabp="plan">
+          <div class="panel">
+            <div class="panel-h">Plan &amp; status</div>
+            <div class="panel-sub">Billing and lifecycle for this client.</div>
+            <div class="srow"><div class="si"><b>Current plan</b><span>Standard — 6 data sources, branded dashboard, monthly reports</span></div><button class="btn sm">Change plan</button></div>
+            <div class="srow"><div class="si"><b>Dashboard status</b><span>Live since 12 March 2026</span></div><span class="pill live">Live</span></div>
+            <div class="srow"><div class="si"><b>Pause dashboard</b><span>Temporarily disable the client's access without deleting anything.</span></div><button class="toggle" data-tg></button></div>
+          </div>
+          <div class="panel" style="margin-bottom:0;">
+            <div class="panel-h">Danger zone</div>
+            <div class="panel-sub">Irreversible actions.</div>
+            <div class="danger-box">
+              <div class="di"><b>Delete this client</b><span>Removes the dashboard, branding, logins and all synced data permanently.</span></div>
+              <button class="btn danger sm">Delete client</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast">Saved</div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var clients = {
+    technova:  {name:"TechNova Solutions", ini:"TN", sub:"technova.youragency.com",  c:"#5B5BD6"},
+    bloom:     {name:"BloomCommerce",      ini:"BC", sub:"bloomcommerce.youragency.com", c:"#DB2777"},
+    greenleaf: {name:"GreenLeaf Organics", ini:"GL", sub:"greenleaf.youragency.com", c:"#16A34A"}
+  };
+
+  // ---------- view routing ----------
+  function go(view, client){
+    document.querySelectorAll(".view").forEach(function(v){ v.classList.remove("active"); });
+    var t = document.getElementById("view-"+view);
+    if(t) t.classList.add("active");
+    var titles = {list:"Clients", add:"Add new client", settings:"Client settings"};
+    var crumbs = {list:"Admin", add:"Admin · Clients", settings:"Admin · Clients"};
+    document.getElementById("pageTitle").textContent = titles[view]||"Clients";
+    document.getElementById("crumb").textContent = crumbs[view]||"Admin";
+    document.getElementById("topActions").style.visibility = (view==="list") ? "visible" : "hidden";
+    if(view==="add"){ resetWizard(); }
+    if(view==="settings" && client){ loadClient(client); }
+    window.scrollTo(0,0);
+    closeSidebar();
+  }
+  document.body.addEventListener("click", function(e){
+    var el = e.target.closest("[data-go]");
+    if(el){ go(el.getAttribute("data-go"), el.getAttribute("data-client")); }
+  });
+
+  // ---------- sidebar ----------
+  var sidebar = document.getElementById("sidebar"), overlay = document.getElementById("overlay");
+  function closeSidebar(){ sidebar.classList.remove("open"); overlay.classList.remove("show"); }
+  document.getElementById("hamburger").addEventListener("click", function(){
+    sidebar.classList.add("open"); overlay.classList.add("show");
+  });
+  overlay.addEventListener("click", closeSidebar);
+  document.querySelectorAll(".nav button").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll(".nav button").forEach(function(x){ x.classList.remove("active"); });
+      b.classList.add("active");
+      if(b.getAttribute("data-go")==="list" || b.textContent.trim()==="Clients") go("list");
+    });
+  });
+
+  // ---------- wizard ----------
+  function gotoStep(n){
+    document.querySelectorAll(".step").forEach(function(s){
+      s.classList.toggle("active", s.getAttribute("data-step")==String(n));
+    });
+    document.querySelectorAll(".stepi").forEach(function(si){
+      var k = parseInt(si.getAttribute("data-stepi"),10);
+      si.classList.toggle("active", k===n);
+      si.classList.toggle("done", k<n);
+    });
+    window.scrollTo(0,0);
+  }
+  function resetWizard(){ gotoStep(1); }
+  document.querySelectorAll("[data-next]").forEach(function(b){
+    b.addEventListener("click", function(){ gotoStep(parseInt(b.getAttribute("data-next"),10)); });
+  });
+  document.querySelectorAll("[data-back]").forEach(function(b){
+    b.addEventListener("click", function(){ gotoStep(parseInt(b.getAttribute("data-back"),10)); });
+  });
+
+  // ---------- wizard live preview ----------
+  var fName = document.getElementById("fName"), fSub = document.getElementById("fSub");
+  var subEdited = false;
+  function initials(name){
+    var p = name.trim().split(/\s+/).filter(Boolean);
+    if(!p.length) return "AF";
+    if(p.length===1) return p[0].substring(0,2).toUpperCase();
+    return (p[0][0]+p[1][0]).toUpperCase();
+  }
+  function slug(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,"").substring(0,24); }
+  function syncAdd(){
+    var nm = fName.value || "Apex Finance";
+    var sb = fSub.value || slug(fName.value) || "apexfinance";
+    var ini = initials(fName.value || "Apex Finance");
+    document.getElementById("pvName").textContent = nm;
+    document.getElementById("pvUrl").textContent = sb + ".youragency.com";
+    document.getElementById("pvLogo").textContent = ini;
+    document.getElementById("dzLogo").textContent = ini;
+  }
+  fName.addEventListener("input", function(){ if(!subEdited) fSub.value = slug(fName.value); syncAdd(); });
+  fSub.addEventListener("input", function(){ subEdited = true; syncAdd(); });
+
+  // ---------- swatches (generic) ----------
+  document.querySelectorAll("[data-swgroup]").forEach(function(group){
+    var sws = group.querySelectorAll(".swatch");
+    var pick = group.querySelector("[data-cpick]");
+    sws.forEach(function(sw){
+      sw.addEventListener("click", function(){
+        sws.forEach(function(x){ x.classList.remove("on"); });
+        sw.classList.add("on");
+        var c = sw.getAttribute("data-c");
+        root.style.setProperty("--accent", c);
+        root.style.setProperty("--accent-soft", c+"22");
+        if(pick) pick.value = c;
+      });
+    });
+    if(pick){
+      pick.addEventListener("input", function(){
+        sws.forEach(function(x){ x.classList.remove("on"); });
+        root.style.setProperty("--accent", pick.value);
+        root.style.setProperty("--accent-soft", pick.value+"22");
+      });
+    }
+  });
+
+  // ---------- data source toggles ----------
+  document.querySelectorAll("[data-ds]").forEach(function(ds){
+    var btn = ds.querySelector("[data-toggle]");
+    var status = ds.querySelector(".status");
+    var dsfield = ds.querySelector(".dsfield");
+    if(!btn) return;
+    btn.addEventListener("click", function(){
+      var on = ds.classList.toggle("connected");
+      status.textContent = on ? "Connected" : "Not connected";
+      btn.textContent = on ? "Disconnect" : "Connect";
+      btn.classList.toggle("primary", !on);
+      if(dsfield && dsfield.querySelector("input")) dsfield.style.display = on ? "block" : "none";
+    });
+  });
+
+  // ---------- generic toggles ----------
+  document.querySelectorAll("[data-tg]").forEach(function(t){
+    t.addEventListener("click", function(){ t.classList.toggle("on"); });
+  });
+
+  // ---------- settings: tabs ----------
+  document.querySelectorAll(".tab").forEach(function(tab){
+    tab.addEventListener("click", function(){
+      document.querySelectorAll(".tab").forEach(function(x){ x.classList.remove("on"); });
+      tab.classList.add("on");
+      var key = tab.getAttribute("data-tab");
+      document.querySelectorAll(".tab-panel").forEach(function(p){
+        p.classList.toggle("active", p.getAttribute("data-tabp")===key);
+      });
+    });
+  });
+
+  // ---------- settings: background segment ----------
+  var lpBox = document.getElementById("lpBox");
+  document.querySelectorAll("#bgSeg button").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll("#bgSeg button").forEach(function(x){ x.classList.remove("on"); });
+      b.classList.add("on");
+      lpBox.className = "lp " + b.getAttribute("data-bg");
+    });
+  });
+
+  // ---------- settings: load a client ----------
+  function loadClient(key){
+    var c = clients[key]; if(!c) return;
+    root.style.setProperty("--accent", c.c);
+    root.style.setProperty("--accent-soft", c.c+"22");
+    document.getElementById("setLogo").textContent = c.ini;
+    document.getElementById("setDzLogo").textContent = c.ini;
+    document.getElementById("setName").textContent = c.name;
+    document.getElementById("setSub").textContent = c.sub;
+    ["lpLogo","dhLogo"].forEach(function(id){ document.getElementById(id).textContent = c.ini; });
+    ["lpName","dhName"].forEach(function(id){ document.getElementById(id).textContent = c.name; });
+    ["setPvUrl1","setPvUrl2"].forEach(function(id){ document.getElementById(id).textContent = c.sub; });
+    document.querySelectorAll('[data-swgroup="set"] .swatch').forEach(function(sw){
+      sw.classList.toggle("on", sw.getAttribute("data-c").toLowerCase()===c.c.toLowerCase());
+    });
+    var pick = document.querySelector('[data-cpick="set"]'); if(pick) pick.value = c.c;
+    // reset tab to branding
+    document.querySelectorAll(".tab").forEach(function(x){ x.classList.toggle("on", x.getAttribute("data-tab")==="branding"); });
+    document.querySelectorAll(".tab-panel").forEach(function(p){ p.classList.toggle("active", p.getAttribute("data-tabp")==="branding"); });
+  }
+
+  // ---------- toast actions ----------
+  var toast = document.getElementById("toast");
+  function showToast(msg){
+    toast.textContent = msg; toast.classList.add("show");
+    setTimeout(function(){ toast.classList.remove("show"); }, 2600);
+  }
+  document.getElementById("saveBtn").addEventListener("click", function(){ showToast("Branding saved — applied to the client's dashboard"); });
+  document.getElementById("createBtn").addEventListener("click", function(){
+    var nm = fName.value.trim() || "New Client";
+    var sb = fSub.value.trim() || slug(nm) || "newclient";
+    var ini = initials(nm);
+    var col = (document.querySelector('[data-swgroup="add"] .swatch.on')||{}).getAttribute
+      ? document.querySelector('[data-swgroup="add"] .swatch.on').getAttribute("data-c")
+      : "#5B5BD6";
+    var connected = document.querySelectorAll("#view-add [data-ds].connected").length;
+    var card = document.createElement("div");
+    card.className = "ccard isnew";
+    var bars = "";
+    for(var i=0;i<6;i++){ bars += '<i'+(i<connected?' class="on"':'')+'></i>'; }
+    card.innerHTML =
+      '<div class="ccard-head"><div class="ccard-logo" style="background:'+col+'">'+ini+'</div>'+
+      '<div><b>'+nm+'</b><span>'+sb+'.youragency.com</span></div></div>'+
+      '<div class="srcrow">'+bars+'</div>'+
+      '<div class="ccard-foot"><div><span class="pill setup">Setup</span> <span class="meta">· just added</span></div>'+
+      '<button class="btn sm" data-go="settings" data-client="technova">Manage</button></div>';
+    var grid = document.getElementById("clientsGrid");
+    grid.insertBefore(card, grid.firstChild);
+    go("list");
+    showToast("Client created — added to your list");
+  });
+
+  syncAdd();
+})();
+</script>
+</body>
+</html>

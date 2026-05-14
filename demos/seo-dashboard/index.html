@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>White-Label SEO Dashboard — Interactive Prototype | Ahmed Beshir</title>
+<meta name="description" content="An interactive prototype of a white-label, multi-client SEO reporting platform for marketing agencies — designed and built by Ahmed Beshir." />
+<style>
+  :root{
+    --indigo:#5B5BD6; --indigo-2:#7C76E8; --indigo-soft:#ECECFB;
+    --ink:#171922; --muted:#5E6273; --faint:#9296A4; --line:#E7E8EE;
+    --bg:#FFFFFF; --bg-2:#F6F7FB; --sidebar:#1C1E2C; --good:#1A9E62;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6;}
+  a{text-decoration:none;color:inherit;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  /* nav */
+  .nav{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(255,255,255,.92);
+    backdrop-filter:blur(8px);z-index:50;}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:62px;}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;letter-spacing:-.3px;}
+  .logo .m{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--indigo),var(--indigo-2));}
+  .nav a.back{font-size:13px;color:var(--muted);font-weight:500;}
+  .nav a.back:hover{color:var(--ink);}
+
+  /* hero */
+  .hero{background:var(--bg-2);border-bottom:1px solid var(--line);overflow:hidden;}
+  .hero-in{padding:64px 0 72px;display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center;}
+  .eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.9px;color:var(--indigo);background:var(--indigo-soft);
+    padding:6px 12px;border-radius:20px;margin-bottom:20px;}
+  .hero h1{font-size:38px;line-height:1.18;font-weight:800;letter-spacing:-1px;margin-bottom:16px;}
+  .hero h1 em{font-style:normal;color:var(--indigo);}
+  .hero p.lead{font-size:15.5px;color:var(--muted);margin-bottom:28px;max-width:440px;}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;
+    padding:13px 20px;border-radius:11px;border:1px solid var(--line);background:#fff;color:var(--ink);
+    transition:transform .12s,box-shadow .12s,background .12s;}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(23,25,34,.1);}
+  .btn.primary{background:var(--indigo);color:#fff;border-color:var(--indigo);}
+  .btn.primary:hover{background:#4F4FC9;}
+  .hero-note{font-size:12px;color:var(--faint);margin-top:18px;}
+
+  /* hero browser visual */
+  .shot{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;
+    box-shadow:0 30px 60px rgba(23,25,34,.16);}
+  .shot-bar{background:#F1F2F6;border-bottom:1px solid var(--line);padding:9px 13px;display:flex;
+    align-items:center;gap:7px;}
+  .shot-bar i{width:9px;height:9px;border-radius:50%;background:#D4D6DE;display:block;}
+  .shot-bar span{margin-left:8px;font-size:10.5px;color:var(--faint);}
+  .shot-body{display:flex;height:248px;}
+  .shot-side{width:62px;background:var(--sidebar);padding:12px 9px;}
+  .shot-side .sl{width:30px;height:30px;border-radius:8px;
+    background:linear-gradient(135deg,var(--indigo),var(--indigo-2));margin-bottom:14px;}
+  .shot-side .si{height:8px;border-radius:4px;background:rgba(255,255,255,.13);margin-bottom:9px;}
+  .shot-side .si.on{background:rgba(124,118,232,.7);}
+  .shot-main{flex:1;padding:14px;}
+  .shot-head{display:flex;align-items:center;gap:9px;margin-bottom:14px;}
+  .shot-head .lg{width:26px;height:26px;border-radius:7px;background:var(--indigo);}
+  .shot-head .ht{flex:1;}
+  .shot-head .ht b{display:block;height:8px;width:90px;border-radius:4px;background:#E2E3EA;margin-bottom:4px;}
+  .shot-head .ht span{display:block;height:6px;width:130px;border-radius:3px;background:#EEEFF3;}
+  .shot-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
+  .shot-kpi{background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:9px;}
+  .shot-kpi i{display:block;height:6px;width:60%;border-radius:3px;background:#DDDEE6;margin-bottom:6px;}
+  .shot-kpi b{display:block;height:11px;width:80%;border-radius:3px;background:#C9CAD6;}
+  .shot-chart{background:var(--bg-2);border:1px solid var(--line);border-radius:9px;padding:11px;}
+
+  /* sections */
+  .section{padding:72px 0;}
+  .section.alt{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .sec-head{text-align:center;max-width:560px;margin:0 auto 44px;}
+  .sec-head .tag{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;
+    color:var(--indigo);margin-bottom:10px;}
+  .sec-head h2{font-size:28px;font-weight:800;letter-spacing:-.6px;margin-bottom:10px;}
+  .sec-head p{font-size:14.5px;color:var(--muted);}
+
+  /* demo cards */
+  .demos{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  .demo{border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden;
+    display:flex;flex-direction:column;transition:transform .14s,box-shadow .14s;}
+  .demo:hover{transform:translateY(-4px);box-shadow:0 22px 44px rgba(23,25,34,.12);}
+  .demo-vis{height:170px;background:var(--bg-2);border-bottom:1px solid var(--line);padding:18px;
+    display:flex;align-items:center;justify-content:center;}
+  .mini{width:100%;max-width:300px;border:1px solid var(--line);border-radius:9px;overflow:hidden;
+    background:#fff;box-shadow:0 8px 20px rgba(23,25,34,.08);}
+  .mini-bar{background:#F1F2F6;padding:6px 9px;display:flex;gap:5px;}
+  .mini-bar i{width:6px;height:6px;border-radius:50%;background:#D4D6DE;}
+  .mini-b{display:flex;}
+  .mini-side{width:42px;background:var(--sidebar);padding:8px 6px;}
+  .mini-side i{display:block;height:6px;border-radius:3px;background:rgba(255,255,255,.14);margin-bottom:6px;}
+  .mini-side i.on{background:rgba(124,118,232,.7);}
+  .mini-main{flex:1;padding:9px;}
+  .mini-row{display:flex;gap:5px;margin-bottom:6px;}
+  .mini-row b{flex:1;height:24px;border-radius:5px;background:var(--bg-2);border:1px solid var(--line);}
+  .mini-wide{height:46px;border-radius:5px;background:var(--bg-2);border:1px solid var(--line);}
+  .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+  .mini-grid b{height:30px;border-radius:5px;background:var(--bg-2);border:1px solid var(--line);}
+  .mini-grid b.accent{background:var(--indigo-soft);border-color:#D4D3F4;}
+  .demo-body{padding:22px;flex:1;display:flex;flex-direction:column;}
+  .demo-body .kicker{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;
+    color:var(--faint);margin-bottom:6px;}
+  .demo-body h3{font-size:18px;font-weight:800;letter-spacing:-.3px;margin-bottom:8px;}
+  .demo-body p{font-size:13.5px;color:var(--muted);margin-bottom:14px;}
+  .demo-body ul{list-style:none;margin-bottom:20px;}
+  .demo-body li{font-size:13px;color:var(--ink);padding:4px 0 4px 22px;position:relative;}
+  .demo-body li::before{content:"";position:absolute;left:0;top:11px;width:11px;height:11px;
+    border-radius:50%;background:var(--indigo-soft);border:2px solid var(--indigo);}
+  .demo-body .btn{margin-top:auto;justify-content:center;}
+
+  /* features */
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .feat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;}
+  .feat .ic{width:40px;height:40px;border-radius:11px;background:var(--indigo-soft);
+    display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+  .feat h4{font-size:14.5px;font-weight:700;margin-bottom:6px;letter-spacing:-.2px;}
+  .feat p{font-size:13px;color:var(--muted);}
+
+  /* how it works */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .step{position:relative;padding-top:8px;}
+  .step .num{width:34px;height:34px;border-radius:10px;background:var(--indigo);color:#fff;
+    font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+  .step h4{font-size:15px;font-weight:700;margin-bottom:6px;letter-spacing:-.2px;}
+  .step p{font-size:13.5px;color:var(--muted);}
+
+  /* footer */
+  .footer{background:var(--sidebar);color:#AEB2C4;padding:48px 0 40px;}
+  .footer-in{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  .footer .logo{color:#fff;}
+  .footer .fmeta{font-size:12.5px;color:#8A8FA3;max-width:440px;}
+  .footer a.flink{font-size:13px;color:#C7CAD9;font-weight:600;}
+  .footer a.flink:hover{color:#fff;}
+  .footer .disc{font-size:11.5px;color:#6E7288;margin-top:22px;padding-top:20px;
+    border-top:1px solid rgba(255,255,255,.08);}
+
+  @media(max-width:860px){
+    .hero-in{grid-template-columns:1fr;gap:38px;padding:48px 0 54px;}
+    .hero h1{font-size:31px;}
+    .demos,.features,.steps{grid-template-columns:1fr;}
+    .section{padding:54px 0;}
+  }
+  @media(max-width:520px){
+    .wrap{padding:0 18px;}
+    .hero h1{font-size:27px;}
+    .sec-head h2{font-size:23px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="wrap nav-in">
+    <div class="logo"><span class="m"></span> Ahmed Beshir</div>
+    <a class="back" href="https://ahmedbeshir.com">← Back to portfolio</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-in">
+    <div>
+      <span class="eyebrow">Interactive Prototype</span>
+      <h1>A <em>white-label SEO dashboard</em> for marketing agencies</h1>
+      <p class="lead">Every client of the agency gets their own branded, always-on dashboard — pulling live SEO data from all the agency's tools into one place. No more manual monthly reports.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="./dashboard.html" target="_blank" rel="noopener">Open client dashboard ↗</a>
+        <a class="btn" href="./admin.html" target="_blank" rel="noopener">Open agency admin ↗</a>
+      </div>
+      <p class="hero-note">Fully interactive · works on any device · sample data for demonstration</p>
+    </div>
+    <div class="shot">
+      <div class="shot-bar"><i></i><i></i><i></i><span>client.youragency.com</span></div>
+      <div class="shot-body">
+        <div class="shot-side">
+          <div class="sl"></div>
+          <div class="si on"></div><div class="si"></div><div class="si"></div>
+          <div class="si"></div><div class="si"></div>
+        </div>
+        <div class="shot-main">
+          <div class="shot-head">
+            <div class="lg"></div>
+            <div class="ht"><b></b><span></span></div>
+          </div>
+          <div class="shot-kpis">
+            <div class="shot-kpi"><i></i><b></b></div>
+            <div class="shot-kpi"><i></i><b></b></div>
+            <div class="shot-kpi"><i></i><b></b></div>
+            <div class="shot-kpi"><i></i><b></b></div>
+          </div>
+          <div class="shot-chart">
+            <svg viewBox="0 0 300 96" width="100%" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="24" x2="300" y2="24" stroke="#EAEBF0"/>
+              <line x1="0" y1="54" x2="300" y2="54" stroke="#EAEBF0"/>
+              <line x1="0" y1="84" x2="300" y2="84" stroke="#E4E5EC"/>
+              <path d="M4,76 L46,70 L88,72 L130,58 L172,48 L214,34 L256,26 L296,12 L296,84 L4,84 Z" fill="#5B5BD6" fill-opacity="0.12"/>
+              <polyline points="4,76 46,70 88,72 130,58 172,48 214,34 256,26 296,12" fill="none" stroke="#5B5BD6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="4,82 46,80 88,77 130,72 172,66 214,58 256,50 296,40" fill="none" stroke="#7C76E8" stroke-width="1.8" stroke-dasharray="4 3"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- DEMOS -->
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="tag">Two sides, one platform</div>
+      <h2>Explore the live demo</h2>
+      <p>The platform has two faces — what the agency's clients see, and the back-office the agency runs it from. Open either one below.</p>
+    </div>
+    <div class="demos">
+
+      <div class="demo">
+        <div class="demo-vis">
+          <div class="mini">
+            <div class="mini-bar"><i></i><i></i><i></i></div>
+            <div class="mini-b">
+              <div class="mini-side"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+              <div class="mini-main">
+                <div class="mini-row"><b></b><b></b><b></b></div>
+                <div class="mini-wide"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-body">
+          <div class="kicker">For the agency's clients</div>
+          <h3>Client Dashboard</h3>
+          <p>The branded portal each client logs into to track their SEO performance any time.</p>
+          <ul>
+            <li>Live data from 6 tools — Search Console, GA4, PageSpeed, Ahrefs, SEMrush, Clarity</li>
+            <li>Traffic, keywords, backlinks, site health &amp; automated insights</li>
+            <li>Themed in each client's own logo and brand colours</li>
+          </ul>
+          <a class="btn primary" href="./dashboard.html" target="_blank" rel="noopener">Open client dashboard ↗</a>
+        </div>
+      </div>
+
+      <div class="demo">
+        <div class="demo-vis">
+          <div class="mini">
+            <div class="mini-bar"><i></i><i></i><i></i></div>
+            <div class="mini-b">
+              <div class="mini-side"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+              <div class="mini-main">
+                <div class="mini-grid"><b class="accent"></b><b></b><b></b><b class="accent"></b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-body">
+          <div class="kicker">For the agency</div>
+          <h3>Agency Admin</h3>
+          <p>The back-office where the agency adds new clients and manages each one's setup.</p>
+          <ul>
+            <li>Add a client with a guided step-by-step flow</li>
+            <li>Per-client settings — branding, data sources, login &amp; plan</li>
+            <li>Set each client's logo &amp; colours with a live branding preview</li>
+          </ul>
+          <a class="btn primary" href="./admin.html" target="_blank" rel="noopener">Open agency admin ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="tag">What's inside</div>
+      <h2>Built for agencies running many clients</h2>
+      <p>One platform that scales from three clients to thirty — without rebuilding anything per client.</p>
+    </div>
+    <div class="features">
+      <div class="feat">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#5B5BD6" stroke-width="1.7"><rect x="2.5" y="2.5" width="6" height="6" rx="1.5"/><rect x="11.5" y="2.5" width="6" height="6" rx="1.5"/><rect x="2.5" y="11.5" width="6" height="6" rx="1.5"/><rect x="11.5" y="11.5" width="6" height="6" rx="1.5"/></svg></div>
+        <h4>Multi-tenant by design</h4>
+        <p>One codebase serves every client, with each client's data fully isolated.</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#5B5BD6" stroke-width="1.7"><circle cx="10" cy="7" r="3.2"/><path d="M4 17c0-3.3 2.7-5 6-5s6 1.7 6 5"/></svg></div>
+        <h4>White-label branding</h4>
+        <p>Each client's logo, colours and login screen — saved to their profile, applied automatically.</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#5B5BD6" stroke-width="1.7"><path d="M3 14l4-4 3.5 2.5L17 6"/><path d="M13 6h4v4"/></svg></div>
+        <h4>6 data sources, unified</h4>
+        <p>Search Console, GA4, PageSpeed, Ahrefs, SEMrush and Clarity — synced into one view.</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#5B5BD6" stroke-width="1.7"><path d="M10 2.5l2.2 4.5 5 .7-3.6 3.5.9 4.9L10 13.8 5.5 16.1l.9-4.9L2.8 7.7l5-.7z"/></svg></div>
+        <h4>Automated insights</h4>
+        <p>The dashboard surfaces the meaningful changes each period — in plain language.</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#5B5BD6" stroke-width="1.7"><circle cx="10" cy="10" r="7.5"/><path d="M2.5 10h15M10 2.5c2 2.2 3 4.8 3 7.5s-1 5.3-3 7.5c-2-2.2-3-4.8-3-7.5s1-5.3 3-7.5z"/></svg></div>
+        <h4>Per-client subdomains</h4>
+        <p>Every client signs in at their own address — clientname.youragency.com.</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#5B5BD6" stroke-width="1.7"><circle cx="10" cy="10" r="7.5"/><path d="M10 5.5V10l3 2"/></svg></div>
+        <h4>Always on</h4>
+        <p>Clients check live performance whenever they want — no more waiting for a monthly report.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="tag">How it works</div>
+      <h2>From new client to live dashboard</h2>
+      <p>Three steps the agency follows for every client they bring on.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <h4>Add the client</h4>
+        <p>In the admin console, the agency creates the client — sets the branding and connects their data sources through a guided flow.</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <h4>Client gets their portal</h4>
+        <p>The client receives a login to their own branded subdomain — their logo, their colours, their data.</p>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <h4>Data stays live</h4>
+        <p>The platform syncs from every connected tool on a schedule, so the dashboard is always current.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-in">
+      <div>
+        <div class="logo"><span class="m"></span> Ahmed Beshir</div>
+        <p class="fmeta">Interactive prototype of a white-label SEO reporting platform — designed and built end to end.</p>
+      </div>
+      <a class="flink" href="https://ahmedbeshir.com">ahmedbeshir.com →</a>
+    </div>
+    <div class="disc">This is an interactive design prototype. All figures shown in the demos are sample data for illustration. No external services are connected.</div>
+  </div>
+</footer>
+
+</body>
+</html>
