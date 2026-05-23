@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Escalé · Booking Confirmation · Design Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..900&family=Geist+Mono:wght@400..600&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --aubergine-900: #3A1234;
+  --aubergine-700: #4A1942;
+  --aubergine-500: #5B2C5F;
+  --aubergine-300: #8E5A8E;
+  --aubergine-100: #EFE3EF;
+  --magenta-500: #B8228C;
+  --magenta-300: #D86CB0;
+  --terracotta-700: #A05A3A;
+  --terracotta-500: #C9956B;
+  --terracotta-300: #E2BC9C;
+  --terracotta-100: #F5E8DC;
+  --ink-900: #1C1410;
+  --ink-700: #3D332D;
+  --ink-500: #6B5D54;
+  --ink-300: #A89A8E;
+  --sand-100: #F0E9DF;
+  --sand-50: #F7F2E9;
+  --cream: #FAF7F2;
+  --paper: #FDFBF7;
+  --success: #5A8C5F;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Geist', -apple-system, sans-serif;
+  --font-arabic: 'Tajawal', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
+  --shadow-sm: 0 1px 2px rgba(58, 18, 52, 0.04);
+  --shadow-md: 0 4px 12px rgba(58, 18, 52, 0.06), 0 1px 3px rgba(58, 18, 52, 0.04);
+  --shadow-lg: 0 12px 32px rgba(58, 18, 52, 0.08), 0 4px 8px rgba(58, 18, 52, 0.04);
+  --shadow-phone: 0 50px 100px -20px rgba(58, 18, 52, 0.25), 0 30px 60px -30px rgba(58, 18, 52, 0.3);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink-900);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 15% 5%, rgba(184, 34, 140, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 85% 90%, rgba(201, 149, 107, 0.06) 0%, transparent 40%);
+}
+
+[lang="ar"], [lang="ar"] * { font-family: var(--font-arabic); }
+[lang="ar"] { line-height: 1.6; }
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' /%3E%3C/svg%3E");
+}
+
+.page {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 48px 32px 96px;
+}
+
+/* HEADER */
+.brand-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 56px;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.brand-identity { display: flex; align-items: center; gap: 20px; }
+.brand-logo { width: 48px; height: 48px; }
+.brand-name-wrap { display: flex; flex-direction: column; gap: 2px; }
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  color: var(--aubergine-900);
+  line-height: 1;
+}
+.brand-tagline {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  font-weight: 500;
+}
+.brand-meta { display: flex; align-items: center; gap: 24px; }
+.screen-stamp { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.screen-stamp .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-300); font-weight: 500; }
+.screen-stamp .val { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--terracotta-700); }
+
+.locale-switch {
+  display: flex;
+  background: var(--paper);
+  border: 1px solid var(--sand-100);
+  border-radius: 9999px;
+  padding: 4px;
+  box-shadow: var(--shadow-sm);
+}
+.locale-switch button {
+  border: 0;
+  background: transparent;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-500);
+  cursor: pointer;
+}
+.locale-switch button.active { background: var(--aubergine-700); color: var(--paper); }
+
+.editorial-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 48px;
+  margin-bottom: 56px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--sand-100);
+}
+.editorial-head .label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--terracotta-700);
+  margin-bottom: 12px;
+}
+.editorial-head h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(40px, 5.5vw, 72px);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  color: var(--aubergine-900);
+  max-width: 18ch;
+}
+.editorial-head h1 em { font-style: italic; color: var(--magenta-500); }
+.editorial-head .colophon {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-500);
+  letter-spacing: 0.02em;
+  text-align: end;
+  line-height: 1.7;
+}
+.editorial-head .colophon strong { color: var(--aubergine-700); }
+
+.composition {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+@media (max-width: 980px) {
+  .composition { grid-template-columns: 1fr; gap: 48px; }
+  .phone { transform: scale(0.85); transform-origin: top center; }
+}
+
+.phone-stage {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  padding: 32px 0;
+}
+.phone-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 30%, rgba(90, 140, 95, 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse at center, rgba(91, 44, 95, 0.06) 0%, transparent 60%);
+  z-index: 0;
+}
+
+.phone {
+  position: relative;
+  width: 400px;
+  height: 840px;
+  background: var(--ink-900);
+  border-radius: 56px;
+  padding: 12px;
+  box-shadow: var(--shadow-phone);
+  z-index: 1;
+}
+.phone::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 30px;
+  background: var(--ink-900);
+  border-radius: 0 0 18px 18px;
+  z-index: 100;
+}
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  background: var(--paper);
+  border-radius: 44px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+.phone-screen::-webkit-scrollbar { display: none; }
+
+/* STATUS BAR */
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 32px 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-900);
+}
+.status-bar .icons { display: flex; gap: 6px; }
+.status-bar svg { width: 16px; height: 16px; }
+
+/* SUCCESS HERO */
+.success-hero {
+  padding: 32px 24px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Success check animation circle */
+.success-mark {
+  width: 96px;
+  height: 96px;
+  margin: 8px auto 24px;
+  position: relative;
+}
+.success-mark .ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--success) 0%, #6FAA75 100%);
+  opacity: 0.12;
+}
+.success-mark .ring-2 {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--success) 0%, #6FAA75 100%);
+  opacity: 0.18;
+}
+.success-mark .check-circle {
+  position: absolute;
+  inset: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--success) 0%, #6FAA75 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px -8px rgba(90, 140, 95, 0.45);
+}
+.success-mark svg {
+  width: 28px;
+  height: 28px;
+  color: var(--paper);
+  stroke-width: 3;
+}
+
+.success-eyebrow {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--terracotta-700);
+  margin-bottom: 8px;
+}
+
+.success-headline {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--aubergine-900);
+  margin-bottom: 8px;
+}
+[lang="ar"] .success-headline { font-weight: 700; letter-spacing: 0; font-size: 30px; }
+.success-headline em {
+  font-style: italic;
+  color: var(--magenta-500);
+}
+
+.success-sub {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-500);
+  margin-bottom: 18px;
+  max-width: 30ch;
+  margin-inline: auto;
+}
+
+/* Booking reference */
+.booking-ref {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--sand-50);
+  border: 1px solid var(--sand-100);
+  padding: 8px 14px;
+  border-radius: 9999px;
+  margin-bottom: 8px;
+}
+.booking-ref-lbl {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  font-weight: 500;
+}
+[lang="ar"] .booking-ref-lbl { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.booking-ref-code {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--aubergine-900);
+  letter-spacing: 0.08em;
+}
+.booking-ref svg {
+  width: 12px;
+  height: 12px;
+  color: var(--ink-500);
+}
+
+/* BOOKING CARD */
+.booking-card {
+  margin: 0 24px 24px;
+  background: var(--paper);
+  border: 1px solid var(--sand-100);
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+.booking-hero-img {
+  height: 140px;
+  background:
+    linear-gradient(180deg, transparent 50%, rgba(58, 18, 52, 0.6) 100%),
+    linear-gradient(135deg, #E2BC9C 0%, #C9956B 40%, #A05A3A 70%, #5B2C5F 100%);
+  position: relative;
+}
+.booking-hero-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 90 L18 70 L26 90 Z M30 90 L38 70 L46 90 Z M50 90 L58 70 L66 90 Z' fill='rgba(255,255,255,0.06)'/%3E%3C/svg%3E");
+  background-size: 180px;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+}
+
+.booking-hero-content {
+  position: absolute;
+  bottom: 12px;
+  inset-inline-start: 16px;
+  inset-inline-end: 16px;
+  color: var(--paper);
+}
+
+.booking-hotel-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+[lang="ar"] .booking-hotel-name { font-weight: 700; letter-spacing: 0; }
+.booking-location {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  opacity: 0.88;
+  margin-top: 4px;
+}
+.booking-location svg { width: 11px; height: 11px; }
+
+.booking-details {
+  padding: 18px 18px 0;
+}
+
+/* Date strip */
+.date-strip {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.date-block {
+  flex: 1;
+  padding: 4px 0;
+}
+.date-block-lbl {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+[lang="ar"] .date-block-lbl { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.date-block-day {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--aubergine-900);
+  line-height: 1;
+  margin-bottom: 3px;
+}
+[lang="ar"] .date-block-day { font-weight: 700; letter-spacing: 0; }
+.date-block-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-500);
+  font-weight: 500;
+}
+
+.date-divider {
+  width: 1px;
+  background: var(--sand-100);
+  flex-shrink: 0;
+}
+
+.nights-pill {
+  background: var(--aubergine-100);
+  color: var(--aubergine-700);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  align-self: center;
+  white-space: nowrap;
+}
+
+/* Info rows */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid var(--sand-100);
+  font-size: 13px;
+}
+.info-row-lbl {
+  color: var(--ink-500);
+}
+.info-row-val {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--aubergine-900);
+  letter-spacing: -0.01em;
+}
+[lang="ar"] .info-row-val { font-weight: 700; letter-spacing: 0; }
+.info-row-val.mono { font-family: var(--font-mono); font-weight: 500; font-size: 13px; }
+
+.paid-pill {
+  background: rgba(90, 140, 95, 0.15);
+  color: var(--success);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  letter-spacing: 0.04em;
+  margin-inline-start: 8px;
+}
+
+/* Action buttons section */
+.action-section {
+  padding: 20px 24px 0;
+}
+
+.action-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--aubergine-900);
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+}
+[lang="ar"] .action-title { font-weight: 700; letter-spacing: 0; }
+
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.action-tile {
+  background: var(--paper);
+  border: 1px solid var(--sand-100);
+  border-radius: 14px;
+  padding: 14px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: start;
+}
+
+.action-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--terracotta-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--terracotta-700);
+  flex-shrink: 0;
+}
+.action-icon svg { width: 16px; height: 16px; }
+.action-icon.alt { background: var(--aubergine-100); color: var(--aubergine-700); }
+
+.action-text {
+  flex: 1;
+  min-width: 0;
+}
+.action-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--aubergine-900);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+[lang="ar"] .action-name { font-weight: 700; letter-spacing: 0; }
+.action-sub {
+  font-size: 10px;
+  color: var(--ink-500);
+  margin-top: 2px;
+}
+
+/* WHAT'S NEXT */
+.next-section {
+  padding: 0 24px;
+  margin-bottom: 24px;
+}
+
+.next-eyebrow {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--terracotta-700);
+  margin-bottom: 4px;
+}
+.next-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--aubergine-900);
+  letter-spacing: -0.015em;
+  margin-bottom: 14px;
+}
+[lang="ar"] .next-title { font-weight: 700; letter-spacing: 0; }
+
+.next-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--sand-100);
+}
+.next-step:first-of-type { border-top: 0; }
+
+.next-step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--aubergine-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--aubergine-700);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.next-step-body { flex: 1; }
+.next-step-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--aubergine-900);
+  letter-spacing: -0.01em;
+  margin-bottom: 3px;
+}
+[lang="ar"] .next-step-title { font-weight: 700; letter-spacing: 0; }
+.next-step-desc {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-500);
+}
+.next-step-time {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--terracotta-700);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+[lang="ar"] .next-step-time { letter-spacing: 0; text-transform: none; font-size: 11px; }
+
+/* CTA */
+.cta-bar {
+  position: sticky;
+  bottom: 0;
+  background: var(--paper);
+  border-top: 1px solid var(--sand-100);
+  padding: 14px 24px 24px;
+  display: flex;
+  gap: 10px;
+  box-shadow: 0 -8px 24px rgba(58, 18, 52, 0.06);
+}
+.cta-secondary {
+  flex: 0 0 auto;
+  background: var(--sand-50);
+  border: 1px solid var(--sand-100);
+  color: var(--aubergine-700);
+  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cta-secondary svg { width: 18px; height: 18px; }
+
+.cta-primary {
+  flex: 1;
+  background: var(--aubergine-700);
+  color: var(--paper);
+  border: 0;
+  padding: 13px 18px;
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.cta-primary svg { width: 14px; height: 14px; }
+[dir="rtl"] .cta-primary svg { transform: scaleX(-1); }
+
+/* SIDE PANEL */
+.side-panel {
+  position: sticky;
+  top: 32px;
+  padding-top: 32px;
+}
+
+.panel-h {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 32px;
+  letter-spacing: -0.025em;
+  color: var(--aubergine-900);
+  margin-bottom: 8px;
+  line-height: 1;
+}
+.panel-h em { font-style: italic; color: var(--magenta-500); }
+.panel-lede {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-500);
+  max-width: 52ch;
+  margin-bottom: 28px;
+}
+
+.principle-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 32px;
+}
+.principle-list li {
+  padding-inline-start: 32px;
+  position: relative;
+}
+.principle-list li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, var(--terracotta-500), var(--magenta-500));
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.principle-list li strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--aubergine-900);
+  margin-bottom: 4px;
+}
+[lang="ar"] .principle-list li strong { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.principle-list li p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-700);
+}
+
+.tech-callout {
+  background: var(--sand-50);
+  border: 1px solid var(--sand-100);
+  border-radius: 14px;
+  padding: 18px;
+}
+.tech-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--terracotta-700);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+[lang="ar"] .tech-label { letter-spacing: 0; text-transform: none; font-size: 12px; }
+.tech-body {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-700);
+}
+.tech-body code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--paper);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--aubergine-700);
+  border: 1px solid var(--sand-100);
+}
+
+.footnote {
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 1px solid var(--sand-100);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-500);
+}
+.footnote .accent { color: var(--magenta-500); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="brand-bar">
+    <div class="brand-identity">
+      <svg class="brand-logo" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#5B2C5F"/>
+            <stop offset="100%" stop-color="#B8228C"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="44" r="36" fill="url(#brandGrad)"/>
+        <circle cx="50" cy="44" r="22" fill="#FDFBF7"/>
+        <path d="M28 74 L36 60 L44 74 Z M44 74 L52 60 L60 74 Z M60 74 L68 60 L76 74 Z" fill="#FDFBF7"/>
+      </svg>
+      <div class="brand-name-wrap">
+        <div class="brand-name">Escalé</div>
+        <div class="brand-tagline">Design System · v0.1</div>
+      </div>
+    </div>
+    <div class="brand-meta">
+      <div class="screen-stamp">
+        <div class="lbl">Screen 10</div>
+        <div class="val">Booking Confirmed</div>
+      </div>
+      <div class="locale-switch">
+        <button id="btnEn" class="active" onclick="setLocale('en')">EN</button>
+        <button id="btnAr" onclick="setLocale('ar')">ع</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="editorial-head">
+    <div>
+      <div class="label" id="eh-label">Screen 10 / Booking Confirmed</div>
+      <h1><span id="eh-1">The trust</span> <em id="eh-2">closer.</em></h1>
+    </div>
+    <div class="colophon">
+      <div><strong>Success without sparkles</strong></div>
+      <div><strong>Booking ref</strong> · BK-X7Y2A9</div>
+      <div><strong>4 next-step actions</strong> · thumb-reach</div>
+      <div>What happens next · <strong>timeline</strong></div>
+      <div style="margin-top:8px; opacity:0.6;">Preview · 22 May 2026</div>
+    </div>
+  </section>
+
+  <div class="composition">
+
+    <!-- PHONE -->
+    <div class="phone-stage">
+      <div class="phone">
+        <div class="phone-screen" id="screen" lang="en" dir="ltr">
+
+          <div class="status-bar">
+            <span>9:41</span>
+            <span class="icons">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 17h2v-2H2v2zm4 0h2v-6H6v6zm4 0h2V7h-2v10zm4 0h2v-4h-2v4zm4 0h2v-8h-2v8z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21l8-12c-2.5-2.5-5-3.5-8-3.5S6.5 6.5 4 9l8 12z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="4" y="8" width="14" height="8" rx="1" fill="currentColor"/></svg>
+            </span>
+          </div>
+
+          <!-- SUCCESS HERO -->
+          <div class="success-hero">
+            <div class="success-mark">
+              <div class="ring"></div>
+              <div class="ring-2"></div>
+              <div class="check-circle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="success-eyebrow" id="suc-eb">Confirmed · Paid in full</div>
+            <h2 class="success-headline">
+              <span id="suc-h1">You're going to</span><br>
+              <em id="suc-h2">Siwa.</em>
+            </h2>
+            <p class="success-sub" id="suc-sub">A confirmation has been sent to your email. The QR key activates the day you arrive.</p>
+
+            <div class="booking-ref">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              <span class="booking-ref-lbl" id="ref-lbl">Booking</span>
+              <span class="booking-ref-code">BK-X7Y2A9</span>
+            </div>
+          </div>
+
+          <!-- BOOKING CARD -->
+          <div class="booking-card">
+            <div style="position: relative;">
+              <div class="booking-hero-img"></div>
+              <div class="booking-hero-content">
+                <div class="booking-hotel-name" id="hotel-name">Adrère Amellal</div>
+                <div class="booking-location">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <span id="hotel-location">Siwa Oasis, Egypt</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-details">
+
+              <div class="date-strip">
+                <div class="date-block">
+                  <div class="date-block-lbl" id="date-in-l">Check in</div>
+                  <div class="date-block-day" id="date-in-d">Sun 15</div>
+                  <div class="date-block-meta" id="date-in-m">Mar · from 14:00</div>
+                </div>
+                <div class="date-divider"></div>
+                <div class="nights-pill" id="nights">3 nights</div>
+                <div class="date-divider"></div>
+                <div class="date-block">
+                  <div class="date-block-lbl" id="date-out-l">Check out</div>
+                  <div class="date-block-day" id="date-out-d">Wed 18</div>
+                  <div class="date-block-meta" id="date-out-m">Mar · by 12:00</div>
+                </div>
+              </div>
+
+              <div class="info-row">
+                <span class="info-row-lbl" id="info-1-l">Room</span>
+                <span class="info-row-val" id="info-1-v">Garden Suite</span>
+              </div>
+              <div class="info-row">
+                <span class="info-row-lbl" id="info-2-l">Guests</span>
+                <span class="info-row-val" id="info-2-v">2 adults</span>
+              </div>
+              <div class="info-row">
+                <span class="info-row-lbl" id="info-3-l">Meal plan</span>
+                <span class="info-row-val" id="info-3-v">Half board</span>
+              </div>
+              <div class="info-row">
+                <span class="info-row-lbl" id="info-4-l">Total paid</span>
+                <div>
+                  <span class="info-row-val mono">EGP 15,840</span>
+                  <span class="paid-pill" id="paid-pill">PAID</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ACTIONS -->
+          <div class="action-section">
+            <h3 class="action-title" id="action-title">Now you can</h3>
+            <div class="action-grid">
+              <button class="action-tile">
+                <div class="action-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </div>
+                <div class="action-text">
+                  <div class="action-name" id="ac-1-n">Add to calendar</div>
+                  <div class="action-sub" id="ac-1-s">iOS · Google · ICS</div>
+                </div>
+              </button>
+
+              <button class="action-tile">
+                <div class="action-icon alt">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                </div>
+                <div class="action-text">
+                  <div class="action-name" id="ac-2-n">Book transfer</div>
+                  <div class="action-sub" id="ac-2-s">From Cairo · 5h</div>
+                </div>
+              </button>
+
+              <button class="action-tile">
+                <div class="action-icon alt">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <div class="action-text">
+                  <div class="action-name" id="ac-3-n">Message hotel</div>
+                  <div class="action-sub" id="ac-3-s">Special requests</div>
+                </div>
+              </button>
+
+              <button class="action-tile">
+                <div class="action-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                </div>
+                <div class="action-text">
+                  <div class="action-name" id="ac-4-n">Share trip</div>
+                  <div class="action-sub" id="ac-4-s">Send to companion</div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- WHAT'S NEXT -->
+          <div class="next-section">
+            <div class="next-eyebrow" id="next-eb">What's next</div>
+            <h3 class="next-title" id="next-title">Between now and arrival</h3>
+
+            <div class="next-step">
+              <div class="next-step-num">1</div>
+              <div class="next-step-body">
+                <div class="next-step-title" id="ns-1-t">Email confirmation</div>
+                <div class="next-step-desc" id="ns-1-d">Full receipt and itinerary sent to your inbox.</div>
+                <div class="next-step-time" id="ns-1-time">Sent · 2 min ago</div>
+              </div>
+            </div>
+
+            <div class="next-step">
+              <div class="next-step-num">2</div>
+              <div class="next-step-body">
+                <div class="next-step-title" id="ns-2-t">Hotel reaches out</div>
+                <div class="next-step-desc" id="ns-2-d">Mariam from the concierge will introduce herself and confirm any special requests.</div>
+                <div class="next-step-time" id="ns-2-time">Within 24 hours</div>
+              </div>
+            </div>
+
+            <div class="next-step">
+              <div class="next-step-num">3</div>
+              <div class="next-step-body">
+                <div class="next-step-title" id="ns-3-t">Pre-arrival reminders</div>
+                <div class="next-step-desc" id="ns-3-d">Weather, what to pack, the road from Cairo — sent the week before.</div>
+                <div class="next-step-time" id="ns-3-time">5 days before · Mar 10</div>
+              </div>
+            </div>
+
+            <div class="next-step">
+              <div class="next-step-num">4</div>
+              <div class="next-step-body">
+                <div class="next-step-title" id="ns-4-t">QR key unlocks</div>
+                <div class="next-step-desc" id="ns-4-d">Your room key becomes active at 14:00 on check-in day.</div>
+                <div class="next-step-time" id="ns-4-time">Sun 15 Mar · 14:00</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA bar -->
+          <div class="cta-bar">
+            <button class="cta-secondary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            </button>
+            <button class="cta-primary">
+              <span id="cta-text">View my trip</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDE PANEL -->
+    <aside class="side-panel">
+
+      <h2 class="panel-h"><span id="ph-1">A calm, clear</span> <em id="ph-1em">confirmation.</em></h2>
+      <p class="panel-lede" id="ph-lede">Most apps celebrate a booking with confetti and big "SUCCESS!" banners. We kept this calm, like a quiet handshake. The guest just paid real money — the screen should feel trustworthy, not loud.</p>
+
+      <ul class="principle-list">
+        <li>
+          <strong id="p1-t">Green means paid</strong>
+          <p id="p1-d">The check mark uses our success green. It is a trust signal, not a party.</p>
+        </li>
+        <li>
+          <strong id="p2-t">It names the destination</strong>
+          <p id="p2-d">The title says "You're going to Siwa", not a booking code. The code stays quietly below.</p>
+        </li>
+        <li>
+          <strong id="p3-t">The booking card is a keepsake</strong>
+          <p id="p3-d">A nice photo with clean details. The guest will screenshot this and share it.</p>
+        </li>
+        <li>
+          <strong id="p4-t">Four useful actions</strong>
+          <p id="p4-d">Add to calendar, book a transfer, message the hotel, share the trip — exactly what the guest needs next.</p>
+        </li>
+        <li>
+          <strong id="p5-t">A clear timeline of what's next</strong>
+          <p id="p5-d">After booking, people wonder "what happens now?". We answer with 4 steps, each with a time.</p>
+        </li>
+      </ul>
+
+      <div class="tech-callout">
+        <div class="tech-label" id="tech-l">What happens after you book</div>
+        <p class="tech-body" id="tech-b">After payment, the system sends four things automatically: the confirmation email right away, a hello from the concierge within a day, a pre-arrival pack five days before, and the QR key on arrival day.</p>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <footer class="footnote">
+    <span>© Escalé · Screen 10 of 13</span>
+    <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
+  </footer>
+
+</div>
+
+<script>
+const t = {
+  en: {
+    ehLabel: "Screen 10 / Booking Confirmed",
+    eh1: "The trust", eh2: "closer.",
+    sucEb: "Confirmed · Paid in full",
+    sucH1: "You're going to", sucH2: "Siwa.",
+    sucSub: "A confirmation has been sent to your email. The QR key activates the day you arrive.",
+    refLbl: "Booking",
+    hotelName: "Adrère Amellal", hotelLocation: "Siwa Oasis, Egypt",
+    dateInL: "Check in", dateInD: "Sun 15", dateInM: "Mar · from 14:00",
+    nights: "3 nights",
+    dateOutL: "Check out", dateOutD: "Wed 18", dateOutM: "Mar · by 12:00",
+    info1l: "Room", info1v: "Garden Suite",
+    info2l: "Guests", info2v: "2 adults",
+    info3l: "Meal plan", info3v: "Half board",
+    info4l: "Total paid", paidPill: "PAID",
+    actionTitle: "Now you can",
+    ac1n: "Add to calendar", ac1s: "iOS · Google · ICS",
+    ac2n: "Book transfer", ac2s: "From Cairo · 5h",
+    ac3n: "Message hotel", ac3s: "Special requests",
+    ac4n: "Share trip", ac4s: "Send to companion",
+    nextEb: "What's next", nextTitle: "Between now and arrival",
+    ns1t: "Email confirmation", ns1d: "Full receipt and itinerary sent to your inbox.", ns1time: "Sent · 2 min ago",
+    ns2t: "Hotel reaches out", ns2d: "Mariam from the concierge will introduce herself and confirm any special requests.", ns2time: "Within 24 hours",
+    ns3t: "Pre-arrival reminders", ns3d: "Weather, what to pack, the road from Cairo — sent the week before.", ns3time: "5 days before · Mar 10",
+    ns4t: "QR key unlocks", ns4d: "Your room key becomes active at 14:00 on check-in day.", ns4time: "Sun 15 Mar · 14:00",
+    ctaText: "View my trip",
+    ph1: "A calm, clear", ph1em: "confirmation.",
+    phLede: 'Most apps celebrate a booking with confetti and big "SUCCESS!" banners. We kept this calm, like a quiet handshake. The guest just paid real money — the screen should feel trustworthy, not loud.',
+    p1t: "Green means paid",
+    p1d: "The check mark uses our success green. It is a trust signal, not a party.",
+    p2t: "It names the destination",
+    p2d: 'The title says "You\'re going to Siwa", not a booking code. The code stays quietly below.',
+    p3t: "The booking card is a keepsake",
+    p3d: "A nice photo with clean details. The guest will screenshot this and share it.",
+    p4t: "Four useful actions",
+    p4d: "Add to calendar, book a transfer, message the hotel, share the trip — exactly what the guest needs next.",
+    p5t: "A clear timeline of what's next",
+    p5d: 'After booking, people wonder "what happens now?". We answer with 4 steps, each with a time.',
+    techL: "What happens after you book",
+    techB: "After payment, the system sends four things automatically: the confirmation email right away, a hello from the concierge within a day, a pre-arrival pack five days before, and the QR key on arrival day."
+  },
+  ar: {
+    ehLabel: "الشاشة ١٠ / تأكيد الحجز",
+    eh1: "إغلاق", eh2: "الثقة.",
+    sucEb: "مؤكَّد · مدفوع بالكامل",
+    sucH1: "أنت ذاهب إلى", sucH2: "سيوة.",
+    sucSub: "تم إرسال التأكيد على بريدك. مفتاح الـ QR يُفعَّل يوم الوصول.",
+    refLbl: "الحجز",
+    hotelName: "أدرير أميلال", hotelLocation: "واحة سيوة، مصر",
+    dateInL: "الوصول", dateInD: "الأحد ١٥", dateInM: "مارس · من ١٤:٠٠",
+    nights: "٣ ليالٍ",
+    dateOutL: "المغادرة", dateOutD: "الأربعاء ١٨", dateOutM: "مارس · حتى ١٢:٠٠",
+    info1l: "الغرفة", info1v: "جناح الحديقة",
+    info2l: "الضيوف", info2v: "بالغان",
+    info3l: "خطة الوجبات", info3v: "نصف إقامة",
+    info4l: "إجمالي المدفوع", paidPill: "مدفوع",
+    actionTitle: "تقدر دلوقتي",
+    ac1n: "أضف للتقويم", ac1s: "iOS · Google · ICS",
+    ac2n: "احجز توصيل", ac2s: "من القاهرة · ٥ ساعات",
+    ac3n: "راسل الفندق", ac3s: "طلبات خاصة",
+    ac4n: "شارك الرحلة", ac4s: "أرسل للرفيق",
+    nextEb: "اللي جاي", nextTitle: "بين الآن والوصول",
+    ns1t: "تأكيد بالبريد", ns1d: "الإيصال الكامل وبرنامج الرحلة بالبريد.", ns1time: "أُرسل · منذ دقيقتين",
+    ns2t: "الفندق يتواصل", ns2d: "مريم من الكونسيرج تقدّم نفسها وتؤكّد أي طلبات خاصة.", ns2time: "خلال ٢٤ ساعة",
+    ns3t: "تنبيهات ما قبل الوصول", ns3d: "الطقس، ماذا تأخذ معك، الطريق من القاهرة — قبل الوصول بأسبوع.", ns3time: "قبل ٥ أيام · ١٠ مارس",
+    ns4t: "تفعيل مفتاح QR", ns4d: "مفتاح غرفتك يصبح فعّالاً عند ١٤:٠٠ يوم الوصول.", ns4time: "الأحد ١٥ مارس · ١٤:٠٠",
+    ctaText: "عرض رحلتي",
+    ph1: "تأكيد هادئ", ph1em: "وواضح.",
+    phLede: 'معظم التطبيقات بتحتفل بالحجز بكونفيتي ولافتات "نجح!" كبيرة. إحنا خليناها هادية، زي مصافحة هادئة. الضيف لسه دافع فلوس حقيقية — الشاشة لازم يكون إحساسها موثوق، مش صاخب.',
+    p1t: "الأخضر معناه مدفوع",
+    p1d: "علامة الصح بتستخدم الأخضر بتاع النجاح. دي إشارة ثقة، مش حفلة.",
+    p2t: "بيسمّي الوجهة",
+    p2d: 'العنوان بيقول "إنت رايح سيوة"، مش كود حجز. الكود بيفضل بهدوء تحت.',
+    p3t: "كارت الحجز ذكرى",
+    p3d: "صورة حلوة وتفاصيل واضحة. الضيف هياخد لقطة شاشة ويشاركها.",
+    p4t: "أربع إجراءات مفيدة",
+    p4d: "ضيف للتقويم، احجز توصيل، راسل الفندق، شارك الرحلة — بالظبط اللي الضيف محتاجه بعد كده.",
+    p5t: "خط زمني واضح للي جاي",
+    p5d: 'بعد الحجز، الناس بتسأل "هيحصل إيه دلوقتي؟". بنجاوب بـ ٤ خطوات، كل واحدة بوقتها.',
+    techL: "اللي بيحصل بعد ما تحجز",
+    techB: "بعد الدفع، النظام بيبعت أربع حاجات تلقائياً: إيميل التأكيد على طول، ترحيب من الكونسيرج خلال يوم، حزمة قبل الوصول بخمس أيام، ومفتاح الـ QR يوم الوصول."
+  }
+};
+
+function setLocale(loc) {
+  const tt = t[loc];
+  const isRtl = loc === 'ar';
+
+  document.getElementById('screen').setAttribute('lang', loc);
+  document.getElementById('screen').setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+  document.getElementById('btnEn').classList.toggle('active', loc === 'en');
+  document.getElementById('btnAr').classList.toggle('active', loc === 'ar');
+
+  document.querySelector('.editorial-head').setAttribute('lang', loc);
+  document.querySelector('.side-panel').setAttribute('lang', loc);
+
+  document.getElementById('eh-label').textContent = tt.ehLabel;
+  document.getElementById('eh-1').textContent = tt.eh1;
+  document.getElementById('eh-2').textContent = tt.eh2;
+
+  document.getElementById('suc-eb').textContent = tt.sucEb;
+  document.getElementById('suc-h1').textContent = tt.sucH1;
+  document.getElementById('suc-h2').textContent = tt.sucH2;
+  document.getElementById('suc-sub').textContent = tt.sucSub;
+  document.getElementById('ref-lbl').textContent = tt.refLbl;
+
+  document.getElementById('hotel-name').textContent = tt.hotelName;
+  document.getElementById('hotel-location').textContent = tt.hotelLocation;
+
+  document.getElementById('date-in-l').textContent = tt.dateInL;
+  document.getElementById('date-in-d').textContent = tt.dateInD;
+  document.getElementById('date-in-m').textContent = tt.dateInM;
+  document.getElementById('nights').textContent = tt.nights;
+  document.getElementById('date-out-l').textContent = tt.dateOutL;
+  document.getElementById('date-out-d').textContent = tt.dateOutD;
+  document.getElementById('date-out-m').textContent = tt.dateOutM;
+
+  document.getElementById('info-1-l').textContent = tt.info1l;
+  document.getElementById('info-1-v').textContent = tt.info1v;
+  document.getElementById('info-2-l').textContent = tt.info2l;
+  document.getElementById('info-2-v').textContent = tt.info2v;
+  document.getElementById('info-3-l').textContent = tt.info3l;
+  document.getElementById('info-3-v').textContent = tt.info3v;
+  document.getElementById('info-4-l').textContent = tt.info4l;
+  document.getElementById('paid-pill').textContent = tt.paidPill;
+
+  document.getElementById('action-title').textContent = tt.actionTitle;
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById(`ac-${i}-n`).textContent = tt[`ac${i}n`];
+    document.getElementById(`ac-${i}-s`).textContent = tt[`ac${i}s`];
+  }
+
+  document.getElementById('next-eb').textContent = tt.nextEb;
+  document.getElementById('next-title').textContent = tt.nextTitle;
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById(`ns-${i}-t`).textContent = tt[`ns${i}t`];
+    document.getElementById(`ns-${i}-d`).textContent = tt[`ns${i}d`];
+    document.getElementById(`ns-${i}-time`).textContent = tt[`ns${i}time`];
+  }
+
+  document.getElementById('cta-text').textContent = tt.ctaText;
+
+  document.getElementById('ph-1').textContent = tt.ph1;
+  document.getElementById('ph-1em').textContent = tt.ph1em;
+  document.getElementById('ph-lede').textContent = tt.phLede;
+  document.getElementById('p1-t').textContent = tt.p1t;
+  document.getElementById('p1-d').textContent = tt.p1d;
+  document.getElementById('p2-t').textContent = tt.p2t;
+  document.getElementById('p2-d').textContent = tt.p2d;
+  document.getElementById('p3-t').textContent = tt.p3t;
+  document.getElementById('p3-d').textContent = tt.p3d;
+  document.getElementById('p4-t').textContent = tt.p4t;
+  document.getElementById('p4-d').textContent = tt.p4d;
+  document.getElementById('p5-t').textContent = tt.p5t;
+  document.getElementById('p5-d').textContent = tt.p5d;
+  document.getElementById('tech-l').textContent = tt.techL;
+  document.getElementById('tech-b').innerHTML = tt.techB;
+}
+</script>
+
+</body>
+</html>
