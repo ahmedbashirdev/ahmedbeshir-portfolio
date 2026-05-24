@@ -4,15 +4,17 @@
 > Updated after **every** step. For the static project handoff see `PROJECT_CONTEXT.md`;
 > for coding conventions see `CLAUDE.md`.
 
-**Last updated:** 2026-05-23
+**Last updated:** 2026-05-24
 
 ---
 
 ## 1. Where the project stands
 
-- Design phase. **18 screens** exist as bilingual HTML/CSS prototypes, all linked from the `index.html` review hub.
+- Design phase. **20 screens** exist as bilingual HTML/CSS prototypes, all linked from the `index.html` review hub.
 - Client returned per-screen feedback; **the full feedback round is now applied** (see §4 — every item checked).
 - Design-rationale text simplified to plain Arabic + English across all screens.
+- **Screen 19 — Offers** built 2026-05-24: markets in-hotel services (dining, spa, pools, experiences) to hotel guests *and* external visitors nearby. See decision D7.
+- **Screen 20 — Service Detail** built 2026-05-24: the full detail page for a single service (description, what's included, session options, hours, a guest review), sitting between the catalog/offers and the request composer. See decision D8.
 - Next: a second client review pass, then scope/cost sign-off and development.
 - Commercials: not signed yet — milestone-based proposal in preparation.
 
@@ -35,11 +37,13 @@
 | 15 | `15-b2b-agency-portal.html` | B2B Agency Portal | B2B web | Built 2026-05-23 |
 | 16–17 | `16-17-login.html` | Login & Sign-in | Guest mobile | Built 2026-05-23 |
 | 18 | `18-hotel-home.html` | Hotel Home (in-stay) | Guest mobile | Built 2026-05-23 |
+| 19 | `19-offers.html` | Offers | Guest mobile | Built 2026-05-24 |
+| 20 | `20-service-detail.html` | Service Detail | Guest mobile | Built 2026-05-24 |
 | — | `index.html` | Design Preview hub | Review tool | Built 2026-05-23 |
 
-All 18 screens now exist. The hub links all of them; no placeholders remain.
+All 20 screens now exist. The hub links all of them; no placeholders remain.
 
-Note: `visual-preview.html` is an exact duplicate of screen 01 — safe to delete.
+Note: `visual-preview.html` (a stale duplicate of an old screen 01) was deleted on 2026-05-23.
 
 ---
 
@@ -51,6 +55,8 @@ Note: `visual-preview.html` is an exact duplicate of screen 01 — safe to delet
 - **D4 — Review hub.** `index.html` built as bespoke HTML following `design-system.md` (the project's own design system is the source of truth; no generic skill fits better).
 - **D5 — Client communication.** Client relies on visuals and finds dense text hard. All client-facing material uses simple Arabic + simple English, side by side.
 - **D6 — Simplify screen text.** Each screen carries two text layers: the app UI text (the real product — kept as-is, bilingual via toggle) and the design-rationale notes (dense, jargon-heavy). Per client request, the rationale notes in all 15 screens are being rewritten into plain Arabic + English.
+- **D7 — Offers screen targets external customers, not just guests.** Screen 19 markets a hotel's in-stay services (restaurants, spa/health club, pools, experiences) as bookable offers. The client's strategic point: booking apps sell only rooms, while hotels have high-margin services that sit half-empty. The offers surface is open to **two audiences** — hotel guests *and* external visitors within the hotel's vicinity ("guests & visitors") — to drive incremental F&B/wellness revenue. This extends D1 (channel-agnostic services) one step further: services are sold not only to guests of any booking channel, but to people who never booked a room at all. Schema implication: an offer purchase by an external visitor has no `Booking` to attach to — flagged in §6.
+- **D8 — The services flow now has a detail step.** Screen 20 (Service Detail) is a dedicated full page for a single service — description, what's included, selectable session options, hours/location, a guest review — modelled on the depth of the HK Room Status screen (per the client: "a service-detail screen, like the HK screen"). It sits in the navigation between browsing and requesting: **catalog (11) / offers (19) → service detail (20) → request composer (12).** It is shared by both audiences from D7 — in-stay guests reach it from the catalog, external visitors reach it from an offer. Session/option selection happens here, so the composer stays short.
 
 ---
 
@@ -107,6 +113,8 @@ Note: `visual-preview.html` is an exact duplicate of screen 01 — safe to delet
 - [x] B2B Agency Portal (post request + receive bids). — Screen 15, built 2026-05-23.
 - [x] Login screen + welcome/options screen. — Screens 16–17, built 2026-05-23.
 - [x] Hotel in-stay home page (info + available services). — Screen 18, built 2026-05-23.
+- [x] Offers screen — markets in-hotel services (dining, spa, pools, experiences) to guests + external visitors nearby. — Screen 19, built 2026-05-24. See D7.
+- [x] Service Detail screen — full detail of one service before requesting, modelled on the HK screen's depth. — Screen 20, built 2026-05-24. See D8.
 
 ### Cross-cutting
 - [ ] Populate screens with realistic example data (client reviews visually).
@@ -116,6 +124,16 @@ Note: `visual-preview.html` is an exact duplicate of screen 01 — safe to delet
 ---
 
 ## 5. Work log
+
+### 2026-05-24
+- Built **Screen 19 — Offers** (`19-offers.html`): the last screen the client asked for. A guest-mobile discovery surface that markets a hotel's in-stay services — dining, spa & wellness, pools/day passes, experiences — as bookable offers. Layout: a location header, a featured-offer brand-gradient card, a category filter row, and a "Near you" list of four offer cards. Every offer is tagged open to guests *and* external visitors ("guests & visitors"), plus a closing pay-in-app / show-the-code note. Bilingual EN/AR, matches the design system and existing screens.
+- Recorded decision **D7** — the Offers screen targets external customers in the hotel's vicinity, not only guests, to drive incremental service revenue (extends D1).
+- Validated `19-offers.html` (jsdom): HTML parses clean, all tags balanced, EN⇄AR toggle runs with zero JS errors, no missing-translation text, no parent-child ID conflict, all 72 toggle targets resolve. 27/27 checks pass.
+- Linked Screen 19 into `index.html` under the Guest App section; updated hub counts (Guest App → 9 screens, masthead → "19 screens · 4 apps", legend → "All 19 screens ready", footer date). Hub re-validated — parses clean, 14 cards, zero broken links.
+- Built **Screen 20 — Service Detail** (`20-service-detail.html`) at the client's request ("a service-detail screen, like the HK screen"). A guest-mobile screen showing one service in full — hero, key facts (duration / price / rating), an "about" description, a "what's included" checklist, three selectable session options, a "good to know" info list (hours, location, booking, a caution note), and a guest-review pull-quote — with a sticky "Request this service" CTA. Example service: Mountain Salt Massage, continuous with the catalog's featured services. Bilingual EN/AR.
+- Recorded decision **D8** — the services flow now has a detail step (catalog/offers → service detail → composer); the detail screen is shared by in-stay guests and external offer visitors.
+- Validated `20-service-detail.html` (jsdom): 27/27 checks pass — tags balanced, parses clean, EN⇄AR toggle zero errors, no missing-translation text, no parent-child ID conflict, all 61 toggle targets resolve.
+- Linked Screen 20 into `index.html` (Guest App → 10 screens, masthead → "20 screens", legend → "All 20 screens ready"). Hub re-validated — 15 cards, zero broken links.
 
 ### 2026-05-23
 - Read all project docs (`PROJECT_CONTEXT.md`, `architecture.md`, `design-system.md`) and `schema.prisma`.
@@ -136,11 +154,12 @@ Note: `visual-preview.html` is an exact duplicate of screen 01 — safe to delet
 - **Screen 07** — added the orders-stats strip (completed / in service / overdue / active staff) and a "Send instructions to staff" button. Bilingual, validated, zero errors.
 - **Screen 03** — Step 1 now shows a "carried over from your search" note; Step 2 gained Nationality + ID/Passport fields with a check-in note. **Screen 11–12** — each service category now shows an hours/price detail line. Both validated.
 - **The full client-feedback round is now applied across all screens.** All 13 screen files validate clean (EN/AR toggle, zero JS errors).
+- Final pre-send QA pass: automated check on all 13 screen files + the hub — HTML parses clean, EN/AR toggle runs with zero errors, no missing-translation ("undefined") text, tag balance correct, every hub card link and preview resolves. Simplified the hub legend (every screen is "ready" now). Housekeeping: deleted `visual-preview.html` (a stale duplicate of an old screen 01). The folder now holds 13 screen files + `index.html` and is clean to send.
 
 ---
 
 ## 6. Next steps
 
 1. Send the updated review hub to the client for a second review pass.
-2. Resolve open schema issue D1 (`Booking.userId` for unregistered OTA guests).
+2. Resolve open schema issue D1 — `Booking.userId` for unregistered OTA guests, and (per D7) how an external visitor with no booking at all purchases an offer/service. Both point to a service customer who is not tied to a `Booking`.
 3. Finalise the milestone-based client proposal.
