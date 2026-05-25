@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>Escalé — Project Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Geist:wght@300..700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --aubergine-900: #3A1234;
+  --aubergine-700: #4A1942;
+  --aubergine-500: #5B2C5F;
+  --aubergine-100: #EFE3EF;
+  --magenta-500: #B8228C;
+  --magenta-300: #D86CB0;
+  --terracotta-700: #A05A3A;
+  --terracotta-500: #C9956B;
+  --terracotta-300: #E2BC9C;
+  --terracotta-100: #F5E8DC;
+  --ink-900: #1C1410;
+  --ink-700: #3D332D;
+  --ink-500: #6B5D54;
+  --ink-300: #A89A8E;
+  --sand-100: #F0E9DF;
+  --sand-50: #F7F2E9;
+  --cream: #FAF7F2;
+  --paper: #FDFBF7;
+  --success: #5A8C5F;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Geist', sans-serif;
+  --font-ar: 'Tajawal', sans-serif;
+}
+
+@page {
+  size: A4;
+  margin: 15mm 15mm 16mm;
+  @bottom-center {
+    content: "Escalé  ·  Project Proposal  ·  " counter(page) " / " counter(pages);
+    font-family: 'Geist', sans-serif;
+    font-size: 7.5pt;
+    letter-spacing: 0.04em;
+    color: #A89A8E;
+  }
+}
+@page cover { margin: 0; @bottom-center { content: ""; } }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-ar);
+  color: var(--ink-900);
+  font-size: 10.5pt;
+  line-height: 1.7;
+  background: var(--paper);
+}
+.en { font-family: var(--font-body); direction: ltr; }
+
+/* ============ COVER ============ */
+.cover {
+  page: cover;
+  width: 210mm; height: 297mm;
+  background:
+    radial-gradient(circle at 84% 16%, rgba(216, 108, 176, 0.42), transparent 52%),
+    linear-gradient(158deg, var(--aubergine-900) 0%, var(--aubergine-500) 58%, var(--terracotta-700) 100%);
+  color: var(--paper);
+  padding: 26mm 22mm;
+  position: relative;
+  overflow: hidden;
+}
+.cover::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 120mm;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 96 L18 64 L30 96 Z M30 96 L42 64 L54 96 Z M54 96 L66 64 L78 96 Z M78 96 L90 64 L102 96 Z' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
+  background-size: 150mm; background-position: bottom right; background-repeat: no-repeat;
+}
+.cover-brand { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
+.cover-logo { width: 46px; height: 46px; }
+.cover-wordmark { font-family: var(--font-display); font-weight: 500; font-size: 22pt; letter-spacing: -0.02em; }
+.cover-tag { font-size: 8pt; letter-spacing: 0.22em; color: var(--terracotta-300); margin-top: 2px; }
+.cover-tag.en { direction: ltr; text-transform: uppercase; }
+
+.cover-mid { position: relative; z-index: 1; margin-top: 58mm; }
+.cover-kicker { font-family: var(--font-display); font-style: italic; font-size: 13pt; color: var(--terracotta-300); }
+.cover-kicker.en { direction: ltr; }
+.cover-title { font-family: var(--font-ar); font-weight: 800; font-size: 42pt; line-height: 1.12; margin-top: 4mm; }
+.cover-sub { font-size: 12pt; color: rgba(253,251,247,0.9); margin-top: 6mm; max-width: 150mm; line-height: 1.8; }
+.cover-sub .en { display: block; direction: rtl; font-size: 9.5pt; color: rgba(253,251,247,0.62); margin-top: 2mm; }
+.cover-sub .en span { direction: ltr; }
+
+.cover-meta {
+  position: relative; z-index: 1; margin-top: 16mm;
+  display: flex; flex-wrap: wrap; gap: 7mm 14mm;
+  padding-top: 7mm; border-top: 1px solid rgba(255,255,255,0.18);
+}
+.cm-item { min-width: 44mm; }
+.cm-l { font-size: 7.5pt; letter-spacing: 0.04em; color: var(--terracotta-300); }
+.cm-l .en { color: rgba(226,188,156,0.7); }
+.cm-v { font-size: 10.5pt; font-weight: 500; margin-top: 1mm; }
+.cm-v .en { direction: ltr; }
+
+.cover-total {
+  position: absolute; z-index: 1; left: 22mm; right: 22mm; bottom: 24mm;
+  background: rgba(253,251,247,0.10);
+  border: 1px solid rgba(255,255,255,0.20);
+  border-radius: 16px;
+  padding: 7mm 9mm;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ct-label { font-size: 10pt; color: rgba(253,251,247,0.85); }
+.ct-label .en { display: block; direction: ltr; font-size: 8pt; color: rgba(253,251,247,0.55); }
+.ct-fig { font-family: var(--font-display); font-weight: 500; font-size: 30pt; letter-spacing: -0.01em; direction: ltr; white-space: nowrap; text-align: left; }
+.ct-fig .ms { font-family: var(--font-ar); font-size: 9pt; font-weight: 500; color: var(--terracotta-300); display: block; text-align: left; margin-top: 1mm; }
+
+/* ============ SECTIONS ============ */
+.section { padding-top: 2mm; }
+.section.break { break-before: page; }
+
+.sec-head { margin-bottom: 6mm; padding-bottom: 3.5mm; border-bottom: 1px solid var(--sand-100); break-inside: avoid; break-after: avoid; }
+.sec-eyebrow { font-family: var(--font-display); font-style: italic; font-size: 10pt; color: var(--terracotta-700); direction: ltr; text-align: right; }
+.sec-title { font-family: var(--font-ar); font-weight: 800; font-size: 19pt; color: var(--aubergine-900); line-height: 1.25; margin-top: 1mm; }
+.sec-title .en { font-family: var(--font-display); font-weight: 400; font-style: italic; font-size: 12pt; color: var(--ink-300); margin-right: 6px; }
+
+p.lead { font-size: 10.5pt; color: var(--ink-700); line-height: 1.85; }
+p.lead .en { display: block; direction: rtl; font-size: 9pt; color: var(--ink-500); margin-top: 2mm; line-height: 1.7; }
+p.lead .en span { direction: ltr; }
+
+/* WHY-MILESTONES CALLOUT */
+.callout {
+  background: var(--sand-50); border: 1px solid var(--sand-100);
+  border-right: 3px solid var(--magenta-500);
+  border-radius: 12px; padding: 5mm 6mm; margin-top: 6mm;
+}
+.callout-t { font-weight: 700; font-size: 10.5pt; color: var(--aubergine-900); }
+.callout-t .en { font-family: var(--font-display); font-style: italic; font-weight: 400; color: var(--terracotta-700); margin-right: 5px; }
+.callout-b { font-size: 9.5pt; color: var(--ink-700); margin-top: 2mm; line-height: 1.75; }
+.callout-b .en { display: block; direction: rtl; font-size: 8.5pt; color: var(--ink-500); margin-top: 1.5mm; }
+.callout-b .en span { direction: ltr; }
+
+/* ============ MILESTONE CARDS ============ */
+.ms-card {
+  background: var(--paper); border: 1px solid var(--sand-100);
+  border-radius: 14px; padding: 6mm 6mm 5mm; margin-bottom: 4.5mm;
+  break-inside: avoid;
+}
+.ms-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8mm; }
+.ms-badge {
+  flex-shrink: 0;
+  background: var(--aubergine-700); color: var(--paper);
+  border-radius: 9px; padding: 2mm 3.5mm; text-align: center; min-width: 24mm;
+}
+.ms-badge .n { font-family: var(--font-display); font-weight: 500; font-size: 22pt; line-height: 1; }
+.ms-badge .l { font-size: 7pt; letter-spacing: 0.04em; color: var(--terracotta-300); margin-top: 0.5mm; }
+.ms-badge .l .en { display: block; direction: ltr; }
+.ms-head { flex: 1; }
+.ms-name { font-family: var(--font-ar); font-weight: 700; font-size: 14pt; color: var(--aubergine-900); line-height: 1.3; }
+.ms-name-en { font-family: var(--font-display); font-style: italic; font-size: 10.5pt; color: var(--terracotta-700); direction: ltr; text-align: right; margin-top: 0.5mm; }
+.ms-price { flex-shrink: 0; text-align: left; }
+.ms-price .amt { font-family: var(--font-display); font-weight: 500; font-size: 21pt; color: var(--magenta-500); letter-spacing: -0.01em; direction: ltr; }
+.ms-price .dur { font-size: 8pt; color: var(--ink-500); margin-top: 0.5mm; }
+.ms-price .dur .en { direction: ltr; }
+
+.ms-incl-l { font-size: 8pt; letter-spacing: 0.04em; color: var(--terracotta-700); font-weight: 700; margin: 4mm 0 2mm; }
+.ms-deliv { margin-top: 4mm; background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 9px; padding: 3mm 4mm; }
+.ms-deliv .dl-l { font-size: 7.5pt; font-weight: 700; letter-spacing: 0.05em; color: var(--terracotta-700); }
+.ms-deliv .dl-l .en { font-family: var(--font-display); font-style: italic; font-weight: 400; letter-spacing: 0; margin-right: 4px; }
+.ms-deliv .dl-ar { font-size: 9.5pt; font-weight: 700; color: var(--aubergine-900); margin-top: 1.5mm; }
+.ms-deliv .dl-en { font-family: var(--font-body); direction: ltr; text-align: left; font-size: 8.5pt; color: var(--ink-500); margin-top: 1mm; }
+.ms-tag { display: inline-block; font-size: 7pt; font-weight: 700; color: var(--magenta-500); background: rgba(184,34,140,0.1); padding: 1mm 2.5mm; border-radius: 9999px; margin-right: 5px; vertical-align: middle; }
+.ms-screens { margin-top: 3.5mm; font-size: 8pt; color: var(--ink-500); }
+.ms-screens .lbl { font-weight: 700; color: var(--terracotta-700); }
+.ms-screens .nums { font-family: var(--font-mono); color: var(--ink-700); direction: ltr; unicode-bidi: isolate; }
+.ms-list { list-style: none; }
+.ms-list li {
+  font-size: 9.5pt; color: var(--ink-700); line-height: 1.6;
+  padding-right:6mm; position: relative; margin-bottom: 1mm;
+}
+.ms-list li::before {
+  content: ''; position: absolute; right: 0; top: 2.4mm;
+  width: 2.6mm; height: 2.6mm;
+  background: linear-gradient(135deg, var(--terracotta-500), var(--magenta-500));
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.ms-en {
+  font-family: var(--font-body); direction: ltr; text-align: left;
+  font-size: 8.5pt; color: var(--ink-500); line-height: 1.6;
+  margin-top: 3mm; padding-top: 3mm; border-top: 1px dotted var(--sand-100);
+}
+
+/* ============ PAYMENT TABLE ============ */
+.pay-table { width: 100%; border-collapse: collapse; margin-top: 2mm; break-inside: avoid; }
+.pay-table th {
+  background: var(--aubergine-900); color: var(--paper);
+  font-size: 7.5pt; font-weight: 500; padding: 2.6mm 2mm; text-align: center; vertical-align: top;
+}
+.pay-table th.m-col { text-align: right; }
+.pay-table th .en { display: block; direction: ltr; font-size: 6.5pt; color: var(--terracotta-300); margin-top: 0.6mm; }
+.pay-table th.m-col .en { text-align: right; }
+.pay-table td { padding: 2.8mm 2mm; border-bottom: 1px solid var(--sand-100); text-align: center; }
+.pay-table tr:nth-child(even) td { background: var(--sand-50); }
+.pay-table td.m-col { text-align: right; }
+.pay-table .m-n { font-weight: 700; color: var(--aubergine-900); font-size: 9pt; }
+.pay-table .m-s { display: block; font-size: 7.5pt; color: var(--ink-500); margin-top: 0.3mm; }
+.pay-table .pay-amt { font-family: var(--font-mono); font-size: 9.5pt; color: var(--ink-700); }
+.pay-table .pay-amt.first { color: var(--magenta-500); font-weight: 600; }
+.pay-table td.pay-tot { font-family: var(--font-display); font-weight: 500; font-size: 11.5pt; color: var(--aubergine-900); }
+.pay-table tr.grand td { background: var(--aubergine-700); color: var(--paper); font-weight: 700; font-size: 8.5pt; border-bottom: 0; }
+.pay-table tr.grand .pay-amt { color: rgba(253,251,247,0.92); }
+.pay-table tr.grand td.pay-tot { color: var(--paper); font-family: var(--font-display); font-size: 14pt; }
+.pay-table tr.grand .en { color: var(--terracotta-300); }
+.pay-note { font-size: 8.5pt; color: var(--ink-500); margin-top: 3mm; line-height: 1.7; }
+.pay-note .en { display: block; direction: ltr; text-align: left; margin-top: 1mm; }
+
+/* ============ TIMELINE ============ */
+.timeline { display: flex; gap: 3mm; margin-top: 3mm; }
+.tl-step {
+  flex: 1; background: var(--paper); border: 1px solid var(--sand-100);
+  border-radius: 10px; padding: 4mm 2mm; text-align: center;
+}
+.tl-step .tl-n { font-family: var(--font-display); font-weight: 500; font-size: 9pt; color: var(--magenta-500); }
+.tl-step .tl-name { font-size: 7.5pt; font-weight: 700; color: var(--aubergine-900); margin-top: 1.5mm; line-height: 1.35; min-height: 9mm; }
+.tl-step .tl-dur { font-size: 7.5pt; color: var(--ink-500); margin-top: 1mm; direction: ltr; }
+.tl-total { text-align: center; font-size: 9.5pt; color: var(--ink-700); margin-top: 4mm; font-weight: 500; }
+.tl-total b { font-family: var(--font-display); font-weight: 500; color: var(--aubergine-900); }
+
+/* ============ INFO BLOCKS ============ */
+.info-grid { display: flex; gap: 5mm; break-inside: avoid; }
+.keep { break-inside: avoid; }
+.info-block {
+  flex: 1; background: var(--sand-50); border: 1px solid var(--sand-100);
+  border-radius: 12px; padding: 5mm;
+}
+.info-block.accent { background: linear-gradient(150deg, var(--aubergine-900), var(--aubergine-700)); border: 0; }
+.ib-t { font-weight: 700; font-size: 11pt; color: var(--aubergine-900); }
+.ib-t .en { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: 9pt; color: var(--terracotta-700); margin-right: 5px; }
+.info-block.accent .ib-t { color: var(--paper); }
+.info-block.accent .ib-t .en { color: var(--terracotta-300); }
+.ib-b { font-size: 9pt; color: var(--ink-700); margin-top: 2.5mm; line-height: 1.75; }
+.ib-b .en { display: block; direction: rtl; font-size: 8pt; color: var(--ink-500); margin-top: 2mm; }
+.ib-b .en span { direction: ltr; }
+.info-block.accent .ib-b { color: rgba(253,251,247,0.9); }
+.info-block.accent .ib-b .en { color: rgba(253,251,247,0.6); }
+.ib-price { font-family: var(--font-display); font-weight: 500; font-size: 17pt; color: var(--magenta-500); direction: ltr; margin-top: 3mm; }
+.info-block.accent .ib-price { color: var(--terracotta-300); }
+
+/* LIST (terms / exclusions) */
+.term-list { list-style: none; margin-top: 1mm; }
+.term-list li {
+  font-size: 9.5pt; color: var(--ink-700); line-height: 1.65;
+  padding-right:7mm; position: relative; margin-bottom: 2.5mm;
+}
+.term-list li::before {
+  content: ''; position: absolute; right: 0; top: 1.6mm;
+  width: 3.4mm; height: 3.4mm; border-radius: 50%;
+  background: var(--aubergine-100);
+}
+.term-list li::after {
+  content: ''; position: absolute; right: 1.1mm; top: 2.7mm;
+  width: 1.2mm; height: 1.2mm; border-radius: 50%; background: var(--magenta-500);
+}
+.term-list li .en { display: block; direction: ltr; text-align: left; font-size: 8pt; color: var(--ink-500); margin-top: 0.5mm; }
+
+/* ACCEPTANCE */
+.accept {
+  margin-top: 6mm; background: var(--sand-50);
+  border: 1px solid var(--sand-100); border-radius: 14px; padding: 6mm 7mm;
+  break-inside: avoid;
+}
+.accept-t { font-family: var(--font-ar); font-weight: 800; font-size: 13pt; color: var(--aubergine-900); }
+.accept-t .en { font-family: var(--font-display); font-weight: 400; font-style: italic; font-size: 10pt; color: var(--terracotta-700); margin-right: 6px; }
+.sign-row { display: flex; gap: 12mm; margin-top: 8mm; }
+.sign-box { flex: 1; }
+.sign-line { border-bottom: 1px solid var(--ink-300); height: 9mm; }
+.sign-label { font-size: 8.5pt; color: var(--ink-500); margin-top: 1.5mm; }
+.sign-label .en { direction: ltr; }
+.contact-line { text-align: center; font-size: 8.5pt; color: var(--ink-500); margin-top: 7mm; direction: ltr; }
+.contact-line b { color: var(--aubergine-700); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- ================= COVER ================= -->
+<div class="cover">
+  <div class="cover-brand">
+    <svg class="cover-logo" viewBox="0 0 100 100">
+      <defs><linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#D86CB0"/><stop offset="100%" stop-color="#B8228C"/>
+      </linearGradient></defs>
+      <circle cx="50" cy="44" r="36" fill="url(#lg)"/>
+      <circle cx="50" cy="44" r="22" fill="#FDFBF7"/>
+      <path d="M28 74 L36 60 L44 74 Z M44 74 L52 60 L60 74 Z M60 74 L68 60 L76 74 Z" fill="#FDFBF7"/>
+    </svg>
+    <div>
+      <div class="cover-wordmark">Escalé</div>
+      <div class="cover-tag en">Hospitality Platform</div>
+    </div>
+  </div>
+
+  <div class="cover-mid">
+    <div class="cover-kicker en">Project Proposal</div>
+    <div class="cover-title">عرض مشروع<br>منصة إسكالي</div>
+    <div class="cover-sub">
+      بناء منصة إسكالي للضيافة الفندقية بالكامل — على ثلاثة مشاريع مستقلة، كل مشروع منتج شغّال وقائم بذاته.
+      <span class="en"><span>The complete build of the Escalé hospitality platform — across three independent projects, each a working, standalone product.</span></span>
+    </div>
+  </div>
+
+  <div class="cover-meta">
+    <div class="cm-item">
+      <div class="cm-l">مُقدّم إلى <span class="en">/ Prepared for</span></div>
+      <div class="cm-v">………………………………</div>
+    </div>
+    <div class="cm-item">
+      <div class="cm-l">مُقدّم من <span class="en">/ Prepared by</span></div>
+      <div class="cm-v">أحمد بشير <span class="en">· Ahmed Beshir</span></div>
+    </div>
+    <div class="cm-item">
+      <div class="cm-l">التاريخ <span class="en">/ Date</span></div>
+      <div class="cm-v en">24 May 2026</div>
+    </div>
+    <div class="cm-item">
+      <div class="cm-l">صلاحية العرض <span class="en">/ Valid for</span></div>
+      <div class="cm-v">30 يوماً <span class="en">· 30 days</span></div>
+    </div>
+  </div>
+
+  <div class="cover-total">
+    <div class="ct-label">إجمالي الاستثمار<span class="en">Total investment</span></div>
+    <div class="ct-fig">$9,000<span class="ms">USD · على 3 مشاريع · across 3 projects</span></div>
+  </div>
+</div>
+
+<!-- ================= OVERVIEW ================= -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-eyebrow en">01 — Overview</div>
+    <div class="sec-title">نظرة عامة <span class="en">The approach</span></div>
+  </div>
+
+  <p class="lead">
+    إسكالي منصة ضيافة متكاملة بتجمع خدمات النزلاء أثناء الإقامة، حجز الفنادق، تشغيل الفندق، ومزاد لشركات السياحة — في نظام واحد. العرض ده بيغطّي بناء المنصة بالكامل، مُقسّمة على 3 مشاريع مستقلة بالترتيب حسب الأولوية: تطبيق إدارة الخدمات (الرئيسي)، تطبيق الحجوزات، ومزاد B2B.
+    <span class="en"><span>Escalé is an all-in-one hospitality platform — in-stay guest services, hotel booking, hotel operations, and a B2B travel-agency auction, in one system. This proposal covers the full build, delivered as 3 independent projects in priority order: the Services Management App (the main one), the Bookings App, and the B2B auction.</span></span>
+  </p>
+
+  <div class="callout">
+    <div class="callout-t">ليه 3 مشاريع؟ <span class="en">Why 3 projects?</span></div>
+    <div class="callout-b">
+      النظام بيتقسم 3 مشاريع مستقلة، بالترتيب حسب الأولوية. المشروع الأول والرئيسي هو تطبيق إدارة الخدمات — الجزء اللي بيميّز إسكالي فعلاً، لأن أغلب التطبيقات بتركّز على حجز الغرف وبتغفل خدمات الفندق. وهو كمان بيبني الأساس التقني المشترك مرة واحدة، فالمشروعين اللي بعده (الحجوزات، ومزاد B2B) بيبنوا فوقه. كل مشروع منتج شغّال قائم بذاته، وبيتدفع على دفعاته الخاصة.
+      <span class="en"><span>The system is delivered as 3 independent projects, ordered by priority. The first and main one is the Services Management App — what truly sets Escalé apart, since most apps focus on room booking and ignore a hotel's services. It also builds the shared technical foundation once, so the two projects after it (Bookings and the B2B auction) build on top. Each project is a working, standalone product, paid on its own installment schedule.</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MILESTONES ================= -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-eyebrow en">02 — Scope</div>
+    <div class="sec-title">المشاريع الثلاثة <span class="en">The three projects</span></div>
+  </div>
+
+  <!-- PROJECT 1 -->
+  <div class="ms-card">
+    <div class="ms-top">
+      <div class="ms-badge"><div class="n">1</div><div class="l">المشروع<span class="en">Project</span></div></div>
+      <div class="ms-head">
+        <div class="ms-name">تطبيق إدارة الخدمات <span class="ms-tag">المشروع الرئيسي · Main</span></div>
+        <div class="ms-name-en">Services Management App</div>
+      </div>
+      <div class="ms-price"><div class="amt">$5,700</div><div class="dur">المدة المقدّرة <span class="en">~13 weeks</span></div></div>
+    </div>
+    <div class="ms-incl-l">نطاق العمل</div>
+    <ul class="ms-list">
+      <li>البنية التحتية والـ API، نظام تعدّد الفنادق، وتسجيل الدخول والصلاحيات</li>
+      <li>المفتاح الرقمي (QR): إصداره عند تسجيل الدخول، وإبطاله عند تسجيل الخروج</li>
+      <li>خدمات النزيل أثناء الإقامة: المطعم، التدبير الفندقي، النادي الصحي، الصيانة، السيارات، حامل الشنط، وغيرها حسب الفندق</li>
+      <li>تطبيق الموظفين وتوجيه الطلبات، ولوحة عمليات الفندق</li>
+    </ul>
+    <div class="ms-screens"><span class="lbl">الشاشات المعنية · Screens:</span> <span class="nums">6 · 7 · 8 · 9 · 11 · 12 · 13 · 16 · 17 · 18 · 19 · 20</span></div>
+    <div class="ms-deliv">
+      <div class="dl-l">التسليم <span class="en">The deliverable</span></div>
+      <div class="dl-ar">منصة خدمات الإقامة كاملة وشغّالة — تطبيق النزيل، تطبيق الموظفين، ولوحة العمليات.</div>
+      <div class="dl-en">The complete, working in-stay services platform — guest app, staff app, and operations dashboard.</div>
+    </div>
+  </div>
+
+  <!-- PROJECT 2 -->
+  <div class="ms-card">
+    <div class="ms-top">
+      <div class="ms-badge"><div class="n">2</div><div class="l">المشروع<span class="en">Project</span></div></div>
+      <div class="ms-head">
+        <div class="ms-name">تطبيق الحجوزات</div>
+        <div class="ms-name-en">Bookings App</div>
+      </div>
+      <div class="ms-price"><div class="amt">$2,100</div><div class="dur">المدة المقدّرة <span class="en">~5 weeks</span></div></div>
+    </div>
+    <div class="ms-incl-l">نطاق العمل</div>
+    <ul class="ms-list">
+      <li>اكتشاف الفنادق والبحث</li>
+      <li>صفحة تفاصيل الفندق: الصور، الغرف، والتقييمات</li>
+      <li>خطوات الحجز وربط بوابات الدفع السعودية (mada و Apple Pay)</li>
+      <li>صفحة تأكيد الحجز</li>
+    </ul>
+    <div class="ms-screens"><span class="lbl">الشاشات المعنية · Screens:</span> <span class="nums">1 · 2 · 3 · 4 · 5 · 10</span></div>
+    <div class="ms-deliv">
+      <div class="dl-l">التسليم <span class="en">The deliverable</span></div>
+      <div class="dl-ar">تطبيق حجوزات شغّال وقائم بذاته — من البحث للحجز والدفع والتأكيد.</div>
+      <div class="dl-en">A working, standalone bookings app — from search to booking, payment and confirmation.</div>
+    </div>
+  </div>
+
+  <!-- PROJECT 3 -->
+  <div class="ms-card">
+    <div class="ms-top">
+      <div class="ms-badge"><div class="n">3</div><div class="l">المشروع<span class="en">Project</span></div></div>
+      <div class="ms-head">
+        <div class="ms-name">مزاد شركات السياحة B2B</div>
+        <div class="ms-name-en">B2B Auction Marketplace</div>
+      </div>
+      <div class="ms-price"><div class="amt">$1,200</div><div class="dur">المدة المقدّرة <span class="en">~3 weeks</span></div></div>
+    </div>
+    <div class="ms-incl-l">نطاق العمل</div>
+    <ul class="ms-list">
+      <li>بوابة شركات السياحة لتسجيل طلبات الحجز واستقبال العروض</li>
+      <li>جانب الفندق في المزاد وتقديم الأسعار</li>
+      <li>دورة المزاد الكاملة من الطلب حتى الترسية</li>
+    </ul>
+    <div class="ms-screens"><span class="lbl">الشاشات المعنية · Screens:</span> <span class="nums">14 · 15</span></div>
+    <div class="ms-deliv">
+      <div class="dl-l">التسليم <span class="en">The deliverable</span></div>
+      <div class="dl-ar">سوق مزاد B2B شغّال بالكامل وقائم بذاته.</div>
+      <div class="dl-en">A fully working, standalone B2B auction marketplace.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PAYMENT ================= -->
+<div class="section" style="break-before: page;">
+  <div class="sec-head">
+    <div class="sec-eyebrow en">03 — Investment</div>
+    <div class="sec-title">جدول الدفع <span class="en">Payment schedule</span></div>
+  </div>
+
+  <table class="pay-table">
+    <thead>
+      <tr>
+        <th class="m-col">المشروع <span class="en">Project</span></th>
+        <th>دفعة البداية <span class="en">Start</span></th>
+        <th>عند التقدّم <span class="en">Progress</span></th>
+        <th>عند التسليم <span class="en">On delivery</span></th>
+        <th>إجمالي المشروع <span class="en">Total</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="m-col"><span class="m-n">المشروع 1</span><span class="m-s">إدارة الخدمات</span></td>
+        <td class="pay-amt first">$1,500</td>
+        <td class="pay-amt">$2,200</td>
+        <td class="pay-amt">$2,000</td>
+        <td class="pay-tot">$5,700</td>
+      </tr>
+      <tr>
+        <td class="m-col"><span class="m-n">المشروع 2</span><span class="m-s">الحجوزات</span></td>
+        <td class="pay-amt first">$600</td>
+        <td class="pay-amt">$900</td>
+        <td class="pay-amt">$600</td>
+        <td class="pay-tot">$2,100</td>
+      </tr>
+      <tr>
+        <td class="m-col"><span class="m-n">المشروع 3</span><span class="m-s">مزاد B2B</span></td>
+        <td class="pay-amt first">$350</td>
+        <td class="pay-amt">$500</td>
+        <td class="pay-amt">$350</td>
+        <td class="pay-tot">$1,200</td>
+      </tr>
+      <tr class="grand">
+        <td class="m-col">الإجمالي <span class="en">Total</span></td>
+        <td class="pay-amt">$2,450</td>
+        <td class="pay-amt">$3,600</td>
+        <td class="pay-amt">$2,950</td>
+        <td class="pay-tot">$9,000</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pay-note">
+    كل مشروع بيتعامل كوحدة مستقلة بنطاقه وسعره، وبيتُدفع على 3 دفعات: دفعة عند البداية، دفعة عند الوصول لنقطة تقدّم متفق عليها، ودفعة عند التسليم والقبول. مفيش مقدّم كبير منفصل — أول دفعة ($1,500 لبداية المشروع الرئيسي) هي اللي بتبدأ العمل، فالعميل بيدفع مبالغ مربوطة بتقدّم حقيقي. كل المبالغ بالدولار الأمريكي (USD).
+    <span class="en">Each project is handled as an independent unit with its own scope and price, paid in 3 installments — one at the start, one at an agreed progress point, and one on delivery and acceptance. There is no large separate deposit: the first installment ($1,500, to start the main project) begins the work, so the client pays amounts tied to real progress. All amounts in USD.</span>
+  </div>
+
+  <div class="keep" style="break-before: page;">
+  <div class="sec-head">
+    <div class="sec-eyebrow en">04 — Timeline</div>
+    <div class="sec-title">الجدول الزمني <span class="en">Estimated timeline</span></div>
+  </div>
+  <div class="timeline">
+    <div class="tl-step"><div class="tl-n">P1</div><div class="tl-name">تطبيق الخدمات</div><div class="tl-dur">~13 wks</div></div>
+    <div class="tl-step"><div class="tl-n">P2</div><div class="tl-name">تطبيق الحجوزات</div><div class="tl-dur">~5 wks</div></div>
+    <div class="tl-step"><div class="tl-n">P3</div><div class="tl-name">مزاد B2B</div><div class="tl-dur">~3 wks</div></div>
+  </div>
+  <div class="tl-total">الإجمالي التقديري: <b>~21 أسبوع (≈ 5 شهور)</b> — المدة فيها وقت احتياطي، وقابلة للتأكيد بعد الاتفاق. المشاريع تُنفّذ بالترتيب.</div>
+  </div>
+</div>
+
+<!-- ================= AFTER LAUNCH + EXCLUSIONS ================= -->
+<div class="section">
+  <div class="keep">
+  <div class="sec-head">
+    <div class="sec-eyebrow en">05 — After launch &amp; scope</div>
+    <div class="sec-title">بعد الإطلاق والنطاق <span class="en">Support &amp; what's not included</span></div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-block accent">
+      <div class="ib-t">دعم وتطوير شهري <span class="en">Monthly support &amp; development</span></div>
+      <div class="ib-b">
+        بعد تسليم المشروع الأخير، في فترة ضمان 30 يوم لإصلاح أي أخطاء مجاناً. بعدها، اتفاق شهري للدعم والتطوير — عمل بدوام جزئي بحوالي ساعتين يومياً — يشمل الصيانة، إصلاح الأخطاء، التحسينات الصغيرة، والتطوير المستمر للمنصة.
+        <span class="en"><span>After the final project, a 30-day warranty covers bug fixes at no charge. After that, a monthly support &amp; development arrangement — part-time work, around 2 hours a day — covering maintenance, bug fixes, small improvements, and continued platform development.</span></span>
+      </div>
+      <div class="ib-price">$400 / month</div>
+    </div>
+    <div class="info-block">
+      <div class="ib-t">مش متضمّن في العرض <span class="en">Not included</span></div>
+      <ul class="term-list" style="margin-top:3mm;">
+        <li>تكاليف التشغيل والطرف الثالث: الاستضافة، رسوم بوابات الدفع، الرسائل، الإشعارات، النطاقات — على العميل بالتكلفة الفعلية<span class="en">Hosting, gateway fees, SMS, push, domains — at actual cost</span></li>
+        <li>حسابات النشر على App Store و Google Play<span class="en">App Store &amp; Google Play developer accounts</span></li>
+        <li>إدخال محتوى الفنادق: الصور والأوصاف<span class="en">Hotel content entry (photos, descriptions)</span></li>
+        <li>أي مزايا خارج النطاق أعلاه — تُسعّر منفصلة<span class="en">Any features beyond the scope above — quoted separately</span></li>
+      </ul>
+    </div>
+  </div>
+  </div>
+
+  <div class="keep">
+  <div class="sec-head" style="margin-top:9mm;">
+    <div class="sec-eyebrow en">06 — Terms</div>
+    <div class="sec-title">الشروط <span class="en">Terms</span></div>
+  </div>
+  <ul class="term-list">
+    <li>العرض صالح لمدة 30 يوماً من تاريخه.<span class="en">This proposal is valid for 30 days from its date.</span></li>
+    <li>كل مشروع وحدة مستقلة بنطاقه وسعره، وبيُدفع على 3 دفعات: البداية، نقطة تقدّم متفق عليها، والتسليم (بمدة مراجعة 5 أيام عمل).<span class="en">Each project is an independent unit with its own scope and price, paid in 3 installments — start, an agreed progress point, and delivery (with a 5-working-day review window).</span></li>
+    <li>دفعة بداية المشروع الأول ($1,500) غير مستردة وبتبدأ العمل — مفيش مقدّم كبير منفصل.<span class="en">The Project 1 start installment ($1,500) is non-refundable and begins the work — there is no large separate deposit.</span></li>
+    <li>التعديلات خارج نطاق المشروع تُسعّر ويُتفق عليها منفصلة.<span class="en">Changes outside a project's scope are quoted and agreed separately.</span></li>
+    <li>ملكية الكود تنتقل للعميل بالكامل بعد سداد المبلغ كاملاً.<span class="en">Full code ownership transfers to the client after full payment.</span></li>
+    <li>المشاريع تُنفّذ بالترتيب المذكور، وكل مشروع يبدأ بعد قبول اللي قبله.<span class="en">Projects run in the listed order; each begins after the previous is accepted.</span></li>
+  </ul>
+
+  <div class="accept">
+    <div class="accept-t">للموافقة على العرض <span class="en">To accept this proposal</span></div>
+    <div class="sign-row">
+      <div class="sign-box">
+        <div class="sign-line"></div>
+        <div class="sign-label">العميل — الاسم والتوقيع <span class="en">/ Client — name &amp; signature</span></div>
+      </div>
+      <div class="sign-box">
+        <div class="sign-line"></div>
+        <div class="sign-label">التاريخ <span class="en">/ Date</span></div>
+      </div>
+    </div>
+    <div class="sign-row">
+      <div class="sign-box">
+        <div class="sign-line"></div>
+        <div class="sign-label">أحمد بشير — التوقيع <span class="en">/ Ahmed Beshir — signature</span></div>
+      </div>
+      <div class="sign-box">
+        <div class="sign-line"></div>
+        <div class="sign-label">التاريخ <span class="en">/ Date</span></div>
+      </div>
+    </div>
+    <div class="contact-line">Ahmed Beshir &nbsp;·&nbsp; <b>ahmedbeshir.com</b> &nbsp;·&nbsp; ahmedoneee@gmail.com</div>
+  </div>
+  </div>
+</div>
+
+</body>
+</html>
