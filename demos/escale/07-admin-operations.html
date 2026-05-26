@@ -569,6 +569,64 @@ body::before {
   box-shadow: var(--shadow-sm);
 }
 
+/* LIVE DOOR-OPEN NOTIFICATION (D11 — room-occupancy notification) */
+.door-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(90, 140, 95, 0.09);
+  border: 1px solid rgba(90, 140, 95, 0.28);
+  border-inline-start: 3px solid var(--success);
+}
+.door-alert-dot {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--success);
+}
+.door-alert-dot::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1.5px solid var(--success);
+  opacity: 0.5;
+  animation: door-pulse 2s var(--ease-out) infinite;
+}
+@keyframes door-pulse {
+  0% { transform: scale(0.6); opacity: 0.6; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+.door-alert-body { flex: 1; min-width: 0; }
+.door-alert-label {
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--success);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+[lang="ar"] .door-alert-label { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.door-alert-text {
+  font-size: 12.5px;
+  color: var(--ink-700);
+  line-height: 1.4;
+}
+.door-alert-text strong { color: var(--aubergine-900); font-weight: 600; }
+.door-alert-time {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-500);
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 /* ARRIVALS LIST */
 .arrival-list {
   display: flex;
@@ -1096,7 +1154,7 @@ body::before {
 
             <div class="kpi-card">
               <div class="kpi-label" id="kpi-2-l">Revenue today</div>
-              <div class="kpi-value">142<span class="sub">K SAR</span></div>
+              <div class="kpi-value">1.6<span class="sub">M EGP</span></div>
               <div class="kpi-delta">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
                 <span>+12.4%</span>
@@ -1124,7 +1182,7 @@ body::before {
 
             <div class="kpi-card">
               <div class="kpi-label" id="kpi-5-l">ADR</div>
-              <div class="kpi-value">4,180<span class="sub">SAR</span></div>
+              <div class="kpi-value">7,400<span class="sub">EGP</span></div>
               <div class="kpi-delta down">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
                 <span>−2.1%</span>
@@ -1160,6 +1218,15 @@ body::before {
                   </div>
                 </div>
 
+                <div class="door-alert">
+                  <span class="door-alert-dot"></span>
+                  <div class="door-alert-body">
+                    <div class="door-alert-label" id="door-label">Live · digital key</div>
+                    <div class="door-alert-text" id="door-text">Room 204 — Mariam Sayed just opened the door with her QR key. The room is now occupied.</div>
+                  </div>
+                  <span class="door-alert-time" id="door-time">just now</span>
+                </div>
+
                 <div class="arrival-list">
 
                   <div class="arrival-row">
@@ -1181,7 +1248,7 @@ body::before {
                       <div class="guest-avatar-mini v2">JD</div>
                       <div class="arrival-guest-info">
                         <div class="guest-name" id="g2-name">James Donaldson</div>
-                        <div class="guest-meta" id="g2-meta">5 nights · Lake-Edge · HB</div>
+                        <div class="guest-meta" id="g2-meta">5 nights · Nile View · HB</div>
                       </div>
                     </div>
                     <div class="arrival-room">312</div>
@@ -1233,7 +1300,7 @@ body::before {
                       <div class="guest-avatar-mini v2">YT</div>
                       <div class="arrival-guest-info">
                         <div class="guest-name" id="g6-name">Yuki Tanaka</div>
-                        <div class="guest-meta" id="g6-meta">3 nights · Lake-Edge · BB</div>
+                        <div class="guest-meta" id="g6-meta">3 nights · Nile View · BB</div>
                       </div>
                     </div>
                     <div class="arrival-room">315</div>
@@ -1516,6 +1583,11 @@ body::before {
         <h3 id="n6-h">Guest reviews shown clearly</h3>
         <p id="n6-p">The latest guest review appears the same way the guest wrote it, easy to read.</p>
       </div>
+      <div class="note-item">
+        <div class="num">07</div>
+        <h3 id="n7-h">The room tells the desk it is in use</h3>
+        <p id="n7-p">When a guest opens the door with the QR key, the dashboard knows at once that the room is occupied.</p>
+      </div>
     </div>
   </section>
 
@@ -1542,14 +1614,17 @@ const t = {
     kpi4l: "Departures", kpi4d: "2 late check-out", kpi5l: "ADR",
     kpi6l: "Open requests", kpi6d: "2 high priority",
     arEb: "Today's timeline", arTitle: "Arrivals",
+    doorLabel: "Live · digital key",
+    doorText: "Room 204 — Mariam Sayed just opened the door with her QR key. The room is now occupied.",
+    doorTime: "just now",
     tabArr: "Arrivals (24)", tabDep: "Departures (19)",
     dayNow: "now", day30m: "in 30m", day30m2: "in 30m", day2h: "in 2h", dayDone: "arrived", dayEarly: "arrived",
     g1Name: "Mariam Sayed · +1", g1Meta: "3 nights · Garden Suite · BB", g1Status: "QR check-in",
-    g2Name: "James Donaldson", g2Meta: "5 nights · Lake-Edge · HB", g2Status: "Waiting",
+    g2Name: "James Donaldson", g2Meta: "5 nights · Nile View · HB", g2Status: "Waiting",
     g3Name: "Ahmed Khalifa · +3", g3Meta: "2 nights · Family Suite · AI", g3Status: "Waiting",
     g4Name: "Elena Markovic", g4Meta: "7 nights · Sea View · BB · B2B", g4Status: "Waiting",
     g5Name: "Sophie Hartmann · +1", g5Meta: "4 nights · Garden Suite · HB", g5Status: "Checked in",
-    g6Name: "Yuki Tanaka", g6Meta: "3 nights · Lake-Edge · BB", g6Status: "Checked in",
+    g6Name: "Yuki Tanaka", g6Meta: "3 nights · Nile View · BB", g6Status: "Checked in",
     rgEb: "Live · 48 rooms", rgTitle: "Room status",
     tabAll: "All floors", tabF2: "Floor 2", tabF3: "Floor 3", tabF4: "Floor 4",
     leg1: "Vacant clean (12)", leg2: "Needs cleaning (5)", leg3: "Occupied (29)", leg4: "Out of order (2)",
@@ -1578,7 +1653,9 @@ const t = {
     n5h: "See who checked in by phone",
     n5p: "A pink label shows which arriving guests already checked in from their phone.",
     n6h: "Guest reviews shown clearly",
-    n6p: "The latest guest review appears the same way the guest wrote it, easy to read."
+    n6p: "The latest guest review appears the same way the guest wrote it, easy to read.",
+    n7h: "The room tells the desk it is in use",
+    n7p: "When a guest opens the door with the QR key, the dashboard knows at once that the room is occupied."
   },
   ar: {
     ehLabel: "الشاشة ٧ / المسؤول · العمليات",
@@ -1594,14 +1671,17 @@ const t = {
     kpi4l: "المغادرون", kpi4d: "٢ خروج متأخر", kpi5l: "متوسط السعر اليومي",
     kpi6l: "طلبات مفتوحة", kpi6d: "٢ أولوية عالية",
     arEb: "جدول اليوم", arTitle: "الواصلون",
+    doorLabel: "مباشر · المفتاح الرقمي",
+    doorText: "غرفة ٢٠٤ — مريم سيد فتحت الباب الآن بمفتاح الـ QR. الغرفة أصبحت مشغولة.",
+    doorTime: "الآن",
     tabArr: "الواصلون (٢٤)", tabDep: "المغادرون (١٩)",
     dayNow: "الآن", day30m: "بعد ٣٠ د", day30m2: "بعد ٣٠ د", day2h: "بعد ساعتين", dayDone: "وصل", dayEarly: "وصل",
     g1Name: "مريم سيد · +١", g1Meta: "٣ ليالٍ · جناح الحديقة · فطار", g1Status: "QR",
-    g2Name: "جيمس دونالدسون", g2Meta: "٥ ليالٍ · طرف البحيرة · نصف", g2Status: "في الانتظار",
+    g2Name: "جيمس دونالدسون", g2Meta: "٥ ليالٍ · إطلالة على النيل · نصف", g2Status: "في الانتظار",
     g3Name: "أحمد خليفة · +٣", g3Meta: "٢ ليالٍ · جناح عائلي · شامل", g3Status: "في الانتظار",
     g4Name: "إيلينا ماركوفيتش", g4Meta: "٧ ليالٍ · إطلالة بحر · فطار · B2B", g4Status: "في الانتظار",
     g5Name: "صوفي هارتمان · +١", g5Meta: "٤ ليالٍ · جناح الحديقة · نصف", g5Status: "وصل",
-    g6Name: "يوكي تاناكا", g6Meta: "٣ ليالٍ · طرف البحيرة · فطار", g6Status: "وصل",
+    g6Name: "يوكي تاناكا", g6Meta: "٣ ليالٍ · إطلالة على النيل · فطار", g6Status: "وصل",
     rgEb: "مباشر · ٤٨ غرفة", rgTitle: "حالة الغرف",
     tabAll: "كل الأدوار", tabF2: "الدور ٢", tabF3: "الدور ٣", tabF4: "الدور ٤",
     leg1: "نظيفة شاغرة (١٢)", leg2: "تحتاج تنظيف (٥)", leg3: "مشغولة (٢٩)", leg4: "خارج الخدمة (٢)",
@@ -1630,7 +1710,9 @@ const t = {
     n5h: "اعرف مين عمل تشيك-إن بموبايله",
     n5p: "علامة وردي بتوضّح أنهي ضيوف واصلين عملوا تشيك-إن من موبايلهم.",
     n6h: "تقييمات النزلاء واضحة",
-    n6p: "أحدث تقييم للنزيل بيظهر زي ما النزيل كتبه، سهل القراءة."
+    n6p: "أحدث تقييم للنزيل بيظهر زي ما النزيل كتبه، سهل القراءة.",
+    n7h: "الغرفة بتقول للاستقبال إنها مشغولة",
+    n7p: "لما الضيف يفتح الباب بمفتاح الـ QR، اللوحة بتعرف على طول إن الغرفة بقت مشغولة."
   }
 };
 
@@ -1686,6 +1768,9 @@ function setLocale(loc) {
   // Arrivals
   document.getElementById('ar-eb').textContent = tt.arEb;
   document.getElementById('ar-title').textContent = tt.arTitle;
+  document.getElementById('door-label').textContent = tt.doorLabel;
+  document.getElementById('door-text').textContent = tt.doorText;
+  document.getElementById('door-time').textContent = tt.doorTime;
   document.getElementById('tab-arr').textContent = tt.tabArr;
   document.getElementById('tab-dep').textContent = tt.tabDep;
   document.getElementById('day-now').textContent = tt.dayNow;
@@ -1754,6 +1839,8 @@ function setLocale(loc) {
   document.getElementById('n5-p').textContent = tt.n5p;
   document.getElementById('n6-h').textContent = tt.n6h;
   document.getElementById('n6-p').textContent = tt.n6p;
+  document.getElementById('n7-h').textContent = tt.n7h;
+  document.getElementById('n7-p').textContent = tt.n7p;
 }
 </script>
 

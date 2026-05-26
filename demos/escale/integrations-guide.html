@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>Escalé — Integrations Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Geist:wght@300..700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --aubergine-900: #3A1234;
+  --aubergine-700: #4A1942;
+  --aubergine-500: #5B2C5F;
+  --aubergine-100: #EFE3EF;
+  --magenta-500: #B8228C;
+  --magenta-300: #D86CB0;
+  --terracotta-700: #A05A3A;
+  --terracotta-500: #C9956B;
+  --terracotta-300: #E2BC9C;
+  --terracotta-100: #F5E8DC;
+  --ink-900: #1C1410;
+  --ink-700: #3D332D;
+  --ink-500: #6B5D54;
+  --ink-300: #A89A8E;
+  --sand-100: #F0E9DF;
+  --sand-50: #F7F2E9;
+  --cream: #FAF7F2;
+  --paper: #FDFBF7;
+  --success: #5A8C5F;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Geist', sans-serif;
+  --font-ar: 'Tajawal', sans-serif;
+}
+
+@page {
+  size: A4;
+  margin: 15mm 15mm 16mm;
+  @bottom-center {
+    content: "Escalé  ·  Integrations Guide  ·  " counter(page) " / " counter(pages);
+    font-family: 'Geist', sans-serif;
+    font-size: 7.5pt;
+    letter-spacing: 0.04em;
+    color: #A89A8E;
+  }
+}
+@page cover { margin: 0; @bottom-center { content: ""; } }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-ar);
+  color: var(--ink-900);
+  font-size: 10.5pt;
+  line-height: 1.7;
+  background: var(--paper);
+}
+.en { font-family: var(--font-body); direction: ltr; }
+
+/* ============ COVER ============ */
+.cover {
+  page: cover;
+  width: 210mm; height: 297mm;
+  background:
+    radial-gradient(circle at 84% 16%, rgba(216, 108, 176, 0.42), transparent 52%),
+    linear-gradient(158deg, var(--aubergine-900) 0%, var(--aubergine-500) 58%, var(--terracotta-700) 100%);
+  color: var(--paper);
+  padding: 26mm 22mm;
+  position: relative;
+  overflow: hidden;
+}
+.cover::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 120mm;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 96 L18 64 L30 96 Z M30 96 L42 64 L54 96 Z M54 96 L66 64 L78 96 Z M78 96 L90 64 L102 96 Z' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
+  background-size: 150mm; background-position: bottom right; background-repeat: no-repeat;
+}
+.cover-brand { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
+.cover-logo { width: 46px; height: 46px; }
+.cover-wordmark { font-family: var(--font-display); font-weight: 500; font-size: 22pt; letter-spacing: -0.02em; }
+.cover-tag { font-size: 8pt; letter-spacing: 0.22em; color: var(--terracotta-300); margin-top: 2px; }
+.cover-tag.en { direction: ltr; text-transform: uppercase; }
+
+.cover-mid { position: relative; z-index: 1; margin-top: 64mm; }
+.cover-kicker { font-family: var(--font-display); font-style: italic; font-size: 13pt; color: var(--terracotta-300); }
+.cover-kicker.en { direction: ltr; }
+.cover-title { font-family: var(--font-ar); font-weight: 800; font-size: 40pt; line-height: 1.14; margin-top: 4mm; }
+.cover-sub { font-size: 12pt; color: rgba(253,251,247,0.9); margin-top: 6mm; max-width: 150mm; line-height: 1.85; }
+
+.cover-meta {
+  position: relative; z-index: 1; margin-top: 18mm;
+  display: flex; flex-wrap: wrap; gap: 7mm 14mm;
+  padding-top: 7mm; border-top: 1px solid rgba(255,255,255,0.18);
+}
+.cm-item { min-width: 44mm; }
+.cm-l { font-size: 7.5pt; letter-spacing: 0.04em; color: var(--terracotta-300); }
+.cm-l .en { color: rgba(226,188,156,0.7); }
+.cm-v { font-size: 10.5pt; font-weight: 500; margin-top: 1mm; }
+.cm-v .en { direction: ltr; }
+
+.cover-note {
+  position: absolute; z-index: 1; left: 22mm; right: 22mm; bottom: 24mm;
+  background: rgba(253,251,247,0.10);
+  border: 1px solid rgba(255,255,255,0.20);
+  border-radius: 14px;
+  padding: 6mm 8mm;
+  font-size: 9.5pt; line-height: 1.8; color: rgba(253,251,247,0.9);
+}
+
+/* ============ SECTIONS ============ */
+.section { padding-top: 2mm; }
+.section.break { break-before: page; }
+
+.sec-head { margin-bottom: 6mm; padding-bottom: 3.5mm; border-bottom: 1px solid var(--sand-100); break-inside: avoid; break-after: avoid; }
+.sec-eyebrow { font-family: var(--font-display); font-style: italic; font-size: 10pt; color: var(--terracotta-700); direction: ltr; text-align: right; }
+.sec-title { font-family: var(--font-ar); font-weight: 800; font-size: 19pt; color: var(--aubergine-900); line-height: 1.3; margin-top: 1mm; }
+.sec-title .en { font-family: var(--font-display); font-weight: 400; font-style: italic; font-size: 12pt; color: var(--ink-300); margin-right: 6px; }
+
+p.lead { font-size: 10.5pt; color: var(--ink-700); line-height: 1.9; }
+
+/* CALLOUT */
+.callout {
+  background: var(--sand-50); border: 1px solid var(--sand-100);
+  border-right: 3px solid var(--magenta-500);
+  border-radius: 12px; padding: 5mm 6mm; margin-top: 6mm;
+}
+.callout-t { font-weight: 700; font-size: 10.5pt; color: var(--aubergine-900); }
+.callout-b { font-size: 9.5pt; color: var(--ink-700); margin-top: 2mm; line-height: 1.8; }
+
+/* PROJECT INTRO */
+.proj-intro {
+  background: linear-gradient(150deg, var(--aubergine-900), var(--aubergine-700));
+  color: var(--paper); border-radius: 12px; padding: 5mm 6mm; margin-bottom: 5mm;
+  break-inside: avoid;
+}
+.proj-intro .pi-order { font-size: 8pt; letter-spacing: 0.04em; color: var(--terracotta-300); font-weight: 700; }
+.proj-intro .pi-name { font-family: var(--font-ar); font-weight: 800; font-size: 14pt; margin-top: 1mm; }
+.proj-intro .pi-desc { font-size: 9.5pt; color: rgba(253,251,247,0.88); margin-top: 2mm; line-height: 1.8; }
+
+/* INTEGRATION CARD */
+.int-card {
+  background: var(--paper); border: 1px solid var(--sand-100);
+  border-radius: 12px; padding: 5mm 5.5mm; margin-bottom: 4mm;
+  break-inside: avoid;
+}
+.int-head { display: flex; align-items: baseline; gap: 7px; margin-bottom: 3mm; padding-bottom: 2.5mm; border-bottom: 1px solid var(--sand-100); }
+.int-num { font-family: var(--font-display); font-weight: 500; font-size: 14pt; color: var(--magenta-500); flex-shrink: 0; }
+.int-name { font-family: var(--font-ar); font-weight: 700; font-size: 12pt; color: var(--aubergine-900); }
+.int-row { margin-bottom: 2.6mm; }
+.int-row:last-child { margin-bottom: 0; }
+.int-l { font-size: 7.5pt; font-weight: 700; letter-spacing: 0.03em; color: var(--terracotta-700); display: block; margin-bottom: 0.8mm; }
+.int-v { font-size: 9.5pt; color: var(--ink-700); line-height: 1.72; }
+.int-row.need {
+  background: var(--sand-50); border-right: 3px solid var(--magenta-500);
+  border-radius: 8px; padding: 2.8mm 3.4mm;
+}
+.int-row.need .int-l { color: var(--magenta-500); }
+.mkt { font-weight: 700; color: var(--aubergine-900); }
+.int-v .sub { display: block; margin-top: 1mm; }
+.int-note { font-size: 8.5pt; color: var(--ink-500); margin-top: 2.4mm; font-style: italic; }
+
+/* CHECKLIST */
+.check-group { margin-bottom: 5mm; break-inside: avoid; }
+.check-proj {
+  font-family: var(--font-ar); font-weight: 800; font-size: 11.5pt; color: var(--aubergine-900);
+  background: var(--sand-50); border-radius: 8px; padding: 2mm 3.5mm; margin-bottom: 3mm;
+}
+.check-proj .tag { font-size: 8pt; font-weight: 700; color: var(--terracotta-700); }
+.check-item {
+  font-size: 9.5pt; color: var(--ink-700); line-height: 1.65;
+  padding-right: 7.5mm; position: relative; margin-bottom: 2.2mm;
+}
+.check-item::before {
+  content: ''; position: absolute; right: 0; top: 0.8mm;
+  width: 3.6mm; height: 3.6mm; border: 1.4px solid var(--aubergine-300); border-radius: 3px;
+}
+.check-item .mkt { color: var(--magenta-500); }
+
+.closing {
+  margin-top: 4mm; background: var(--sand-50); border: 1px solid var(--sand-100);
+  border-right: 3px solid var(--magenta-500);
+  border-radius: 12px; padding: 5mm 6mm; break-inside: avoid;
+}
+.closing-t { font-weight: 700; font-size: 10.5pt; color: var(--aubergine-900); }
+.closing-b { font-size: 9.5pt; color: var(--ink-700); margin-top: 2mm; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- ================= COVER ================= -->
+<div class="cover">
+  <div class="cover-brand">
+    <svg class="cover-logo" viewBox="0 0 100 100">
+      <defs><linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#D86CB0"/><stop offset="100%" stop-color="#B8228C"/>
+      </linearGradient></defs>
+      <circle cx="50" cy="44" r="36" fill="url(#lg)"/>
+      <circle cx="50" cy="44" r="22" fill="#FDFBF7"/>
+      <path d="M28 74 L36 60 L44 74 Z M44 74 L52 60 L60 74 Z M60 74 L68 60 L76 74 Z" fill="#FDFBF7"/>
+    </svg>
+    <div>
+      <div class="cover-wordmark">Escalé</div>
+      <div class="cover-tag en">Hospitality Platform</div>
+    </div>
+  </div>
+
+  <div class="cover-mid">
+    <div class="cover-kicker en">Integrations Guide</div>
+    <div class="cover-title">دليل التكاملات<br>والربط مع الأنظمة</div>
+    <div class="cover-sub">
+      الأنظمة الخارجية التي ستتصل بها منصة Escalé، وكيف يتم الربط، وما الذي يحتاج العميل إلى تجهيزه أو التعاقد عليه — مُرتّبة حسب المشاريع الثلاثة وترتيب تنفيذها.
+    </div>
+  </div>
+
+  <div class="cover-meta">
+    <div class="cm-item">
+      <div class="cm-l">مُقدّم إلى <span class="en">/ Prepared for</span></div>
+      <div class="cm-v">………………………………</div>
+    </div>
+    <div class="cm-item">
+      <div class="cm-l">مُقدّم من <span class="en">/ Prepared by</span></div>
+      <div class="cm-v">أحمد بشير <span class="en">· Ahmed Beshir</span></div>
+    </div>
+    <div class="cm-item">
+      <div class="cm-l">التاريخ <span class="en">/ Date</span></div>
+      <div class="cm-v en">26 May 2026</div>
+    </div>
+  </div>
+
+  <div class="cover-note">
+    هذا الملف يشرح <strong>التكاملات والربط فقط</strong> — ما هي الأنظمة، وكيف تُربط، وما الذي يلزم العميل تجهيزه أو التعاقد عليه قبل كل مرحلة.
+  </div>
+</div>
+
+<!-- ================= OVERVIEW ================= -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-eyebrow en">01 — Overview</div>
+    <div class="sec-title">نظرة عامة <span class="en">The approach</span></div>
+  </div>
+
+  <p class="lead">
+    منصة Escalé لا تعمل بمفردها — هي تتصل بعدد من الأنظمة والخدمات الخارجية المتخصصة لكي تعمل بشكل كامل: بوابات الدفع، الأقفال الذكية، التحقق من الهوية، الفوترة الإلكترونية، الرسائل، وغيرها. هذا الملف يوضّح كل تكامل: ما هو، وكيف يتم ربطه، والأهم — ما الذي يحتاج العميل إلى تجهيزه أو التعاقد عليه.
+  </p>
+
+  <div class="callout">
+    <div class="callout-t">لماذا الترتيب حسب المشاريع؟</div>
+    <div class="callout-b">
+      المنصة تُسلَّم على ثلاثة مشاريع مستقلة بالترتيب. المشروع الأول — تطبيق إدارة الخدمات — يحمل الأساس التقني المشترك، فتُجهَّز فيه معظم التكاملات الأساسية. والمشروعان التاليان يبنيان فوقه ويضيفان ما يخصّهما فقط. ترتيب هذا الملف يطابق ترتيب التنفيذ، حتى يعرف العميل ما يبدأ في تجهيزه الآن وما يمكن أن يأتي لاحقًا.
+    </div>
+  </div>
+
+  <div class="callout" style="border-right-color: var(--terracotta-500);">
+    <div class="callout-t">ملاحظتان مهمتان</div>
+    <div class="callout-b">
+      <strong>السوقان:</strong> المنصة تعمل في مصر والخليج، وبعض التكاملات تختلف حسب بلد الفندق — وهي موضّحة لكل سوق على حدة.<br>
+      <strong>ملكية الحسابات:</strong> بعض الحسابات (متاجر التطبيقات، بوابات الدفع، الاستضافة) يجب أن تُفتح باسم العميل أو الكيان، لأنه المالك الرسمي لها — والفريق التقني يوجّه العميل في الإعداد.
+    </div>
+  </div>
+</div>
+
+<!-- ================= PROJECT 1 ================= -->
+<div class="section break">
+  <div class="sec-head">
+    <div class="sec-eyebrow en">02 — Project 1</div>
+    <div class="sec-title">المشروع الأول · تطبيق إدارة الخدمات <span class="en">Services Management App</span></div>
+  </div>
+
+  <div class="proj-intro">
+    <div class="pi-order">يُنفَّذ أولًا · المشروع الرئيسي</div>
+    <div class="pi-name">تطبيق إدارة الخدمات</div>
+    <div class="pi-desc">المشروع الأساسي — يحمل البنية التحتية المشتركة، تطبيق النزيل، تطبيق الموظفين، لوحة العمليات، تسجيل الوصول أونلاين، والمفتاح الرقمي. معظم التكاملات الأساسية تُجهَّز هنا، لذلك بنود هذا المشروع هي ما يبدأ العميل في تجهيزه أولًا.</div>
+  </div>
+
+  <div class="int-card">
+    <div class="int-head"><span class="int-num">1</span><span class="int-name">الاستضافة والبنية التحتية</span></div>
+    <div class="int-row"><span class="int-l">ما هو</span><span class="int-v">الخوادم وقاعدة البيانات وتخزين الملفات والصور وشبكة التوزيع — الأساس الذي يعمل عليه النظام كله.</span></div>
+    <div class="int-row"><span class="int-l">كيف نربطه</span><span class="int-v">نجهّز الاستضافة على مزوّدات سحابية موثوقة، ونربط بها قاعدة البيانات والتخزين، ونديرها للعميل.</span></div>
+    <div class="int-row need"><span class="int-l">يحتاج من العميل</span><span class="int-v">نطاق إلكتروني (Domain) للمنصة، وحسابات لدى مزوّدات الاستضافة السحابية مفتوحة باسم العميل ليملكها رسميًا.</span></div>
+  </div>
+
+  <div class="int-card">
+    <div class="int-head"><span class="int-num">2</span><span class="int-name">الرسائل النصية ورموز التحقق (SMS / OTP)</span></div>
+    <div class="int-row"><span class="int-l">ما هو</span><span class="int-v">إرسال رموز تسجيل الدخول وتنبيهات الحجز للنزيل عبر الرسائل النصية.</span></div>
+    <div class="int-row"><span class="int-l">كيف نربطه</span><span class="int-v">نربط مزوّد رسائل مناسبًا لكل سوق، إضافةً إلى مزوّد دولي للرسائل خارج البلدين.</span></div>
+    <div class="int-row need"><span class="int-l">يحتاج من العميل</span><span class="int-v">
+      <span class="sub"><span class="mkt">الخليج:</span> فتح حساب لدى مزوّد رسائل (Unifonic) وتسجيل اسم المُرسِل.</span>
+      <span class="sub"><span class="mkt">مصر:</span> حساب لدى مجمّع رسائل محلي، وتسجيل اسم المُرسِل لدى الجهاز القومي لتنظيم الاتصالات (NTRA) — يستغرق أسابيع، لذا يُفضّل البدء فيه مبكرًا.</span>
+    </span></div>
+  </div>
+
+  <div class="int-card">
+    <div class="int-head"><span class="int-num">3</span><span class="int-name">البريد الإلكتروني</span></div>
+    <div class="int-row"><span class="int-l">ما هو</span><span class="int-v">إرسال تأكيدات الحجز والإشعارات للنزلاء عبر البريد الإلكتروني.</span></div>
+    <div class="int-row"><span class="int-l">كيف نربطه</span><span class="int-v">عبر خدمة بريد متخصّصة للمعاملات (Resend) مربوطة بنطاق العميل.</span></div>
+    <div class="int-row need"><span class="int-l">يحتاج من العميل</span><span class="int-v">حساب لدى خدمة البريد، وتأكيد ملكية النطاق الإلكتروني — إعداد بسيط يوجّه فيه الفريق العميل.</span></div>
+  </div>
+
+  <div class="int-card">
+    <div class="int-head"><span class="int-num">4</span><span class="int-name">الإشعارات الفورية ونشر التطبيقات</span></div>
+    <div class="int-row"><span class="int-l">ما هو</span><span class="int-v">إشعارات فورية على هواتف النزلاء والموظفين، ونشر تطبيقَي النزيل والموظفين على المتاجر.</span></div>
+    <div class="int-row"><span class="int-l">كيف نربطه</span><span class="int-v">نظام الإشعارات مدمج داخل التطبيق؛ والنشر يتم على متجري Apple App Store وGoogle Play.</span></div>
+    <div class="int-row need"><span class="int-l">يحتاج من العميل</span><span class="int-v">حساب Apple Developer وحساب Google Play مفتوحان باسم العميل أو الكيان — لأنهما يتطلبان الهوية القانونية للمالك، والعميل هو مالك التطبيقات.</span></div>
+  </div>
+
+  <div class="int-card">
+    <div class="int-head"><span class="int-num">5</span><span class="int-name">القفل الذكي والمفتاح الرقمي (QR)</span></div>
+    <div class="int-row"><span class="int-l">ما هو</span><span class="int-v">المفتاح الرقمي الذي يفتح به النزيل غرفته من التطبيق. نقطة مهمة: كود QR وحده لا يفتح بابًا — الفتح الفعلي يعتمد على نوع القفل المركّب في الفندق (بلوتوث، NFC، رمز رقمي…).</span></div>
+    <div class="int-row"><span class="int-l">كيف نربطه</span><span class="int-v">المنصة لا تصنع الأقفال؛ بل تتكامل مع نظام أقفال الفندق عبر واجهة موحّدة (مثل Seam). نبدأ بالفتح عبر رمز رقمي، والفتح باللمس عبر البلوتوث مرحلة لاحقة.</span></div>
+    <div class="int-row need"><span class="int-l">يحتاج من العميل</span><span class="int-v">تحديد نوع الأقفال في كل فندق (أو تركيب أقفال ذكية إن لم تكن موجودة)، والتعاقد مع مزوّد الأقفال وفتح حساب الواجهة الموحّدة.</span></div>
+    <div class="int-note">قرار اختيار مزوّد الأقفال يجب تأكيده مع الفريق قبل بدء تطوير هذا الجزء.</div>
+  </div>
+
+  <div class="int-card">
+    <div class="int-head"><span class="int-num">6</span><span class="int-name">التحقق من الهوية</span></div>
+    <div class="int-row"><span class="int-l">ما هو</span><span class="int-v">التحقق من هوية النزيل عند تسجيل الوصول أونلاين قبل الحضور.</span></div>
+    <div class="int-row need"><span class="int-l">كيف نربطه وما يحتاجه العميل</span><span class="int-v">
+      <span class="sub"><span class="mkt">الخليج:</span> التكامل مع «نفاذ» — يتطلب اشتراك العميل في الخدمة عبر شركة ضبط التقنية (TCC)، ويتطلب كيانًا سعوديًا مسجَّلًا. (في الإمارات: خدمة UAE PASS المماثلة.)</span>
+      <span class="sub"><span class="mkt">مصر:</span> لا توجد خدمة هوية وطنية موحّدة للقطاع الخاص؛ التحقق يتم بتسجيل بيانات الهوية أو جواز السفر — لا يحتاج تعاقدًا خارجيًا.</span>
+    </span></div>
+    <div class="int-note">التحقق المتقدّم بالهوية يمكن تأجيله؛ النسخة الأولى تكفيها رموز التحقق عبر الرسائل والبريد.</div>
+  </div>
+
+  <div class="int-card">
+    <div class="int-head"><span class="int-num">7</span><span class="int-name">تسجيل النزلاء لدى الجهات الرسمية</span></div>
+    <div class="int-row"><span class="int-l">ما هو</span><span class="int-v">تسجيل بيانات كل نزيل لدى الجهات الرسمية — التزام قانوني إلزامي في البلدين.</span></div>
+    <div class="int-row need"><span class="int-l">كيف نربطه وما يحتاجه العميل</span><span class="int-v">
+      <span class="sub"><span class="mkt">الخليج:</span> التكامل مع «شموس» (وزارة الداخلية السعودية) — يتطلب تسجيل المنشأة والعمل عبر شبكة مرخّصة، وقد يحتاج مُكامِلًا معتمدًا.</span>
+      <span class="sub"><span class="mkt">مصر:</span> لا توجد واجهة ربط وطنية؛ المنصة تلتقط بيانات النزيل وتولّد الكشف الشهري لوزارة السياحة. يحتاج العميل أن تكون المنشأة مسجّلة ومرخّصة سياحيًا.</span>
+    </span></div>
+  </div>
+
+  <div class="int-card">
+    <div class="int-head"><span class="int-num">8</span><span class="int-name">الذكاء الاصطناعي</span></div>
+    <div class="int-row"><span class="int-l">ما هو</span><span class="int-v">مزايا ذكية مساعدة داخل المنصة.</span></div>
+    <div class="int-row"><span class="int-l">كيف نربطه</span><span class="int-v">عبر طبقة مخصّصة داخل المنصة تتصل بخدمة الذكاء الاصطناعي.</span></div>
+    <div class="int-row need"><span class="int-l">يحتاج من العميل</span><span class="int-v">حساب لدى مزوّد الخدمة باسم العميل — إعداد بسيط يديره الفريق التقني.</span></div>
+  </div>
+</div>
+
+<!-- ================= PROJECT 2 ================= -->
+<div class="section break">
+  <div class="sec-head">
+    <div class="sec-eyebrow en">03 — Project 2</div>
+    <div class="sec-title">المشروع الثاني · تطبيق الحجوزات <span class="en">Bookings App</span></div>
+  </div>
+
+  <div class="proj-intro">
+    <div class="pi-order">يُنفَّذ ثانيًا</div>
+    <div class="pi-name">تطبيق الحجوزات</div>
+    <div class="pi-desc">اكتشاف الفنادق، الحجز، الدفع، والتأكيد. يبني فوق أساس المشروع الأول، ويضيف التكاملات الخاصة بالحجز والدفع.</div>
+  </div>
+
+  <div class="int-card">
+    <div class="int-head"><span class="int-num">9</span><span class="int-name">بوابات الدفع</span></div>
+    <div class="int-row"><span class="int-l">ما هو</span><span class="int-v">استقبال مدفوعات الحجوزات إلكترونيًا.</span></div>
+    <div class="int-row need"><span class="int-l">كيف نربطه وما يحتاجه العميل</span><span class="int-v">
+      <span class="sub"><span class="mkt">مصر:</span> التعاقد مع بوابة دفع — Paymob أو Fawry — تغطّي البطاقات وبطاقة Meeza الوطنية والمحافظ الإلكترونية. يحتاج العميل سجلًا تجاريًا وحساب تاجر لدى البوابة.</span>
+      <span class="sub"><span class="mkt">الخليج:</span> التعاقد مع بوابة دفع سعودية — Moyasar أو HyperPay — تغطّي mada وApple Pay وSTC Pay والبطاقات. يحتاج حساب تاجر وسجلًا تجاريًا.</span>
+      <span class="sub"><span class="mkt">للسوقين:</span> حساب Stripe للبطاقات الدولية. وإن رغب العميل في خدمات التقسيط (Tabby/Tamara في الخليج، valU/Sympl في مصر) يتعاقد معها منفصلًا.</span>
+    </span></div>
+  </div>
+
+  <div class="int-card">
+    <div class="int-head"><span class="int-num">10</span><span class="int-name">الفوترة الإلكترونية</span></div>
+    <div class="int-row"><span class="int-l">ما هو</span><span class="int-v">نظام الفوترة الإلكترونية الإلزامي — أي منشأة تُصدر فواتير أو إيصالات يجب أن تلتزم به.</span></div>
+    <div class="int-row need"><span class="int-l">كيف نربطه وما يحتاجه العميل</span><span class="int-v">
+      <span class="sub"><span class="mkt">مصر:</span> التسجيل في منظومة مصلحة الضرائب المصرية (ETA) للفاتورة والإيصال الإلكتروني، والحصول على شهادة الختم الإلكتروني.</span>
+      <span class="sub"><span class="mkt">الخليج:</span> التسجيل في منظومة «فاتورة» التابعة لهيئة الزكاة والضريبة والجمارك (زاتكا) والربط معها، عادةً عبر مزوّد حلول فوترة معتمد.</span>
+    </span></div>
+    <div class="int-note">التزام إلزامي قانونًا في البلدين — يُنصَح بإتمام التسجيل مبكرًا.</div>
+  </div>
+
+  <div class="int-card">
+    <div class="int-head"><span class="int-num">11</span><span class="int-name">الخرائط</span></div>
+    <div class="int-row"><span class="int-l">ما هو</span><span class="int-v">عرض مواقع الفنادق على الخريطة والبحث عن العناوين والوجهات.</span></div>
+    <div class="int-row"><span class="int-l">كيف نربطه</span><span class="int-v">عبر منصة خرائط Google.</span></div>
+    <div class="int-row need"><span class="int-l">يحتاج من العميل</span><span class="int-v">حساب Google Cloud ومفتاح خدمة الخرائط — إعداد يوجّه فيه الفريق العميل، والحساب باسم العميل.</span></div>
+  </div>
+</div>
+
+<!-- ================= PROJECT 3 ================= -->
+<div class="section break">
+  <div class="sec-head">
+    <div class="sec-eyebrow en">04 — Project 3</div>
+    <div class="sec-title">المشروع الثالث · مزاد شركات السياحة <span class="en">B2B Auction</span></div>
+  </div>
+
+  <div class="proj-intro">
+    <div class="pi-order">يُنفَّذ ثالثًا</div>
+    <div class="pi-name">مزاد شركات السياحة B2B</div>
+    <div class="pi-desc">سوق المزاد بين شركات السياحة والفنادق — تنشر الشركة طلب الحجز وتتنافس الفنادق بأسعارها.</div>
+  </div>
+
+  <div class="int-card">
+    <div class="int-head"><span class="int-num">—</span><span class="int-name">لا يحتاج تكاملات خارجية جديدة</span></div>
+    <div class="int-row"><span class="int-l">لماذا</span><span class="int-v">المزاد يعيد استخدام البنية والتكاملات المبنية في المشروعين الأول والثاني — تسجيل الدخول، الإشعارات، البريد الإلكتروني، وبوابات الدفع. لا يضيف هذا المشروع نظامًا خارجيًا جديدًا يتطلب تعاقدًا.</span></div>
+    <div class="int-row need"><span class="int-l">يحتاج من العميل</span><span class="int-v">لا شيء جديد — فقط التأكد من أن حساب التاجر لدى بوابة الدفع يغطّي معاملات الشركات (B2B) إن كان التحصيل سيمرّ عبر المنصة.</span></div>
+  </div>
+</div>
+
+<!-- ================= CHECKLIST ================= -->
+<div class="section break">
+  <div class="sec-head">
+    <div class="sec-eyebrow en">05 — Checklist</div>
+    <div class="sec-title">ما يحتاج العميل إلى تجهيزه <span class="en">Client setup checklist</span></div>
+  </div>
+
+  <p class="lead">قائمة مختصرة بالحسابات والتعاقدات والتسجيلات التي يجهّزها العميل، مرتّبة حسب المشاريع. ما يخصّ سوقًا بعينه مُعلَّم به.</p>
+
+  <div class="check-group" style="margin-top:5mm;">
+    <div class="check-proj">المشروع الأول — تطبيق إدارة الخدمات <span class="tag">· يُجهَّز أولًا</span></div>
+    <div class="check-item">نطاق إلكتروني (Domain) وحسابات استضافة سحابية باسم العميل.</div>
+    <div class="check-item">حساب مزوّد رسائل وتسجيل اسم المُرسِل — <span class="mkt">الخليج:</span> Unifonic · <span class="mkt">مصر:</span> مجمّع محلي + تسجيل لدى NTRA (يُبدأ مبكرًا).</div>
+    <div class="check-item">حساب خدمة البريد الإلكتروني وتأكيد ملكية النطاق.</div>
+    <div class="check-item">حساب Apple Developer وحساب Google Play باسم العميل أو الكيان.</div>
+    <div class="check-item">تحديد/تجهيز أقفال الفنادق والتعاقد مع مزوّد الأقفال (قرار يُؤكَّد قبل التطوير).</div>
+    <div class="check-item"><span class="mkt">الخليج:</span> الاشتراك في «نفاذ» عبر TCC (يتطلب كيانًا سعوديًا مسجَّلًا).</div>
+    <div class="check-item">تسجيل المنشأة في «شموس» <span class="mkt">(الخليج)</span> · والتأكد من الترخيص السياحي للمنشأة <span class="mkt">(مصر)</span>.</div>
+    <div class="check-item">حساب خدمة الذكاء الاصطناعي.</div>
+  </div>
+
+  <div class="check-group">
+    <div class="check-proj">المشروع الثاني — تطبيق الحجوزات <span class="tag">· يُجهَّز ثانيًا</span></div>
+    <div class="check-item">حساب تاجر لدى بوابة دفع وسجل تجاري — <span class="mkt">مصر:</span> Paymob أو Fawry · <span class="mkt">الخليج:</span> Moyasar أو HyperPay · وحساب Stripe للبطاقات الدولية.</div>
+    <div class="check-item">التسجيل في منظومة الفوترة الإلكترونية — <span class="mkt">مصر:</span> مصلحة الضرائب (ETA) + شهادة الختم · <span class="mkt">الخليج:</span> منظومة «فاتورة» (زاتكا).</div>
+    <div class="check-item">حساب Google Cloud لخدمة الخرائط.</div>
+  </div>
+
+  <div class="check-group">
+    <div class="check-proj">المشروع الثالث — مزاد B2B <span class="tag">· يُجهَّز ثالثًا</span></div>
+    <div class="check-item">لا جديد — فقط التأكد من أن حساب الدفع يغطّي معاملات الشركات (B2B).</div>
+  </div>
+
+  <div class="closing">
+    <div class="closing-t">توصية</div>
+    <div class="closing-b">يُنصَح بالبدء في تجهيز بنود المشروع الأول مبكرًا — خاصةً ما يستغرق وقتًا مثل تسجيل أسماء المُرسِل، فتح حسابات المتاجر، واختيار مزوّد الأقفال — حتى لا يتأخّر التطوير عند الوصول إلى كل مرحلة. والفريق التقني يرافق العميل في كل خطوة إعداد.</div>
+  </div>
+</div>
+
+</body>
+</html>

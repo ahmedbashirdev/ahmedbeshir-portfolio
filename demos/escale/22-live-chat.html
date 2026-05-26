@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Escalé · Live Chat · Design Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..900&family=Geist+Mono:wght@400..600&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --aubergine-900: #3A1234;
+  --aubergine-700: #4A1942;
+  --aubergine-500: #5B2C5F;
+  --aubergine-300: #8E5A8E;
+  --aubergine-100: #EFE3EF;
+  --magenta-500: #B8228C;
+  --magenta-300: #D86CB0;
+  --terracotta-700: #A05A3A;
+  --terracotta-500: #C9956B;
+  --terracotta-300: #E2BC9C;
+  --terracotta-100: #F5E8DC;
+  --ink-900: #1C1410;
+  --ink-700: #3D332D;
+  --ink-500: #6B5D54;
+  --ink-300: #A89A8E;
+  --sand-100: #F0E9DF;
+  --sand-50: #F7F2E9;
+  --cream: #FAF7F2;
+  --paper: #FDFBF7;
+  --success: #5A8C5F;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Geist', -apple-system, sans-serif;
+  --font-arabic: 'Tajawal', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
+  --shadow-sm: 0 1px 2px rgba(58, 18, 52, 0.04);
+  --shadow-md: 0 4px 12px rgba(58, 18, 52, 0.06), 0 1px 3px rgba(58, 18, 52, 0.04);
+  --shadow-phone: 0 50px 100px -20px rgba(58, 18, 52, 0.25), 0 30px 60px -30px rgba(58, 18, 52, 0.3);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink-900);
+  line-height: 1.5;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 88% 0%, rgba(184, 34, 140, 0.06), transparent 40%),
+    radial-gradient(circle at 4% 12%, rgba(91, 44, 95, 0.05), transparent 36%);
+}
+[lang="ar"], [lang="ar"] * { font-family: var(--font-arabic); }
+[lang="ar"] { line-height: 1.6; }
+
+.page { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 48px 32px 96px; }
+
+/* HEADER */
+.brand-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 24px; }
+.brand-identity { display: flex; align-items: center; gap: 20px; }
+.brand-logo { width: 48px; height: 48px; }
+.brand-name-wrap { display: flex; flex-direction: column; gap: 2px; }
+.brand-name { font-family: var(--font-display); font-weight: 500; font-size: 24px; letter-spacing: -0.02em; color: var(--aubergine-900); line-height: 1; }
+.brand-tagline { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-500); font-weight: 500; }
+.brand-meta { display: flex; align-items: center; gap: 24px; }
+.screen-stamp { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.screen-stamp .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-300); font-weight: 500; }
+.screen-stamp .val { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--terracotta-700); }
+.locale-switch { display: flex; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 9999px; padding: 4px; box-shadow: var(--shadow-sm); }
+.locale-switch button { border: 0; background: transparent; padding: 8px 18px; border-radius: 9999px; font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-500); cursor: pointer; }
+.locale-switch button.active { background: var(--aubergine-700); color: var(--paper); }
+
+/* EDITORIAL HEAD */
+.editorial-head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 48px; margin-bottom: 44px; padding-bottom: 32px; border-bottom: 1px solid var(--sand-100); }
+.editorial-head .label { font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--terracotta-700); margin-bottom: 12px; }
+.editorial-head h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(38px, 5vw, 64px); line-height: 0.98; letter-spacing: -0.035em; color: var(--aubergine-900); max-width: 16ch; }
+.editorial-head h1 em { font-style: italic; color: var(--magenta-500); }
+[lang="ar"] .editorial-head h1 { font-weight: 700; letter-spacing: 0; line-height: 1.15; }
+.editorial-head .colophon { font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); letter-spacing: 0.02em; text-align: end; line-height: 1.7; }
+.editorial-head .colophon strong { color: var(--aubergine-700); }
+[lang="ar"] .editorial-head .colophon { font-family: var(--font-arabic); }
+
+/* COMPOSITION */
+.composition { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+@media (max-width: 980px) { .composition { grid-template-columns: 1fr; gap: 48px; } .phone { transform: scale(0.9); transform-origin: top center; } }
+
+.phone-stage { display: flex; justify-content: center; position: relative; padding: 24px 0; }
+.phone-stage::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 58% 48% at 50% 26%, rgba(91, 44, 95, 0.08), transparent 62%); z-index: 0; }
+.phone { position: relative; width: 396px; height: 836px; background: var(--ink-900); border-radius: 54px; padding: 12px; box-shadow: var(--shadow-phone); z-index: 1; }
+.phone::before { content: ''; position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 108px; height: 29px; background: var(--ink-900); border-radius: 0 0 18px 18px; z-index: 100; }
+.phone-screen { width: 100%; height: 100%; background: var(--cream); border-radius: 43px; overflow-y: auto; overflow-x: hidden; position: relative; display: flex; flex-direction: column; }
+.phone-screen::-webkit-scrollbar { display: none; }
+
+.status-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 30px 6px; font-size: 14px; font-weight: 600; color: var(--paper); position: absolute; top: 0; left: 0; right: 0; z-index: 6; }
+.status-bar .icons { display: flex; gap: 6px; align-items: center; }
+.status-bar svg { width: 17px; height: 17px; }
+
+/* CHAT HEADER */
+.chat-head {
+  background: linear-gradient(150deg, var(--aubergine-700), var(--aubergine-900));
+  padding: 46px 18px 14px;
+  display: flex; align-items: center; gap: 12px;
+  flex-shrink: 0;
+}
+.chat-back {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(253, 251, 247, 0.14); border: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--paper); flex-shrink: 0; cursor: pointer;
+}
+.chat-back svg { width: 17px; height: 17px; }
+[dir="rtl"] .chat-back svg { transform: scaleX(-1); }
+.chat-head-info { flex: 1; min-width: 0; }
+.chat-head-name { font-family: var(--font-display); font-weight: 500; font-size: 17px; letter-spacing: -0.015em; color: var(--paper); line-height: 1.1; }
+[lang="ar"] .chat-head-name { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.chat-head-sub { font-size: 10.5px; color: rgba(253, 251, 247, 0.7); margin-top: 2px; display: flex; align-items: center; gap: 5px; }
+.chat-head-sub .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
+[lang="ar"] .chat-head-sub { font-size: 11.5px; }
+.chat-avatar {
+  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--terracotta-300), var(--terracotta-500));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--paper);
+  border: 1.5px solid rgba(253, 251, 247, 0.3);
+}
+
+/* SEGMENTED CONTROL */
+.chat-tabs {
+  display: flex; gap: 4px; padding: 10px 16px;
+  background: var(--paper); border-bottom: 1px solid var(--sand-100);
+  flex-shrink: 0;
+}
+.chat-tab {
+  flex: 1; border: 0; cursor: pointer;
+  padding: 9px 8px; border-radius: 9999px;
+  background: var(--sand-50);
+  font-family: var(--font-body); font-size: 12.5px; font-weight: 500;
+  color: var(--ink-500);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+[lang="ar"] .chat-tab { font-family: var(--font-arabic); }
+.chat-tab.active { background: var(--aubergine-700); color: var(--paper); }
+.chat-tab svg { width: 13px; height: 13px; }
+
+/* CHAT THREAD */
+.chat-thread {
+  flex: 1; padding: 16px 16px 12px;
+  display: flex; flex-direction: column; gap: 12px;
+  background: var(--cream);
+}
+.chat-day {
+  align-self: center; font-family: var(--font-mono);
+  font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ink-300); padding: 2px 0; margin-bottom: 2px;
+}
+[lang="ar"] .chat-day { letter-spacing: 0; text-transform: none; font-size: 11px; }
+
+.msg { display: flex; flex-direction: column; max-width: 80%; }
+.msg.in { align-self: flex-start; align-items: flex-start; }
+.msg.out { align-self: flex-end; align-items: flex-end; }
+
+.msg-sender {
+  font-size: 9.5px; font-weight: 600; color: var(--terracotta-700);
+  margin-bottom: 4px; padding-inline-start: 4px;
+}
+[lang="ar"] .msg-sender { font-size: 11px; }
+
+.bubble {
+  padding: 9px 13px; font-size: 12.5px; line-height: 1.5;
+  border-radius: 16px;
+}
+.msg.in .bubble {
+  background: var(--paper); color: var(--ink-700);
+  border: 1px solid var(--sand-100);
+  border-end-start-radius: 5px;
+}
+.msg.out .bubble {
+  background: var(--aubergine-700); color: var(--paper);
+  border-end-end-radius: 5px;
+}
+
+.msg-time {
+  display: flex; align-items: center; gap: 4px;
+  font-family: var(--font-mono); font-size: 9px; color: var(--ink-300);
+  margin-top: 4px; padding-inline: 4px;
+}
+.msg-time svg { width: 13px; height: 13px; color: var(--magenta-500); }
+
+/* INLINE REQUEST CARD */
+.req-card {
+  align-self: flex-start; max-width: 84%;
+  background: var(--paper); border: 1px solid var(--sand-100);
+  border-radius: 14px; padding: 11px 13px;
+  box-shadow: var(--shadow-sm);
+}
+.req-card-top { display: flex; align-items: center; gap: 9px; }
+.req-card-ic {
+  width: 30px; height: 30px; border-radius: 9px; flex-shrink: 0;
+  background: var(--aubergine-100); color: var(--aubergine-700);
+  display: flex; align-items: center; justify-content: center;
+}
+.req-card-ic svg { width: 15px; height: 15px; }
+.req-card-body { flex: 1; min-width: 0; }
+.req-card-title {
+  font-family: var(--font-display); font-weight: 500; font-size: 12.5px;
+  color: var(--aubergine-900); letter-spacing: -0.01em; line-height: 1.15;
+}
+[lang="ar"] .req-card-title { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.req-card-pill {
+  font-size: 9px; font-weight: 700; flex-shrink: 0;
+  color: var(--magenta-500); background: rgba(184, 34, 140, 0.1);
+  padding: 3px 8px; border-radius: 9999px;
+}
+[lang="ar"] .req-card-pill { font-size: 10.5px; }
+.req-card-meta {
+  font-size: 10px; color: var(--ink-500);
+  margin-top: 8px; padding-top: 7px;
+  border-top: 1px solid var(--sand-100);
+  display: flex; align-items: center; gap: 6px;
+}
+[lang="ar"] .req-card-meta { font-size: 11px; }
+.req-card-meta svg { width: 11px; height: 11px; color: var(--ink-300); }
+
+/* TYPING INDICATOR */
+.typing { display: flex; flex-direction: column; align-self: flex-start; max-width: 80%; }
+.typing-bubble {
+  background: var(--paper); border: 1px solid var(--sand-100);
+  border-radius: 16px; border-end-start-radius: 5px;
+  padding: 11px 14px; display: flex; align-items: center; gap: 4px;
+}
+.typing-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--ink-300);
+  animation: typing-bounce 1.3s infinite var(--ease-out);
+}
+.typing-dot:nth-child(2) { animation-delay: 0.18s; }
+.typing-dot:nth-child(3) { animation-delay: 0.36s; }
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+.typing-label {
+  font-size: 9.5px; color: var(--ink-300);
+  margin-top: 4px; padding-inline-start: 4px;
+}
+[lang="ar"] .typing-label { font-size: 11px; }
+
+/* HIGHLIGHT — escalation card (rationed brand gradient) */
+.escalate {
+  margin: 4px 16px 0;
+  background: linear-gradient(135deg, var(--aubergine-700) 0%, var(--magenta-500) 100%);
+  border-radius: 16px; padding: 14px 15px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 8px 22px -8px rgba(184, 34, 140, 0.45);
+  flex-shrink: 0;
+}
+.escalate-ic {
+  width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(253, 251, 247, 0.16);
+  display: flex; align-items: center; justify-content: center; color: var(--paper);
+}
+.escalate-ic svg { width: 17px; height: 17px; }
+.escalate-text { flex: 1; min-width: 0; }
+.escalate-title {
+  font-family: var(--font-display); font-weight: 500; font-size: 13px;
+  color: var(--paper); letter-spacing: -0.01em; line-height: 1.15;
+}
+[lang="ar"] .escalate-title { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.escalate-sub { font-size: 10.5px; color: rgba(253, 251, 247, 0.82); margin-top: 2px; }
+[lang="ar"] .escalate-sub { font-size: 11.5px; }
+.escalate-arrow {
+  width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(253, 251, 247, 0.16);
+  display: flex; align-items: center; justify-content: center; color: var(--paper);
+}
+.escalate-arrow svg { width: 14px; height: 14px; }
+[dir="rtl"] .escalate-arrow svg { transform: scaleX(-1); }
+
+/* STICKY INPUT BAR */
+.chat-input {
+  position: sticky; bottom: 0;
+  background: var(--paper); border-top: 1px solid var(--sand-100);
+  padding: 12px 16px 22px;
+  display: flex; align-items: center; gap: 9px;
+  box-shadow: 0 -8px 24px rgba(58, 18, 52, 0.06);
+  flex-shrink: 0;
+}
+.chat-attach {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  background: var(--sand-50); border: 1px solid var(--sand-100);
+  color: var(--aubergine-700); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.chat-attach svg { width: 17px; height: 17px; }
+.chat-field {
+  flex: 1; min-width: 0;
+  background: var(--sand-50); border: 1px solid var(--sand-100);
+  border-radius: 9999px; padding: 10px 16px;
+  font-size: 12.5px; color: var(--ink-300);
+}
+[lang="ar"] .chat-field { font-family: var(--font-arabic); }
+.chat-send {
+  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+  background: var(--magenta-500); border: 0; cursor: pointer;
+  color: var(--paper);
+  display: flex; align-items: center; justify-content: center;
+}
+.chat-send svg { width: 16px; height: 16px; }
+[dir="rtl"] .chat-send svg { transform: scaleX(-1); }
+
+/* SIDE PANEL */
+.side-panel { position: sticky; top: 32px; padding-top: 24px; }
+.panel-h { font-family: var(--font-display); font-weight: 500; font-size: 32px; letter-spacing: -0.025em; color: var(--aubergine-900); margin-bottom: 8px; line-height: 1.05; }
+[lang="ar"] .panel-h { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; line-height: 1.25; }
+.panel-h em { font-style: italic; color: var(--magenta-500); }
+.panel-lede { font-size: 15px; line-height: 1.65; color: var(--ink-500); max-width: 52ch; margin-bottom: 28px; }
+.principle-list { list-style: none; display: flex; flex-direction: column; gap: 18px; margin-bottom: 28px; }
+.principle-list li { padding-inline-start: 32px; position: relative; }
+.principle-list li::before { content: ''; position: absolute; inset-inline-start: 0; top: 4px; width: 16px; height: 16px; background: linear-gradient(135deg, var(--terracotta-500), var(--magenta-500)); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.principle-list li strong { display: block; font-family: var(--font-display); font-weight: 500; font-size: 16px; letter-spacing: -0.01em; color: var(--aubergine-900); margin-bottom: 4px; }
+[lang="ar"] .principle-list li strong { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.principle-list li p { font-size: 13px; line-height: 1.55; color: var(--ink-700); }
+.tech-callout { background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 14px; padding: 18px; }
+.tech-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta-700); font-weight: 600; margin-bottom: 8px; }
+[lang="ar"] .tech-label { letter-spacing: 0; text-transform: none; font-size: 12px; }
+.tech-body { font-size: 13px; line-height: 1.6; color: var(--ink-700); }
+
+.footnote { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--sand-100); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); }
+[lang="ar"] .footnote { font-family: var(--font-arabic); }
+.footnote .accent { color: var(--magenta-500); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="brand-bar">
+    <div class="brand-identity">
+      <svg class="brand-logo" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#5B2C5F"/>
+            <stop offset="100%" stop-color="#B8228C"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="44" r="36" fill="url(#brandGrad)"/>
+        <circle cx="50" cy="44" r="22" fill="#FDFBF7"/>
+        <path d="M28 74 L36 60 L44 74 Z M44 74 L52 60 L60 74 Z M60 74 L68 60 L76 74 Z" fill="#FDFBF7"/>
+      </svg>
+      <div class="brand-name-wrap">
+        <div class="brand-name">Escalé</div>
+        <div class="brand-tagline">Design System · v0.1</div>
+      </div>
+    </div>
+    <div class="brand-meta">
+      <div class="screen-stamp">
+        <div class="lbl" id="stamp-lbl">Screen 22</div>
+        <div class="val" id="stamp-val">Live Chat</div>
+      </div>
+      <div class="locale-switch">
+        <button id="btnEn" class="active" onclick="setLocale('en')">EN</button>
+        <button id="btnAr" onclick="setLocale('ar')">ع</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="editorial-head" id="editorialHead">
+    <div>
+      <div class="label" id="eh-label">Screen 22 / Live Chat</div>
+      <h1><span id="eh-1">Talk to the hotel,</span> <em id="eh-2">not the front desk.</em></h1>
+    </div>
+    <div class="colophon">
+      <div><strong id="cl-1">Three channels —</strong> <span id="cl-1b">staff, management, staff↔management</span></div>
+      <div><strong id="cl-2">Tied to</strong> <span id="cl-2b">live service requests</span></div>
+      <div><strong id="cl-3">A complaint reaches a manager fast</strong></div>
+      <div style="margin-top:8px; opacity:0.6;" id="cl-date">New screen · 25 May 2026</div>
+    </div>
+  </section>
+
+  <div class="composition" id="composition">
+
+    <!-- ============ PHONE ============ -->
+    <div class="phone-stage">
+      <div class="phone">
+        <div class="phone-screen">
+
+          <div class="status-bar">
+            <span>9:41</span>
+            <span class="icons">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 17h2v4H2zm5-4h2v8H7zm5-4h2v12h-2zm5-4h2v16h-2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.7 6 0 9l12 15L24 9c-2.7-3-7-5-12-5z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="18" height="10" rx="2.5"/><rect x="4" y="9" width="12" height="6" rx="1" fill="currentColor"/><path d="M22 10v4" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+
+          <!-- CHAT HEADER -->
+          <div class="chat-head">
+            <button class="chat-back" aria-label="Back">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div class="chat-head-info">
+              <div class="chat-head-name" id="ch-name">Casa Bougainvillea</div>
+              <div class="chat-head-sub">
+                <span class="dot"></span>
+                <span id="ch-sub">Hotel team · usually replies in minutes</span>
+              </div>
+            </div>
+            <div class="chat-avatar">CB</div>
+          </div>
+
+          <!-- SEGMENTED CONTROL -->
+          <div class="chat-tabs">
+            <button class="chat-tab active">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span id="tab-staff">Staff</span>
+            </button>
+            <button class="chat-tab">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/></svg>
+              <span id="tab-mgmt">Management</span>
+            </button>
+          </div>
+
+          <!-- CHAT THREAD -->
+          <div class="chat-thread">
+
+            <div class="chat-day" id="chat-day">Today</div>
+
+            <!-- Incoming -->
+            <div class="msg in">
+              <div class="msg-sender" id="m1-sender">Front desk · Mariam</div>
+              <div class="bubble" id="m1-text">Good morning, Omar! Housekeeping is on the way — about 10 minutes.</div>
+              <div class="msg-time"><span>09:12</span></div>
+            </div>
+
+            <!-- Outgoing -->
+            <div class="msg out">
+              <div class="bubble" id="m2-text">Thank you — could we also get two extra towels?</div>
+              <div class="msg-time">
+                <span>09:13</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 7 11 16 7.5 12.5"/><polyline points="22 7 14.5 16 14 15.4"/></svg>
+              </div>
+            </div>
+
+            <!-- Incoming -->
+            <div class="msg in">
+              <div class="msg-sender" id="m3-sender">Front desk · Mariam</div>
+              <div class="bubble" id="m3-text">Of course — I've added it to your request. You can follow it live.</div>
+              <div class="msg-time"><span>09:14</span></div>
+            </div>
+
+            <!-- Inline service-request card -->
+            <div class="req-card">
+              <div class="req-card-top">
+                <div class="req-card-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                </div>
+                <div class="req-card-body">
+                  <div class="req-card-title" id="rc-title">Request #248 · Extra towels</div>
+                </div>
+                <span class="req-card-pill" id="rc-pill">In progress</span>
+              </div>
+              <div class="req-card-meta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span id="rc-meta">Assigned to housekeeping · 9 min</span>
+              </div>
+            </div>
+
+            <!-- Outgoing -->
+            <div class="msg out">
+              <div class="bubble" id="m4-text">Perfect, thank you!</div>
+              <div class="msg-time">
+                <span>09:15</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 7 11 16 7.5 12.5"/><polyline points="22 7 14.5 16 14 15.4"/></svg>
+              </div>
+            </div>
+
+            <!-- Typing indicator -->
+            <div class="typing">
+              <div class="typing-bubble">
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+              </div>
+              <div class="typing-label" id="typing-label">Front desk is typing…</div>
+            </div>
+
+          </div>
+
+          <!-- HIGHLIGHT — escalation card -->
+          <div class="escalate">
+            <div class="escalate-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="escalate-text">
+              <div class="escalate-title" id="esc-title">Need a manager?</div>
+              <div class="escalate-sub" id="esc-sub">Message hotel management directly — they can resolve anything fast.</div>
+            </div>
+            <div class="escalate-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+
+          <!-- STICKY INPUT BAR -->
+          <div class="chat-input">
+            <button class="chat-attach" aria-label="Attach">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <div class="chat-field" id="input-ph">Message…</div>
+            <button class="chat-send" aria-label="Send">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SIDE PANEL ============ -->
+    <aside class="side-panel" id="sidePanel">
+      <h2 class="panel-h"><span id="ph-1">Talk to the hotel,</span> <em id="ph-1em">not the front desk.</em></h2>
+      <p class="panel-lede" id="ph-lede">A guest with a question shouldn't have to walk down to a counter. Chat puts the whole hotel one tap away — and routes each conversation to the people who can actually answer it.</p>
+
+      <ul class="principle-list">
+        <li>
+          <strong id="p1-t">Three channels, one inbox</strong>
+          <p id="p1-d">The guest can message hotel staff, message hotel management, and — behind the scenes — management talks to staff. Three threads, each going to the right people.</p>
+        </li>
+        <li>
+          <strong id="p2-t">Chatting straight with staff is faster</strong>
+          <p id="p2-d">A quick word with the front desk gets a request moving sooner than a phone call or a trip to the lobby — the team replies in minutes.</p>
+        </li>
+        <li>
+          <strong id="p3-t">A complaint that reaches a manager</strong>
+          <p id="p3-d">If something goes wrong, the guest takes it straight to management, who can fix it fast — heading off a bad public review and lifting how the stay is remembered.</p>
+        </li>
+        <li>
+          <strong id="p4-t">Management sees how staff perform</strong>
+          <p id="p4-d">The management↔staff thread speeds coordination and gives managers real oversight — who is responding, how quickly, and where help is needed.</p>
+        </li>
+        <li>
+          <strong id="p5-t">Tied to service requests</strong>
+          <p id="p5-d">A message can create or track a request, and the live card sits right in the thread — guest, staff and management all see the same status.</p>
+        </li>
+      </ul>
+
+      <div class="tech-callout">
+        <div class="tech-label" id="tech-l">A note for the hotel</div>
+        <p class="tech-body" id="tech-b">Every message is stored per hotel and shown to each person in their own language. The chat connects guests, staff and management in one place — and links straight to the service requests they are talking about.</p>
+      </div>
+    </aside>
+
+  </div>
+
+  <footer class="footnote" id="footnote">
+    <span id="ft-1">© Escalé · Screen 22 of 22 · New — live chat</span>
+    <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
+  </footer>
+
+</div>
+
+<script>
+const t = {
+  en: {
+    stampLbl: "Screen 22",
+    stampVal: "Live Chat",
+    ehLabel: "Screen 22 / Live Chat",
+    eh1: "Talk to the hotel,", eh2: "not the front desk.",
+    cl1: "Three channels —", cl1b: "staff, management, staff↔management",
+    cl2: "Tied to", cl2b: "live service requests",
+    cl3: "A complaint reaches a manager fast",
+    clDate: "New screen · 25 May 2026",
+    chName: "Casa Bougainvillea",
+    chSub: "Hotel team · usually replies in minutes",
+    tabStaff: "Staff",
+    tabMgmt: "Management",
+    chatDay: "Today",
+    m1Sender: "Front desk · Mariam",
+    m1Text: "Good morning, Omar! Housekeeping is on the way — about 10 minutes.",
+    m2Text: "Thank you — could we also get two extra towels?",
+    m3Sender: "Front desk · Mariam",
+    m3Text: "Of course — I've added it to your request. You can follow it live.",
+    rcTitle: "Request #248 · Extra towels",
+    rcPill: "In progress",
+    rcMeta: "Assigned to housekeeping · 9 min",
+    m4Text: "Perfect, thank you!",
+    typingLabel: "Front desk is typing…",
+    escTitle: "Need a manager?",
+    escSub: "Message hotel management directly — they can resolve anything fast.",
+    inputPh: "Message…",
+    ph1: "Talk to the hotel,", ph1em: "not the front desk.",
+    phLede: "A guest with a question shouldn't have to walk down to a counter. Chat puts the whole hotel one tap away — and routes each conversation to the people who can actually answer it.",
+    p1t: "Three channels, one inbox",
+    p1d: "The guest can message hotel staff, message hotel management, and — behind the scenes — management talks to staff. Three threads, each going to the right people.",
+    p2t: "Chatting straight with staff is faster",
+    p2d: "A quick word with the front desk gets a request moving sooner than a phone call or a trip to the lobby — the team replies in minutes.",
+    p3t: "A complaint that reaches a manager",
+    p3d: "If something goes wrong, the guest takes it straight to management, who can fix it fast — heading off a bad public review and lifting how the stay is remembered.",
+    p4t: "Management sees how staff perform",
+    p4d: "The management↔staff thread speeds coordination and gives managers real oversight — who is responding, how quickly, and where help is needed.",
+    p5t: "Tied to service requests",
+    p5d: "A message can create or track a request, and the live card sits right in the thread — guest, staff and management all see the same status.",
+    techL: "A note for the hotel",
+    techB: "Every message is stored per hotel and shown to each person in their own language. The chat connects guests, staff and management in one place — and links straight to the service requests they are talking about.",
+    ft1: "© Escalé · Screen 22 of 22 · New — live chat"
+  },
+  ar: {
+    stampLbl: "الشاشة ٢٢",
+    stampVal: "المحادثة المباشرة",
+    ehLabel: "الشاشة ٢٢ / المحادثة المباشرة",
+    eh1: "كلّم الفندق،", eh2: "مش مكتب الاستقبال.",
+    cl1: "ثلاث قنوات —", cl1b: "الموظفين، الإدارة، الإدارة↔الموظفين",
+    cl2: "مربوطة بـ", cl2b: "طلبات الخدمة الحيّة",
+    cl3: "الشكوى توصل لمدير بسرعة",
+    clDate: "شاشة جديدة · ٢٥ مايو ٢٠٢٦",
+    chName: "كازا بوغانفيليا",
+    chSub: "فريق الفندق · بيرد عادةً خلال دقائق",
+    tabStaff: "الموظفون",
+    tabMgmt: "الإدارة",
+    chatDay: "النهارده",
+    m1Sender: "مكتب الاستقبال · مريم",
+    m1Text: "صباح الخير يا عمر! خدمة الغرف في الطريق — حوالي ١٠ دقايق.",
+    m2Text: "شكراً — ممكن كمان فوطتين زيادة؟",
+    m3Sender: "مكتب الاستقبال · مريم",
+    m3Text: "أكيد — ضفتها لطلبك. تقدر تتابعها مباشرةً.",
+    rcTitle: "طلب رقم ٢٤٨ · فوط إضافية",
+    rcPill: "قيد التنفيذ",
+    rcMeta: "مُسند لخدمة الغرف · ٩ دقايق",
+    m4Text: "تمام، شكراً جزيلاً!",
+    typingLabel: "مكتب الاستقبال بيكتب…",
+    escTitle: "محتاج مدير؟",
+    escSub: "كلّم إدارة الفندق مباشرةً — يقدروا يحلّوا أي حاجة بسرعة.",
+    inputPh: "اكتب رسالة…",
+    ph1: "كلّم الفندق،", ph1em: "مش مكتب الاستقبال.",
+    phLede: "الضيف اللي عنده سؤال مش لازم ينزل لمكتب الاستقبال. المحادثة بتخلّي الفندق كله على بُعد ضغطة — وبتوجّه كل حوار للناس اللي تقدر فعلاً تجاوب عليه.",
+    p1t: "ثلاث قنوات، صندوق واحد",
+    p1d: "الضيف يقدر يكلّم موظفي الفندق، ويكلّم إدارة الفندق، ومن وراء الكواليس الإدارة بتكلّم الموظفين. ثلاث محادثات، كل واحدة بتروح للناس الصح.",
+    p2t: "الكلام المباشر مع الموظفين أسرع",
+    p2d: "كلمة سريعة مع مكتب الاستقبال بتحرّك الطلب أسرع من مكالمة أو نزلة للوبي — والفريق بيرد خلال دقائق.",
+    p3t: "شكوى توصل لمدير",
+    p3d: "لو في حاجة غلط، الضيف بياخدها مباشرةً للإدارة، اللي تقدر تحلّها بسرعة — وكده بنتفادى تقييم عام سلبي ونرفع إحساس الضيف بإقامته.",
+    p4t: "الإدارة بتشوف أداء الموظفين",
+    p4d: "محادثة الإدارة↔الموظفين بتسرّع التنسيق وبتدّي المديرين رؤية حقيقية — مين بيرد، بسرعة قد إيه، وفين محتاجين مساعدة.",
+    p5t: "مربوطة بطلبات الخدمة",
+    p5d: "الرسالة تقدر تنشئ طلب أو تتابعه، وكارت الحالة الحيّ بيظهر جوّه المحادثة نفسها — الضيف والموظفين والإدارة كلهم بيشوفوا نفس الحالة.",
+    techL: "ملاحظة للفندق",
+    techB: "كل رسالة بتتخزّن لكل فندق على حدة وبتظهر لكل شخص بلغته. المحادثة بتربط الضيوف والموظفين والإدارة في مكان واحد — وبتوصّل مباشرةً بطلبات الخدمة اللي بيتكلّموا عنها.",
+    ft1: "© إسكالي · الشاشة ٢٢ من ٢٢ · جديدة — المحادثة المباشرة"
+  }
+};
+
+function setLocale(loc) {
+  const tt = t[loc];
+  const isRtl = loc === 'ar';
+
+  document.getElementById('btnEn').classList.toggle('active', loc === 'en');
+  document.getElementById('btnAr').classList.toggle('active', loc === 'ar');
+  ['editorialHead', 'composition', 'sidePanel', 'footnote'].forEach(function (id) {
+    const el = document.getElementById(id);
+    el.setAttribute('lang', loc);
+    el.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+  });
+
+  const set = function (id, val) { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+  set('stamp-lbl', tt.stampLbl);
+  set('stamp-val', tt.stampVal);
+
+  set('eh-label', tt.ehLabel);
+  set('eh-1', tt.eh1); set('eh-2', tt.eh2);
+  set('cl-1', tt.cl1); set('cl-1b', tt.cl1b);
+  set('cl-2', tt.cl2); set('cl-2b', tt.cl2b);
+  set('cl-3', tt.cl3); set('cl-date', tt.clDate);
+
+  set('ch-name', tt.chName);
+  set('ch-sub', tt.chSub);
+  set('tab-staff', tt.tabStaff);
+  set('tab-mgmt', tt.tabMgmt);
+
+  set('chat-day', tt.chatDay);
+  set('m1-sender', tt.m1Sender); set('m1-text', tt.m1Text);
+  set('m2-text', tt.m2Text);
+  set('m3-sender', tt.m3Sender); set('m3-text', tt.m3Text);
+  set('rc-title', tt.rcTitle); set('rc-pill', tt.rcPill); set('rc-meta', tt.rcMeta);
+  set('m4-text', tt.m4Text);
+  set('typing-label', tt.typingLabel);
+
+  set('esc-title', tt.escTitle); set('esc-sub', tt.escSub);
+  set('input-ph', tt.inputPh);
+
+  set('ph-1', tt.ph1); set('ph-1em', tt.ph1em); set('ph-lede', tt.phLede);
+  for (let i = 1; i <= 5; i++) { set('p' + i + '-t', tt['p' + i + 't']); set('p' + i + '-d', tt['p' + i + 'd']); }
+  set('tech-l', tt.techL); set('tech-b', tt.techB);
+  set('ft-1', tt.ft1);
+}
+</script>
+
+</body>
+</html>
