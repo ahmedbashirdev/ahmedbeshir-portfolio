@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>منصة سيولة — نموذج تفاعلي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#0D9488; --brand-d:#0B5A52; --violet:#2DC2B0; --lilac:#93DDD2;
+  --ok:#16A34A; --warn:#F59E0B; --danger:#DC2626; --info:#0EA5E9;
+  --ink:#0F172A; --slate:#475569; --muted:#94A3B8; --line:#E2E8F0;
+  --bg:#F1F5F9; --card:#FFFFFF; --soft:#D8F1ED;
+  --r:14px; --r-sm:9px;
+  --sh:0 1px 2px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.07);
+  --sh-sm:0 1px 3px rgba(15,23,42,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Readex Pro','Inter',system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+[dir=ltr] body{font-family:'Inter','Readex Pro',system-ui,sans-serif}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:9px}
+
+/* ===== TOP BAR ===== */
+.topbar{
+  position:sticky;top:0;z-index:40;height:62px;
+  background:var(--brand-d);color:#fff;display:flex;align-items:center;
+  gap:18px;padding-inline:20px;
+}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.3px}
+.logo .mark{width:34px;height:34px;border-radius:9px;overflow:hidden;display:grid;place-items:center;flex-shrink:0}
+.logo .mark svg{width:100%;height:100%;display:block}
+.logo .wm{font-family:'Readex Pro',sans-serif;line-height:1}
+.logo .wm small{display:block;font-size:9.5px;font-weight:600;color:#93DDD2;letter-spacing:2px;margin-top:2px}
+.roleswitch{display:flex;background:rgba(255,255,255,.1);border-radius:10px;padding:3px;gap:2px}
+.roleswitch button{color:#93DDD2;padding:6px 14px;border-radius:8px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.roleswitch button.on{background:#fff;color:var(--brand-d)}
+.tb-spacer{flex:1}
+.tb-ic{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.1);
+  display:grid;place-items:center;position:relative;color:#fff}
+.tb-ic .dot{position:absolute;top:8px;inset-inline-end:9px;width:7px;height:7px;border-radius:50%;background:var(--warn)}
+.langbtn{background:rgba(255,255,255,.1);color:#fff;padding:8px 13px;border-radius:10px;font-weight:700;font-size:12.5px}
+.tb-user{display:flex;align-items:center;gap:9px}
+.tb-user .av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#5EEAD4,#93DDD2);
+  display:grid;place-items:center;color:#0B5A52;font-weight:800}
+.tb-user .nm{font-size:12.5px;font-weight:700;line-height:1.2}
+.tb-user .rl{font-size:11px;color:#93DDD2}
+
+/* ===== LAYOUT ===== */
+.shell{display:flex;min-height:calc(100vh - 62px)}
+.side{width:248px;background:var(--card);border-inline-start:1px solid var(--line);
+  padding:16px 12px;flex-shrink:0}
+.side .grp{font-size:11px;color:var(--muted);font-weight:700;padding:14px 12px 6px}
+.navitem{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;
+  color:var(--slate);font-weight:600;font-size:13.5px;margin-bottom:2px;width:100%;text-align:start}
+.navitem:hover{background:var(--bg)}
+.navitem.on{background:var(--soft);color:var(--brand)}
+.navitem .ic{width:20px;height:20px;flex-shrink:0}
+.navitem .badge{margin-inline-start:auto;background:var(--danger);color:#fff;font-size:10.5px;
+  font-weight:700;padding:1px 7px;border-radius:9px}
+.main{flex:1;padding:24px 28px;min-width:0}
+.crumb{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:3px}
+.h1{font-size:23px;font-weight:800;margin-bottom:3px}
+.sub{color:var(--slate);font-size:13px;margin-bottom:20px}
+.pagehead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+
+/* ===== COMPONENTS ===== */
+.grid{display:grid;gap:16px}
+.kpis{grid-template-columns:repeat(4,1fr)}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--sh-sm)}
+.kpi .top{display:flex;align-items:center;justify-content:space-between}
+.kpi .ico{width:38px;height:38px;border-radius:10px;display:grid;place-items:center}
+.kpi .lbl{color:var(--slate);font-size:12.5px;font-weight:600;margin-top:10px}
+.kpi .val{font-size:25px;font-weight:800;letter-spacing:-.5px}
+.kpi .trend{font-size:11.5px;font-weight:700}
+.up{color:var(--ok)} .down{color:var(--danger)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh-sm)}
+.card .ch{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;
+  align-items:center;justify-content:space-between;gap:10px}
+.card .ch h3{font-size:14.5px;font-weight:800}
+.card .cb{padding:18px}
+.btn{background:var(--brand);color:#fff;padding:9px 16px;border-radius:10px;font-weight:700;font-size:13px;
+  display:inline-flex;align-items:center;gap:7px}
+.btn:hover{background:#0F766E}
+.btn.ghost{background:var(--card);color:var(--brand);border:1px solid var(--line)}
+.btn.sm{padding:6px 11px;font-size:12px}
+.btn.ok{background:var(--ok)} .btn.ok:hover{background:#15803D}
+table{width:100%;border-collapse:collapse;font-size:12.8px}
+th{text-align:start;color:var(--muted);font-weight:700;font-size:11.5px;padding:10px 12px;
+  border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--bg)}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;
+  font-size:11px;font-weight:700;white-space:nowrap}
+.tag::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.9}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{padding:6px 13px;border-radius:20px;background:var(--card);border:1px solid var(--line);
+  font-size:12px;font-weight:700;color:var(--slate)}
+.chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.chip .n{opacity:.7;font-size:11px}
+.bars{display:flex;align-items:flex-end;gap:14px;height:170px;padding-top:10px}
+.bars .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end}
+.bars .bar{width:60%;max-width:42px;background:linear-gradient(180deg,#2DC2B0,#0D9488);
+  border-radius:7px 7px 0 0;min-height:6px;transition:.5s}
+.bars .bl{font-size:11px;color:var(--muted);font-weight:600}
+.prod{display:flex;gap:11px;align-items:center}
+.thumb{width:42px;height:42px;border-radius:9px;background:linear-gradient(135deg,#D8F1ED,#CCFBF1);
+  display:grid;place-items:center;flex-shrink:0;font-size:18px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12.5px;font-weight:700;margin-bottom:5px}
+.field input,.field select,.field textarea{
+  width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:9px;font-family:inherit;
+  font-size:13px;background:var(--card);color:var(--ink)}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--lilac);border-color:var(--brand)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh-sm)}
+.pcard .img{height:130px;background:linear-gradient(135deg,#D8F1ED,#CCFBF1);display:grid;place-items:center;font-size:40px}
+.pcard .body{padding:13px}
+.commission{background:#ECFDF5;color:var(--ok);font-weight:800;font-size:12px;padding:3px 9px;border-radius:7px}
+.empty{text-align:center;padding:30px;color:var(--muted)}
+.dropz{border:2px dashed var(--line);border-radius:11px;padding:22px;text-align:center;color:var(--muted);font-size:12.5px}
+.split2{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
+.split3{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+.minirow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line)}
+.minirow:last-child{border-bottom:none}
+.note{font-size:11.5px;color:var(--muted)}
+@media(max-width:1080px){.kpis{grid-template-columns:repeat(2,1fr)}.split2,.split3{grid-template-columns:1fr}.pgrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){.side{display:none}.kpis,.pgrid,.frow{grid-template-columns:1fr}.main{padding:16px}}
+.banner{background:linear-gradient(110deg,#0B5A52,#0D9488);color:#fff;border-radius:var(--r);
+  padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
+.banner h2{font-size:17px;font-weight:800}
+.banner p{font-size:12.5px;color:#93DDD2}
+.donut{width:150px;height:150px;border-radius:50%;flex-shrink:0}
+.legend{display:flex;flex-direction:column;gap:9px}
+.legend .li{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600}
+.legend .sw{width:11px;height:11px;border-radius:3px}
+
+/* ===== HBARS ===== */
+.hbars{display:flex;flex-direction:column;gap:10px;padding:4px 0}
+.hbar{display:flex;flex-direction:column;gap:5px}
+.hb-head{display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.hb-head b{font-size:12.5px;font-weight:700;color:var(--ink)}
+.hb-head span{color:var(--slate);font-weight:600;display:flex;align-items:center;gap:5px}
+.hb-head span i{display:inline-block;width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.hb-track{height:7px;background:var(--bg);border-radius:4px;overflow:hidden}
+.hb-fill{height:100%;border-radius:4px;transition:.4s}
+
+/* ===== FAIL TAG / CARD ===== */
+.ftag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:5px;
+  font-size:11px;font-weight:700;font-family:monospace;white-space:nowrap}
+.fcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:14px 16px;box-shadow:var(--sh-sm);display:flex;gap:14px;align-items:flex-start}
+.fcard-body{flex:1;min-width:0}
+.fcard-top{display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap}
+.fcard-desc{font-size:12.5px;color:var(--slate);margin-bottom:6px}
+.fcard-meta{font-size:11.5px;color:var(--muted)}
+
+/* ===== EXPANDABLE TABLE ROW ===== */
+.exrow summary{list-style:none;cursor:pointer;display:contents}
+.exrow summary::-webkit-details-marker{display:none}
+.exrow-panel{background:#F8FAFC;border-top:1px solid var(--line)}
+.exrow-panel td{padding:14px 16px!important;border-bottom:none!important}
+.exrow-inner{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:900px){.exrow-inner{grid-template-columns:1fr}}
+.expanel-block{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.expanel-block h4{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.03em}
+.expanel-block p{font-size:12.5px;color:var(--slate);margin-bottom:3px}
+
+/* ===== PAGER ===== */
+.pager{display:flex;align-items:center;gap:8px;padding:14px 16px;flex-wrap:wrap}
+.pager span{font-size:12px;color:var(--muted);font-weight:600}
+.pager button{padding:5px 11px;border-radius:8px;border:1px solid var(--line);background:var(--card);
+  font-size:12px;font-weight:700;color:var(--slate);cursor:pointer}
+.pager button.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.pager .pp{display:flex;align-items:center;gap:5px;margin-inline-start:auto}
+.pager .pp select{padding:4px 8px;border:1px solid var(--line);border-radius:7px;font-size:12px;background:var(--card)}
+
+/* ===== DATE FILTER BAR ===== */
+.filter-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:12px 16px;margin-bottom:16px}
+.filter-bar select,.filter-bar input{padding:7px 11px;border:1px solid var(--line);
+  border-radius:8px;font-family:inherit;font-size:12.5px;background:var(--bg);color:var(--ink)}
+.filter-bar label{font-size:12px;font-weight:700;color:var(--muted)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px}
+.tabs button{padding:9px 16px;font-size:13px;font-weight:700;color:var(--slate);border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;background:none}
+.tabs button.on{color:var(--brand);border-bottom-color:var(--brand)}
+.tabpane{display:none}
+.tabpane.on{display:block}
+
+/* ===== REJECTION PANEL ===== */
+.reject-banner{background:#FEF2F2;border:1px solid #FCA5A5;border-radius:var(--r);padding:16px 20px;margin-bottom:16px}
+.reject-banner h3{color:#DC2626;font-size:15px;font-weight:800;margin-bottom:6px}
+.reject-banner p{font-size:13px;color:#7F1D1D;margin-bottom:10px}
+.reject-banner .meta{font-size:11.5px;color:#B91C1C;margin-bottom:12px}
+
+/* ===== MISC ===== */
+.info-banner{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:12.5px;color:#1E40AF;font-weight:600}
+.gov-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.gov-row:last-child{border-bottom:none}
+.gov-name{width:90px;font-size:12.5px;font-weight:700;flex-shrink:0}
+.gov-bar-wrap{flex:1;height:7px;background:var(--bg);border-radius:4px;overflow:hidden}
+.gov-bar-fill{height:100%;background:var(--brand);border-radius:4px}
+.gov-count{width:40px;text-align:end;font-size:12px;font-weight:700;color:var(--ink);flex-shrink:0}
+
+/* ===== STATS HERO + STATUS TILES (Taager-style) ===== */
+.stats-hero{background:linear-gradient(125deg,#0B5A52 0%,#0D9488 55%,#2DC2B0 100%);
+  color:#fff;border-radius:var(--r);padding:20px 24px;margin-bottom:16px;
+  display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:22px;box-shadow:var(--sh);
+  align-items:center;position:relative;overflow:hidden}
+.stats-hero::after{content:"";position:absolute;inset-block:0;inset-inline-end:-60px;width:240px;
+  background:radial-gradient(circle at center,rgba(255,255,255,.14),transparent 70%);pointer-events:none}
+.hero-l h2{font-size:12px;color:#93DDD2;font-weight:600;margin-bottom:6px;letter-spacing:.5px}
+.hero-l .big{font-size:42px;font-weight:800;letter-spacing:-.8px;line-height:1}
+.hero-l .meta{font-size:12px;color:#CCFBF1;margin-top:6px;font-weight:600}
+.hero-m,.hero-r{border-inline-start:1px solid rgba(255,255,255,.22);padding-inline-start:22px;position:relative;z-index:1}
+.hero-m h3,.hero-r h3{font-size:11.5px;color:#93DDD2;font-weight:600;margin-bottom:5px;letter-spacing:.5px}
+.hero-m b,.hero-r b{font-size:26px;font-weight:800;letter-spacing:-.4px;line-height:1;display:block}
+.hero-m .pct,.hero-r .pct{font-size:12px;color:#CCFBF1;font-weight:700;margin-top:4px}
+@media(max-width:1080px){.stats-hero{grid-template-columns:1fr;gap:14px}.hero-m,.hero-r{border-inline-start:none;border-block-start:1px solid rgba(255,255,255,.22);padding-inline-start:0;padding-block-start:14px}}
+
+.tile-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+@media(max-width:1080px){.tile-grid{grid-template-columns:repeat(2,1fr)}}
+.stile{background:var(--card);border:1px solid var(--line);border-radius:11px;
+  padding:13px 15px 14px;box-shadow:var(--sh-sm);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;gap:3px}
+.stile-bar{position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px}
+.stl-lbl{font-size:11.5px;color:var(--slate);font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:6px}
+.stl-lbl i{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
+.stl-val{font-size:24px;font-weight:800;letter-spacing:-.5px;line-height:1.05}
+.stl-sub{font-size:11px;color:var(--muted);font-weight:600;margin-top:3px}
+
+/* ===== ORDER ROW (Taager-style chevron + timeline) ===== */
+.chev{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:7px;
+  background:var(--bg);color:var(--slate);transition:.25s;cursor:pointer}
+.chev:hover{background:var(--soft);color:var(--brand)}
+.exrow-open .chev{background:var(--brand);color:#fff;transform:rotate(180deg)}
+.exrow-open td{background:#F8FAFC}
+.expanel-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}
+@media(max-width:900px){.expanel-grid{grid-template-columns:1fr}}
+.tline{display:flex;flex-direction:column;gap:0;position:relative;padding-inline-start:22px}
+.tline::before{content:"";position:absolute;inset-block:8px;inset-inline-start:7px;width:2px;background:var(--line)}
+.tstep{position:relative;padding:6px 0 8px 0;font-size:12.5px}
+.tstep::before{content:"";position:absolute;inset-inline-start:-22px;top:10px;width:14px;height:14px;border-radius:50%;
+  border:2px solid var(--line);background:var(--card);z-index:1}
+.tstep.done::before{background:var(--ok);border-color:var(--ok)}
+.tstep.current::before{background:var(--brand);border-color:var(--brand);box-shadow:0 0 0 4px rgba(13,148,136,.18)}
+.tstep .ts-l{font-weight:700;color:var(--ink);font-size:12.5px}
+.tstep .ts-d{font-size:11px;color:var(--muted);font-weight:600;margin-top:1px}
+.tstep.muted .ts-l{color:var(--muted);font-weight:600}
+
+/* ===== TOGGLE SWITCH ===== */
+.tgl{position:relative;display:inline-block;width:36px;height:20px;vertical-align:middle}
+.tgl input{opacity:0;width:0;height:0;position:absolute}
+.tgl span{position:absolute;cursor:pointer;inset:0;background:var(--line);border-radius:20px;transition:.2s}
+.tgl span::before{content:"";position:absolute;height:14px;width:14px;inset-inline-start:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+.tgl input:checked + span{background:var(--brand)}
+.tgl input:checked + span::before{transform:translateX(16px)}
+[dir=rtl] .tgl input:checked + span::before{transform:translateX(-16px)}
+
+/* ===== Default SVG icon size + info-banner layout ===== */
+svg.ic{width:18px;height:18px;flex-shrink:0;display:inline-block;vertical-align:middle}
+.kpi .ico svg.ic, .kpi .ico .ic{width:18px;height:18px}
+.navitem svg.ic, .navitem .ic{width:20px;height:20px}
+.info-banner{display:flex;align-items:center;gap:10px}
+.info-banner svg.ic{width:16px;height:16px;color:#1E40AF;flex-shrink:0}
+.reject-banner svg.ic{width:18px;height:18px}
+.btn svg.ic{width:14px;height:14px}
+.tb-ic svg{width:19px;height:19px}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">
+    <span class="mark"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="lgBg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#2DC2B0"/><stop offset="100%" stop-color="#0B5A52"/>
+      </linearGradient></defs>
+      <rect width="120" height="120" rx="28" fill="url(#lgBg)"/>
+      <path fill-rule="evenodd" fill="#FFFFFF" d="M60 26 C49 26 41 35 37 47 A30 30 0 1 0 83 47 C79 35 71 26 60 26 Z M44 74 L44 60 C44 50 50 47 60 47 C70 47 76 50 76 60 L76 74 Z M41 78 L79 78 L79 80.5 L41 80.5 Z"/>
+    </svg></span>
+    <span class="wm"><span id="appName">سيولة</span><small id="appNameSub">soyoula</small></span>
+  </div>
+  <div class="roleswitch" id="roleSwitch"></div>
+  <div class="tb-spacer"></div>
+  <button class="langbtn" id="langBtn" onclick="toggleLang()">EN</button>
+  <button class="langbtn" id="countryBtn" onclick="toggleCountry()" style="display:flex;gap:6px;align-items:center"><span id="cFlag">🇪🇬</span><span id="cName">مصر</span></button>
+  <div class="tb-ic" title="الإشعارات">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+    <span class="dot"></span>
+  </div>
+  <div class="tb-user">
+    <div class="av" id="userAv">أ</div>
+    <div><div class="nm" id="userName">أحمد الراوي</div><div class="rl" id="userRole">تاجر</div></div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="side"><nav id="nav"></nav></aside>
+  <main class="main" id="main"></main>
+</div>
+
+<script>
+/* ============ i18n ============ */
+const I18N={
+ ar:{dir:"rtl",app:"سيولة",appSub:"soyoula",lang:"EN",
+  admin:"الأدمن",merchant:"التاجر",marketer:"المسوّق",
+  rl_admin:"مدير المنصّة",rl_merchant:"تاجر",rl_marketer:"مسوّق",
+  u_admin:"إدارة",u_merchant:"أحمد الراوي",u_marketer:"محمد سمير",
+  g_main:"الرئيسية",g_manage:"الإدارة",g_money:"المالية",
+  dashboard:"لوحة التحكم",users:"المستخدمون",settlements:"التسويات",
+  products:"منتجاتي",addproduct:"إضافة منتج",orders:"الطلبات",
+  marketplace:"سوق المنتجات",links:"روابط الإحالة",wallet:"المحفظة",
+  search:"بحث…",viewall:"عرض الكل",export:"تصدير",save:"حفظ المنتج",approve:"اعتماد",
+  suspend:"تعليق",getlink:"احصل على رابط",withdraw:"طلب سحب",addvar:"إضافة متغيّر",
+  egp:"ج.م",week:"آخر 7 أيام",
+  country_EG:"مصر", country_SA:"السعودية", ccy_EG:"ج.م", ccy_SA:"ر.س", switchCountry:"تبديل الدولة",
+  // new nav items
+  stats:"إحصائيات تجارتك",mystore:"متجري",failed:"الطلبات غير الناجحة",
+  approvals:"اعتماد المنتجات",review:"مراجعة منتج",
+  mstats:"الإحصائيات",rejected:"منتج مرفوض",
+  // filters & labels
+  applyFilter:"تطبيق",fromDate:"من تاريخ",toDate:"إلى تاريخ",country:"الدولة",egypt:"مصر",
+  allCauses:"كل الأسباب",importToStore:"استيراد إلى متجري",
+  basePrice:"السعر الأساسي (سعر الموقع)",yourSellPrice:"سعر بيعك",yourProfit:"ربحك",
+  basePriceNote:"الحدّ الأدنى للبيع — لا يمكن للمسوّق البيع بأقل منه، وهو ما تحصل عليه عن كل طلب ناجح",
+  adminReviewNote:"سيخضع المنتج لمراجعة الأدمن قبل ظهوره في السوق",
+  apprStatus:"حالة الاعتماد",editResubmit:"تعديل وإعادة تقديم",
+  bulkApprove:"اعتماد جماعي",pendingCount:"5 بانتظار",
+  // stats labels
+  totalOrders:"إجمالي الطلبات",deliveredOrders:"تم التسليم",inProgress:"قيد التنفيذ",
+  cancelledReturned:"ملغاة/مرتجعة",deliveryRate:"معدل التسليم",netProfit:"صافي ربحك",
+  statusBreakdown:"تفصيل حالات الطلبات",byGov:"أداء حسب المحافظة",
+  soldProducts:"منتجات قمت ببيعها",
+  avgSellPrice:"متوسط سعر بيعك",totalProfit:"إجمالي ربحك",
+  // merchant stats
+  totalSales:"إجمالي المبيعات",netDue:"صافي مستحقّك",bestProducts:"أفضل المنتجات أداءً",
+  marketerPerf:"أداء المسوّقين",
+  // wallet V2
+  availableBalance:"الرصيد المتاح للسحب",pendingBalance:"الرصيد المعلَّق",totalEarnings:"إجمالي الأرباح",
+  availableOn:"تتاح بتاريخ",deliveryDate:"تاريخ التسليم",pendingStatus:"معلَّق",availableStatus:"متاح",
+  returnedStatus:"مرتجع",walletNote:"الأرباح تتاح للسحب بعد 7 أيام من التسليم لتغطية المرتجعات",
+  // order table
+  orderCode:"كود الطلب",govLabel:"المحافظة",qty:"الكمية",dueAmount:"المستحق لك",
+  marketerLabel:"المسوّق",codStatus:"حالة التحصيل COD",editOrder:"تعديل",cancelOrder:"إلغاء",
+  fullAddress:"عنوان التوصيل الكامل",shippingInfo:"الشحن",paymentInfo:"الدفع",
+  notesAttempts:"ملاحظات ومحاولات",trackingNo:"رقم التتبّع",codLabel:"دفع عند الاستلام",
+  clientNote:"ملاحظة العميل",callAttempts:"محاولات الاتصال",perPage:"لكل صفحة",
+  // failed codes
+  fix_INVALID_PHONE:"تعديل رقم الهاتف",fix_OUT_OF_STOCK:"استبدال المنتج",
+  fix_STORE_CLOSED:"فتح المتجر",fix_PRICE_BELOW_BASE:"تعديل سعر البيع",
+  fix_INTEGRATION_TIMEOUT:"إعادة محاولة يدوية",fix_INTEGRATION_SCHEMA:"عرض تقرير الـSchema",
+  autoRetry:"إعادة تلقائية",
+  desc_INVALID_PHONE:"رقم العميل لا يطابق صيغة مصر (11 رقم تبدأ بـ01)",
+  desc_OUT_OF_STOCK:"المنتج غير متوفّر في المخزون",
+  desc_STORE_CLOSED:"المتجر مغلق ولا يقبل طلبات جديدة",
+  desc_PRICE_BELOW_BASE:"سعر البيع أقل من السعر الأساسي للمنتج",
+  desc_INTEGRATION_TIMEOUT:"انتهت مهلة الاتصال بخدمة التكامل",
+  desc_INTEGRATION_SCHEMA:"حقل ناقص في بيانات الـAPI",
+  // admin failed
+  failedCatalog:"كتالوج أكواد الأخطاء",failCodeLabel:"الكود",fixAction:"إجراء الإصلاح",
+  cod_pending:"بانتظار التحصيل",cod_collected:"محصّل",cod_returned:"مرتجع",
+  rejectedReason:"سبب الرفض",rejectedBanner:"تم رفض هذا المنتج",
+  rejectedDesc:"جودة الصور منخفضة — الصورة الأولى أقل من 800×800 بكسل. يرجى رفع صور عالية الجودة وإعادة التقديم.",
+  rejectReasonLabel:"سبب الرفض",rejectInput:"اكتب سبب الرفض…",confirmReject:"تأكيد الرفض",
+  myImportedProducts:"منتجاتي المستوردة",defaultSellPrice:"سعر البيع الافتراضي",soldCount:"كم بِيع",
+  // admin dash
+  t_orders:"إجمالي الطلبات",t_sales:"إجمالي المبيعات",t_deliv:"نسبة التسليم",t_stores:"متاجر نشطة",
+  ordersTrend:"حركة الطلبات — 6 أشهر",statusDist:"توزيع حالات الطلبات",recentOrders:"أحدث الطلبات",
+  // tables
+  c_order:"رقم الطلب",c_customer:"العميل",c_total:"الإجمالي",c_status:"الحالة",c_date:"التاريخ",
+  c_name:"الاسم",c_role:"الدور",c_store:"المتجر",c_action:"إجراء",c_product:"المنتج",
+  c_price:"السعر الأساسي",c_stock:"المخزون",c_commission:"ربحك",c_income:"سعر بيعك",
+  c_party:"الجهة",c_type:"النوع",c_amount:"المبلغ",c_visits:"الزيارات",c_conv:"التحويل",
+  c_link:"الرابط",c_products:"المنتجات",
+  // merchant
+  m_orders:"طلباتي",m_sales:"مبيعات الشهر",m_products:"عدد المنتجات",m_balance:"رصيد المحفظة",
+  salesTrend:"المبيعات الأسبوعية",topProducts:"الأكثر مبيعًا",
+  f_name:"اسم المنتج",f_cat:"التصنيف",f_desc:"الوصف",f_price:"سعر البيع",f_cost:"التكلفة",
+  f_comm:"السعر الأساسي (سعر الموقع)",f_images:"صور المنتج",f_variants:"متغيّرات المنتج",
+  f_color:"اللون",f_size:"المقاس",f_qty:"الكمية",dropmsg:"اسحب الصور هنا أو اضغط للرفع",
+  // marketer
+  k_earn:"أرباح متاحة",k_pending:"عمولات معلّقة",k_paid:"إجمالي المدفوع",k_conv:"معدّل التحويل",
+  yourComm:"عمولتك",walletBalance:"الرصيد المتاح للسحب",txns:"آخر الحركات",
+  allStatuses:"الكل",pickProducts:"اختر منتجات للترويج واحصل على رابط الإحالة الخاص بك",
+  bannerH:"أهلاً بك في لوحة التاجر",bannerP:"لديك 6 طلبات بانتظار التأكيد و3 منتجات قاربت على النفاد.",
+  st_pending:"قيد الانتظار",st_confirmed:"تم التأكيد",st_review:"مراجعة",st_packing:"قيد التغليف",
+  st_shipped:"تم الشحن",st_waiting:"بانتظار",st_delivered:"تم التسليم",st_partial:"تسليم جزئي",
+  st_complete:"مكتمل",st_cancelled:"ملغي",st_returned:"مرتجع",st_return:"طلب إرجاع",
+  st_whatsapp:"واتساب",st_delay:"تأجيل",st_stock:"بانتظار المخزون",
+  active:"نشط",pendingApp:"بانتظار الاعتماد",paid:"مدفوع",scheduled:"مجدول",
+  settings:"الإعدادات",storeInfo:"معلومات المتجر",payoutInfo:"بيانات الدفع",shippingSet:"الشحن",
+  integrations:"التكاملات",identity:"الهوية والتحقّق",saveChanges:"حفظ التغييرات",
+  connect:"ربط",manage:"إدارة",verified:"تمّ التحقّق",
+  addorder:"إضافة طلب",submitOrder:"تأكيد الطلب",addItem:"+ منتج آخر",
+  customerInfo:"بيانات العميل",shipPay:"الشحن والدفع",amountToCollect:"المبلغ المحصَّل",
+  courierStatus:"الحالة",activeCourier:"نشط",availableCourier:"متاح",
+  activateCourier:"تفعيل",deactivateCourier:"إيقاف",primaryCourier:"الشركة الرئيسية",
+  shippingNote:"حاليًا تعتمد على {0}؛ فعّل شركات إضافية لاستخدامها بالتوازي أو كاحتياطي.",
+  shipping:"إدارة الشحن",shippingAdmin:"إدارة شركات الشحن",
+  shippingAdminSub:"فعّل أو أوقف شركات الشحن لكل دولة على مستوى المنصّة",
+  marketerShipNote:"شركات الشحن تُفعَّل من إدارة المنصّة. يمكنك اختيار شركتك الافتراضية من الشركات النشطة.",
+  adminToggleNote:"التبديل هنا يؤثّر على جميع المسوّقين في دولة",
+  courierMgmt:"الإدارة"},
+ en:{dir:"ltr",app:"Soyoula",appSub:"سيولة",lang:"ع",
+  admin:"Admin",merchant:"Merchant",marketer:"Marketer",
+  rl_admin:"Platform Manager",rl_merchant:"Merchant",rl_marketer:"Marketer",
+  u_admin:"Admin",u_merchant:"Ahmed Elrawy",u_marketer:"Mohamed Samir",
+  g_main:"Main",g_manage:"Management",g_money:"Finance",
+  dashboard:"Dashboard",users:"Users",settlements:"Settlements",
+  products:"My Products",addproduct:"Add Product",orders:"Orders",
+  marketplace:"Marketplace",links:"Referral Links",wallet:"Wallet",
+  search:"Search…",viewall:"View all",export:"Export",save:"Save Product",approve:"Approve",
+  suspend:"Suspend",getlink:"Get Link",withdraw:"Request Payout",addvar:"Add Variant",
+  egp:"EGP",week:"Last 7 days",
+  country_EG:"Egypt", country_SA:"Saudi Arabia", ccy_EG:"EGP", ccy_SA:"SAR", switchCountry:"Switch Country",
+  stats:"My Stats",mystore:"My Store",failed:"Failed Orders",
+  approvals:"Product Approvals",review:"Review Product",
+  mstats:"Statistics",rejected:"Rejected Product",
+  applyFilter:"Apply",fromDate:"From",toDate:"To",country:"Country",egypt:"Egypt",
+  allCauses:"All Causes",importToStore:"Import to My Store",
+  basePrice:"Base Price (Site Price)",yourSellPrice:"Your Sell Price",yourProfit:"Your Profit",
+  basePriceNote:"Minimum sell price — marketers cannot sell below this; it is what you receive per successful order",
+  adminReviewNote:"This product will be reviewed by admin before appearing in the marketplace",
+  apprStatus:"Approval Status",editResubmit:"Edit & Resubmit",
+  bulkApprove:"Bulk Approve",pendingCount:"5 pending",
+  totalOrders:"Total Orders",deliveredOrders:"Delivered",inProgress:"In Progress",
+  cancelledReturned:"Cancelled/Returned",deliveryRate:"Delivery Rate",netProfit:"Net Profit",
+  statusBreakdown:"Order Status Breakdown",byGov:"Performance by Governorate",
+  soldProducts:"Products You Sold",
+  avgSellPrice:"Avg. Your Sell Price",totalProfit:"Total Profit",
+  totalSales:"Total Sales",netDue:"Net Due to You",bestProducts:"Top Performing Products",
+  marketerPerf:"Marketer Performance",
+  availableBalance:"Available Balance",pendingBalance:"Pending Balance",totalEarnings:"Total Earnings",
+  availableOn:"Available On",deliveryDate:"Delivery Date",pendingStatus:"Pending",availableStatus:"Available",
+  returnedStatus:"Returned",walletNote:"Earnings available for withdrawal 7 days after delivery to cover returns",
+  orderCode:"Order Code",govLabel:"Governorate",qty:"Qty",dueAmount:"Due to You",
+  marketerLabel:"Marketer",codStatus:"COD Status",editOrder:"Edit",cancelOrder:"Cancel",
+  fullAddress:"Full Delivery Address",shippingInfo:"Shipping",paymentInfo:"Payment",
+  notesAttempts:"Notes & Attempts",trackingNo:"Tracking No.",codLabel:"Cash on Delivery",
+  clientNote:"Client Note",callAttempts:"Call Attempts",perPage:"Per page",
+  fix_INVALID_PHONE:"Edit Phone Number",fix_OUT_OF_STOCK:"Replace Product",
+  fix_STORE_CLOSED:"Open Store",fix_PRICE_BELOW_BASE:"Edit Sell Price",
+  fix_INTEGRATION_TIMEOUT:"Manual Retry",fix_INTEGRATION_SCHEMA:"View Schema Report",
+  autoRetry:"Auto-retry",
+  desc_INVALID_PHONE:"Client number doesn't match Egypt format (11 digits starting with 01)",
+  desc_OUT_OF_STOCK:"Product is out of stock",
+  desc_STORE_CLOSED:"Store is closed and not accepting new orders",
+  desc_PRICE_BELOW_BASE:"Sell price is below the product base price",
+  desc_INTEGRATION_TIMEOUT:"Integration service timed out",
+  desc_INTEGRATION_SCHEMA:"Missing field in API data",
+  failedCatalog:"Error Code Catalog",failCodeLabel:"Code",fixAction:"Fix Action",
+  cod_pending:"Pending Collection",cod_collected:"Collected",cod_returned:"Returned",
+  rejectedReason:"Rejection Reason",rejectedBanner:"This Product Was Rejected",
+  rejectedDesc:"Image quality is low — first image is below 800×800px. Please upload high-quality images and resubmit.",
+  rejectReasonLabel:"Rejection Reason",rejectInput:"Write rejection reason…",confirmReject:"Confirm Rejection",
+  myImportedProducts:"My Imported Products",defaultSellPrice:"Default Sell Price",soldCount:"Sold",
+  t_orders:"Total Orders",t_sales:"Total Sales",t_deliv:"Delivery Rate",t_stores:"Active Stores",
+  ordersTrend:"Orders Trend — 6 Months",statusDist:"Order Status Split",recentOrders:"Recent Orders",
+  c_order:"Order No.",c_customer:"Customer",c_total:"Total",c_status:"Status",c_date:"Date",
+  c_name:"Name",c_role:"Role",c_store:"Store",c_action:"Action",c_product:"Product",
+  c_price:"Price",c_stock:"Stock",c_commission:"Commission",c_income:"Seller Income",
+  c_party:"Party",c_type:"Type",c_amount:"Amount",c_visits:"Visits",c_conv:"Conv.",
+  c_link:"Link",c_products:"Items",
+  m_orders:"My Orders",m_sales:"Monthly Sales",m_products:"Products",m_balance:"Wallet Balance",
+  salesTrend:"Weekly Sales",topProducts:"Top Sellers",
+  f_name:"Product Name",f_cat:"Category",f_desc:"Description",f_price:"Selling Price",f_cost:"Cost",
+  f_comm:"Marketer Commission",f_images:"Product Images",f_variants:"Product Variants",
+  f_color:"Color",f_size:"Size",f_qty:"Quantity",dropmsg:"Drag images here or click to upload",
+  k_earn:"Available Earnings",k_pending:"Pending Commissions",k_paid:"Total Paid",k_conv:"Conversion Rate",
+  yourComm:"Your commission",walletBalance:"Available for withdrawal",txns:"Recent Activity",
+  allStatuses:"All",pickProducts:"Pick products to promote and get your referral link",
+  bannerH:"Welcome to your Merchant dashboard",bannerP:"You have 6 orders awaiting confirmation and 3 products low on stock.",
+  st_pending:"Pending",st_confirmed:"Confirmed",st_review:"Review",st_packing:"Packing",
+  st_shipped:"Shipped",st_waiting:"Waiting",st_delivered:"Delivered",st_partial:"Partial",
+  st_complete:"Complete",st_cancelled:"Cancelled",st_returned:"Returned",st_return:"Return Req.",
+  st_whatsapp:"WhatsApp",st_delay:"Delay",st_stock:"Awaiting Stock",
+  active:"Active",pendingApp:"Pending Approval",paid:"Paid",scheduled:"Scheduled",
+  settings:"Settings",storeInfo:"Store Info",payoutInfo:"Payout Info",shippingSet:"Shipping",
+  integrations:"Integrations",identity:"Identity & KYC",saveChanges:"Save Changes",
+  connect:"Connect",manage:"Manage",verified:"Verified",
+  addorder:"Add Order",submitOrder:"Submit Order",addItem:"+ Add Item",
+  customerInfo:"Customer Info",shipPay:"Shipping & Payment",amountToCollect:"Amount to Collect",
+  courierStatus:"Status",activeCourier:"Active",availableCourier:"Available",
+  activateCourier:"Activate",deactivateCourier:"Deactivate",primaryCourier:"Primary Courier",
+  shippingNote:"You're currently using {0}; activate additional couriers for parallel use or as backup.",
+  shipping:"Shipping Mgmt",shippingAdmin:"Shipping Couriers Management",
+  shippingAdminSub:"Activate or deactivate couriers per country platform-wide",
+  marketerShipNote:"Couriers are activated by platform admin. You can pick your default from the active ones.",
+  adminToggleNote:"Toggling here affects all marketers in",
+  courierMgmt:"Management"}
+};
+let lang="ar";
+let country = "EG";
+const COUNTRIES = {
+  EG:{flag:"🇪🇬", govs:["القاهرة","الجيزة","الإسكندرية","المنصورة","طنطا","أسيوط"],
+       govsEn:["Cairo","Giza","Alexandria","Mansoura","Tanta","Asyut"],
+       govData:[218,164,132,88,76,68], govRates:[82,78,74,69,71,63]},
+  SA:{flag:"🇸🇦", govs:["الرياض","جدة","الدمام","مكة","المدينة","الطائف"],
+       govsEn:["Riyadh","Jeddah","Dammam","Mecca","Medina","Taif"],
+       govData:[245,198,142,96,82,71], govRates:[84,79,76,72,70,65]}
+};
+const ccy = () => t("ccy_"+country);
+const cName = () => t("country_"+country);
+const govs = () => lang=="ar" ? COUNTRIES[country].govs : COUNTRIES[country].govsEn;
+const t=k=>I18N[lang][k]||k;
+
+/* ============ icons ============ */
+const IC={
+ dashboard:'<path d="M3 3h8v8H3zM13 3h8v5h-8zM13 10h8v11h-8zM3 13h8v8H3z"/>',
+ users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 3-5.5 6.5-5.5s6.5 1.9 6.5 5.5"/><circle cx="18" cy="9" r="2.7"/><path d="M18 14.5c2.7 0 4.5 1.5 4.5 4"/>',
+ money:'<rect x="2" y="6" width="20" height="13" rx="2"/><circle cx="12" cy="12.5" r="3"/>',
+ box:'<path d="M3 8l9-5 9 5v8l-9 5-9-5zM3 8l9 5 9-5M12 13v9"/>',
+ plus:'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>',
+ cart:'<circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M2 3h3l2.4 12.4a2 2 0 002 1.6h8.6a2 2 0 002-1.6L23 7H6"/>',
+ store:'<path d="M4 9h16v11H4zM3 4h18l1 5H2zM9 20v-6h6v6"/>',
+ link:'<path d="M9 15l6-6M10 6l2-2a4 4 0 016 6l-2 2M14 18l-2 2a4 4 0 01-6-6l2-2"/>',
+ wallet:'<rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10h18M16 14h2"/>',
+ chart:'<path d="M3 3v18h18M7 16l4-6 4 4 4-7"/>',
+ alert:'<path d="M10.3 3.3L2 20h20L13.7 3.3a2 2 0 00-3.4 0zM12 9v5M12 17.5v.5"/>',
+ check:'<polyline points="20 6 9 17 4 12"/>',
+ xmark:'<path d="M18 6 6 18M6 6l12 12"/>',
+ eye:'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
+ refresh:'<path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.5 9A9 9 0 0120.5 6.4M20.5 15a9 9 0 01-17 2.6"/>',
+ star:'<polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/>',
+ settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1A1.7 1.7 0 004.6 9a1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/>',
+ truck:'<path d="M1 3h15v13H1zM16 8h4l3 3v5h-7zM5.5 18.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 18.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>'
+};
+const svg=p=>'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';
+
+/* ============ couriers / integrations ============ */
+const COURIERS = {
+  EG:[
+    {id:'sideup',  ar:'سايد اب',        en:'SideUp',        fee:48, status:'active'},
+    {id:'bosta',   ar:'بوسطة',           en:'Bosta',         fee:45, status:'available'},
+    {id:'aramex',  ar:'أرامكس',          en:'Aramex',        fee:55, status:'available'},
+    {id:'mylerz',  ar:'مايلرز',          en:'Mylerz',        fee:50, status:'available'},
+    {id:'dhl_eg',  ar:'DHL مصر',        en:'DHL Egypt',     fee:75, status:'available'},
+    {id:'jt_eg',   ar:'J&T',             en:'J&T Express',   fee:48, status:'available'},
+    {id:'barq',    ar:'برق',             en:'Barq',          fee:42, status:'available'}
+  ],
+  SA:[
+    {id:'smsa',      ar:'سمسا',           en:'SMSA Express',  fee:20, status:'active'},
+    {id:'aramex_sa', ar:'أرامكس',         en:'Aramex',        fee:18, status:'available'},
+    {id:'dhl_sa',    ar:'DHL السعودية',   en:'DHL Saudi',     fee:25, status:'available'},
+    {id:'ajex',      ar:'AJEX',           en:'AJEX',          fee:19, status:'available'},
+    {id:'saudipost', ar:'البريد السعودي', en:'Saudi Post',    fee:15, status:'available'},
+    {id:'jt_sa',     ar:'J&T',            en:'J&T Saudi',     fee:17, status:'available'}
+  ]
+};
+const couriers = () => COURIERS[country].map(c=>({id:c.id,name:lang=='ar'?c.ar:c.en,fee:c.fee,status:c.status}));
+const couriersActive = () => couriers().filter(c=>c.status==='active');
+const fmt = (s,v) => s.replace('{0}',v);
+
+const INTEGRATIONS = {
+  EG:[{id:'shopify',name:'Shopify',icon:'S',color:'#95BF47',status:'connected'},
+      {id:'woo',name:'WooCommerce',icon:'W',color:'#7F54B3',status:'available'},
+      {id:'easy',name:'Easy Orders',icon:'E',color:'#0EA5E9',status:'connected'},
+      {id:'youcan',name:'YouCan',icon:'Y',color:'#F59E0B',status:'available'}],
+  SA:[{id:'salla',name:'سلة',icon:'س',color:'#BCD55A',status:'connected'},
+      {id:'zid',name:'زد',icon:'ز',color:'#5B3CC4',status:'available'},
+      {id:'shopify',name:'Shopify',icon:'S',color:'#95BF47',status:'available'},
+      {id:'youcan',name:'YouCan',icon:'Y',color:'#F59E0B',status:'available'}]
+};
+
+/* ============ role / nav config ============ */
+const ROLES={
+ admin:{nav:[
+   {g:"g_main"},{id:"dashboard",ic:"dashboard"},
+   {g:"g_manage"},{id:"users",ic:"users",badge:6},{id:"approvals",ic:"check",badge:5},
+   {id:"orders",ic:"cart"},{id:"failed",ic:"alert"},{id:"shipping",ic:"truck"},
+   {g:"g_money"},{id:"settlements",ic:"money"}]},
+ merchant:{nav:[
+   {g:"g_main"},{id:"dashboard",ic:"dashboard"},{id:"orders",ic:"cart",badge:6},
+   {g:"g_manage"},{id:"products",ic:"box"},{id:"addproduct",ic:"plus"},
+   {g:"g_money"},{id:"mstats",ic:"chart"}]},
+ marketer:{nav:[
+   {g:"g_main"},{id:"dashboard",ic:"dashboard"},{id:"marketplace",ic:"store"},
+   {id:"mystore",ic:"store"},{id:"orders",ic:"cart"},{id:"addorder",ic:"plus"},
+   {g:"g_money"},{id:"stats",ic:"chart"},{id:"failed",ic:"alert"},{id:"wallet",ic:"wallet"},{id:"settings",ic:"settings"}]}
+};
+const FIRST={admin:"dashboard",merchant:"dashboard",marketer:"dashboard"};
+let state={role:"merchant",screen:"dashboard"};
+
+/* ============ helpers ============ */
+const STC={pending:"#F59E0B",confirmed:"#0D9488",review:"#2DC2B0",packing:"#0EA5E9",
+ shipped:"#0891B2",waiting:"#64748B",delivered:"#16A34A",partial:"#65A30D",complete:"#15803D",
+ cancelled:"#DC2626",returned:"#B91C1C",return:"#EA580C",whatsapp:"#25D366",delay:"#9333EA",stock:"#475569"};
+const tag=(txt,color)=>`<span class="tag" style="color:${color};background:${color}1a">${txt}</span>`;
+const stTag=s=>tag(t("st_"+s),STC[s]);
+function kpi(ic,icbg,iccol,lbl,val,trend,up){
+  return `<div class="kpi"><div class="top">
+    <div class="ico" style="background:${icbg};color:${iccol}">${svg(IC[ic])}</div>
+    ${trend?`<span class="trend ${up?'up':'down'}">${up?'▲':'▼'} ${trend}</span>`:''}</div>
+    <div class="lbl">${lbl}</div><div class="val">${val}</div></div>`;
+}
+function bars(data){
+  const mx=Math.max(...data.map(d=>d[1]));
+  return `<div class="bars">${data.map(d=>`<div class="col">
+    <div class="bar" style="height:${Math.round(d[1]/mx*100)}%"></div>
+    <div class="bl">${d[0]}</div></div>`).join('')}</div>`;
+}
+function donut(segs){
+  let acc=0;const stops=segs.map(s=>{const a=acc;acc+=s[2];return `${s[1]} ${a}% ${acc}%`;}).join(',');
+  return `<div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+    <div class="donut" style="background:conic-gradient(${stops})"></div>
+    <div class="legend">${segs.map(s=>`<div class="li">
+      <span class="sw" style="background:${s[1]}"></span>${s[0]} <b style="margin-inline-start:4px">${s[2]}%</b></div>`).join('')}</div></div>`;
+}
+function tbl(cols,rows){
+  return `<div style="overflow-x:auto"><table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+   <tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
+function head(crumb,h1,sub,actions){
+  return `<div class="pagehead"><div>
+    <div class="crumb">${crumb}</div><div class="h1">${h1}</div>
+    ${sub?`<div class="sub" style="margin:0">${sub}</div>`:''}</div>
+    <div style="display:flex;gap:9px">${actions||''}</div></div>`;
+}
+
+/* ============ SCREENS ============ */
+const S={};
+
+S["admin/approvals"]=()=>head(t("admin")+" · "+t("approvals"),t("approvals"),
+  lang=="ar"?"راجع المنتجات الجديدة والتعديلات قبل نشرها — الأحدث أولاً":"Review new products and edits before publishing — newest first")
+ +`<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+    <input style="flex:1;min-width:200px;padding:9px 12px;border:1px solid var(--line);border-radius:9px;font-family:inherit;font-size:13px" placeholder="${t("search")}">
+    <button class="btn ok sm">${t("bulkApprove")}</button>
+    <span class="tag" style="color:#F59E0B;background:#FEF3C7">${t("pendingCount")}</span>
+  </div>
+  <div class="card"><div class="cb" style="padding:0">${tbl(
+    ['<input type="checkbox">',t("c_product"),lang=="ar"?"التاجر":"Merchant",t("country"),t("c_price"),t("c_date"),t("apprStatus"),t("c_action")],
+    [['<input type="checkbox">',prod("👕","تيشيرت رياضي نص كم","SKU-TS-999"),uChip("م","متجر بيسوهولا"),cName(),"185 "+ccy(),"2026/05/31",apprTag("pending"),`<button class="btn sm" onclick="go('review')">${lang=="ar"?"مراجعة":"Review"}</button>`],
+     ['<input type="checkbox">',prod("🩳","بنطلون شورت جديد","SKU-SH-300"),uChip("ه","هبة سامي"),cName(),"210 "+ccy(),"2026/05/30",apprTag("pending"),`<button class="btn sm" onclick="go('review')">${lang=="ar"?"مراجعة":"Review"}</button>`],
+     ['<input type="checkbox">',prod("🧢","قبعة رياضية","SKU-CP-041"),uChip("ع","عمرو زكي"),cName(),"95 "+ccy(),"2026/05/29",apprTag("pending"),`<button class="btn sm" onclick="go('review')">${lang=="ar"?"مراجعة":"Review"}</button>`],
+     ['<input type="checkbox">',prod("🧥","جاكيت شتوي","SKU-WJ-018"),uChip("م","متجر بيسوهولا"),cName(),"650 "+ccy(),"2026/05/28",apprTag("pending"),`<button class="btn sm" onclick="go('review')">${lang=="ar"?"مراجعة":"Review"}</button>`],
+     ['<input type="checkbox">',prod("👟","حذاء كاجوال","SKU-CS-088"),uChip("ي","يوسف نبيل"),cName(),"380 "+ccy(),"2026/05/27",apprTag("pending"),`<button class="btn sm" onclick="go('review')">${lang=="ar"?"مراجعة":"Review"}</button>`]])
+  }</div></div>`;
+
+S["admin/review"]=()=>head(t("admin")+" · "+t("review"),t("review"),
+  lang=="ar"?"راجع بيانات المنتج بالكامل قبل الاعتماد أو الرفض":"Review full product details before approving or rejecting")
+ +`<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+    <div class="card"><div class="ch"><h3>${lang=="ar"?"معاينة المنتج":"Product Preview"}</h3></div>
+      <div class="cb">
+        <div style="background:linear-gradient(135deg,#D8F1ED,#CCFBF1);border-radius:12px;height:160px;display:grid;place-items:center;font-size:64px;margin-bottom:14px">👕</div>
+        <div style="font-weight:800;font-size:15px;margin-bottom:10px">${lang=="ar"?"تيشيرت رياضي نص كم":"Sport Half-Sleeve Tee"}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+          <div><div class="note">${t("basePrice")}</div><b>185 ${ccy()}</b></div>
+          <div><div class="note">${lang=="ar"?"المخزون":"Stock"}</div><b>320</b></div>
+          <div><div class="note">"SKU"</div><b style="font-family:monospace">SKU-TS-999</b></div>
+          <div><div class="note">${lang=="ar"?"التاجر":"Merchant"}</div><b>${lang=="ar"?"متجر بيسوهولا":"Besouhola"}</b></div>
+        </div>
+        <div class="note">${lang=="ar"?"تيشيرت قطن مريح بقصّة عصرية، متوفّر بعدة ألوان ومقاسات.":"Comfortable cotton tee with a modern fit, available in several colors and sizes."}</div>
+      </div></div>
+    <div>
+      <div class="card" style="margin-bottom:14px"><div class="ch"><h3>${lang=="ar"?"قرار الاعتماد":"Approval Decision"}</h3></div>
+        <div class="cb">
+          <button class="btn ok" style="width:100%;justify-content:center;margin-bottom:10px">${svg(IC.check)} ${t("approve")}</button>
+          <div style="border-top:1px solid var(--line);padding-top:12px">
+            <div class="field"><label>${t("rejectReasonLabel")}</label>
+              <textarea rows="3" placeholder="${t("rejectInput")}"></textarea></div>
+            <button class="btn" style="background:#DC2626;width:100%;justify-content:center">${svg(IC.xmark)} ${t("confirmReject")}</button>
+          </div>
+        </div></div>
+      <div class="card"><div class="ch"><h3>${lang=="ar"?"معلومات التقديم":"Submission Info"}</h3></div>
+        <div class="cb">
+          <div class="minirow"><span class="note">${lang=="ar"?"تاريخ التقديم":"Submitted"}</span><b>2026/05/31</b></div>
+          <div class="minirow"><span class="note">${lang=="ar"?"نوع التقديم":"Type"}</span><b>${lang=="ar"?"منتج جديد":"New Product"}</b></div>
+          <div class="minirow"><span class="note">${lang=="ar"?"فحص NSFW":"NSFW Check"}</span>${tag(lang=="ar"?"اجتاز":"Passed","#16A34A")}</div>
+        </div></div>
+    </div>
+  </div>
+  <button class="btn ghost sm" onclick="go('approvals')">← ${lang=="ar"?"العودة للاعتمادات":"Back to Approvals"}</button>`;
+
+S["admin/failed"]=()=>{
+  const codeStats=[
+    {code:"INVALID_PHONE",count:42,pct:28},
+    {code:"PRICE_BELOW_BASE",count:31,pct:21},
+    {code:"OUT_OF_STOCK",count:27,pct:18},
+    {code:"INTEGRATION_TIMEOUT",count:24,pct:16},
+    {code:"STORE_CLOSED",count:15,pct:10},
+    {code:"INTEGRATION_SCHEMA",count:11,pct:7}
+  ];
+  const C={INVALID_PHONE:['#B45309','#FEF3C7'],OUT_OF_STOCK:['#C2410C','#FFEDD5'],
+    STORE_CLOSED:['#475569','#F1F5F9'],PRICE_BELOW_BASE:['#DC2626','#FEE2E2'],
+    INTEGRATION_TIMEOUT:['#1D4ED8','#DBEAFE'],INTEGRATION_SCHEMA:['#7C3AED','#EDE9FE']};
+  const total=codeStats.reduce((s,c)=>s+c.count,0);
+  const cards=[
+    {code:"INVALID_PHONE",order:"A0001-00098721",src:lang=='ar'?'متجر بيسوهولا':'Besouhola',attempts:lang=='ar'?'محاولة يدوية — لم تُصحَّح بعد':'Manual — not fixed yet',auto:false},
+    {code:"OUT_OF_STOCK",order:"A0001-00098715",src:lang=='ar'?'متجر Energy Affiliate':'Energy Affiliate',attempts:lang=='ar'?'تلقائي — في انتظار إعادة التوفّر':'Auto — awaiting restock',auto:true},
+    {code:"STORE_CLOSED",order:"A0001-00098710",src:lang=='ar'?'متجر بيسوهولا':'Besouhola',attempts:lang=='ar'?'تلقائي — ستُرسَل الدفعة عند الفتح':'Auto — batch on open',auto:true},
+    {code:"PRICE_BELOW_BASE",order:"A0001-00098702",src:lang=='ar'?'متجر Energy Affiliate':'Energy Affiliate',attempts:lang=='ar'?'يدوي — يحتاج تعديل سعر البيع':'Manual — sell price update needed',auto:false},
+    {code:"INTEGRATION_TIMEOUT",order:"A0001-00098698",src:lang=='ar'?'متجر بيسوهولا':'Besouhola',attempts:lang=='ar'?'تلقائي — المحاولة 3 من 5':'Auto — attempt 3/5',auto:true},
+    {code:"INTEGRATION_SCHEMA",order:"A0001-00098690",src:lang=='ar'?'متجر Energy Affiliate':'Energy Affiliate',attempts:lang=='ar'?'يدوي — حقل city مفقود':'Manual — field city missing',auto:false}
+  ];
+  return head(t("admin")+" · "+t("failed"),t("failed"),
+    lang=="ar"?"توزيع الفشل على الأكواد آخر 30 يومًا — لمراقبة المعدّلات غير الاعتيادية":"Failure distribution by code over last 30 days — to monitor abnormal rates")
+  +dateFilterBar()
+  +`<div class="tabs">
+    <button class="on" onclick="setTab('f_orders',this)">${lang=='ar'?'الطلبات الفاشلة':'Failed Orders'} (${total})</button>
+    <button onclick="setTab('f_codes',this)">${lang=='ar'?'الأكواد والإحصائيات':'Codes & Stats'}</button>
+  </div>
+  <div id="tab-f_orders" class="tabpane on">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      ${cards.map(d=>failCard(d)).join('')}
+    </div>
+    ${pager(total)}
+  </div>
+  <div id="tab-f_codes" class="tabpane">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px">
+      ${codeStats.map(cs=>{const[cc,cb]=C[cs.code];return `<div class="kpi">
+        <div class="top"><div style="padding:6px 12px;border-radius:7px;background:${cb}"><span style="font-family:monospace;font-size:11px;font-weight:700;color:${cc}">${cs.code}</span></div>
+          <span style="font-size:18px;font-weight:800;color:${cc}">${cs.pct}%</span></div>
+        <div class="lbl" style="margin-top:8px">${lang=='ar'?'الطلبات الفاشلة':'Failed Orders'}</div>
+        <div class="val" style="color:${cc}">${cs.count}</div></div>`;}).join('')}
+    </div>
+    <div class="card"><div class="ch"><h3>${t("failedCatalog")}</h3></div>
+      <div class="cb" style="padding:0">${tbl(
+        [t("failCodeLabel"),lang=='ar'?'الاسم بالإنجليزية':'English Name',t("fixAction")],
+        [["INVALID_PHONE","Invalid Phone",t("fix_INVALID_PHONE")],
+         ["OUT_OF_STOCK","Out of Stock",t("fix_OUT_OF_STOCK")],
+         ["STORE_CLOSED","Store Closed",t("fix_STORE_CLOSED")],
+         ["PRICE_BELOW_BASE","Price Below Base",t("fix_PRICE_BELOW_BASE")],
+         ["INTEGRATION_TIMEOUT","Integration Timeout",t("fix_INTEGRATION_TIMEOUT")],
+         ["INTEGRATION_SCHEMA","Integration Schema",t("fix_INTEGRATION_SCHEMA")]].map(r=>[failTag(r[0]),r[1],r[2]])
+      )}</div></div>
+  </div>`;
+};
+
+S["admin/orders"]=()=>{
+  const sts=["pending","confirmed","packing","shipped","delivered","cancelled","returned"];
+  const G = govs();
+  const PC = couriersActive()[0].name;
+  const rows=[
+    {emoji:"👕",name:"تيشيرت رياضي",sku:"SKU-TS-104",code:"M0042-00012350",date:"2026/05/31",customer:"سارة محمود",phone:"01012345678",gov:G[0],city:"مدينة نصر",street:"شارع عباس",bldg:"عمارة 12",floor:"دور 2",apt:"شقة 8",qty:1,total:240,marketer:"محمد سمير",status:"pending",cod:"pending",courier:PC,note:"—",calls:1},
+    {emoji:"🩳",name:"بنطلون شورت",sku:"SKU-SH-088",code:"M0042-00012340",date:"2026/05/30",customer:"كريم فؤاد",phone:"01198765432",gov:G[1],city:"الدقي",street:"شارع النيل",bldg:"عمارة 7",floor:"دور 5",apt:"شقة 20",qty:3,total:540,items:[{n:'بنطلون شورت',sku:'SKU-SH-088',qty:2,price:210},{n:'حزام جلد',sku:'SKU-BL-022',qty:1,price:120}],marketer:"رنا خالد",status:"confirmed",cod:"pending",courier:PC,note:"—",calls:0},
+    {emoji:"👟",name:"حذاء رياضي",sku:"SKU-SN-210",code:"M0042-00012320",date:"2026/05/28",customer:"منى عبدالله",phone:"01587654321",gov:G[2],city:"سيدي بشر",street:"شارع قابيل",bldg:"عمارة 3",floor:"دور 1",apt:"شقة 4",qty:1,total:720,marketer:"عمرو زكي",status:"shipped",cod:"pending",courier:PC,note:"—",calls:1},
+    {emoji:"🎒",name:"شنطة ظهر",sku:"SKU-BG-055",code:"M0042-00012310",date:"2026/05/27",customer:"طارق سمير",phone:"01234567890",gov:G[3],city:"المنصورة",street:"شارع الجمهورية",bldg:"عمارة 15",floor:"دور 3",apt:"شقة 9",qty:1,total:415,marketer:"هبة سامي",status:"delivered",cod:"collected",courier:PC,note:"—",calls:2},
+    {emoji:"👕",name:"تيشيرت كاجوال",sku:"SKU-TS-077",code:"M0042-00012300",date:"2026/05/25",customer:"ليلى حسن",phone:"01001122334",gov:G[4],city:"طنطا",street:"شارع البحر",bldg:"عمارة 8",floor:"دور 2",apt:"شقة 5",qty:1,total:205,marketer:"محمد سمير",status:"cancelled",cod:"returned",courier:PC,note:"العميل طلب الإلغاء",calls:3},
+    {emoji:"🩳",name:"بنطلون شورت",sku:"SKU-SH-088",code:"M0042-00012290",date:"2026/05/24",customer:"عمرو زكي",phone:"01099887766",gov:G[5],city:"أسيوط",street:"شارع الحرية",bldg:"عمارة 2",floor:"دور 4",apt:"شقة 14",qty:2,total:540,items:[{n:'بنطلون شورت',sku:'SKU-SH-088',qty:1,price:270},{n:'تيشيرت كاجوال',sku:'SKU-TS-077',qty:1,price:270}],marketer:"رنا خالد",status:"returned",cod:"returned",courier:PC,note:"المنتج لا يناسب",calls:4}
+  ];
+  return head(t("admin")+" · "+t("orders"),t("orders"),
+    lang=="ar"?"نظرة شاملة على كل الطلبات عبر المنصّة":"Platform-wide view of all orders",
+    `<button class="btn ghost sm">${t("export")}</button>`)
+  +orderFilterBar({marketer:true,cod:true})
+  +`<div class="chips"><button class="chip on" onclick="chip(this)">${t("allStatuses")} <span class="n">1,284</span></button>
+    ${sts.map(s=>`<button class="chip" onclick="chip(this)">${t("st_"+s)}</button>`).join('')}</div>
+  <div class="card"><div class="cb" style="padding:0">
+    ${ordTableRich(rows,{marketer:true,cod:true})}
+  </div>${pager(1284)}</div>`;
+};
+
+S["admin/dashboard"]=()=>head(t("admin")+" · "+t("dashboard"),t("dashboard"),
+  lang=="ar"?"نظرة شاملة على أداء المنصّة وكل المتاجر":"Platform-wide performance across all stores")
+ +dateFilterBar()
+ +`<div class="grid kpis" style="margin-bottom:16px">
+   ${kpi("cart","#D8F1ED","#0D9488",t("t_orders"),"1,284","12%",1)}
+   ${kpi("money","#ECFDF5","#16A34A",t("t_sales"),"412,500 "+ccy(),"8%",1)}
+   ${kpi("box","#FEF3C7","#D97706",t("t_deliv"),"87%","3%",1)}
+   ${kpi("store","#D8F1ED","#2DC2B0",t("t_stores"),"24","2",1)}</div>
+ <div class="split2">
+   <div class="card"><div class="ch"><h3>${t("ordersTrend")}</h3></div>
+     <div class="cb">${bars([["يناير",620],["فبراير",710],["مارس",680],["أبريل",890],["مايو",1040],["يونيو",1284]].map((d,i)=>[["Jan","Feb","Mar","Apr","May","Jun"][i]&&lang=="en"?["Jan","Feb","Mar","Apr","May","Jun"][i]:d[0],d[1]]))}</div></div>
+   <div class="card"><div class="ch"><h3>${t("statusDist")}</h3></div>
+     <div class="cb">${donut([[t("st_delivered"),"#16A34A",58],[t("st_shipped"),"#0891B2",22],[t("st_pending"),"#F59E0B",13],[t("st_cancelled"),"#DC2626",7]])}</div></div>
+ </div>
+ <div class="card" style="margin-top:16px"><div class="ch"><h3>${t("recentOrders")}</h3>
+   <button class="btn ghost sm">${t("viewall")}</button></div>
+   <div class="cb" style="padding:0">${tbl(
+     [t("c_order"),t("c_customer"),t("c_store"),t("c_total"),t("c_status")],
+     [["#663727c2","سارة محمود","Energy Affiliate","1,090 "+ccy(),stTag("delivered")],
+      ["#663719a7","كريم فؤاد","Besouhola","640 "+ccy(),stTag("shipped")],
+      ["#66370f3b"," منى عبدالله","Energy Affiliate","2,250 "+ccy(),stTag("pending")],
+      ["#6636f8e1","طارق سمير","Besouhola","430 "+ccy(),stTag("review")],
+      ["#6636e22d","ليلى حسن","Energy Affiliate","880 "+ccy(),stTag("cancelled")]])}</div></div>`;
+
+S["admin/users"]=()=>head(t("admin")+" · "+t("users"),t("users"),
+  lang=="ar"?"اعتماد التجّار والمسوّقين والتحقّق من المستندات":"Approve merchants & marketers, verify documents",
+  `<button class="btn ghost sm">${t("export")}</button>`)
+ +`<div class="chips">
+   <button class="chip on">${t("allStatuses")} <span class="n">128</span></button>
+   <button class="chip">${t("merchant")} <span class="n">41</span></button>
+   <button class="chip">${t("marketer")} <span class="n">81</span></button>
+   <button class="chip">${t("pendingApp")} <span class="n">6</span></button></div>
+ <div class="card"><div class="cb" style="padding:0">${tbl(
+   [t("c_name"),t("c_role"),t("c_store"),t("c_status"),t("c_action")],
+   [[uChip("م","منى عبدالله"),t("merchant"),"Besouhola",tag(t("pendingApp"),"#F59E0B"),
+     `<button class="btn ok sm">${t("approve")}</button>`],
+    [uChip("ع","عمرو زكي"),t("marketer"),"Energy Affiliate",tag(t("pendingApp"),"#F59E0B"),
+     `<button class="btn ok sm">${t("approve")}</button>`],
+    [uChip("ه","هبة سامي"),t("merchant"),"Energy Affiliate",tag(t("active"),"#16A34A"),
+     `<button class="btn ghost sm">${t("suspend")}</button>`],
+    [uChip("ي","يوسف نبيل"),t("marketer"),"Besouhola",tag(t("active"),"#16A34A"),
+     `<button class="btn ghost sm">${t("suspend")}</button>`],
+    [uChip("ر","رنا خالد"),t("marketer"),"Energy Affiliate",tag(t("active"),"#16A34A"),
+     `<button class="btn ghost sm">${t("suspend")}</button>`]])}</div></div>`;
+
+S["admin/settlements"]=()=>head(t("admin")+" · "+t("settlements"),t("settlements"),
+  lang=="ar"?"التسويات المالية بين التجّار والمسوّقين وشركات الشحن":"Settlements across merchants, marketers and couriers")
+ +dateFilterBar()
+ +`<div class="grid kpis" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px">
+   ${kpi("money","#ECFDF5","#16A34A",lang=="ar"?"مدفوع هذا الشهر":"Paid this month","186,400 "+ccy(),"",1)}
+   ${kpi("money","#FEF3C7","#D97706",lang=="ar"?"قيد التسوية":"In progress","52,900 "+ccy(),"",1)}
+   ${kpi("money","#D8F1ED","#0D9488",lang=="ar"?"عدد التسويات":"Settlements","312","",1)}</div>
+ <div class="card"><div class="cb" style="padding:0">${tbl(
+   [t("c_party"),t("c_type"),t("c_amount"),t("c_status"),t("c_date")],
+   [["Energy Affiliate",t("merchant"),"24,300 "+ccy(),tag(t("paid"),"#16A34A"),"2026/05/19"],
+    ["محمد سمير",t("marketer"),"3,180 "+ccy(),tag(t("paid"),"#16A34A"),"2026/05/19"],
+    ["شركة بوسطة للشحن",lang=="ar"?"شحن":"Courier","8,750 "+ccy(),tag(t("scheduled"),"#0EA5E9"),"2026/05/21"],
+    ["Besouhola",t("merchant"),"16,900 "+ccy(),tag(t("scheduled"),"#0EA5E9"),"2026/05/22"],
+    ["رنا خالد",t("marketer"),"1,540 "+ccy(),tag(t("pendingApp"),"#F59E0B"),"—"]])}</div></div>`;
+
+S["admin/shipping"]=()=>{
+  const C = couriers();
+  const active = couriersActive();
+  return head(t("admin")+" · "+t("shipping"), t("shippingAdmin")+" — "+cName(), t("shippingAdminSub"))
+  +`<div class="info-banner">${svg(IC.alert)} ${t('adminToggleNote')} <b>${cName()}</b>. ${lang=='ar'?'بدّل الدولة من الشريط العلوي لإدارة الأخرى.':'Switch country from the top bar to manage the other.'}</div>
+  <div class="card"><div class="ch">
+    <h3>${lang=='ar'?'شركات الشحن المتاحة في':'Couriers available in'} ${cName()}</h3>
+    <span class="tag" style="color:#16A34A;background:#ECFDF5">${active.length} ${t('activeCourier')}</span>
+  </div>
+  <div class="cb" style="padding:0">${tbl(
+    [lang=='ar'?'الشركة':'Courier', lang=='ar'?'المُعرّف':'ID',
+     lang=='ar'?'متوسط الرسوم':'Avg Fee', t('courierStatus'),
+     lang=='ar'?'تفعيل المنصّة':'Platform Toggle', t('c_action')],
+    C.map(c=>[
+      `<b>${c.name}</b>${c.id===active[0]?.id?` <span class="tag" style="color:#0D9488;background:#D8F1ED;margin-inline-start:6px">${t('primaryCourier')}</span>`:''}`,
+      `<code style="font-family:monospace;font-size:11.5px">${c.id}</code>`,
+      c.fee+' '+ccy(),
+      c.status==='active'?tag(t('activeCourier'),'#16A34A'):tag(t('availableCourier'),'#94A3B8'),
+      `<label class="tgl"><input type="checkbox" ${c.status==='active'?'checked':''}><span></span></label>`,
+      `<button class="btn ghost sm">${t('manage')}</button>`
+    ])
+  )}</div></div>
+  <div class="card" style="margin-top:14px"><div class="ch"><h3>${lang=='ar'?'إحصائيات شركات الشحن النشطة':'Active Couriers Stats'}</h3></div>
+    <div class="cb">
+      ${active.map(c=>`<div class="minirow">
+        <div><b>${c.name}</b><div class="note">${lang=='ar'?'يُستخدم من':'Used by'} <b style="color:#0D9488">4</b> ${lang=='ar'?'مسوّقين':'marketers'} · <b>156</b> ${lang=='ar'?'طلب هذا الشهر':'orders this month'}</div></div>
+        <b style="color:#0D9488">${(c.fee*156).toLocaleString()} ${ccy()}</b>
+      </div>`).join('')}
+    </div></div>`;
+};
+
+S["merchant/rejected"]=()=>head(t("merchant")+" · "+t("rejected"),t("rejected"),"")
+ +`<div class="reject-banner">
+    <h3>${t("rejectedBanner")}</h3>
+    <p>${t("rejectedDesc")}</p>
+    <div class="meta">${lang=="ar"?"بواسطة: إدارة المنصّة · تاريخ: 2026/05/28 · مرجع: ADM-R-0041":"By: Platform Admin · Date: 2026/05/28 · Ref: ADM-R-0041"}</div>
+    <button class="btn">${t("editResubmit")}</button>
+  </div>
+  <div class="card"><div class="ch"><h3>${lang=="ar"?"معاينة المنتج":"Product Preview"}</h3></div>
+    <div class="cb">
+      <div style="display:grid;grid-template-columns:120px 1fr;gap:20px;align-items:start">
+        <div style="background:linear-gradient(135deg,#D8F1ED,#CCFBF1);border-radius:12px;height:120px;display:grid;place-items:center;font-size:48px">🧥</div>
+        <div>
+          <div style="font-weight:800;font-size:16px;margin-bottom:10px">${lang=="ar"?"جاكيت خفيف رياضي":"Lightweight Sport Jacket"}</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px">
+            <div><div class="note">${t("basePrice")}</div><b>430 ${ccy()}</b></div>
+            <div><div class="note">${lang=="ar"?"المخزون":"Stock"}</div><b>0</b></div>
+            <div><div class="note">"SKU"</div><b style="font-family:monospace">SKU-JK-031</b></div>
+            <div><div class="note">${lang=="ar"?"التصنيف":"Category"}</div><b>${lang=="ar"?"ملابس رجالي":"Men Clothing"}</b></div>
+          </div>
+          <div class="note">${lang=="ar"?"جاكيت قطن مريح بقصّة عصرية.":"Comfortable cotton jacket with a modern fit."}</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+S["merchant/mstats"]=()=>{
+  const topProds=[["👕","تيشيرت رياضي نص كم","320","96,000 "+ccy()],["🩳","بنطلون شورت رياضي","218","45,780 "+ccy()],["👟","حذاء رياضي","142","79,520 "+ccy()],["🎒","شنطة ظهر","66","21,120 "+ccy()]];
+  const mkts=[["محمد سمير","248","78%"],["رنا خالد","196","74%"],["عمرو زكي","164","71%"],["هبة سامي","138","76%"]];
+  return head(t("merchant")+" · "+t("mstats"),t("mstats"),lang=="ar"?"أداء منتجاتك ومبيعاتك عبر كل المسوّقين":"Your products and sales performance across all marketers")
+  +dateFilterBar()
+  +statHero("١ → ٣٠ مايو ٢٠٢٦",cName(),"1,284",t("totalOrders"),"75%","248,000 "+ccy(),t("netDue"))
+  +statTiles([
+    [t("st_pending"),"112",STC.pending],
+    [t("st_confirmed"),"186",STC.confirmed],
+    [t("st_packing"),"94",STC.packing],
+    [t("st_shipped"),"168",STC.shipped],
+    [t("st_delivered"),"968",STC.delivered,"75%"],
+    [t("st_returned"),"56",STC.returned],
+    [t("st_cancelled"),"56",STC.cancelled],
+    [t("st_partial"),"32",STC.partial]
+  ])
+  +`<div class="split2">
+    <div class="card"><div class="ch"><h3>${t("bestProducts")}</h3></div>
+      <div class="cb">${topProds.map(p=>`<div class="minirow">
+        <div class="prod"><div class="thumb">${p[0]}</div>
+          <div><div style="font-weight:700;font-size:12.5px">${p[1]}</div>
+          <div class="note">${p[2]} ${lang=="ar"?"طلب":"orders"}</div></div></div>
+        <b style="color:#0D9488">${p[3]}</b></div>`).join('')}</div></div>
+    <div class="card"><div class="ch"><h3>${t("marketerPerf")}</h3></div>
+      <div class="cb">${mkts.map(m=>`<div class="minirow">
+        <div><div style="font-weight:700;font-size:12.5px">${m[0]}</div>
+          <div class="note">${m[1]} ${lang=="ar"?"طلب":"orders"}</div></div>
+        ${tag(m[2]+"% "+t("deliveryRate"),parseFloat(m[2])>=75?"#16A34A":"#F59E0B")}</div>`).join('')}</div></div>
+  </div>`;
+};
+
+S["merchant/dashboard"]=()=>head(t("merchant")+" · "+t("dashboard"),t("dashboard"))
+ +dateFilterBar()
+ +`<div class="banner"><div><h2>${t("bannerH")}</h2><p>${t("bannerP")}</p></div>
+    <button class="btn" style="background:#fff;color:#0D9488" onclick="go('orders')">${t("orders")}</button></div>
+  <div class="grid kpis" style="margin-bottom:16px">
+   ${kpi("cart","#D8F1ED","#0D9488",t("m_orders"),"326","9%",1)}
+   ${kpi("money","#ECFDF5","#16A34A",t("m_sales"),"94,200 "+ccy(),"14%",1)}
+   ${kpi("box","#FEF3C7","#D97706",t("m_products"),"58","4",1)}
+   ${kpi("wallet","#D8F1ED","#2DC2B0",t("m_balance"),"21,640 "+ccy(),"",1)}</div>
+  <div class="split2">
+   <div class="card"><div class="ch"><h3>${t("salesTrend")}</h3><span class="note">${t("week")}</span></div>
+     <div class="cb">${bars((lang=="ar"?[["سبت",12],["أحد",18],["اثنين",15],["ثلاثاء",22],["أربعاء",19],["خميس",27],["جمعة",24]]:[["Sat",12],["Sun",18],["Mon",15],["Tue",22],["Wed",19],["Thu",27],["Fri",24]]))}</div></div>
+   <div class="card"><div class="ch"><h3>${t("topProducts")}</h3></div><div class="cb">
+     ${[["تيشيرت رياضي نص كم","142 "+ccy(),"86"],["بنطلون شورت","210 "+ccy(),"71"],["تيشيرت كاجوال","165 "+ccy(),"63"],["جاكيت خفيف","430 "+ccy(),"48"]].map(p=>`
+      <div class="minirow"><div class="prod"><div class="thumb">👕</div>
+        <div><div style="font-weight:700;font-size:12.5px">${p[0]}</div>
+        <div class="note">${p[1]}</div></div></div>
+        <b style="color:#0D9488">${p[2]} ${lang=="ar"?"طلب":"orders"}</b></div>`).join('')}
+   </div></div></div>`;
+
+S["merchant/orders"]=()=>{
+  const sts=["pending","confirmed","packing","shipped","delivered","cancelled","returned"];
+  const G = govs();
+  const PC = couriersActive()[0].name;
+  const rows=[
+    {emoji:"👕",name:"تيشيرت رياضي",sku:"SKU-TS-104",code:"M0042-00012350",date:"2026/05/31",customer:"سارة محمود",phone:"01012345678",gov:G[0],city:"مدينة نصر",street:"شارع عباس",bldg:"عمارة 12",floor:"دور 2",apt:"شقة 8",qty:1,total:240,due:185,marketer:"محمد سمير",status:"pending",cod:"pending",courier:PC,note:"—",calls:1},
+    {emoji:"🩳",name:"بنطلون شورت",sku:"SKU-SH-088",code:"M0042-00012340",date:"2026/05/30",customer:"كريم فؤاد",phone:"01198765432",gov:G[1],city:"الدقي",street:"شارع النيل",bldg:"عمارة 7",floor:"دور 5",apt:"شقة 20",qty:3,total:540,due:420,items:[{n:'بنطلون شورت',sku:'SKU-SH-088',qty:2,price:210},{n:'حزام جلد',sku:'SKU-BL-022',qty:1,price:120}],marketer:"رنا خالد",status:"confirmed",cod:"pending",courier:PC,note:"—",calls:0},
+    {emoji:"👟",name:"حذاء رياضي",sku:"SKU-SN-210",code:"M0042-00012320",date:"2026/05/28",customer:"منى عبدالله",phone:"01587654321",gov:G[2],city:"سيدي بشر",street:"شارع قابيل",bldg:"عمارة 3",floor:"دور 1",apt:"شقة 4",qty:1,total:720,due:560,marketer:"عمرو زكي",status:"shipped",cod:"pending",courier:PC,note:"—",calls:1},
+    {emoji:"🎒",name:"شنطة ظهر",sku:"SKU-BG-055",code:"M0042-00012310",date:"2026/05/27",customer:"طارق سمير",phone:"01234567890",gov:G[3],city:"المنصورة",street:"شارع الجمهورية",bldg:"عمارة 15",floor:"دور 3",apt:"شقة 9",qty:1,total:415,due:320,marketer:"هبة سامي",status:"delivered",cod:"collected",courier:PC,note:"—",calls:2},
+    {emoji:"👕",name:"تيشيرت كاجوال",sku:"SKU-TS-077",code:"M0042-00012300",date:"2026/05/25",customer:"ليلى حسن",phone:"01001122334",gov:G[4],city:"طنطا",street:"شارع البحر",bldg:"عمارة 8",floor:"دور 2",apt:"شقة 5",qty:1,total:205,due:165,marketer:"محمد سمير",status:"cancelled",cod:"returned",courier:PC,note:"العميل طلب الإلغاء",calls:3},
+    {emoji:"🩳",name:"بنطلون شورت",sku:"SKU-SH-088",code:"M0042-00012290",date:"2026/05/24",customer:"عمرو زكي",phone:"01099887766",gov:G[5],city:"أسيوط",street:"شارع الحرية",bldg:"عمارة 2",floor:"دور 4",apt:"شقة 14",qty:2,total:540,due:420,items:[{n:'بنطلون شورت',sku:'SKU-SH-088',qty:1,price:270},{n:'تيشيرت كاجوال',sku:'SKU-TS-077',qty:1,price:270}],marketer:"رنا خالد",status:"packing",cod:"pending",courier:PC,note:"—",calls:1}
+  ];
+  return head(t("merchant")+" · "+t("orders"),t("orders"),
+    lang=="ar"?"إدارة الطلبات عبر دورة حياتها الكاملة":"Manage orders across their full lifecycle",
+    `<button class="btn ghost sm">${t("export")}</button>`)
+  +orderFilterBar({marketer:true})
+  +`<div class="chips"><button class="chip on" onclick="chip(this)">${t("allStatuses")} <span class="n">326</span></button>
+    ${sts.map(s=>`<button class="chip" onclick="chip(this)">${t("st_"+s)}</button>`).join('')}</div>
+  <div class="card"><div class="cb" style="padding:0">
+    ${ordTableRich(rows,{due:true,marketer:true})}
+  </div>${pager(326)}</div>`;
+};
+
+S["merchant/products"]=()=>head(t("merchant")+" · "+t("products"),t("products"),
+  lang=="ar"?"كل منتجاتك ومخزونها وحالة اعتمادها":"All your products, stock and approval status",
+  `<button class="btn sm" onclick="go('addproduct')">+ ${t("addproduct")}</button>`)
+ +`<div class="card"><div class="cb" style="padding:0">${tbl(
+   [t("c_product"),"SKU",t("c_price"),t("c_stock"),t("apprStatus"),t("c_action")],
+   [[prod("👕","تيشيرت رياضي نص كم","SKU-TS-104"),"SKU-TS-104","185 "+ccy(),"320",apprTag("approved"),`<button class="btn ghost sm">…</button>`],
+    [prod("🩳","بنطلون شورت رياضي","SKU-SH-088"),"SKU-SH-088","210 "+ccy(),tag("12 — "+(lang=="ar"?"منخفض":"low"),"#F59E0B"),apprTag("pending"),`<button class="btn ghost sm">…</button>`],
+    [prod("👕","تيشيرت كاجوال قطن","SKU-TS-077"),"SKU-TS-077","165 "+ccy(),"190",apprTag("approved"),`<button class="btn ghost sm">…</button>`],
+    [prod("🧥","جاكيت خفيف","SKU-JK-031"),"SKU-JK-031","430 "+ccy(),"0",apprTag("rejected"),`<button class="btn sm" style="background:#FEE2E2;color:#DC2626" onclick="go('rejected')">${t("editResubmit")}</button>`],
+    [prod("👟","حذاء رياضي","SKU-SN-210"),"SKU-SN-210","560 "+ccy(),"74",apprTag("draft"),`<button class="btn ghost sm">…</button>`]])}</div></div>`;
+
+S["merchant/addproduct"]=()=>head(t("merchant")+" · "+t("addproduct"),t("addproduct"),
+  lang=="ar"?"أدخل بيانات المنتج ومتغيّراته والسعر الأساسي":"Enter product details, variants and base price",
+  `<button class="btn sm">${t("save")}</button>`)
+ +`<div class="info-banner">${svg(IC.alert)} ${t("adminReviewNote")}</div>
+  <div class="split3">
+   <div class="card"><div class="ch"><h3>${lang=="ar"?"بيانات أساسية":"Basic info"}</h3></div><div class="cb">
+     <div class="field"><label>${t("f_name")}</label><input value="${lang=="ar"?'تيشيرت رياضي نص كم':'Sport Half-Sleeve Tee'}"></div>
+     <div class="frow">
+       <div class="field"><label>${t("f_cat")}</label><select><option>${lang=="ar"?'ملابس رجالي':'Men Clothing'}</option><option>${lang=="ar"?'معدّات رياضية':'Sportswear'}</option></select></div>
+       <div class="field"><label>${t("c_store")}</label><select><option>Energy Affiliate</option></select></div>
+     </div>
+     <div class="field"><label>${t("f_desc")}</label><textarea rows="3">${lang=="ar"?'تيشيرت قطن مريح بقصّة عصرية، متوفّر بعدة ألوان ومقاسات.':'Comfortable cotton tee with a modern fit, available in several colors and sizes.'}</textarea></div>
+     <div class="frow">
+       <div class="field"><label>${t("f_price")} (${ccy()})</label><input value="142"></div>
+       <div class="field"><label>${t("f_cost")} (${ccy()})</label><input value="78"></div>
+     </div>
+     <div class="field"><label>${t("basePrice")} (${ccy()})</label><input value="185">
+       <div class="note" style="margin-top:5px">${t("basePriceNote")}</div></div>
+   </div></div>
+   <div>
+     <div class="card" style="margin-bottom:16px"><div class="ch"><h3>${t("f_images")}</h3></div>
+       <div class="cb"><div class="dropz">⬆️<br>${t("dropmsg")}</div></div></div>
+     <div class="card"><div class="ch"><h3>${lang=="ar"?'الحالة':'Status'}</h3></div><div class="cb">
+       <div class="field"><label>${lang=="ar"?'حالة النشر':'Publish status'}</label>
+         <select><option>${t("active")}</option><option>${lang=="ar"?'مسوّدة':'Draft'}</option></select></div>
+       <label style="display:flex;gap:8px;font-size:12.5px;font-weight:600">
+         <input type="checkbox" checked style="width:auto"> ${lang=="ar"?'إتاحته في سوق المسوّقين':'List in marketer marketplace'}</label>
+     </div></div>
+   </div></div>
+   <div class="card" style="margin-top:16px"><div class="ch"><h3>${t("f_variants")}</h3>
+     <button class="btn ghost sm">+ ${t("addvar")}</button></div>
+     <div class="cb" style="padding:0">${tbl([t("f_color"),t("f_size"),t("f_price"),t("f_qty"),"SKU"],
+       [[lang=="ar"?'أسود':'Black',"M","142","120","TS-104-BM"],
+        [lang=="ar"?'أسود':'Black',"L","142","96","TS-104-BL"],
+        [lang=="ar"?'أبيض':'White',"M","142","64","TS-104-WM"],
+        [lang=="ar"?'كحلي':'Navy',"L","152","40","TS-104-NL"]])}</div></div>`;
+
+S["marketer/dashboard"]=()=>head(t("marketer")+" · "+t("dashboard"),t("dashboard"),
+  lang=="ar"?"أرباحك وأداء متجرك ومنتجاتك المستوردة":"Your earnings and your store's imported products performance")
+ +dateFilterBar()
+ +`<div class="grid kpis" style="margin-bottom:16px">
+   ${kpi("wallet","#ECFDF5","#16A34A",t("k_earn"),"4,820 "+ccy(),"",1)}
+   ${kpi("money","#FEF3C7","#D97706",t("k_pending"),"1,260 "+ccy(),"",1)}
+   ${kpi("money","#D8F1ED","#0D9488",t("k_paid"),"38,400 "+ccy(),"22%",1)}
+   ${kpi("link","#D8F1ED","#2DC2B0",t("k_conv"),"6.4%","0.8%",1)}</div>
+  <div class="split2">
+   <div class="card"><div class="ch"><h3>${t("salesTrend")}</h3><span class="note">${t("week")}</span></div>
+     <div class="cb">${bars((lang=="ar"?[["سبت",4],["أحد",7],["اثنين",6],["ثلاثاء",9],["أربعاء",8],["خميس",12],["جمعة",10]]:[["Sat",4],["Sun",7],["Mon",6],["Tue",9],["Wed",8],["Thu",12],["Fri",10]]))}</div></div>
+   <div class="card"><div class="ch"><h3>${t("topProducts")}</h3></div><div class="cb">
+     ${[["تيشيرت رياضي نص كم","60 "+ccy(),"28"],["بنطلون شورت رياضي","85 "+ccy(),"19"],["حذاء رياضي","190 "+ccy(),"11"]].map(p=>`
+      <div class="minirow"><div class="prod"><div class="thumb">🛍️</div>
+        <div><div style="font-weight:700;font-size:12.5px">${p[0]}</div>
+        <div class="note">${t("yourProfit")}: ${p[1]}</div></div></div>
+        <b style="color:#16A34A">${p[2]} ${lang=="ar"?"طلب":"orders"}</b></div>`).join('')}
+   </div></div></div>`;
+
+S["marketer/marketplace"]=()=>{
+  const ps=[["👕","تيشيرت رياضي نص كم","SKU-TS-104",185],["🩳","بنطلون شورت رياضي","SKU-SH-088",210],
+   ["👟","حذاء رياضي","SKU-SN-210",560],["🧥","جاكيت خفيف","SKU-JK-031",430],
+   ["👕","تيشيرت كاجوال قطن","SKU-TS-077",165],["🎒","شنطة ظهر","SKU-BG-055",320]];
+  return head(t("marketer")+" · "+t("marketplace"),t("marketplace"),lang=="ar"?"اختر منتجات واستوردها لمتجرك بسعر بيعك الخاص":"Pick products and import to your store with your own sell price")
+  +`<div class="chips">
+     <button class="chip on" onclick="chip(this)">${t("allStatuses")}</button>
+     <button class="chip" onclick="chip(this)">${lang=="ar"?'ملابس':'Clothing'}</button>
+     <button class="chip" onclick="chip(this)">${lang=="ar"?'أحذية':'Shoes'}</button>
+     <button class="chip" onclick="chip(this)">${lang=="ar"?'الأعلى ربحًا':'Top profit'}</button></div>
+   <div class="pgrid">${ps.map(p=>{
+     const defSell=Math.round(p[3]*1.3);
+     const defProfit=defSell-p[3];
+     return `<div class="pcard">
+       <div class="img">${p[0]}</div><div class="body">
+         <div style="font-weight:700;font-size:13px;margin-bottom:4px">${p[1]}</div>
+         <div class="note" style="margin-bottom:8px">${p[2]}</div>
+         <div style="font-size:12px;color:var(--muted);margin-bottom:3px">${t("basePrice")}: <b style="color:var(--ink)">${p[3]} ${ccy()}</b></div>
+         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+           <div><div style="font-size:11px;color:var(--muted);font-weight:700;margin-bottom:3px">${t("yourSellPrice")}</div>
+             <input type="number" value="${defSell}" min="${p[3]}" style="width:100%;padding:6px 9px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-weight:700"></div>
+           <div><div style="font-size:11px;color:var(--muted);font-weight:700;margin-bottom:3px">${t("yourProfit")}</div>
+             <div style="padding:6px 9px;border-radius:8px;background:var(--soft);color:#0D9488;font-weight:800;font-size:13px">${defProfit} ${ccy()}</div></div>
+         </div>
+         <button class="btn sm" style="width:100%;justify-content:center">${t("importToStore")}</button>
+       </div></div>`;}).join('')}</div>`;
+};
+
+S["marketer/orders"]=()=>{
+  const sts=["pending","confirmed","packing","shipped","delivered","cancelled","returned"];
+  const G = govs();
+  const PC = couriersActive()[0].name;
+  const rows=[
+    {emoji:"👕",name:"تيشيرت رياضي",sku:"SKU-TS-104",code:"M0042-00012350",date:"2026/05/31",customer:"سارة محمود",phone:"01012345678",gov:G[0],city:"مدينة نصر",street:"شارع عباس",bldg:"عمارة 12",floor:"دور 2",apt:"شقة 8",qty:1,total:240,profit:55,status:"pending",cod:"pending",courier:PC,note:"يرجى التغليف بعناية",calls:1},
+    {emoji:"🩳",name:"بنطلون شورت",sku:"SKU-SH-088",code:"M0042-00012340",date:"2026/05/30",customer:"كريم فؤاد",phone:"01198765432",gov:G[1],city:"الدقي",street:"شارع النيل",bldg:"عمارة 7",floor:"دور 5",apt:"شقة 20",qty:3,total:540,profit:120,items:[{n:'بنطلون شورت',sku:'SKU-SH-088',qty:2,price:210},{n:'حزام جلد',sku:'SKU-BL-022',qty:1,price:120}],status:"confirmed",cod:"pending",courier:PC,note:"—",calls:2},
+    {emoji:"👟",name:"حذاء رياضي",sku:"SKU-SN-210",code:"M0042-00012320",date:"2026/05/28",customer:"منى عبدالله",phone:"01587654321",gov:G[2],city:"سيدي بشر",street:"شارع قابيل",bldg:"عمارة 3",floor:"دور 1",apt:"شقة 4",qty:1,total:720,profit:160,status:"shipped",cod:"pending",courier:PC,note:"—",calls:1},
+    {emoji:"🎒",name:"شنطة ظهر",sku:"SKU-BG-055",code:"M0042-00012310",date:"2026/05/27",customer:"طارق سمير",phone:"01234567890",gov:G[3],city:"المنصورة",street:"شارع الجمهورية",bldg:"عمارة 15",floor:"دور 3",apt:"شقة 9",qty:1,total:415,profit:95,status:"delivered",cod:"collected",courier:PC,note:"—",calls:3},
+    {emoji:"👕",name:"تيشيرت كاجوال",sku:"SKU-TS-077",code:"M0042-00012300",date:"2026/05/25",customer:"ليلى حسن",phone:"01001122334",gov:G[4],city:"طنطا",street:"شارع البحر",bldg:"عمارة 8",floor:"دور 2",apt:"شقة 5",qty:1,total:205,profit:40,status:"cancelled",cod:"returned",courier:PC,note:"العميل طلب الإلغاء",calls:4},
+    {emoji:"🩳",name:"بنطلون شورت",sku:"SKU-SH-088",code:"M0042-00012290",date:"2026/05/24",customer:"عمرو زكي",phone:"01099887766",gov:G[5],city:"أسيوط",street:"شارع الحرية",bldg:"عمارة 2",floor:"دور 4",apt:"شقة 14",qty:2,total:540,profit:120,items:[{n:'بنطلون شورت',sku:'SKU-SH-088',qty:1,price:270},{n:'تيشيرت كاجوال',sku:'SKU-TS-077',qty:1,price:270}],status:"returned",cod:"returned",courier:PC,note:"المنتج لا يناسب",calls:2}
+  ];
+  return head(t("marketer")+" · "+t("orders"),t("orders"),lang=="ar"?"كل طلباتك — فلتر موحّد بالحالات وإجراءات حسب حالة كل طلب":"All your orders — unified status filter with conditional actions")
+  +orderFilterBar({})
+  +`<div class="chips"><button class="chip on" onclick="chip(this)">${t("allStatuses")} <span class="n">38</span></button>
+    ${sts.map(s=>`<button class="chip" onclick="chip(this)">${t("st_"+s)}</button>`).join('')}</div>
+  <div class="card"><div class="cb" style="padding:0">
+    ${ordTableRich(rows,{profit:true})}
+  </div>${pager(38)}</div>`;
+};
+
+S["marketer/stats"]=()=>{
+  const wkData=lang=="ar"
+    ?[["أ1",68],["أ2",74],["أ3",82],["أ4",91],["أ5",88],["أ6",102],["أ7",115],["أ8",126]]
+    :[["W1",68],["W2",74],["W3",82],["W4",91],["W5",88],["W6",102],["W7",115],["W8",126]];
+  const G = govs(), D = COUNTRIES[country].govData, R = COUNTRIES[country].govRates;
+  const maxGov = Math.max(...D);
+  const govArr = G.map((n,i)=>[n, D[i], R[i]]);
+  return head(t("marketer")+" · "+t("stats"),t("stats"),lang=="ar"?"أداء منتجاتك التي بِعتها في دولتك خلال الفترة":"Your sold products performance in your country for the period")
+  +dateFilterBar()
+  +statHero("١ → ٣٠ مايو ٢٠٢٦",cName(),"746",t("totalOrders"),"76%","13,900 "+ccy(),t("netProfit"))
+  +statTiles([
+    [t("st_review"),"42",STC.review],
+    [t("st_confirmed"),"96",STC.confirmed],
+    [t("st_packing"),"64",STC.packing],
+    [t("st_shipped"),"88",STC.shipped],
+    [t("st_waiting"),"74",STC.waiting],
+    [t("st_delivered"),"570",STC.delivered,"76%"],
+    [t("st_returned"),"34",STC.returned],
+    [t("st_cancelled"),"24",STC.cancelled]
+  ])
+  +`<div class="split2" style="margin-bottom:16px">
+    <div class="card"><div class="ch"><h3>${lang=="ar"?"توزيع الحالات":"Status Distribution"}</h3></div>
+      <div class="cb">${donut([[t("st_delivered"),"#16A34A",76],[t("st_shipped"),"#0891B2",16],[t("st_returned"),"#B91C1C",5],[t("st_cancelled"),"#DC2626",3]])}</div></div>
+    <div class="card"><div class="ch"><h3>${lang=="ar"?"الطلبات — آخر 8 أسابيع":"Orders — last 8 weeks"}</h3></div>
+      <div class="cb">${bars(wkData)}</div></div>
+  </div>
+  <div class="card" style="margin-bottom:16px"><div class="ch"><h3>${t("byGov")}</h3></div>
+    <div class="cb">${govArr.map(g=>{
+      const rate=g[2];const rateColor=rate>=80?"#16A34A":rate>=70?"#F59E0B":"#DC2626";
+      return `<div class="gov-row"><div class="gov-name">${g[0]}</div>
+        <div class="gov-bar-wrap"><div class="gov-bar-fill" style="width:${Math.round(g[1]/maxGov*100)}%"></div></div>
+        <div class="gov-count">${g[1]}</div>
+        <span class="tag" style="color:${rateColor};background:${rateColor}1a;margin-inline-start:8px">${g[2]}%</span></div>`;}).join('')}
+    </div></div>
+  <div class="card"><div class="ch"><h3>${t("soldProducts")}</h3></div>
+    <div class="cb" style="padding:0">${tbl(
+      [t('c_product'),'SKU',t('f_cat'),t('totalOrders'),
+       t('st_review'),t('st_confirmed'),t('st_packing'),t('st_shipped'),
+       lang=='ar'?'قيد التوصيل':'Out for Delivery',t('st_delivered'),
+       t('st_returned'),t('st_cancelled'),
+       t('deliveryRate'),lang=='ar'?'معدل الإلغاء':'Cancellation Rate',
+       lang=='ar'?'معدل الإرجاع':'Return Rate',
+       t('basePrice'),t('avgSellPrice'),t('totalSales'),
+       lang=='ar'?'متوسط الربح/طلب':'Avg Profit/Order',t('totalProfit'),
+       lang=='ar'?'آخر طلب':'Last Order'],
+      [[prod("👕","تيشيرت رياضي نص كم","SKU-TS-104"),"SKU-TS-104",lang=="ar"?"ملابس":"Clothing","320","14","28","22","36","28","248","30","14",rateTag(77),rateTag(4,true),rateTag(9,true),"185 "+ccy(),"238 "+ccy(),"76,160 "+ccy(),"42 "+ccy(),`<b style="color:#0D9488">13,376 ${ccy()}</b>`,"2026/05/30"],
+       [prod("🩳","بنطلون شورت","SKU-SH-088"),"SKU-SH-088",lang=="ar"?"ملابس":"Clothing","218","9","18","14","28","22","164","26","11",rateTag(75),rateTag(5,true),rateTag(12,true),"210 "+ccy(),"272 "+ccy(),"59,296 "+ccy(),"47 "+ccy(),`<b style="color:#0D9488">10,168 ${ccy()}</b>`,"2026/05/29"],
+       [prod("👟","حذاء رياضي","SKU-SN-210"),"SKU-SN-210",lang=="ar"?"أحذية":"Shoes","142","6","14","10","18","14","112","12","9",rateTag(79),rateTag(6,true),rateTag(8,true),"560 "+ccy(),"726 "+ccy(),"103,092 "+ccy(),"131 "+ccy(),`<b style="color:#0D9488">18,592 ${ccy()}</b>`,"2026/05/28"],
+       [prod("🎒","شنطة ظهر","SKU-BG-055"),"SKU-BG-055",lang=="ar"?"إكسسوارات":"Accessories","66","4","8","5","7","6","46","14","6",rateTag(70),rateTag(9,true),rateTag(21,true),"320 "+ccy(),"416 "+ccy(),"27,456 "+ccy(),"67 "+ccy(),`<b style="color:#0D9488">4,416 ${ccy()}</b>`,"2026/05/27"]]
+    )}</div>${pager(4)}</div>`;
+};
+
+S["marketer/failed"]=()=>{
+  const cards=[
+    {code:"INVALID_PHONE",order:"M0042-00012388",src:"متجر Energy Affiliate",attempts:lang=="ar"?"محاولة يدوية — لم تُصحَّح بعد":"Manual — not fixed yet",auto:false},
+    {code:"OUT_OF_STOCK",order:"M0042-00012371",src:"متجر Energy Affiliate",attempts:lang=="ar"?"تلقائي — في انتظار إعادة التوفّر":"Auto — awaiting restock",auto:true},
+    {code:"STORE_CLOSED",order:"M0042-00012365",src:"متجر Energy Affiliate",attempts:lang=="ar"?"تلقائي — ستُرسَل الدفعة عند الفتح":"Auto — batch on open",auto:true},
+    {code:"PRICE_BELOW_BASE",order:"M0042-00012359",src:"متجر Energy Affiliate",attempts:lang=="ar"?"يدوي — يحتاج تعديل سعر البيع":"Manual — sell price update needed",auto:false},
+    {code:"INTEGRATION_TIMEOUT",order:"M0042-00012341",src:"متجر Energy Affiliate",attempts:lang=="ar"?"تلقائي — المحاولة 3 من 5":"Auto — attempt 3/5",auto:true},
+    {code:"INTEGRATION_SCHEMA",order:"M0042-00012330",src:"متجر Energy Affiliate",attempts:lang=="ar"?"يدوي — حقل 'city' مفقود":"Manual — field 'city' missing",auto:false}
+  ];
+  const causes=["INVALID_PHONE","OUT_OF_STOCK","STORE_CLOSED","PRICE_BELOW_BASE","INTEGRATION_TIMEOUT","INTEGRATION_SCHEMA"];
+  return head(t("marketer")+" · "+t("failed"),t("failed"),lang=="ar"?"كل طلب فاشل له سبب واضح وزرّ إصلاح؛ بعض الأسباب تُعاد محاولتها تلقائيًا":"Every failed order has a clear reason and a fix button; some causes retry automatically")
+  +`<div class="chips"><button class="chip on" onclick="chip(this)">${t("allCauses")}</button>
+    ${causes.map(c=>`<button class="chip" onclick="chip(this)">${c.replace('_',' ')}</button>`).join('')}</div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    ${cards.map(d=>failCard(d)).join('')}
+  </div>`;
+};
+
+S["marketer/mystore"]=()=>head(t("marketer")+" · "+t("mystore"),t("mystore"),
+  lang=="ar"?"متجرك الخاص — المنتجات المستوردة وأسعار بيعك وأرباحك":"Your store — imported products, your sell prices and profits")
+ +`<div class="card" style="margin-bottom:16px"><div class="ch"><h3>${lang=="ar"?'هوية المتجر':'Store Identity'}</h3></div><div class="cb">
+   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px">
+     <div><div class="note">${lang=="ar"?'اسم المتجر':'Store Name'}</div><b>Energy Affiliate</b></div>
+     <div><div class="note">${t("country")}</div><b>${cName()}</b></div>
+     <div><div class="note">${lang=="ar"?'المُعرّف':'Handle'}</div><b style="font-family:monospace">energy-aff</b></div>
+     <div><div class="note">${lang=="ar"?'الحالة':'Status'}</div>${tag(t("active"),"#16A34A")}</div>
+     <div><div class="note">${lang=="ar"?'المنتجات':'Products'}</div><b>4</b></div>
+     <div><div class="note">${lang=="ar"?'طلبات هذا الشهر':'Orders this month'}</div><b>38</b></div>
+   </div>
+ </div></div>
+ <div class="card"><div class="ch"><h3>${t("myImportedProducts")}</h3></div>
+ <div class="cb" style="padding:0">${tbl(
+   [t("c_product"),t("basePrice"),t("defaultSellPrice"),t("yourProfit"),t("soldCount"),t("c_action")],
+   [[prod("👕","تيشيرت رياضي نص كم","SKU-TS-104"),"185 "+ccy(),"240 "+ccy(),"55 "+ccy(),"18",`<button class="btn ghost sm">${lang=="ar"?'تعديل السعر':'Edit Price'}</button>`],
+    [prod("🩳","بنطلون شورت رياضي","SKU-SH-088"),"210 "+ccy(),"270 "+ccy(),"60 "+ccy(),"12",`<button class="btn ghost sm">${lang=="ar"?'تعديل السعر':'Edit Price'}</button>`],
+    [prod("👟","حذاء رياضي","SKU-SN-210"),"560 "+ccy(),"720 "+ccy(),"160 "+ccy(),"5",`<button class="btn ghost sm">${lang=="ar"?'تعديل السعر':'Edit Price'}</button>`],
+    [prod("🎒","شنطة ظهر","SKU-BG-055"),"320 "+ccy(),"415 "+ccy(),"95 "+ccy(),"3",`<button class="btn ghost sm">${lang=="ar"?'تعديل السعر':'Edit Price'}</button>`]])
+ }</div></div>
+ ${pager(4)}`;
+
+S["marketer/settings"]=()=>{
+  const payMethods=country==='EG'
+    ?[lang=='ar'?'إنستا باي':'InstaPay',lang=='ar'?'فودافون كاش':'Vodafone Cash',lang=='ar'?'تحويل بنكي':'Bank Transfer']
+    :[lang=='ar'?'STC Pay':'STC Pay',lang=='ar'?'تحويل بنكي':'Bank Transfer'];
+  const minW=country==='EG'?500:200;
+  const ibanPfx=country==='EG'?'EG':'SA';
+  const cs=couriers();
+  return head(t('marketer')+' · '+t('settings'),t('settings'),'',
+    `<button class="btn sm">${t('saveChanges')}</button>`)
+  +`<div class="info-banner">${svg(IC.alert)} ${lang=='ar'?'الإعدادات سارية على دولة '+cName()+' فقط — بدّل الدولة من شريط الأعلى للتعديل على الأخرى':'Settings apply to '+cName()+' only — switch country from the top bar to edit the other.'}</div>
+  <div class="tabs">
+    <button class="on" onclick="setTab('s_store',this)">${t('storeInfo')}</button>
+    <button onclick="setTab('s_payout',this)">${t('payoutInfo')}</button>
+    <button onclick="setTab('s_ship',this)">${t('shippingSet')}</button>
+    <button onclick="setTab('s_intg',this)">${t('integrations')}</button>
+    <button onclick="setTab('s_id',this)">${t('identity')}</button>
+  </div>
+  <div id="tab-s_store" class="tabpane on">
+    <div class="card"><div class="cb">
+      <div class="frow">
+        <div class="field"><label>${lang=='ar'?'اسم المتجر':'Store Name'}</label><input value="Energy Affiliate"></div>
+        <div class="field"><label>${lang=='ar'?'المُعرّف':'Handle'}</label><input value="energy-aff"></div>
+      </div>
+      <div class="frow">
+        <div class="field"><label>${t('country')}</label><input value="${cName()}" disabled></div>
+        <div class="field"><label>${lang=='ar'?'العملة':'Currency'}</label><input value="${ccy()}" disabled></div>
+      </div>
+      <div class="field"><label>URL</label><input value="https://soyoula.com/s/energy-aff"></div>
+      <div class="field"><label>${lang=='ar'?'نبذة':'Bio'}</label><textarea rows="3">${lang=='ar'?'متجر ملابس رياضية بأسعار مناسبة.':'Sportswear at great prices.'}</textarea></div>
+      <button class="btn sm">${t('saveChanges')}</button>
+    </div></div>
+  </div>
+  <div id="tab-s_payout" class="tabpane">
+    <div class="card"><div class="cb">
+      <div class="frow">
+        <div class="field"><label>${lang=='ar'?'طريقة الدفع':'Payment Method'}</label>
+          <select>${payMethods.map(m=>`<option>${m}</option>`).join('')}</select></div>
+        <div class="field"><label>${lang=='ar'?'دورة الصرف':'Payout Cycle'}</label>
+          <select><option>${lang=='ar'?'أسبوعي':'Weekly'}</option><option>${lang=='ar'?'نصف شهري':'Bi-weekly'}</option><option>${lang=='ar'?'شهري':'Monthly'}</option></select></div>
+      </div>
+      <div class="frow">
+        <div class="field"><label>${lang=='ar'?'اسم الحساب':'Account Name'}</label><input value="${lang=='ar'?'محمد سمير':'Mohamed Samir'}"></div>
+        <div class="field"><label>IBAN</label><input value="${ibanPfx}000123456789012345" placeholder="${ibanPfx}..."></div>
+      </div>
+      <div class="field"><label>${lang=='ar'?'الحدّ الأدنى للسحب':'Min. Withdrawal'} (${ccy()})</label><input type="number" value="${minW}"></div>
+      <button class="btn sm">${t('saveChanges')}</button>
+    </div></div>
+  </div>
+  <div id="tab-s_ship" class="tabpane">
+    <div class="info-banner">${svg(IC.alert)} ${t('marketerShipNote')}</div>
+    <div class="card"><div class="ch"><h3>${lang=='ar'?'شركات الشحن النشطة في':'Active couriers in'} ${cName()}</h3>
+      <span class="note">${lang=='ar'?'تُدار من المنصّة':'Managed by platform'}</span></div>
+      <div class="cb" style="padding:0">${tbl(
+        [lang=='ar'?'الشركة':'Courier', lang=='ar'?'متوسط الرسوم':'Avg Fee', t('courierStatus')],
+        couriersActive().map(c=>[
+          `<b>${c.name}</b>`,
+          c.fee+' '+ccy(),
+          tag(t('activeCourier'),'#16A34A')
+        ])
+      )}</div></div>
+    <div class="card" style="margin-top:14px"><div class="cb">
+      <div class="field"><label>${lang=='ar'?'شركتي الافتراضية':'My Default Courier'}</label>
+        <select>${couriersActive().map(c=>`<option>${c.name} — ${c.fee} ${ccy()}</option>`).join('')}</select>
+        <div class="note" style="margin-top:5px">${lang=='ar'?'تختار من الشركات التي فعّلتها الإدارة فقط':'You can only pick from couriers activated by admin'}</div></div>
+      <div class="field"><label>${lang=='ar'?'من يتحمّل تكلفة الشحن':'Who pays shipping?'}</label>
+        <select><option>${lang=='ar'?'العميل':'Customer'}</option><option>${lang=='ar'?'المسوّق':'Marketer'}</option><option>${lang=='ar'?'مشترك':'Split'}</option></select></div>
+      <button class="btn">${t('saveChanges')}</button>
+    </div></div>
+  </div>
+  <div id="tab-s_intg" class="tabpane">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      ${INTEGRATIONS[country].map(int=>`
+        <div class="card"><div class="cb" style="display:flex;align-items:center;gap:14px">
+          <div style="width:46px;height:46px;border-radius:12px;background:${int.color}22;display:grid;place-items:center;font-weight:800;font-size:20px;color:${int.color};flex-shrink:0">${int.icon}</div>
+          <div style="flex:1"><div style="font-weight:800;font-size:14px">${int.name}</div>
+            <div class="note">${int.status==='connected'?(lang=='ar'?'متصل':'Connected'):(lang=='ar'?'متاح':'Available')}</div></div>
+          <button class="btn sm" ${int.status==='connected'?'style="background:var(--soft);color:var(--brand)"':''}>${int.status==='connected'?t('manage'):t('connect')}</button>
+        </div></div>`).join('')}
+    </div>
+  </div>
+  <div id="tab-s_id" class="tabpane">
+    <div class="card"><div class="cb">
+      <div class="frow">
+        <div class="field"><label>${lang=='ar'?'الاسم الكامل':'Full Name'}</label><input value="${lang=='ar'?'محمد سمير عبدالله':'Mohamed Samir Abdullah'}"></div>
+        <div class="field"><label>${lang=='ar'?'رقم الهوية':'ID Number'} (${country==='EG'?'14':'10'} ${lang=='ar'?'رقم':'digits'})</label>
+          <input value="${country==='EG'?'29901011234567':'1234567890'}" maxlength="${country==='EG'?14:10}"></div>
+      </div>
+      <div class="frow">
+        <div class="field"><label>${lang=='ar'?'صورة الهوية (أمامية)':'ID Front'}</label><div class="dropz">⬆️<br>${lang=='ar'?'اسحب أو اضغط للرفع':'Drag or click to upload'}</div></div>
+        <div class="field"><label>${lang=='ar'?'صورة الهوية (خلفية)':'ID Back'}</label><div class="dropz">⬆️<br>${lang=='ar'?'اسحب أو اضغط للرفع':'Drag or click to upload'}</div></div>
+      </div>
+      <div class="field"><label>${lang=='ar'?'صورة سيلفي':'Selfie'}</label><div class="dropz">📷<br>${lang=='ar'?'صورة سيلفي ممسكًا بالهوية':'Selfie holding your ID'}</div></div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;padding:10px 14px;background:#ECFDF5;border-radius:9px">
+        ${svg(IC.check)} <b style="color:#16A34A">${t('verified')}</b>
+      </div>
+      <button class="btn sm">${t('saveChanges')}</button>
+    </div></div>
+  </div>`;
+};
+
+S["marketer/addorder"]=()=>{
+  const products=[
+    {id:'ts104',name:lang=='ar'?'تيشيرت رياضي نص كم':'Sport Half-Sleeve Tee',base:185},
+    {id:'sh088',name:lang=='ar'?'بنطلون شورت رياضي':'Sport Shorts',base:210},
+    {id:'sn210',name:lang=='ar'?'حذاء رياضي':'Sport Shoe',base:560}
+  ];
+  const G=govs();
+  const cs=couriers();
+  const ph=country==='EG'?'01xxxxxxxxx':'05xxxxxxxx';
+  const defSell=240;const defShip=cs[0].fee;
+  return head(t('marketer')+' · '+t('addorder'),t('addorder'),'',
+    `<button class="btn ok">${t('submitOrder')}</button>`)
+  +`<div class="split3">
+    <div class="card"><div class="ch"><h3>${t('customerInfo')}</h3></div><div class="cb">
+      <div class="field"><label>${lang=='ar'?'الاسم الكامل':'Full Name'}</label><input placeholder="${lang=='ar'?'اسم العميل':'Customer Name'}"></div>
+      <div class="field"><label>${lang=='ar'?'رقم الهاتف':'Phone'}</label><input type="tel" placeholder="${ph}"></div>
+      <div class="frow">
+        <div class="field"><label>${lang=='ar'?'المحافظة':'Governorate'}</label>
+          <select><option value="">${lang=='ar'?'اختر…':'Select…'}</option>${G.map(g=>`<option>${g}</option>`).join('')}</select></div>
+        <div class="field"><label>${lang=='ar'?'المدينة':'City'}</label><input placeholder="${lang=='ar'?'المدينة أو الحي':'City / District'}"></div>
+      </div>
+      <div class="field"><label>${lang=='ar'?'العنوان التفصيلي':'Detailed Address'}</label><textarea rows="2" placeholder="${lang=='ar'?'شارع، عمارة، دور، شقة':'Street, building, floor, apt'}"></textarea></div>
+      <div class="field"><label>${t('clientNote')}</label><textarea rows="2" placeholder="${lang=='ar'?'ملاحظة خاصة…':'Customer note…'}"></textarea></div>
+    </div></div>
+    <div>
+      <div class="card" style="margin-bottom:14px"><div class="ch"><h3>${lang=='ar'?'المنتجات':'Products'}</h3>
+        <button class="btn ghost sm">${t('addItem')}</button></div><div class="cb">
+        <div class="frow" style="align-items:end">
+          <div class="field" style="margin-bottom:0"><label>${lang=='ar'?'المنتج':'Product'}</label>
+            <select>${products.map(p=>`<option value="${p.id}">${p.name} — ${p.base} ${ccy()}</option>`).join('')}</select></div>
+          <div class="field" style="margin-bottom:0"><label>${t('qty')}</label><input type="number" value="1" min="1"></div>
+        </div>
+        <div class="field" style="margin-top:10px"><label>${t('yourSellPrice')} (${ccy()})</label><input type="number" value="${defSell}" min="${products[0].base}"></div>
+        <div class="minirow"><span class="note">${t('basePrice')}</span><b>${products[0].base} ${ccy()}</b></div>
+        <div class="minirow"><span style="color:#0D9488;font-weight:700">${t('yourProfit')}</span><b style="color:#0D9488">${defSell-products[0].base} ${ccy()}</b></div>
+      </div></div>
+      <div class="card"><div class="ch"><h3>${t('shipPay')}</h3></div><div class="cb">
+        <div class="field"><label>${lang=='ar'?'شركة الشحن':'Courier'}</label>
+          <select>${couriersActive().map(c=>`<option>${c.name} — ${c.fee} ${ccy()}</option>`).join('')}</select></div>
+        <div class="field"><label>${lang=='ar'?'طريقة الدفع':'Payment'}</label>
+          <select><option>${t('codLabel')}</option></select></div>
+        <div class="minirow"><span class="note">${lang=='ar'?'إجمالي الطلب':'Order Total'}</span><b>${defSell} ${ccy()}</b></div>
+        <div class="minirow"><span class="note">${lang=='ar'?'رسوم الشحن':'Shipping Fee'}</span><b>${defShip} ${ccy()}</b></div>
+        <div class="minirow"><span style="color:#0D9488;font-weight:800">${t('amountToCollect')}</span><b style="color:#0D9488;font-size:16px">${defSell+defShip} ${ccy()}</b></div>
+      </div></div>
+    </div>
+  </div>`;
+};
+
+S["marketer/wallet"]=()=>head(t("marketer")+" · "+t("wallet"),t("wallet"),
+  lang=="ar"?"رصيدك وحركاتك المالية وطلبات السحب":"Your balance, transactions and payout requests")
+ +`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px">
+   <div class="banner" style="margin:0;flex-direction:column;align-items:flex-start;gap:5px;padding:18px 20px">
+     <p style="color:#93DDD2;font-size:12px">${t("availableBalance")}</p>
+     <h2 style="font-size:28px">4,820 <span style="font-size:16px">${ccy()}</span></h2>
+     <button class="btn" style="background:#fff;color:#0D9488;margin-top:6px;font-size:12px;padding:7px 14px">${t("withdraw")}</button></div>
+   <div class="kpi"><div class="top"><div class="ico" style="background:#FEF3C7;color:#D97706">${svg(IC.money)}</div></div>
+     <div class="lbl">${t("pendingBalance")}</div><div class="val">1,260 <small style="font-size:14px">${ccy()}</small></div></div>
+   <div class="kpi"><div class="top"><div class="ico" style="background:#ECFDF5;color:#16A34A">${svg(IC.money)}</div></div>
+     <div class="lbl">${t("totalEarnings")}</div><div class="val">38,400 <small style="font-size:14px">${ccy()}</small></div></div>
+ </div>
+ <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:11px 16px;margin-bottom:16px;font-size:12.5px;color:#1E40AF;font-weight:600">
+   ${t("walletNote")}</div>
+ <div class="tabs">
+   <button class="on" onclick="setTab('txns',this)">${t('txns')}</button>
+   <button onclick="setTab('earn',this)">${lang=='ar'?'إحصائيات الأرباح':'Earnings Stats'}</button>
+ </div>
+ <div id="tab-txns" class="tabpane on">
+   <div class="card"><div class="cb" style="padding:0">${tbl(
+     [t("c_product"),t("orderCode"),t("deliveryDate"),lang=="ar"?'ربحك':'Profit',t("availableOn"),t("c_status")],
+     [[prod("👕","تيشيرت رياضي",""),"M0042-00012345","2026/05/19","+ 55 "+ccy(),"2026/05/26",tag(t("availableStatus"),"#16A34A")],
+      [prod("🩳","بنطلون شورت",""),"M0042-00012312","2026/05/17","+ 60 "+ccy(),"2026/05/24",tag(t("pendingStatus"),"#F59E0B")],
+      [prod("👟","حذاء رياضي",""),"M0042-00012290","2026/05/15","+ 160 "+ccy(),"—",tag(t("returnedStatus"),"#DC2626")],
+      [prod("🎒","شنطة ظهر",""),"M0042-00012280","2026/05/14","+ 95 "+ccy(),"2026/05/21",tag(t("pendingStatus"),"#F59E0B")],
+      [prod("👕","تيشيرت كاجوال",""),"M0042-00012270","2026/05/13","+ 40 "+ccy(),"2026/05/20",tag(t("availableStatus"),"#16A34A")]])
+   }</div></div>
+   ${pager(38)}
+ </div>
+ <div id="tab-earn" class="tabpane">
+   ${dateFilterBar()}
+   ${statTiles([
+     [lang=='ar'?'أرباح هذا الشهر':'This Month','5,840 '+ccy(),'#0D9488',lang=='ar'?'+22% عن السابق':'+22% vs last'],
+     [lang=='ar'?'الشهر السابق':'Last Month','4,790 '+ccy(),'#475569'],
+     [lang=='ar'?'متوسط الربح/طلب':'Avg/Order','47 '+ccy(),'#16A34A'],
+     [lang=='ar'?'أفضل منتج':'Top Product','18,592 '+ccy(),'#D97706',lang=='ar'?'حذاء رياضي':'Sport Shoe']
+   ])}
+   <div class="split2" style="margin-bottom:16px">
+     <div class="card"><div class="ch"><h3>${lang=='ar'?'أرباح آخر 6 أشهر':'Earnings — last 6 months'}</h3></div>
+       <div class="cb">${bars(lang=='ar'?[['ديسمبر',2100],['يناير',2800],['فبراير',3400],['مارس',4200],['أبريل',4790],['مايو',5840]]:[['Dec',2100],['Jan',2800],['Feb',3400],['Mar',4200],['Apr',4790],['May',5840]])}</div></div>
+     <div class="card"><div class="ch"><h3>${lang=='ar'?'توزيع الأرباح حسب الحالة':'Earnings by Status'}</h3></div>
+       <div class="cb">${donut([[t('availableStatus'),'#16A34A',68],[t('pendingStatus'),'#F59E0B',24],[t('returnedStatus'),'#DC2626',8]])}</div></div>
+   </div>
+   <div class="card"><div class="ch"><h3>${lang=='ar'?'أفضل المنتجات في الأرباح':'Top Products by Earnings'}</h3></div>
+     <div class="cb">
+       <div class="minirow"><div class="prod"><div class="thumb">👟</div><div><div style="font-weight:700;font-size:12.5px">${lang=='ar'?'حذاء رياضي':'Sport Shoe'}</div><div class="note">112 ${lang=='ar'?'طلب':'orders'}</div></div></div><b style="color:#0D9488">18,592 ${ccy()}</b></div>
+       <div class="minirow"><div class="prod"><div class="thumb">👕</div><div><div style="font-weight:700;font-size:12.5px">${lang=='ar'?'تيشيرت رياضي نص كم':'Sport Half-Sleeve Tee'}</div><div class="note">248 ${lang=='ar'?'طلب':'orders'}</div></div></div><b style="color:#0D9488">13,376 ${ccy()}</b></div>
+       <div class="minirow"><div class="prod"><div class="thumb">🩳</div><div><div style="font-weight:700;font-size:12.5px">${lang=='ar'?'بنطلون شورت':'Shorts'}</div><div class="note">164 ${lang=='ar'?'طلب':'orders'}</div></div></div><b style="color:#0D9488">10,168 ${ccy()}</b></div>
+       <div class="minirow"><div class="prod"><div class="thumb">🎒</div><div><div style="font-weight:700;font-size:12.5px">${lang=='ar'?'شنطة ظهر':'Backpack'}</div><div class="note">46 ${lang=='ar'?'طلب':'orders'}</div></div></div><b style="color:#0D9488">4,416 ${ccy()}</b></div>
+     </div></div>
+ </div>`;
+
+function orderFilterBar(opts){
+  opts=opts||{};
+  return `<div class="filter-bar" style="margin-bottom:10px">
+    <input type="search" placeholder="${lang=='ar'?'بحث: كود الطلب أو اسم العميل أو الهاتف':'Search: order code, customer, phone'}" style="flex:1;min-width:220px">
+    <label>${t('govLabel')}</label>
+    <select><option>${lang=='ar'?'كل المحافظات':'All'}</option>${govs().map(g=>`<option>${g}</option>`).join('')}</select>
+    ${opts.marketer?`<label>${t('marketerLabel')}</label><select><option>${lang=='ar'?'كل المسوّقين':'All'}</option><option>محمد سمير</option><option>رنا خالد</option><option>عمرو زكي</option><option>هبة سامي</option></select>`:''}
+    ${opts.cod?`<label>${t('codStatus')}</label><select><option>${t('allStatuses')}</option><option>${t('cod_pending')}</option><option>${t('cod_collected')}</option><option>${t('cod_returned')}</option></select>`:''}
+    <label>${lang=='ar'?'شركة الشحن':'Courier'}</label>
+    <select><option>${lang=='ar'?'الكل':'All'}</option>${(opts.marketer?couriers():couriersActive()).map(c=>`<option value="${c.id}">${c.name}${opts.marketer&&c.status==='active'?' ★':''}</option>`).join('')}</select>
+    <button class="btn sm">${t('applyFilter')}</button>
+  </div>`;
+}
+function uChip(i,n){return `<div class="prod"><div class="thumb" style="font-size:13px;font-weight:800;color:#0D9488">${i}</div><b style="font-size:12.5px">${n}</b></div>`;}
+function prod(e,n,s){return `<div class="prod"><div class="thumb">${e}</div><div><div style="font-weight:700;font-size:12.5px">${n}</div>${s?`<div class="note">${s}</div>`:''}</div></div>`;}
+
+function hbars(rows){
+  const mx=Math.max(...rows.map(r=>r[1]));
+  return `<div class="hbars">`+rows.map(r=>`
+    <div class="hbar"><div class="hb-head"><b>${r[1]}</b><span><i style="background:${r[2]}"></i>${r[0]}</span></div>
+    <div class="hb-track"><div class="hb-fill" style="width:${Math.round(r[1]/mx*100)}%;background:${r[2]}"></div></div></div>`).join('')+`</div>`;
+}
+
+function dateFilterBar(){
+  return `<div class="filter-bar">
+    <label>${t("fromDate")}</label>
+    <input type="text" value="${lang=='ar'?'١ مايو ٢٠٢٦':'1 May 2026'}" style="width:140px">
+    <label>${t("toDate")}</label>
+    <input type="text" value="${lang=='ar'?'٣٠ مايو ٢٠٢٦':'30 May 2026'}" style="width:140px">
+    <label>${t("country")}</label>
+    <select onchange="country=this.value;renderAll()" style="padding:7px 11px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:12.5px;background:var(--bg);color:var(--ink)"><option value="EG"${country==='EG'?' selected':''}>${t('country_EG')}</option><option value="SA"${country==='SA'?' selected':''}>${t('country_SA')}</option></select>
+    <button class="btn sm">${t("applyFilter")}</button>
+  </div>`;
+}
+
+function failTag(code){
+  const C={INVALID_PHONE:['#B45309','#FEF3C7'],OUT_OF_STOCK:['#C2410C','#FFEDD5'],
+    STORE_CLOSED:['#475569','#F1F5F9'],PRICE_BELOW_BASE:['#DC2626','#FEE2E2'],
+    INTEGRATION_TIMEOUT:['#1D4ED8','#DBEAFE'],INTEGRATION_SCHEMA:['#7C3AED','#EDE9FE']};
+  const [c,b]=C[code]||['#475569','#F1F5F9'];
+  return `<span class="ftag" style="color:${c};background:${b}">${code}</span>`;
+}
+
+function failCard(d){
+  return `<div class="fcard">
+    <div style="display:flex;flex-direction:column;gap:7px;flex-shrink:0">
+      <button class="btn sm">${t('fix_'+d.code)}</button>
+      ${d.auto?`<span class="tag" style="color:#0D9488;background:#D8F1ED;font-size:10.5px">${t('autoRetry')}</span>`:''}
+    </div>
+    <div class="fcard-body">
+      <div class="fcard-top">
+        <span style="font-weight:700;font-size:12.5px">${d.order}</span>
+        ${failTag(d.code)}
+        <span class="note">${d.src}</span>
+      </div>
+      <div class="fcard-desc">${t('desc_'+d.code)}</div>
+      <div class="fcard-meta">${d.attempts}</div>
+    </div>
+  </div>`;
+}
+
+function apprTag(s){
+  const M={approved:['معتمد','#16A34A'],pending:['بانتظار الاعتماد','#F59E0B'],
+    rejected:['مرفوض','#DC2626'],draft:['مسودة','#475569']};
+  const [x,c]=M[s]||['—','#475569'];
+  return tag(x,c);
+}
+
+function rateTag(pct,inverted){
+  const v=parseFloat(pct);
+  const c=inverted?(v<=5?'#16A34A':v<=12?'#F59E0B':'#DC2626'):(v>=75?'#16A34A':v>=65?'#F59E0B':'#DC2626');
+  return `<span style="color:${c};font-weight:700">${pct}%</span>`;
+}
+function statHero(period,country,total,totalLbl,deliveryRate,netProfit,netProfitLbl){
+  return `<div class="stats-hero">
+    <div class="hero-l"><h2>${period} · ${country}</h2>
+      <div class="big">${total}</div><div class="meta">${totalLbl}</div></div>
+    <div class="hero-m"><h3>${t('deliveryRate')}</h3><b>${deliveryRate}</b>
+      <div class="pct">${lang=='ar'?'من إجمالي الطلبات':'of total orders'}</div></div>
+    <div class="hero-r"><h3>${netProfitLbl}</h3><b>${netProfit}</b>
+      <div class="pct">${lang=='ar'?'بعد التسليم':'after delivery'}</div></div>
+  </div>`;
+}
+function statTiles(rows){
+  return `<div class="tile-grid">`+rows.map(r=>`
+    <div class="stile"><div class="stile-bar" style="background:${r[2]}"></div>
+      <div class="stl-lbl"><i style="background:${r[2]}"></i>${r[0]}</div>
+      <div class="stl-val" style="color:${r[2]}">${r[1]}</div>
+      ${r[3]?`<div class="stl-sub">${r[3]}</div>`:''}</div>`).join('')+`</div>`;
+}
+function orderTimeline(currentStatus){
+  const flow=['pending','confirmed','packing','shipped','delivered'];
+  const idx=flow.indexOf(currentStatus);
+  const cancelled=(currentStatus==='cancelled'||currentStatus==='returned');
+  const labels={pending:'قيد الانتظار',confirmed:'تم التأكيد',packing:'قيد التغليف',shipped:'تم الشحن',delivered:'تم التسليم'};
+  const labelsEn={pending:'Pending',confirmed:'Confirmed',packing:'Packing',shipped:'Shipped',delivered:'Delivered'};
+  return `<div class="tline">`+flow.map((s,i)=>{
+    let cls=cancelled?'muted':(i<idx?'done':i===idx?'current':'muted');
+    const L=lang=='ar'?labels[s]:labelsEn[s];
+    return `<div class="tstep ${cls}"><div class="ts-l">${L}</div>
+      <div class="ts-d">${i<=idx&&!cancelled?'2026/05/'+(28+i):'—'}</div></div>`;
+  }).join('')+(cancelled?`<div class="tstep current" style="margin-top:4px"><div class="ts-l" style="color:#DC2626">${stTag(currentStatus)}</div></div>`:'')+`</div>`;
+}
+
+function pager(total){
+  return `<div class="pager">
+    <button class="btn ghost sm">‹‹</button>
+    <button class="on" style="padding:5px 11px;border-radius:8px;background:var(--brand);color:#fff;font-size:12px;font-weight:700;border:none;cursor:pointer">1</button>
+    <button style="padding:5px 11px;border-radius:8px;border:1px solid var(--line);background:var(--card);font-size:12px;font-weight:700;color:var(--slate);cursor:pointer">2</button>
+    <button style="padding:5px 11px;border-radius:8px;border:1px solid var(--line);background:var(--card);font-size:12px;font-weight:700;color:var(--slate);cursor:pointer">3</button>
+    <button class="btn ghost sm">>>›</button>
+    <div class="pp" style="display:flex;align-items:center;gap:6px;margin-inline-start:auto">
+      <span style="font-size:12px;color:var(--muted);font-weight:600">${t('perPage')}</span>
+      <select style="padding:4px 8px;border:1px solid var(--line);border-radius:7px;font-size:12px;background:var(--card)">
+        <option>25</option><option>50</option><option>100</option>
+      </select>
+    </div>
+    <span style="font-size:12px;color:var(--muted);font-weight:600">${total} ${lang=='ar'?'نتيجة':'results'}</span>
+  </div>`;
+}
+
+let _exId=0;
+function ordTableRich(rows,opts){
+  opts=opts||{};
+  const cols=[' ',t('c_product'),t('orderCode')+' / '+t('c_date'),t('c_customer'),t('govLabel'),t('qty'),t('c_total')];
+  if(opts.profit) cols.push(`<span style="color:#0D9488">${t('netProfit')}</span>`);
+  if(opts.due) cols.push(t('dueAmount'));
+  if(opts.marketer) cols.push(t('marketerLabel'));
+  if(opts.cod) cols.push(t('codStatus'));
+  cols.push(t('c_status'),t('c_action'));
+  const codColors={pending:['#F59E0B','#FEF3C7'],collected:['#16A34A','#ECFDF5'],returned:['#DC2626','#FEE2E2']};
+  let html=`<div style="overflow-x:auto"><table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`;
+  rows.forEach((r,i)=>{
+    const id='ex'+(++_exId);
+    const showEdit=(r.status==='pending');
+    const showCancel=(r.status==='pending'||r.status==='confirmed'||r.status==='packing');
+    let actions=showEdit?`<button class="btn ghost sm" style="margin-inline-end:4px">${t('editOrder')}</button>`:'';
+    actions+=showCancel?`<button class="btn sm" style="background:#FEE2E2;color:#DC2626">${t('cancelOrder')}</button>`:'';
+    if(!actions) actions='—';
+    const chevTd=`<td style="width:34px"><span class="chev" id="chev_${id}"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></td>`;
+    const tds=[(r.items&&r.items.length>1?prod(r.emoji,r.items[0].n,r.items[0].sku):prod(r.emoji,r.name,r.sku))+(r.items&&r.items.length>1?`<span class="tag" style="color:#0D9488;background:#D8F1ED;margin-inline-start:6px">+${r.items.length-1} ${lang=='ar'?'إضافي':'more'}</span>`:''),
+      `<div style="font-weight:700;font-size:12px">${r.code}</div><div class="note">${r.date}</div>`,
+      `<div style="font-weight:600;font-size:12.5px">${r.customer}</div><div class="note">${r.phone}</div>`,
+      r.gov,r.qty,'<b>'+r.total+' '+ccy()+'</b>'];
+    if(opts.profit) tds.push(`<b style="color:#0D9488">${r.profit} ${ccy()}</b>`);
+    if(opts.due) tds.push(`<b>${r.due} ${ccy()}</b>`);
+    if(opts.marketer) tds.push(r.marketer||'—');
+    if(opts.cod){const[cc,cb]=codColors[r.cod]||['#475569','#F1F5F9'];tds.push(`<span class="tag" style="color:${cc};background:${cb}">${r.cod==='pending'?t('cod_pending'):r.cod==='collected'?t('cod_collected'):t('cod_returned')}</span>`);}
+    tds.push(stTag(r.status),actions);
+    html+=`<tr onclick="(function(tr){var p=tr.nextElementSibling;tr.classList.toggle('exrow-open');p.style.display=p.style.display==='none'?'table-row':'none';})(this)" style="cursor:pointer">
+      ${chevTd}${tds.map(c=>`<td>${c}</td>`).join('')}</tr>
+    <tr id="panel_${id}" class="exrow-panel" style="display:none"><td colspan="${cols.length}">
+      <div class="expanel-grid">
+        <div class="expanel-block"><h4>${t('fullAddress')}</h4><p>${r.gov} · ${r.city||'المدينة'} · ${r.street||'الشارع'} · ${r.bldg||'عمارة 5'} · ${r.floor||'دور 3'} · ${r.apt||'شقة 12'}</p></div>
+        <div class="expanel-block"><h4>${lang=='ar'?'مسار الطلب':'Order Timeline'}</h4>${orderTimeline(r.status)}</div>
+      </div>
+      <div class="expanel-block" style="grid-column:1/-1;margin-top:10px"><h4>${lang=='ar'?'منتجات الطلب':'Order Items'}</h4>
+        ${tbl([t('c_product'),'SKU',t('qty'),lang=='ar'?'السعر':'Price',t('c_total')],(r.items||[{n:r.name,sku:r.sku,qty:r.qty,price:r.total}]).map(it=>[it.n,it.sku,it.qty,it.price+' '+ccy(),(it.qty*it.price)+' '+ccy()]))}
+      </div>
+      <div class="expanel-grid" style="grid-template-columns:1fr 1fr 1fr;margin-top:10px">
+        <div class="expanel-block"><h4>${t('shippingInfo')}</h4><p>${r.courier||'بوسطة'}</p><p>${t('trackingNo')}: BOS-${r.code}</p></div>
+        <div class="expanel-block"><h4>${t('paymentInfo')}</h4><p>${t('codLabel')}</p><p>${r.cod==='collected'?t('cod_collected'):r.cod==='returned'?t('cod_returned'):t('cod_pending')}</p></div>
+        <div class="expanel-block"><h4>${t('notesAttempts')}</h4><p>${t('clientNote')}: ${r.note||'—'}</p><p>${t('callAttempts')}: ${r.calls||0}</p></div>
+      </div>
+    </td></tr>`;
+  });
+  html+=`</tbody></table></div>`;
+  return html;
+}
+
+/* ============ render ============ */
+function renderRoleSwitch(){
+  document.getElementById("roleSwitch").innerHTML=["admin","merchant","marketer"]
+    .map(r=>`<button class="${r==state.role?'on':''}" onclick="setRole('${r}')">${t(r)}</button>`).join('');
+}
+function renderNav(){
+  document.getElementById("nav").innerHTML=ROLES[state.role].nav.map(n=>{
+    if(n.g)return `<div class="grp">${t(n.g)}</div>`;
+    return `<button class="navitem ${n.id==state.screen?'on':''}" onclick="go('${n.id}')">
+      ${svg(IC[n.ic])}<span>${t(n.id)}</span>${n.badge?`<span class="badge">${n.badge}</span>`:''}</button>`;
+  }).join('');
+}
+function renderScreen(){
+  const fn=S[state.role+"/"+state.screen];
+  document.getElementById("main").innerHTML=fn?fn():'<div class="empty">—</div>';
+  window.scrollTo(0,0);
+}
+function renderChrome(){
+  document.documentElement.dir=I18N[lang].dir;
+  document.documentElement.lang=lang;
+  document.getElementById("appName").textContent=t("app");
+  document.getElementById("appNameSub").textContent=t("appSub");
+  document.getElementById("langBtn").textContent=t("lang");
+  document.getElementById("userName").textContent=t("u_"+state.role);
+  document.getElementById("userRole").textContent=t("rl_"+state.role);
+  document.getElementById("userAv").textContent=t("u_"+state.role).trim()[0];
+  document.getElementById("cFlag").textContent = COUNTRIES[country].flag;
+  document.getElementById("cName").textContent = cName();
+}
+function go(id){state.screen=id;renderNav();renderScreen();}
+function setRole(r){state.role=r;state.screen=FIRST[r];renderRoleSwitch();renderChrome();renderNav();renderScreen();}
+function toggleLang(){lang=lang=="ar"?"en":"ar";renderAll();}
+function toggleCountry(){ country = country==="EG"?"SA":"EG"; renderAll(); }
+function renderAll(){renderChrome();renderRoleSwitch();renderNav();renderScreen();}
+function setTab(id,btn){
+  const pane=document.getElementById('tab-'+id);const parent=pane.parentElement;
+  parent.querySelectorAll('.tabpane').forEach(p=>p.classList.remove('on'));
+  pane.classList.add('on');
+  btn.closest('.tabs').querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+}
+function chip(el){el.parentNode.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');}
+
+renderAll();
+</script>
+</body>
+</html>
