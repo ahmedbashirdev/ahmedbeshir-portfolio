@@ -135,22 +135,7 @@ tbody tr:hover{background:var(--bg)}
 .minirow:last-child{border-bottom:none}
 .note{font-size:11.5px;color:var(--muted)}
 @media(max-width:1080px){.kpis{grid-template-columns:repeat(2,1fr)}.split2,.split3{grid-template-columns:1fr}.pgrid{grid-template-columns:repeat(2,1fr)}}
-.hamb{display:none;width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.12);color:#fff;align-items:center;justify-content:center;flex-shrink:0}
-.hamb svg{width:20px;height:20px}
-.scrim{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:44}
-.scrim.show{display:block}
-@media(max-width:1080px){.kpis{grid-template-columns:repeat(2,1fr)}.split2,.split3{grid-template-columns:1fr}.pgrid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:860px){
-  .hamb{display:flex}
-  .roleswitch{order:5;flex:1 0 100%;margin-top:8px;justify-content:center}
-  .topbar{height:auto;flex-wrap:wrap;padding-block:10px;gap:10px}
-  .side{position:fixed;top:0;inset-inline-end:0;height:100vh;width:264px;z-index:45;
-    transform:translateX(110%);transition:transform .25s ease;box-shadow:-8px 0 24px rgba(15,23,42,.12);overflow-y:auto}
-  .side.open{transform:translateX(0)}
-  .main{padding:16px}
-  .kpis,.pgrid,.frow{grid-template-columns:1fr}
-}
-@media(max-width:480px){.kpis{grid-template-columns:1fr}.langbtn .lbl{display:none}.tb-user .nm,.tb-user .rl{display:none}}
+@media(max-width:720px){.side{display:none}.kpis,.pgrid,.frow{grid-template-columns:1fr}.main{padding:16px}}
 .banner{background:linear-gradient(110deg,#0B5A52,#0D9488);color:#fff;border-radius:var(--r);
   padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
 .banner h2{font-size:17px;font-weight:800}
@@ -297,7 +282,6 @@ svg.ic{width:18px;height:18px;flex-shrink:0;display:inline-block;vertical-align:
 <body>
 
 <header class="topbar">
-  <button class="hamb" id="hambBtn" onclick="toggleNav()" aria-label="القائمة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
   <div class="logo">
     <span class="mark"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
       <defs><linearGradient id="lgBg" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -324,9 +308,8 @@ svg.ic{width:18px;height:18px;flex-shrink:0;display:inline-block;vertical-align:
 </header>
 
 <div class="shell">
-  <aside class="side" id="side"><nav id="nav"></nav></aside>
+  <aside class="side"><nav id="nav"></nav></aside>
   <main class="main" id="main"></main>
-  <div class="scrim" id="scrim" onclick="closeNav()"></div>
 </div>
 
 <script>
@@ -347,12 +330,6 @@ const I18N={
   // new nav items
   stats:"إحصائيات تجارتك",mystore:"متجري",failed:"الطلبات غير الناجحة",
   approvals:"اعتماد المنتجات",review:"مراجعة منتج",
-  activity:"سجل النشاط",
-  act_auth:"دخول/خروج",act_security:"أمان",act_product:"منتجات",act_order:"طلبات",act_integration:"تكاملات",act_finance:"مالية",act_admin:"إجراء إداري",
-  c_when:"التاريخ والوقت",c_actor:"المُستخدِم",c_category:"التصنيف",c_event:"الحدث",c_ip:"IP / الجهاز",
-  actAllCat:"كل التصنيفات",actExport:"تصدير CSV",
-  actSubAdmin:"كل أنشطة المنصّة عبر جميع المستخدمين — الأحدث أولاً",
-  actSubMine:"سجلّ أنشطتك على حسابك — الأحدث أولاً",
   mstats:"الإحصائيات",rejected:"منتج مرفوض",
   // filters & labels
   applyFilter:"تطبيق",fromDate:"من تاريخ",toDate:"إلى تاريخ",country:"الدولة",egypt:"مصر",
@@ -451,12 +428,6 @@ const I18N={
   country_EG:"Egypt", country_SA:"Saudi Arabia", ccy_EG:"EGP", ccy_SA:"SAR", switchCountry:"Switch Country",
   stats:"My Stats",mystore:"My Store",failed:"Failed Orders",
   approvals:"Product Approvals",review:"Review Product",
-  activity:"Activity Log",
-  act_auth:"Sign-in",act_security:"Security",act_product:"Products",act_order:"Orders",act_integration:"Integrations",act_finance:"Finance",act_admin:"Admin Action",
-  c_when:"Date & Time",c_actor:"User",c_category:"Category",c_event:"Event",c_ip:"IP / Device",
-  actAllCat:"All categories",actExport:"Export CSV",
-  actSubAdmin:"All platform activity across every user — newest first",
-  actSubMine:"Log of your own account activity — newest first",
   mstats:"Statistics",rejected:"Rejected Product",
   applyFilter:"Apply",fromDate:"From",toDate:"To",country:"Country",egypt:"Egypt",
   allCauses:"All Causes",importToStore:"Import to My Store",
@@ -563,7 +534,6 @@ const IC={
  xmark:'<path d="M18 6 6 18M6 6l12 12"/>',
  eye:'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
  refresh:'<path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.5 9A9 9 0 0120.5 6.4M20.5 15a9 9 0 01-17 2.6"/>',
- history:'<path d="M3 3v6h6"/><path d="M3.5 9A9 9 0 1 1 3 12"/><path d="M12 7v5l3 2"/>',
  star:'<polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/>',
  settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1A1.7 1.7 0 004.6 9a1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/>',
  truck:'<path d="M1 3h15v13H1zM16 8h4l3 3v5h-7zM5.5 18.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 18.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>'
@@ -609,17 +579,17 @@ const INTEGRATIONS = {
 const ROLES={
  admin:{nav:[
    {g:"g_main"},{id:"dashboard",ic:"dashboard"},
-   {g:"g_manage"},{id:"users",ic:"users",badge:6},{id:"approvals",ic:"check",badge:5},{id:"activity",ic:"history"},
+   {g:"g_manage"},{id:"users",ic:"users",badge:6},{id:"approvals",ic:"check",badge:5},
    {id:"orders",ic:"cart"},{id:"failed",ic:"alert"},{id:"shipping",ic:"truck"},
    {g:"g_money"},{id:"settlements",ic:"money"}]},
  merchant:{nav:[
    {g:"g_main"},{id:"dashboard",ic:"dashboard"},{id:"orders",ic:"cart",badge:6},
-   {g:"g_manage"},{id:"products",ic:"box"},{id:"addproduct",ic:"plus"},{id:"activity",ic:"history"},
+   {g:"g_manage"},{id:"products",ic:"box"},{id:"addproduct",ic:"plus"},
    {g:"g_money"},{id:"mstats",ic:"chart"}]},
  marketer:{nav:[
    {g:"g_main"},{id:"dashboard",ic:"dashboard"},{id:"marketplace",ic:"store"},
    {id:"mystore",ic:"store"},{id:"orders",ic:"cart"},{id:"addorder",ic:"plus"},
-   {g:"g_money"},{id:"stats",ic:"chart"},{id:"failed",ic:"alert"},{id:"wallet",ic:"wallet"},{id:"activity",ic:"history"},{id:"settings",ic:"settings"}]}
+   {g:"g_money"},{id:"stats",ic:"chart"},{id:"failed",ic:"alert"},{id:"wallet",ic:"wallet"},{id:"settings",ic:"settings"}]}
 };
 const FIRST={admin:"dashboard",merchant:"dashboard",marketer:"dashboard"};
 let state={role:"merchant",screen:"dashboard"};
@@ -630,59 +600,6 @@ const STC={pending:"#F59E0B",confirmed:"#0D9488",review:"#2DC2B0",packing:"#0EA5
  cancelled:"#DC2626",returned:"#B91C1C",return:"#EA580C",whatsapp:"#25D366",delay:"#9333EA",stock:"#475569"};
 const tag=(txt,color)=>`<span class="tag" style="color:${color};background:${color}1a">${txt}</span>`;
 const stTag=s=>tag(t("st_"+s),STC[s]);
-
-const ACT={auth:'#64748B',security:'#DC2626',product:'#0D9488',order:'#0EA5E9',integration:'#7C3AED',finance:'#16A34A',admin:'#F59E0B'};
-const actTag=c=>tag(t("act_"+c),ACT[c]);
-function actFilter(){return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
-  <input style="flex:1;min-width:200px;padding:9px 12px;border:1px solid var(--line);border-radius:9px;font-family:inherit;font-size:13px" placeholder="${t("search")}">
-  <div class="chips">
-   <span class="chip on" onclick="chip(this)">${t("actAllCat")}</span>
-   ${['auth','security','product','order','integration','finance','admin'].map(c=>`<span class="chip" onclick="chip(this)">${t("act_"+c)}</span>`).join('')}
-  </div>
-  <button class="btn ghost sm">${svg(IC.refresh)} ${t("actExport")}</button>
-</div>`;}
-
-/* ============ SCREENS ============ */
-const S={};
-
-S["admin/activity"]=()=>head(t("admin")+" · "+t("activity"),t("activity"),t("actSubAdmin"))
- +actFilter()
- +`<div class="card"><div class="cb" style="padding:0">${tbl(
-   [t("c_when"),t("c_actor"),t("c_category"),t("c_event"),t("c_ip")],
-   [["2026/06/01 14:32",uChip("م","متجر بيسوهولا"),actTag("product"),lang=="ar"?"أضاف منتجاً جديداً: تيشيرت رياضي (SKU-TS-999)":"Added new product: Sport Tee (SKU-TS-999)","41.34.10.22"],
-    ["2026/06/01 14:20",uChip("ع","عمرو زكي"),actTag("order"),lang=="ar"?"أنشأ طلباً يدوياً M0002-00045128":"Created manual order M0002-00045128","156.200.8.91"],
-    ["2026/06/01 13:58",uChip("أ","أدمن المنصّة"),actTag("admin"),lang=="ar"?"اعتمد منتج: قبعة رياضية":"Approved product: Sport Cap","10.0.0.4"],
-    ["2026/06/01 13:40",uChip("ه","هبة سامي"),actTag("finance"),lang=="ar"?"قدّمت طلب سحب 1,250 ج.م":"Requested withdrawal EGP 1,250","197.45.66.3"],
-    ["2026/06/01 13:11",uChip("ع","عمرو زكي"),actTag("integration"),lang=="ar"?"ربط متجر Easy Orders — مزامنة ناجحة":"Connected Easy Orders store — sync OK","156.200.8.91"],
-    ["2026/06/01 12:50",uChip("م","متجر بيسوهولا"),actTag("security"),lang=="ar"?"غيّر كلمة المرور":"Changed password","41.34.10.22"],
-    ["2026/06/01 12:32",uChip("ي","يوسف نبيل"),actTag("auth"),lang=="ar"?"تسجيل دخول ناجح":"Successful sign-in","102.40.12.7"],
-    ["2026/06/01 11:05",uChip("أ","أدمن المنصّة"),actTag("admin"),lang=="ar"?"رفض منتج: جاكيت شتوي — السبب: صور منخفضة الجودة":"Rejected product: Winter Jacket — reason: low-quality images","10.0.0.4"]])
- }</div></div>`;
-
-S["merchant/activity"]=()=>head(t("merchant")+" · "+t("activity"),t("activity"),t("actSubMine"))
- +actFilter()
- +`<div class="card"><div class="cb" style="padding:0">${tbl(
-   [t("c_when"),t("c_category"),t("c_event"),t("c_ip")],
-   [["2026/06/01 14:32",actTag("product"),lang=="ar"?"أضفت منتجاً جديداً: تيشيرت رياضي (SKU-TS-999) — بانتظار الاعتماد":"Added new product: Sport Tee (SKU-TS-999) — pending approval","41.34.10.22"],
-    ["2026/06/01 11:18",actTag("product"),lang=="ar"?"عدّلت السعر الأساسي لمنتج: قبعة رياضية":"Edited base price of: Sport Cap","41.34.10.22"],
-    ["2026/06/01 10:40",actTag("order"),lang=="ar"?"حدّثت حالة الطلب M0001-00098721 إلى «تم الشحن»":"Updated order M0001-00098721 to “Shipped”","41.34.10.22"],
-    ["2026/05/31 18:05",actTag("finance"),lang=="ar"?"استلمت تسوية مستحقّاتك عن أسبوع 21":"Received settlement payout for week 21","41.34.10.22"],
-    ["2026/05/31 09:12",actTag("security"),lang=="ar"?"غيّرت كلمة المرور":"Changed password","41.34.10.22"],
-    ["2026/05/31 08:55",actTag("auth"),lang=="ar"?"تسجيل دخول ناجح":"Successful sign-in","41.34.10.22"]])
- }</div></div>`;
-
-S["marketer/activity"]=()=>head(t("marketer")+" · "+t("activity"),t("activity"),t("actSubMine"))
- +actFilter()
- +`<div class="card"><div class="cb" style="padding:0">${tbl(
-   [t("c_when"),t("c_category"),t("c_event"),t("c_ip")],
-   [["2026/06/01 14:20",actTag("order"),lang=="ar"?"أنشأت طلباً يدوياً M0002-00045128":"Created manual order M0002-00045128","156.200.8.91"],
-    ["2026/06/01 13:11",actTag("integration"),lang=="ar"?"ربطت متجر Easy Orders — مزامنة ناجحة":"Connected Easy Orders store — sync OK","156.200.8.91"],
-    ["2026/06/01 11:47",actTag("product"),lang=="ar"?"استوردت منتجاً إلى متجري: حذاء كاجوال":"Imported product to my store: Casual Shoes","156.200.8.91"],
-    ["2026/06/01 10:02",actTag("order"),lang=="ar"?"رفعت 38 طلباً عبر استيراد جماعي (CSV)":"Bulk-uploaded 38 orders (CSV)","156.200.8.91"],
-    ["2026/05/31 17:30",actTag("finance"),lang=="ar"?"قدّمت طلب سحب 1,250 ج.م":"Requested withdrawal EGP 1,250","156.200.8.91"],
-    ["2026/05/31 09:40",actTag("auth"),lang=="ar"?"تسجيل دخول ناجح":"Successful sign-in","156.200.8.91"]])
- }</div></div>`;
-
 function kpi(ic,icbg,iccol,lbl,val,trend,up){
   return `<div class="kpi"><div class="top">
     <div class="ico" style="background:${icbg};color:${iccol}">${svg(IC[ic])}</div>
@@ -712,6 +629,9 @@ function head(crumb,h1,sub,actions){
     ${sub?`<div class="sub" style="margin:0">${sub}</div>`:''}</div>
     <div style="display:flex;gap:9px">${actions||''}</div></div>`;
 }
+
+/* ============ SCREENS ============ */
+const S={};
 
 S["admin/approvals"]=()=>head(t("admin")+" · "+t("approvals"),t("approvals"),
   lang=="ar"?"راجع المنتجات الجديدة والتعديلات قبل نشرها — الأحدث أولاً":"Review new products and edits before publishing — newest first")
@@ -1640,10 +1560,8 @@ function renderChrome(){
   document.getElementById("cFlag").textContent = COUNTRIES[country].flag;
   document.getElementById("cName").textContent = cName();
 }
-function go(id){state.screen=id;renderNav();renderScreen();closeNav();}
-function setRole(r){state.role=r;state.screen=FIRST[r];renderRoleSwitch();renderChrome();renderNav();renderScreen();closeNav();}
-function toggleNav(){const s=document.getElementById("side"),sc=document.getElementById("scrim");const open=s.classList.toggle("open");sc.classList.toggle("show",open);}
-function closeNav(){const s=document.getElementById("side"),sc=document.getElementById("scrim");if(s)s.classList.remove("open");if(sc)sc.classList.remove("show");}
+function go(id){state.screen=id;renderNav();renderScreen();}
+function setRole(r){state.role=r;state.screen=FIRST[r];renderRoleSwitch();renderChrome();renderNav();renderScreen();}
 function toggleLang(){lang=lang=="ar"?"en":"ar";renderAll();}
 function toggleCountry(){ country = country==="EG"?"SA":"EG"; renderAll(); }
 function renderAll(){renderChrome();renderRoleSwitch();renderNav();renderScreen();}
