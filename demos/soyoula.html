@@ -144,9 +144,11 @@ tbody tr:hover{background:var(--bg)}
   .hamb{display:flex}
   .roleswitch{order:5;flex:1 0 100%;margin-top:8px;justify-content:center}
   .topbar{height:auto;flex-wrap:wrap;padding-block:10px;gap:10px}
-  .side{position:fixed;top:0;inset-inline-end:0;height:100vh;width:264px;z-index:45;
-    transform:translateX(110%);transition:transform .25s ease;box-shadow:-8px 0 24px rgba(15,23,42,.12);overflow-y:auto}
-  .side.open{transform:translateX(0)}
+  .side{position:fixed;top:0;inset-inline-start:0;height:100vh;width:264px;z-index:45;
+    transition:transform .25s ease;box-shadow:0 0 24px rgba(15,23,42,.18);overflow-y:auto}
+  [dir="rtl"] .side{transform:translateX(110%)}
+  [dir="ltr"] .side{transform:translateX(-110%)}
+  [dir="rtl"] .side.open,[dir="ltr"] .side.open{transform:translateX(0)}
   .main{padding:16px}
   .kpis,.pgrid,.frow{grid-template-columns:1fr}
 }
