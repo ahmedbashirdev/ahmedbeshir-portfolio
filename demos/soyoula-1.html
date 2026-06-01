@@ -349,9 +349,6 @@ const I18N={
   // new nav items
   stats:"إحصائيات تجارتك",mystore:"متجري",failed:"الطلبات غير الناجحة",
   approvals:"اعتماد المنتجات",review:"مراجعة منتج",
-  categories:"التصنيفات",kyc:"مراجعة التوثيق",reports:"التقارير الموسّعة",
-  warehouses:"المخازن والمخزون",coupons:"الكوبونات",returns:"المرتجعات",
-  wishlist:"المفضّلة",bulkupload:"رفع جماعي",pdetail:"تفاصيل المنتج",
   activity:"سجل النشاط",
   act_auth:"دخول/خروج",act_security:"أمان",act_product:"منتجات",act_order:"طلبات",act_integration:"تكاملات",act_finance:"مالية",act_admin:"إجراء إداري",
   c_when:"التاريخ والوقت",c_actor:"المُستخدِم",c_category:"التصنيف",c_event:"الحدث",c_ip:"IP / الجهاز",
@@ -456,9 +453,6 @@ const I18N={
   country_EG:"Egypt", country_SA:"Saudi Arabia", ccy_EG:"EGP", ccy_SA:"SAR", switchCountry:"Switch Country",
   stats:"My Stats",mystore:"My Store",failed:"Failed Orders",
   approvals:"Product Approvals",review:"Review Product",
-  categories:"Categories",kyc:"KYC Review",reports:"Reports",
-  warehouses:"Warehouses & Stock",coupons:"Coupons",returns:"Returns",
-  wishlist:"Wishlist",bulkupload:"Bulk Upload",pdetail:"Product Detail",
   activity:"Activity Log",
   act_auth:"Sign-in",act_security:"Security",act_product:"Products",act_order:"Orders",act_integration:"Integrations",act_finance:"Finance",act_admin:"Admin Action",
   c_when:"Date & Time",c_actor:"User",c_category:"Category",c_event:"Event",c_ip:"IP / Device",
@@ -618,15 +612,15 @@ const ROLES={
  admin:{nav:[
    {g:"g_main"},{id:"dashboard",ic:"dashboard"},
    {g:"g_manage"},{id:"users",ic:"users",badge:6},{id:"approvals",ic:"check",badge:5},{id:"activity",ic:"history"},
-   {id:"orders",ic:"cart"},{id:"failed",ic:"alert"},{id:"shipping",ic:"truck"},{id:"categories",ic:"box"},{id:"kyc",ic:"users"},
-   {g:"g_money"},{id:"settlements",ic:"money"},{id:"reports",ic:"chart"},{id:"settings",ic:"settings"}]},
+   {id:"orders",ic:"cart"},{id:"failed",ic:"alert"},{id:"shipping",ic:"truck"},
+   {g:"g_money"},{id:"settlements",ic:"money"}]},
  merchant:{nav:[
    {g:"g_main"},{id:"dashboard",ic:"dashboard"},{id:"orders",ic:"cart",badge:6},
-   {g:"g_manage"},{id:"products",ic:"box"},{id:"addproduct",ic:"plus"},{id:"activity",ic:"history"},{id:"warehouses",ic:"box"},{id:"returns",ic:"refresh"},{id:"coupons",ic:"star"},
-   {g:"g_money"},{id:"mstats",ic:"chart"},{id:"settings",ic:"settings"}]},
+   {g:"g_manage"},{id:"products",ic:"box"},{id:"addproduct",ic:"plus"},{id:"activity",ic:"history"},
+   {g:"g_money"},{id:"mstats",ic:"chart"}]},
  marketer:{nav:[
-   {g:"g_main"},{id:"dashboard",ic:"dashboard"},{id:"marketplace",ic:"store"},{id:"wishlist",ic:"star"},
-   {id:"mystore",ic:"store"},{id:"orders",ic:"cart"},{id:"addorder",ic:"plus"},{id:"bulkupload",ic:"plus"},
+   {g:"g_main"},{id:"dashboard",ic:"dashboard"},{id:"marketplace",ic:"store"},
+   {id:"mystore",ic:"store"},{id:"orders",ic:"cart"},{id:"addorder",ic:"plus"},
    {g:"g_money"},{id:"stats",ic:"chart"},{id:"failed",ic:"alert"},{id:"wallet",ic:"wallet"},{id:"activity",ic:"history"},{id:"settings",ic:"settings"}]}
 };
 const FIRST={admin:"dashboard",merchant:"dashboard",marketer:"dashboard"};
@@ -667,70 +661,6 @@ S["admin/activity"]=()=>head(t("admin")+" · "+t("activity"),t("activity"),t("ac
     ["2026/06/01 11:05",uChip("أ","أدمن المنصّة"),actTag("admin"),lang=="ar"?"رفض منتج: جاكيت شتوي — السبب: صور منخفضة الجودة":"Rejected product: Winter Jacket — reason: low-quality images","10.0.0.4"]])
  }</div></div>`;
 
-S["admin/categories"]=()=>head(t("admin")+" · "+t("categories"),t("categories"),
-  lang=="ar"?"إدارة تصنيفات الكتالوج لكل دولة":"Manage catalog categories per country",
-  `<button class="btn ok sm">${lang=="ar"?"+ تصنيف جديد":"+ New category"}</button>`)
- +`<div class="chips">
-   <button class="chip on">${lang=="ar"?"كل الدول":"All countries"} <span class="n">18</span></button>
-   <button class="chip">${cName()} <span class="n">12</span></button>
-  </div>
-  <div class="card"><div class="cb" style="padding:0">${tbl(
-   [lang=="ar"?"التصنيف":"Category",lang=="ar"?"عدد المنتجات":"Products",lang=="ar"?"الكتالوج":"Catalog",t("c_status"),t("c_action")],
-   [[prod("👕",lang=="ar"?"ملابس":"Apparel",""),"312",cName(),tag(t("active"),"#16A34A"),`<button class="btn ghost sm">${lang=="ar"?"تعديل":"Edit"}</button>`],
-    [prod("👟",lang=="ar"?"أحذية":"Footwear",""),"148",cName(),tag(t("active"),"#16A34A"),`<button class="btn ghost sm">${lang=="ar"?"تعديل":"Edit"}</button>`],
-    [prod("🎒",lang=="ar"?"حقائب":"Bags",""),"96",cName(),tag(t("active"),"#16A34A"),`<button class="btn ghost sm">${lang=="ar"?"تعديل":"Edit"}</button>`],
-    [prod("⌚",lang=="ar"?"إكسسوارات":"Accessories",""),"203",cName(),tag(lang=="ar"?"مخفي":"Hidden","#64748B"),`<button class="btn ghost sm">${lang=="ar"?"تعديل":"Edit"}</button>`],
-    [prod("🧴",lang=="ar"?"عناية":"Care",""),"54",cName(),tag(t("active"),"#16A34A"),`<button class="btn ghost sm">${lang=="ar"?"تعديل":"Edit"}</button>`]])
- }</div></div>`;
-
-S["admin/kyc"]=()=>head(t("admin")+" · "+t("kyc"),t("kyc"),
-  lang=="ar"?"راجع مستندات التجّار والمسوّقين قبل اعتماد الحساب":"Review merchant & marketer documents before account approval")
- +`<div class="chips">
-   <button class="chip on">${t("pendingApp")} <span class="n">4</span></button>
-   <button class="chip">${lang=="ar"?"معتمَد":"Approved"} <span class="n">122</span></button>
-   <button class="chip">${lang=="ar"?"مرفوض":"Rejected"} <span class="n">2</span></button>
-  </div>
-  <div class="card"><div class="cb" style="padding:0">${tbl(
-   [t("c_name"),t("c_role"),lang=="ar"?"المستندات":"Documents",t("c_date"),t("c_status"),t("c_action")],
-   [[uChip("م","منى عبدالله"),t("merchant"),lang=="ar"?"بطاقة + سجل تجاري":"ID + Commercial reg.","2026/05/31",tag(t("pendingApp"),"#F59E0B"),`<button class="btn sm">${lang=="ar"?"مراجعة":"Review"}</button>`],
-    [uChip("ع","عمرو زكي"),t("marketer"),lang=="ar"?"بطاقة شخصية":"National ID","2026/05/31",tag(t("pendingApp"),"#F59E0B"),`<button class="btn sm">${lang=="ar"?"مراجعة":"Review"}</button>`],
-    [uChip("ر","رنا خالد"),t("marketer"),lang=="ar"?"بطاقة شخصية":"National ID","2026/05/30",tag(t("pendingApp"),"#F59E0B"),`<button class="btn sm">${lang=="ar"?"مراجعة":"Review"}</button>`],
-    [uChip("ط","طارق فؤاد"),t("merchant"),lang=="ar"?"بطاقة + ضريبي":"ID + Tax card","2026/05/29",tag(t("pendingApp"),"#F59E0B"),`<button class="btn sm">${lang=="ar"?"مراجعة":"Review"}</button>`]])
- }</div></div>`;
-
-S["admin/reports"]=()=>head(t("admin")+" · "+t("reports"),t("reports"),
-  lang=="ar"?"أربع لوحات: التسويات والتدفّق النقدي · أداء الشحن ورفض COD · حركة المخزون · مصادر الطلبات":"Four panels: settlements & cash flow · shipping & COD rejection · inventory · order sources")
- +`<div class="grid kpis" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px">
-   ${kpi('money','#D8F1ED','#0D9488',lang=="ar"?"صافي التدفّق النقدي":"Net cash flow","312,400 "+ccy(),"8.4%",true)}
-   ${kpi('truck','#DBEAFE','#1D4ED8',lang=="ar"?"نسبة التسليم":"Delivery rate","71%","2.1%",true)}
-   ${kpi('alert','#FEE2E2','#DC2626',lang=="ar"?"رفض COD":"COD rejection","29%","1.3%",false)}
-   ${kpi('box','#FEF3C7','#D97706',lang=="ar"?"حركة المخزون":"Stock moves","1,820","—",true)}
- </div>
- <div class="split2">
-   <div class="card"><div class="ch"><h3>${lang=="ar"?"التدفّق النقدي الأسبوعي":"Weekly cash flow"}</h3></div><div class="cb">${bars([["W1",62],["W2",75],["W3",58],["W4",90],["W5",84],["W6",97]])}</div></div>
-   <div class="card"><div class="ch"><h3>${lang=="ar"?"مصادر الطلبات":"Order sources"}</h3></div><div class="cb">${donut([[lang=="ar"?"يدوي":"Manual","#0D9488",46],[lang=="ar"?"جملة":"Bulk","#0EA5E9",33],["API","#7C3AED",21]])}</div></div>
- </div>`;
-
-S["admin/settings"]=()=>head(t("admin")+" · "+t("settings"),t("settings"),
-  lang=="ar"?"إعدادات المنصّة وقواعد التشغيل المعتمدة":"Platform settings and approved operating rules")
- +`<div class="split2">
-   <div class="card"><div class="ch"><h3>${lang=="ar"?"قواعد العمولة والمالية":"Commission & finance"}</h3></div><div class="cb">
-     <div class="minirow"><span class="note">${lang=="ar"?"فترة سماح العمولة":"Commission grace"}</span><b>${lang=="ar"?"7 أيام بعد التسليم":"7 days after delivery"}</b></div>
-     <div class="minirow"><span class="note">${lang=="ar"?"نموذج التسعير":"Pricing model"}</span><b>${lang=="ar"?"ذاتي (السعر الأساسي حدّ أدنى)":"Self-pricing (base = floor)"}</b></div>
-     <div class="minirow"><span class="note">${lang=="ar"?"كود الطلب":"Order code"}</span><b style="font-family:monospace">M{merchant}-{seq}</b></div>
-   </div></div>
-   <div class="card"><div class="ch"><h3>${lang=="ar"?"الاعتماد والتكاملات":"Approval & integrations"}</h3></div><div class="cb">
-     <div class="minirow"><span class="note">${lang=="ar"?"اعتماد المنتجات":"Product approval"}</span>${tag(lang=="ar"?"إلزامي":"Required","#0D9488")}</div>
-     <div class="minirow"><span class="note">${lang=="ar"?"الاعتماد الجماعي":"Bulk approve"}</span>${tag(lang=="ar"?"مُفعَّل":"ON","#16A34A")}</div>
-     <div class="minirow"><span class="note">${lang=="ar"?"فحص NSFW الآلي":"Auto NSFW check"}</span>${tag(lang=="ar"?"مُفعَّل":"ON","#16A34A")}</div>
-     <div class="minirow"><span class="note">${lang=="ar"?"إعادة محاولة التكامل":"Integration retry"}</span><b>${lang=="ar"?"5 مرّات ثم Dead-letter":"5× then dead-letter"}</b></div>
-   </div></div>
- </div>
- <div class="card" style="margin-top:16px"><div class="ch"><h3>${lang=="ar"?"الدول واللغات":"Countries & languages"}</h3></div><div class="cb">
-   <div class="minirow"><span class="note">${lang=="ar"?"الدول المفعّلة":"Active countries"}</span><b>${lang=="ar"?"مصر · السعودية":"Egypt · Saudi Arabia"}</b></div>
-   <div class="minirow"><span class="note">${lang=="ar"?"اللغات":"Languages"}</span><b>${lang=="ar"?"العربية · الإنجليزية":"Arabic · English"}</b></div>
- </div></div>`;
-
 S["merchant/activity"]=()=>head(t("merchant")+" · "+t("activity"),t("activity"),t("actSubMine"))
  +actFilter()
  +`<div class="card"><div class="cb" style="padding:0">${tbl(
@@ -743,66 +673,6 @@ S["merchant/activity"]=()=>head(t("merchant")+" · "+t("activity"),t("activity")
     ["2026/05/31 08:55",actTag("auth"),lang=="ar"?"تسجيل دخول ناجح":"Successful sign-in","41.34.10.22"]])
  }</div></div>`;
 
-S["merchant/warehouses"]=()=>head(t("merchant")+" · "+t("warehouses"),t("warehouses"),
-  lang=="ar"?"مستويات المخزون عبر مخازنك — المتاح والمحجوز لكل منتج":"Stock levels across your warehouses — available & reserved per product",
-  `<button class="btn ok sm">${lang=="ar"?"+ مخزن":"+ Warehouse"}</button>`)
- +`<div class="grid kpis" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px">
-   ${kpi('box','#D8F1ED','#0D9488',lang=="ar"?"عدد المخازن":"Warehouses","3","—",true)}
-   ${kpi('cart','#DBEAFE','#1D4ED8',lang=="ar"?"إجمالي القطع المتاحة":"Available units","4,180","2.6%",true)}
-   ${kpi('alert','#FEE2E2','#DC2626',lang=="ar"?"منتجات منخفضة المخزون":"Low-stock items","7","1",false)}
- </div>
- <div class="card"><div class="cb" style="padding:0">${tbl(
-   [t("c_product"),lang=="ar"?"المخزن":"Warehouse",lang=="ar"?"المتاح":"Available",lang=="ar"?"المحجوز":"Reserved",t("c_status")],
-   [[prod("👕","تيشيرت رياضي","SKU-TS-999"),lang=="ar"?"القاهرة":"Cairo","320","45",tag(t("active"),"#16A34A")],
-    [prod("🩳","بنطلون شورت","SKU-SH-300"),lang=="ar"?"القاهرة":"Cairo","96","18",tag(t("active"),"#16A34A")],
-    [prod("🧢","قبعة رياضية","SKU-CP-041"),lang=="ar"?"الجيزة":"Giza","12","9",tag(lang=="ar"?"منخفض":"Low","#F59E0B")],
-    [prod("🧥","جاكيت شتوي","SKU-WJ-018"),lang=="ar"?"الإسكندرية":"Alexandria","0","0",tag(lang=="ar"?"نفد":"Out","#DC2626")]])
- }</div></div>`;
-
-S["merchant/coupons"]=()=>head(t("merchant")+" · "+t("coupons"),t("coupons"),
-  lang=="ar"?"أكواد الخصم الخاصة بمتجرك":"Discount codes for your store",
-  `<button class="btn ok sm">${lang=="ar"?"+ كوبون جديد":"+ New coupon"}</button>`)
- +`<div class="card"><div class="cb" style="padding:0">${tbl(
-   [lang=="ar"?"الكود":"Code",lang=="ar"?"النوع":"Type",lang=="ar"?"القيمة":"Value",lang=="ar"?"الاستخدام":"Used",lang=="ar"?"الصلاحية":"Expires",t("c_status")],
-   [["<b style='font-family:monospace'>EID20</b>",lang=="ar"?"نسبة":"Percent","20%","134 / 500","2026/06/30",tag(t("active"),"#16A34A")],
-    ["<b style='font-family:monospace'>FREESHIP</b>",lang=="ar"?"شحن مجاني":"Free ship","—","420 / ∞","2026/07/15",tag(t("active"),"#16A34A")],
-    ["<b style='font-family:monospace'>SAVE50</b>",lang=="ar"?"مبلغ":"Amount","50 "+ccy(),"500 / 500",lang=="ar"?"منتهٍ":"Ended",tag(lang=="ar"?"منتهٍ":"Expired","#64748B")],
-    ["<b style='font-family:monospace'>WELCOME</b>",lang=="ar"?"نسبة":"Percent","10%","78 / 1000","2026/08/01",tag(t("active"),"#16A34A")]])
- }</div></div>`;
-
-S["merchant/returns"]=()=>head(t("merchant")+" · "+t("returns"),t("returns"),
-  lang=="ar"?"إدارة طلبات الإرجاع واللوجستيات العكسية":"Manage return requests and reverse logistics")
- +`<div class="chips">
-   <button class="chip on">${lang=="ar"?"قيد المراجعة":"Pending"} <span class="n">3</span></button>
-   <button class="chip">${lang=="ar"?"مقبول":"Accepted"} <span class="n">28</span></button>
-   <button class="chip">${lang=="ar"?"مرفوض":"Rejected"} <span class="n">5</span></button>
-  </div>
-  <div class="card"><div class="cb" style="padding:0">${tbl(
-   [t("orderCode"),t("c_product"),lang=="ar"?"السبب":"Reason",t("c_date"),t("c_status"),t("c_action")],
-   [["M0001-00098721",prod("👕","تيشيرت رياضي",""),lang=="ar"?"مقاس غير مناسب":"Wrong size","2026/05/31",tag(lang=="ar"?"قيد المراجعة":"Pending","#F59E0B"),`<button class="btn sm">${lang=="ar"?"مراجعة":"Review"}</button>`],
-    ["M0001-00098640",prod("👟","حذاء كاجوال",""),lang=="ar"?"عيب صناعة":"Defect","2026/05/30",tag(lang=="ar"?"قيد المراجعة":"Pending","#F59E0B"),`<button class="btn sm">${lang=="ar"?"مراجعة":"Review"}</button>`],
-    ["M0001-00098512",prod("🧥","جاكيت شتوي",""),lang=="ar"?"المنتج مختلف":"Item mismatch","2026/05/28",tag(lang=="ar"?"مقبول":"Accepted","#16A34A"),`<button class="btn ghost sm">${lang=="ar"?"تفاصيل":"Details"}</button>`]])
- }</div></div>`;
-
-S["merchant/settings"]=()=>head(t("merchant")+" · "+t("settings"),t("settings"),
-  lang=="ar"?"ملف التاجر وبيانات الدفع وإعدادات الشحن":"Merchant profile, payout details and shipping")
- +`<div class="split2">
-   <div class="card"><div class="ch"><h3>${lang=="ar"?"ملف التاجر والعلامة":"Merchant & brand"}</h3></div><div class="cb">
-     <div class="field"><label>${lang=="ar"?"اسم المتجر":"Store name"}</label><input value="Besouhola" style="width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:9px;font-family:inherit"></div>
-     <div class="field"><label>${lang=="ar"?"وصف مختصر":"Short bio"}</label><textarea rows="2" style="width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:9px;font-family:inherit">${lang=="ar"?"متجر ملابس رياضية":"Sportswear store"}</textarea></div>
-   </div></div>
-   <div class="card"><div class="ch"><h3>${lang=="ar"?"بيانات الدفع":"Payout details"}</h3></div><div class="cb">
-     <div class="minirow"><span class="note">${lang=="ar"?"طريقة الدفع":"Payout method"}</span><b>${lang=="ar"?"تحويل بنكي":"Bank transfer"}</b></div>
-     <div class="minirow"><span class="note">${lang=="ar"?"البنك":"Bank"}</span><b>CIB •••• 4821</b></div>
-     <div class="minirow"><span class="note">${lang=="ar"?"دورة التسوية":"Settlement cycle"}</span><b>${lang=="ar"?"أسبوعية":"Weekly"}</b></div>
-   </div></div>
- </div>
- <div class="card" style="margin-top:16px"><div class="ch"><h3>${lang=="ar"?"التنبيهات":"Notifications"}</h3></div><div class="cb">
-   <div class="minirow"><span class="note">${lang=="ar"?"طلب جديد":"New order"}</span>${tag(lang=="ar"?"مُفعَّل":"ON","#16A34A")}</div>
-   <div class="minirow"><span class="note">${lang=="ar"?"نفاد المخزون":"Out of stock"}</span>${tag(lang=="ar"?"مُفعَّل":"ON","#16A34A")}</div>
-   <div class="minirow"><span class="note">${lang=="ar"?"طلب إرجاع":"Return request"}</span>${tag(lang=="ar"?"مُفعَّل":"ON","#16A34A")}</div>
- </div></div>`;
-
 S["marketer/activity"]=()=>head(t("marketer")+" · "+t("activity"),t("activity"),t("actSubMine"))
  +actFilter()
  +`<div class="card"><div class="cb" style="padding:0">${tbl(
@@ -814,81 +684,6 @@ S["marketer/activity"]=()=>head(t("marketer")+" · "+t("activity"),t("activity")
     ["2026/05/31 17:30",actTag("finance"),lang=="ar"?"قدّمت طلب سحب 1,250 ج.م":"Requested withdrawal EGP 1,250","156.200.8.91"],
     ["2026/05/31 09:40",actTag("auth"),lang=="ar"?"تسجيل دخول ناجح":"Successful sign-in","156.200.8.91"]])
  }</div></div>`;
-
-S["marketer/pdetail"]=()=>{
-  const base=185, sell=Math.round(base*1.3), profit=sell-base;
-  return head(t("marketer")+" · "+t("pdetail"),t("pdetail"),"",
-    `<button class="btn ghost sm" onclick="go('marketplace')">← ${t("marketplace")}</button>`)
-  +`<div class="split2">
-     <div class="card"><div class="cb">
-       <div style="background:linear-gradient(135deg,#D8F1ED,#CCFBF1);border-radius:12px;height:240px;display:grid;place-items:center;font-size:96px">👕</div>
-       <div style="display:flex;gap:8px;margin-top:10px">
-         ${["👕","🧥","🎽","👔"].map(e=>`<div style="width:56px;height:56px;border:1px solid var(--line);border-radius:9px;display:grid;place-items:center;font-size:26px;cursor:pointer">${e}</div>`).join('')}
-       </div>
-     </div></div>
-     <div>
-       <div class="card" style="margin-bottom:14px"><div class="cb">
-         <div style="font-weight:800;font-size:18px;margin-bottom:4px">${lang=="ar"?"تيشيرت رياضي نص كم":"Sport Half-Sleeve Tee"}</div>
-         <div class="note" style="margin-bottom:10px">SKU-TS-104 · ${cName()}</div>
-         <div style="font-size:13px;color:var(--muted);margin-bottom:6px">${t("basePrice")}: <b style="color:var(--ink);font-size:15px">${base} ${ccy()}</b></div>
-         <div style="font-size:13px;color:var(--muted);margin-bottom:14px">${lang=="ar"?"المخزون":"Stock"}: <b style="color:var(--ink)">${lang=="ar"?"بِيع 180 من 500":"180 of 500 sold"}</b></div>
-         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-           <div><div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px">${t("yourSellPrice")}</div>
-             <input type="number" value="${sell}" min="${base}" style="width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:9px;font-weight:800;font-size:15px"></div>
-           <div><div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px">${t("yourProfit")}</div>
-             <div style="padding:9px 12px;border-radius:9px;background:var(--soft);color:#0D9488;font-weight:800;font-size:15px">${profit} ${ccy()}</div></div>
-         </div>
-         <div style="display:flex;gap:9px">
-           <button class="btn" style="flex:1;justify-content:center">${t("importToStore")}</button>
-           <button class="btn ghost sm">${svg(IC.star)} ${t("wishlist")}</button>
-         </div>
-       </div></div>
-       <div class="card"><div class="ch"><h3>${lang=="ar"?"الوصف":"Description"}</h3></div><div class="cb">
-         <div class="note">${lang=="ar"?"تيشيرت قطن مريح بقصّة عصرية، متوفّر بعدة ألوان ومقاسات — مناسب للأنشطة الرياضية والإطلالة اليومية.":"Comfortable cotton tee with a modern fit, multiple colors and sizes — great for sports and daily wear."}</div>
-       </div></div>
-     </div>
-   </div>`;
-};
-
-S["marketer/wishlist"]=()=>{
-  const ps=[["👟","حذاء رياضي","SKU-SN-210",560],["🧥","جاكيت خفيف","SKU-JK-031",430],
-   ["🎒","شنطة ظهر","SKU-BG-055",320],["⌚","ساعة رياضية","SKU-WT-014",890]];
-  return head(t("marketer")+" · "+t("wishlist"),t("wishlist"),lang=="ar"?"المنتجات التي حفظتها تمهيدًا لاستيرادها":"Products you saved to import later")
-  +`<div class="pgrid">${ps.map(p=>{
-     const defSell=Math.round(p[3]*1.3), defProfit=defSell-p[3];
-     return `<div class="pcard">
-       <div class="img" style="cursor:pointer" onclick="go('pdetail')">${p[0]}</div><div class="body">
-         <div style="font-weight:700;font-size:13px;margin-bottom:4px">${p[1]}</div>
-         <div class="note" style="margin-bottom:8px">${p[2]}</div>
-         <div style="font-size:12px;color:var(--muted);margin-bottom:3px">${t("basePrice")}: <b style="color:var(--ink)">${p[3]} ${ccy()}</b></div>
-         <div style="font-size:12px;color:var(--muted);margin-bottom:10px">${t("yourProfit")}: <b style="color:#0D9488">${defProfit} ${ccy()}</b></div>
-         <div style="display:flex;gap:8px">
-           <button class="btn sm" style="flex:1;justify-content:center">${t("importToStore")}</button>
-           <button class="btn ghost sm" style="color:#DC2626">${svg(IC.xmark)}</button>
-         </div>
-       </div></div>`;}).join('')}</div>`;
-};
-
-S["marketer/bulkupload"]=()=>head(t("marketer")+" · "+t("bulkupload"),t("bulkupload"),
-  lang=="ar"?"ارفع عدّة طلبات دفعة واحدة عبر ملف Excel/CSV مع تحقّق آلي صفًّا صفًّا":"Upload many orders at once via Excel/CSV with row-by-row validation",
-  `<button class="btn ghost sm">${lang=="ar"?"تحميل القالب":"Download template"}</button>`)
- +`<div style="border:2px dashed var(--line);border-radius:14px;padding:34px;text-align:center;background:var(--bg);margin-bottom:16px">
-    <div style="font-size:40px;margin-bottom:8px">⬆</div>
-    <div style="font-weight:700;margin-bottom:4px">${lang=="ar"?"اسحب ملف Excel/CSV هنا أو اختر ملفًا":"Drag Excel/CSV here or choose a file"}</div>
-    <div class="note">${lang=="ar"?"الحدّ الأقصى 5000 صفّ — يُطبَّق نفس تحقّق الإدخال اليدوي":"Up to 5000 rows — same validation as manual entry"}</div>
-    <button class="btn sm" style="margin-top:12px">${lang=="ar"?"اختيار ملف":"Choose file"}</button>
-  </div>
-  <div class="card"><div class="ch"><h3>${lang=="ar"?"تقرير التحقّق — آخر رفع":"Validation report — last upload"}</h3></div>
-   <div class="cb" style="padding:0">${tbl(
-     [lang=="ar"?"الصفّ":"Row",t("c_product"),lang=="ar"?"الهاتف":"Phone",t("c_status"),lang=="ar"?"الخطأ":"Error"],
-     [["1",prod("👕","تيشيرت رياضي",""),"010••••5678",tag(lang=="ar"?"صالح":"Valid","#16A34A"),"—"],
-      ["2",prod("🩳","بنطلون شورت",""),"011••••5432",tag(lang=="ar"?"صالح":"Valid","#16A34A"),"—"],
-      ["3",prod("👟","حذاء رياضي",""),"0100",tag(lang=="ar"?"خطأ":"Error","#DC2626"),"INVALID_PHONE"],
-      ["4",prod("🧥","جاكيت شتوي",""),"015••••4321",tag(lang=="ar"?"خطأ":"Error","#DC2626"),"PRICE_BELOW_BASE"],
-      ["5",prod("🎒","شنطة ظهر",""),"012••••7890",tag(lang=="ar"?"صالح":"Valid","#16A34A"),"—"]])
-   }</div></div>
-  <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:11px 16px;margin-top:14px;font-size:12.5px;color:#1E40AF;font-weight:600">
-    ${lang=="ar"?"3 صفوف صالحة ستُعتمد · صفّان بهما أخطاء يجب تصحيحهما قبل الاعتماد":"3 valid rows will be imported · 2 rows have errors to fix before import"}</div>`;
 
 function kpi(ic,icbg,iccol,lbl,val,trend,up){
   return `<div class="kpi"><div class="top">
@@ -1320,7 +1115,7 @@ S["marketer/marketplace"]=()=>{
      const defSell=Math.round(p[3]*1.3);
      const defProfit=defSell-p[3];
      return `<div class="pcard">
-       <div class="img" style="cursor:pointer" onclick="go('pdetail')">${p[0]}</div><div class="body">
+       <div class="img">${p[0]}</div><div class="body">
          <div style="font-weight:700;font-size:13px;margin-bottom:4px">${p[1]}</div>
          <div class="note" style="margin-bottom:8px">${p[2]}</div>
          <div style="font-size:12px;color:var(--muted);margin-bottom:3px">${t("basePrice")}: <b style="color:var(--ink)">${p[3]} ${ccy()}</b></div>
