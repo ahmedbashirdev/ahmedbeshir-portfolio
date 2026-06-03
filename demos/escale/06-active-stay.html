@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Escalé · Active Stay · Design Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..900&family=Geist+Mono:wght@400..600&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --aubergine-900: #3A1234;
+  --aubergine-700: #4A1942;
+  --aubergine-500: #5B2C5F;
+  --aubergine-300: #8E5A8E;
+  --aubergine-100: #EFE3EF;
+  --magenta-500: #B8228C;
+  --magenta-300: #D86CB0;
+  --terracotta-700: #A05A3A;
+  --terracotta-500: #C9956B;
+  --terracotta-300: #E2BC9C;
+  --terracotta-100: #F5E8DC;
+  --ink-900: #1C1410;
+  --ink-700: #3D332D;
+  --ink-500: #6B5D54;
+  --ink-300: #A89A8E;
+  --sand-100: #F0E9DF;
+  --sand-50: #F7F2E9;
+  --cream: #FAF7F2;
+  --paper: #FDFBF7;
+  --success: #5A8C5F;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Geist', -apple-system, sans-serif;
+  --font-arabic: 'Tajawal', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
+  --shadow-md: 0 4px 12px rgba(58, 18, 52, 0.06), 0 1px 3px rgba(58, 18, 52, 0.04);
+  --shadow-lg: 0 12px 32px rgba(58, 18, 52, 0.08), 0 4px 8px rgba(58, 18, 52, 0.04);
+  --shadow-key: 0 30px 60px -15px rgba(91, 44, 95, 0.35), 0 16px 32px -8px rgba(184, 34, 140, 0.2);
+  --shadow-phone: 0 50px 100px -20px rgba(58, 18, 52, 0.25), 0 30px 60px -30px rgba(58, 18, 52, 0.3);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink-900);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 15% 5%, rgba(184, 34, 140, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 85% 90%, rgba(201, 149, 107, 0.06) 0%, transparent 40%);
+}
+
+[lang="ar"], [lang="ar"] * { font-family: var(--font-arabic); }
+[lang="ar"] { line-height: 1.6; }
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' /%3E%3C/svg%3E");
+}
+
+.page {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 48px 32px 96px;
+}
+
+.brand-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 56px;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.brand-identity { display: flex; align-items: center; gap: 20px; }
+.brand-logo { width: 48px; height: 48px; }
+.brand-name-wrap { display: flex; flex-direction: column; gap: 2px; }
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  color: var(--aubergine-900);
+  line-height: 1;
+}
+.brand-tagline {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  font-weight: 500;
+}
+
+.brand-meta { display: flex; align-items: center; gap: 24px; }
+.screen-stamp { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.screen-stamp .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-300); font-weight: 500; }
+.screen-stamp .val { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--terracotta-700); }
+
+.locale-switch {
+  display: flex;
+  background: var(--paper);
+  border: 1px solid var(--sand-100);
+  border-radius: 9999px;
+  padding: 4px;
+  box-shadow: 0 1px 2px rgba(58, 18, 52, 0.04);
+}
+.locale-switch button {
+  border: 0;
+  background: transparent;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-500);
+  cursor: pointer;
+  transition: all 250ms var(--ease-out);
+}
+.locale-switch button.active {
+  background: var(--aubergine-700);
+  color: var(--paper);
+}
+
+.editorial-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 48px;
+  margin-bottom: 56px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--sand-100);
+}
+.editorial-head .label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--terracotta-700);
+  margin-bottom: 12px;
+}
+.editorial-head h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(40px, 5.5vw, 72px);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  color: var(--aubergine-900);
+  max-width: 16ch;
+}
+.editorial-head h1 em {
+  font-style: italic;
+  color: var(--magenta-500);
+}
+.editorial-head .colophon {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-500);
+  letter-spacing: 0.02em;
+  text-align: end;
+  line-height: 1.7;
+}
+.editorial-head .colophon strong { color: var(--aubergine-700); }
+
+.composition {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+@media (max-width: 980px) {
+  .composition { grid-template-columns: 1fr; gap: 48px; }
+  .phone { transform: scale(0.85); transform-origin: top center; }
+}
+
+.phone-stage {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  padding: 32px 0;
+}
+.phone-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 35%, rgba(184, 34, 140, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse at center, rgba(91, 44, 95, 0.08) 0%, transparent 60%);
+  z-index: 0;
+}
+
+.phone {
+  position: relative;
+  width: 400px;
+  height: 840px;
+  background: var(--ink-900);
+  border-radius: 56px;
+  padding: 12px;
+  box-shadow: var(--shadow-phone);
+  z-index: 1;
+}
+.phone::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 30px;
+  background: var(--ink-900);
+  border-radius: 0 0 18px 18px;
+  z-index: 100;
+}
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  background: var(--paper);
+  border-radius: 44px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+.phone-screen::-webkit-scrollbar { display: none; }
+
+/* STATUS BAR */
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 32px 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-900);
+}
+.status-bar .icons { display: flex; gap: 6px; }
+.status-bar svg { width: 16px; height: 16px; }
+
+/* APP HEADER */
+.app-header {
+  padding: 6px 24px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-greeting { display: flex; align-items: center; gap: 12px; }
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--terracotta-300), var(--terracotta-500));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--paper);
+}
+.greet-text { display: flex; flex-direction: column; }
+.greet-line-1 {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  font-weight: 500;
+}
+.greet-line-2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--aubergine-900);
+  letter-spacing: -0.01em;
+}
+[lang="ar"] .greet-line-1, [lang="ar"] .greet-line-2 { letter-spacing: 0; }
+[lang="ar"] .greet-line-1 { text-transform: none; font-size: 12px; }
+[lang="ar"] .greet-line-2 { font-weight: 700; }
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--sand-50);
+  border: 1px solid var(--sand-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--aubergine-700);
+  position: relative;
+}
+.icon-button .dot {
+  position: absolute;
+  top: 8px;
+  inset-inline-end: 10px;
+  width: 8px;
+  height: 8px;
+  background: var(--magenta-500);
+  border-radius: 50%;
+  border: 2px solid var(--paper);
+}
+.icon-button svg { width: 18px; height: 18px; }
+
+/* ACTIVE STAY HERO */
+.stay-hero {
+  padding: 0 24px 8px;
+}
+
+.stay-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--terracotta-700);
+  margin-bottom: 6px;
+}
+.stay-eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  display: inline-block;
+  box-shadow: 0 0 0 4px rgba(90, 140, 95, 0.15);
+}
+
+.stay-headline {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--aubergine-900);
+  margin-bottom: 4px;
+}
+[lang="ar"] .stay-headline { font-weight: 700; letter-spacing: 0; font-size: 28px; }
+.stay-headline em {
+  font-style: italic;
+  color: var(--magenta-500);
+}
+
+.stay-sub {
+  font-size: 13px;
+  color: var(--ink-500);
+  margin-bottom: 20px;
+}
+
+/* THE KEY CARD */
+.key-card {
+  position: relative;
+  margin: 0 24px 24px;
+  border-radius: 28px;
+  overflow: hidden;
+  padding: 4px;
+  background: linear-gradient(135deg, #3A1234 0%, #5B2C5F 30%, #B8228C 75%, #D86CB0 100%);
+  box-shadow: var(--shadow-key);
+}
+
+.key-inner {
+  background: linear-gradient(160deg, #4A1942 0%, #5B2C5F 50%, #3A1234 100%);
+  border-radius: 25px;
+  padding: 22px;
+  position: relative;
+  color: var(--paper);
+  overflow: hidden;
+}
+
+/* Subtle pattern overlay */
+.key-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 95 L18 75 L26 95 Z M30 95 L38 75 L46 95 Z M50 95 L58 75 L66 95 Z M70 95 L78 75 L86 95 Z' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
+  background-size: 280px;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+.key-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 2;
+}
+
+.key-label {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+[lang="ar"] .key-label { letter-spacing: 0; text-transform: none; font-size: 11px; }
+
+.key-hotel {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+[lang="ar"] .key-hotel { font-weight: 700; letter-spacing: 0; }
+
+.key-mini-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(253, 251, 247, 0.16);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.key-mini-logo svg { width: 18px; height: 18px; }
+
+/* QR Code area */
+.qr-wrap {
+  background: var(--paper);
+  border-radius: 18px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.qr-svg {
+  width: 180px;
+  height: 180px;
+}
+
+.qr-pulse-text {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+[lang="ar"] .qr-pulse-text { letter-spacing: 0; text-transform: none; font-size: 12px; }
+
+.qr-pulse-text svg { width: 12px; height: 12px; color: var(--aubergine-700); }
+
+/* Key bottom info */
+.key-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 18px;
+  position: relative;
+  z-index: 2;
+}
+
+.key-room-block { }
+.key-room-label {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+[lang="ar"] .key-room-label { letter-spacing: 0; text-transform: none; }
+
+.key-room-num {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 32px;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.key-expires {
+  text-align: end;
+  opacity: 0.85;
+}
+.key-expires-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+[lang="ar"] .key-expires-label { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.key-expires-val {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* STAY STRIP */
+.stay-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  margin: 0 24px 24px;
+  background: var(--sand-100);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--sand-100);
+}
+.strip-cell {
+  background: var(--paper);
+  padding: 12px;
+  text-align: center;
+}
+.strip-num {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--aubergine-900);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.strip-num.accent { color: var(--magenta-500); font-style: italic; }
+.strip-lbl {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  font-weight: 500;
+}
+[lang="ar"] .strip-lbl { letter-spacing: 0; text-transform: none; font-size: 11px; }
+
+/* SECTION TITLE */
+.sect-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 24px 10px;
+}
+.sect-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 20px;
+  letter-spacing: -0.015em;
+  color: var(--aubergine-900);
+}
+[lang="ar"] .sect-title { font-weight: 700; letter-spacing: 0; }
+.sect-action {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--terracotta-700);
+}
+
+/* SERVICES GRID */
+.services-grid {
+  padding: 0 24px 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.service-tile {
+  background: var(--paper);
+  border: 1px solid var(--sand-100);
+  border-radius: 14px;
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.service-tile.featured {
+  background: var(--terracotta-100);
+  border-color: var(--terracotta-300);
+}
+.service-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--sand-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--aubergine-700);
+}
+.service-tile.featured .service-icon {
+  background: var(--paper);
+  color: var(--terracotta-700);
+}
+.service-icon svg { width: 18px; height: 18px; }
+.service-name {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-900);
+  letter-spacing: 0.02em;
+}
+[lang="ar"] .service-name { font-size: 12px; font-weight: 700; }
+
+/* ACTIVITY FEED */
+.activity-feed { padding: 0 24px 24px; }
+
+.activity-card {
+  background: var(--paper);
+  border: 1px solid var(--sand-100);
+  border-radius: 16px;
+  padding: 12px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.activity-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.activity-icon.done { background: rgba(90, 140, 95, 0.15); color: var(--success); }
+.activity-icon.pending { background: var(--terracotta-100); color: var(--terracotta-700); }
+.activity-icon.info { background: var(--aubergine-100); color: var(--aubergine-700); }
+.activity-icon svg { width: 16px; height: 16px; }
+
+.activity-content { flex: 1; min-width: 0; }
+.activity-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--aubergine-900);
+  letter-spacing: -0.01em;
+  margin-bottom: 2px;
+}
+[lang="ar"] .activity-title { font-weight: 700; }
+.activity-sub {
+  font-size: 11px;
+  color: var(--ink-500);
+  line-height: 1.4;
+}
+
+.activity-time {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-300);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* CONCIERGE CHAT BANNER */
+.concierge-banner {
+  margin: 8px 24px 100px;
+  background: linear-gradient(135deg, var(--aubergine-900) 0%, var(--aubergine-700) 70%, var(--magenta-500) 100%);
+  color: var(--paper);
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.concierge-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M70 90 L78 70 L86 90 Z M85 90 L93 70 L101 90 Z' fill='rgba(255,255,255,0.06)'/%3E%3C/svg%3E");
+  background-size: 220px;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+}
+
+.concierge-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(253, 251, 247, 0.16);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 16px;
+  flex-shrink: 0;
+  z-index: 1;
+  position: relative;
+}
+
+.concierge-text { flex: 1; z-index: 1; position: relative; }
+.concierge-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+}
+[lang="ar"] .concierge-title { font-weight: 700; }
+.concierge-sub {
+  font-size: 11px;
+  opacity: 0.8;
+  margin-top: 2px;
+  font-style: italic;
+}
+[lang="ar"] .concierge-sub { font-style: normal; }
+
+.concierge-cta {
+  background: var(--paper);
+  color: var(--aubergine-900);
+  border: 0;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  z-index: 1;
+  position: relative;
+}
+
+/* BOTTOM NAV */
+.bottom-nav {
+  position: sticky;
+  bottom: 0;
+  background: var(--paper);
+  border-top: 1px solid var(--sand-100);
+  padding: 10px 16px 22px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: var(--ink-500);
+  font-weight: 500;
+  padding: 4px 8px;
+}
+.nav-item.active { color: var(--aubergine-900); }
+.nav-item.active .nav-icon-bg {
+  background: var(--aubergine-100);
+}
+.nav-icon-bg {
+  width: 44px;
+  height: 28px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 250ms var(--ease-out);
+}
+.nav-icon-bg svg { width: 18px; height: 18px; }
+[lang="ar"] .nav-item { font-size: 11px; }
+
+/* SIDE PANEL */
+.side-panel {
+  position: sticky;
+  top: 32px;
+  padding-top: 32px;
+}
+
+.panel-h {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 32px;
+  letter-spacing: -0.025em;
+  color: var(--aubergine-900);
+  margin-bottom: 8px;
+  line-height: 1;
+}
+.panel-h em {
+  font-style: italic;
+  color: var(--magenta-500);
+}
+
+.panel-lede {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-500);
+  max-width: 52ch;
+  margin-bottom: 28px;
+}
+
+.principle-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 32px;
+}
+.principle-list li {
+  padding-inline-start: 32px;
+  position: relative;
+}
+.principle-list li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, var(--terracotta-500), var(--magenta-500));
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.principle-list li strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--aubergine-900);
+  margin-bottom: 4px;
+}
+[lang="ar"] .principle-list li strong { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.principle-list li p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-700);
+}
+
+/* Quote pull */
+.pull-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--aubergine-900);
+  border-inline-start: 3px solid var(--magenta-500);
+  padding-inline-start: 20px;
+  margin-bottom: 32px;
+}
+[lang="ar"] .pull-quote { font-family: var(--font-arabic); font-style: normal; font-weight: 500; }
+.pull-quote .em { color: var(--magenta-500); }
+
+.tech-callout {
+  background: var(--sand-50);
+  border: 1px solid var(--sand-100);
+  border-radius: 14px;
+  padding: 18px;
+}
+.tech-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--terracotta-700);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+[lang="ar"] .tech-label { letter-spacing: 0; text-transform: none; font-size: 12px; }
+.tech-body {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-700);
+}
+.tech-body code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--paper);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--aubergine-700);
+  border: 1px solid var(--sand-100);
+}
+
+.footnote {
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 1px solid var(--sand-100);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-500);
+}
+.footnote .accent { color: var(--magenta-500); font-weight: 600; }
+
+@media (max-width: 640px) {
+  .page { padding: 32px 20px 64px; }
+  .editorial-head { grid-template-columns: 1fr; gap: 24px; }
+  .editorial-head .colophon { text-align: start; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="brand-bar">
+    <div class="brand-identity">
+      <svg class="brand-logo" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#5B2C5F"/>
+            <stop offset="100%" stop-color="#B8228C"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="44" r="36" fill="url(#brandGrad)"/>
+        <circle cx="50" cy="44" r="22" fill="#FDFBF7"/>
+        <path d="M28 74 L36 60 L44 74 Z M44 74 L52 60 L60 74 Z M60 74 L68 60 L76 74 Z" fill="#FDFBF7"/>
+      </svg>
+      <div class="brand-name-wrap">
+        <div class="brand-name">Escalé</div>
+        <div class="brand-tagline">Design System · v0.1</div>
+      </div>
+    </div>
+    <div class="brand-meta">
+      <div class="screen-stamp">
+        <div class="lbl">Screen 06</div>
+        <div class="val">Active Stay</div>
+      </div>
+      <div class="locale-switch">
+        <button id="btnEn" class="active" onclick="setLocale('en')">EN</button>
+        <button id="btnAr" onclick="setLocale('ar')">ع</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="editorial-head">
+    <div>
+      <div class="label" id="eh-label">Screen 06 / Active Stay</div>
+      <h1><span id="eh-1">The phone</span> <em id="eh-2">becomes the key.</em></h1>
+    </div>
+    <div class="colophon">
+      <div><strong>QR key</strong> as hero — taps to expand</div>
+      <div><strong>Room 204</strong> · check-out countdown</div>
+      <div><strong>6 services</strong> at thumb-reach</div>
+      <div>Live <strong>activity feed</strong> + concierge chat</div>
+      <div style="margin-top:8px; opacity:0.6;">Preview · 22 May 2026</div>
+    </div>
+  </section>
+
+  <div class="composition">
+
+    <!-- PHONE -->
+    <div class="phone-stage">
+      <div class="phone">
+        <div class="phone-screen" id="screen" lang="en" dir="ltr">
+
+          <div class="status-bar">
+            <span>9:41</span>
+            <span class="icons">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 17h2v-2H2v2zm4 0h2v-6H6v6zm4 0h2V7h-2v10zm4 0h2v-4h-2v4zm4 0h2v-8h-2v8z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21l8-12c-2.5-2.5-5-3.5-8-3.5S6.5 6.5 4 9l8 12z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="4" y="8" width="14" height="8" rx="1" fill="currentColor"/></svg>
+            </span>
+          </div>
+
+          <div class="app-header">
+            <div class="app-greeting">
+              <div class="avatar">A</div>
+              <div class="greet-text">
+                <span class="greet-line-1" id="greet1">Good evening</span>
+                <span class="greet-line-2" id="greet2">Ahmed</span>
+              </div>
+            </div>
+            <button class="icon-button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+              <span class="dot"></span>
+            </button>
+          </div>
+
+          <!-- HERO -->
+          <div class="stay-hero">
+            <div class="stay-eyebrow" id="stay-eb">Checked in · Day 2 of 3</div>
+            <h2 class="stay-headline">
+              <span id="stay-h1">Welcome back to</span> <em id="stay-h2">your stay.</em>
+            </h2>
+          </div>
+
+          <!-- THE KEY CARD - HERO -->
+          <div class="key-card">
+            <div class="key-inner">
+              <div class="key-top">
+                <div>
+                  <div class="key-label" id="key-lbl">Your digital key</div>
+                  <div class="key-hotel" id="key-hotel">Dar AlUla · AlUla</div>
+                </div>
+                <div class="key-mini-logo">
+                  <svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="40" r="32" fill="none" stroke="white" stroke-width="6"/>
+                    <path d="M30 72 L38 58 L46 72 Z M46 72 L54 58 L62 72 Z M62 72 L70 58 L78 72 Z" fill="white"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="qr-wrap">
+                <!-- QR-style pattern (stylized; not a real scannable code) -->
+                <svg class="qr-svg" viewBox="0 0 100 100">
+                  <!-- Corner finders -->
+                  <rect x="0" y="0" width="22" height="22" fill="#3A1234"/>
+                  <rect x="4" y="4" width="14" height="14" fill="#FDFBF7"/>
+                  <rect x="8" y="8" width="6" height="6" fill="#3A1234"/>
+
+                  <rect x="78" y="0" width="22" height="22" fill="#3A1234"/>
+                  <rect x="82" y="4" width="14" height="14" fill="#FDFBF7"/>
+                  <rect x="86" y="8" width="6" height="6" fill="#3A1234"/>
+
+                  <rect x="0" y="78" width="22" height="22" fill="#3A1234"/>
+                  <rect x="4" y="82" width="14" height="14" fill="#FDFBF7"/>
+                  <rect x="8" y="86" width="6" height="6" fill="#3A1234"/>
+
+                  <!-- Random data dots -->
+                  <g fill="#3A1234">
+                    <rect x="26" y="0" width="4" height="4"/><rect x="34" y="0" width="4" height="4"/><rect x="42" y="0" width="4" height="4"/><rect x="50" y="0" width="4" height="4"/><rect x="58" y="0" width="4" height="4"/><rect x="66" y="0" width="4" height="4"/><rect x="74" y="0" width="4" height="4"/>
+                    <rect x="26" y="6" width="4" height="4"/><rect x="38" y="6" width="4" height="4"/><rect x="46" y="6" width="4" height="4"/><rect x="58" y="6" width="4" height="4"/><rect x="70" y="6" width="4" height="4"/>
+                    <rect x="30" y="12" width="4" height="4"/><rect x="42" y="12" width="4" height="4"/><rect x="50" y="12" width="4" height="4"/><rect x="62" y="12" width="4" height="4"/><rect x="74" y="12" width="4" height="4"/>
+                    <rect x="26" y="18" width="4" height="4"/><rect x="34" y="18" width="4" height="4"/><rect x="46" y="18" width="4" height="4"/><rect x="54" y="18" width="4" height="4"/><rect x="66" y="18" width="4" height="4"/><rect x="74" y="18" width="4" height="4"/>
+
+                    <rect x="0" y="26" width="4" height="4"/><rect x="12" y="26" width="4" height="4"/><rect x="18" y="26" width="4" height="4"/><rect x="30" y="26" width="4" height="4"/><rect x="38" y="26" width="4" height="4"/><rect x="50" y="26" width="4" height="4"/><rect x="62" y="26" width="4" height="4"/><rect x="70" y="26" width="4" height="4"/><rect x="78" y="26" width="4" height="4"/><rect x="90" y="26" width="4" height="4"/>
+                    <rect x="6" y="34" width="4" height="4"/><rect x="14" y="34" width="4" height="4"/><rect x="26" y="34" width="4" height="4"/><rect x="34" y="34" width="4" height="4"/><rect x="42" y="34" width="4" height="4"/><rect x="50" y="34" width="4" height="4"/><rect x="58" y="34" width="4" height="4"/><rect x="66" y="34" width="4" height="4"/><rect x="74" y="34" width="4" height="4"/><rect x="86" y="34" width="4" height="4"/><rect x="94" y="34" width="4" height="4"/>
+                    <rect x="0" y="42" width="4" height="4"/><rect x="10" y="42" width="4" height="4"/><rect x="22" y="42" width="4" height="4"/><rect x="30" y="42" width="4" height="4"/><rect x="46" y="42" width="4" height="4"/><rect x="54" y="42" width="4" height="4"/><rect x="62" y="42" width="4" height="4"/><rect x="78" y="42" width="4" height="4"/><rect x="86" y="42" width="4" height="4"/>
+                    <rect x="6" y="50" width="4" height="4"/><rect x="18" y="50" width="4" height="4"/><rect x="26" y="50" width="4" height="4"/><rect x="34" y="50" width="4" height="4"/><rect x="42" y="50" width="4" height="4"/><rect x="58" y="50" width="4" height="4"/><rect x="66" y="50" width="4" height="4"/><rect x="74" y="50" width="4" height="4"/><rect x="82" y="50" width="4" height="4"/><rect x="94" y="50" width="4" height="4"/>
+                    <rect x="0" y="58" width="4" height="4"/><rect x="12" y="58" width="4" height="4"/><rect x="22" y="58" width="4" height="4"/><rect x="38" y="58" width="4" height="4"/><rect x="46" y="58" width="4" height="4"/><rect x="54" y="58" width="4" height="4"/><rect x="70" y="58" width="4" height="4"/><rect x="78" y="58" width="4" height="4"/><rect x="90" y="58" width="4" height="4"/>
+                    <rect x="8" y="66" width="4" height="4"/><rect x="14" y="66" width="4" height="4"/><rect x="26" y="66" width="4" height="4"/><rect x="34" y="66" width="4" height="4"/><rect x="46" y="66" width="4" height="4"/><rect x="58" y="66" width="4" height="4"/><rect x="66" y="66" width="4" height="4"/><rect x="78" y="66" width="4" height="4"/><rect x="86" y="66" width="4" height="4"/><rect x="94" y="66" width="4" height="4"/>
+                    <rect x="0" y="74" width="4" height="4"/><rect x="14" y="74" width="4" height="4"/><rect x="22" y="74" width="4" height="4"/><rect x="30" y="74" width="4" height="4"/><rect x="42" y="74" width="4" height="4"/><rect x="54" y="74" width="4" height="4"/><rect x="62" y="74" width="4" height="4"/><rect x="70" y="74" width="4" height="4"/><rect x="78" y="74" width="4" height="4"/><rect x="86" y="74" width="4" height="4"/><rect x="94" y="74" width="4" height="4"/>
+
+                    <rect x="26" y="82" width="4" height="4"/><rect x="34" y="82" width="4" height="4"/><rect x="42" y="82" width="4" height="4"/><rect x="58" y="82" width="4" height="4"/><rect x="66" y="82" width="4" height="4"/><rect x="74" y="82" width="4" height="4"/>
+                    <rect x="30" y="88" width="4" height="4"/><rect x="46" y="88" width="4" height="4"/><rect x="54" y="88" width="4" height="4"/><rect x="62" y="88" width="4" height="4"/><rect x="70" y="88" width="4" height="4"/>
+                    <rect x="26" y="94" width="4" height="4"/><rect x="38" y="94" width="4" height="4"/><rect x="50" y="94" width="4" height="4"/><rect x="58" y="94" width="4" height="4"/><rect x="66" y="94" width="4" height="4"/><rect x="74" y="94" width="4" height="4"/>
+                  </g>
+                  <!-- Brand mark center -->
+                  <circle cx="50" cy="50" r="10" fill="#FDFBF7"/>
+                  <circle cx="50" cy="50" r="8" fill="#B8228C"/>
+                  <path d="M45 53 L47 49 L49 53 Z M49 53 L51 49 L53 53 Z M53 53 L55 49 L57 53 Z" fill="#FDFBF7"/>
+                </svg>
+
+                <div class="qr-pulse-text">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.343 17.657A8 8 0 1 1 17.657 6.343M9.172 14.828a4 4 0 0 1 5.656-5.656"/></svg>
+                  <span id="qr-pulse">Hold near room reader</span>
+                </div>
+              </div>
+
+              <div class="key-bottom">
+                <div class="key-room-block">
+                  <div class="key-room-label" id="room-lbl">Your room</div>
+                  <div class="key-room-num">204</div>
+                </div>
+                <div class="key-expires">
+                  <div class="key-expires-label" id="expires-lbl">Expires</div>
+                  <div class="key-expires-val" id="expires-val">18 Mar · 12:00</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAY STRIP -->
+          <div class="stay-strip">
+            <div class="strip-cell">
+              <div class="strip-num accent">1</div>
+              <div class="strip-lbl" id="strip-1">Night left</div>
+            </div>
+            <div class="strip-cell">
+              <div class="strip-num">07:30</div>
+              <div class="strip-lbl" id="strip-2">Breakfast</div>
+            </div>
+            <div class="strip-cell">
+              <div class="strip-num">18°</div>
+              <div class="strip-lbl" id="strip-3">Outside</div>
+            </div>
+          </div>
+
+          <!-- SERVICES -->
+          <div class="sect-row">
+            <h3 class="sect-title" id="sect-services">At your service</h3>
+            <span class="sect-action" id="action-services">All →</span>
+          </div>
+
+          <div class="services-grid">
+            <div class="service-tile featured">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+              </div>
+              <div class="service-name" id="svc-1">Room service</div>
+            </div>
+            <div class="service-tile">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6l3 0M6 6l0 16M3 22l18 0M9 22l0-7M14 15l0 7M21 22l0-16M21 6l-3 0M9 11l5 0M14 6l0 5"/></svg>
+              </div>
+              <div class="service-name" id="svc-2">Housekeeping</div>
+            </div>
+            <div class="service-tile">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10h18M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zM7 18v2M17 18v2"/></svg>
+              </div>
+              <div class="service-name" id="svc-3">Restaurant</div>
+            </div>
+            <div class="service-tile">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              </div>
+              <div class="service-name" id="svc-4">Wake-up</div>
+            </div>
+            <div class="service-tile">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13M9 9l12-2M6 18l-4-1 8-2v3M6 18a3 3 0 1 1-3-3"/></svg>
+              </div>
+              <div class="service-name" id="svc-5">Spa</div>
+            </div>
+            <div class="service-tile">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M2 12h20M12 2c2 3 3 6 3 10s-1 7-3 10c-2-3-3-6-3-10s1-7 3-10z"/></svg>
+              </div>
+              <div class="service-name" id="svc-6">Excursions</div>
+            </div>
+          </div>
+
+          <!-- ACTIVITY -->
+          <div class="sect-row">
+            <h3 class="sect-title" id="sect-activity">Today</h3>
+            <span class="sect-action" id="action-activity">View all →</span>
+          </div>
+
+          <div class="activity-feed">
+            <div class="activity-card">
+              <div class="activity-icon done">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title" id="act-1-t">Room serviced</div>
+                <div class="activity-sub" id="act-1-s">Towels & water refreshed</div>
+              </div>
+              <span class="activity-time" id="act-1-time">1h ago</span>
+            </div>
+
+            <div class="activity-card">
+              <div class="activity-icon pending">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title" id="act-2-t">Dinner reservation</div>
+                <div class="activity-sub" id="act-2-s">8:30pm at the oasis terrace</div>
+              </div>
+              <span class="activity-time" id="act-2-time">in 2h</span>
+            </div>
+
+            <div class="activity-card">
+              <div class="activity-icon info">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title" id="act-3-t">Sunset walk · 6:18pm</div>
+                <div class="activity-sub" id="act-3-s">Mountain dunes, 20-min from lodge</div>
+              </div>
+              <span class="activity-time" id="act-3-time">tip</span>
+            </div>
+          </div>
+
+          <!-- CONCIERGE -->
+          <div class="concierge-banner">
+            <div class="concierge-avatar">M</div>
+            <div class="concierge-text">
+              <div class="concierge-title" id="conc-t">Mariam · Concierge</div>
+              <div class="concierge-sub" id="conc-s">"Anything for tonight? I'm right here."</div>
+            </div>
+            <button class="concierge-cta" id="conc-cta">Chat</button>
+          </div>
+
+          <!-- BOTTOM NAV -->
+          <nav class="bottom-nav">
+            <div class="nav-item">
+              <div class="nav-icon-bg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
+              <span id="nav-discover">Discover</span>
+            </div>
+            <div class="nav-item active">
+              <div class="nav-icon-bg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18M3 12h18M3 17h12"/></svg>
+              </div>
+              <span id="nav-stay">My Stay</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon-bg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              </div>
+              <span id="nav-inbox">Inbox</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon-bg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <span id="nav-account">Account</span>
+            </div>
+          </nav>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- DESIGN NOTES -->
+    <aside class="side-panel">
+
+      <h2 class="panel-h"><span id="ph-1">The key</span> <em id="ph-1em">is the product.</em></h2>
+      <p class="panel-lede" id="ph-lede">Most hotel apps hide the QR key deep inside. We made it the main thing on the screen. That one choice is what makes Escalé feel different straight away.</p>
+
+      <div class="pull-quote" id="pull-q">
+        "I tap, and the door opens. I tap, and breakfast appears. The hotel reorganised itself around <span class="em">my pocket.</span>"
+      </div>
+
+      <ul class="principle-list">
+        <li>
+          <strong id="p1-t">A "wow" in 2 seconds</strong>
+          <p id="p1-d">When the screen opens, the colourful key card is the first thing you see. It also looks great in a screenshot.</p>
+        </li>
+        <li>
+          <strong id="p2-t">The screen is about your stay</strong>
+          <p id="p2-d">Your room number, your breakfast time, the weather, the nights left — all about this stay, not general features.</p>
+        </li>
+        <li>
+          <strong id="p3-t">The concierge is always there</strong>
+          <p id="p3-d">Mariam's banner reminds the guest a real person is ready to help. It calms first-time visitors.</p>
+        </li>
+        <li>
+          <strong id="p4-t">Six services, easy to reach</strong>
+          <p id="p4-d">Spa, restaurant, room service — all one tap away. Easy access means guests use them more.</p>
+        </li>
+        <li>
+          <strong id="p5-t">Activity feels like care</strong>
+          <p id="p5-d">"Towels refreshed 1h ago" shows the guest the hotel is looking after them, even when they don't see staff.</p>
+        </li>
+      </ul>
+
+      <div class="tech-callout">
+        <div class="tech-label" id="tech-l">How the digital key stays safe</div>
+        <p class="tech-body" id="tech-b">The QR key is a secure code that only this guest's phone can show. The door reader checks it without needing internet. The code changes every 30 seconds, so a screenshot of it cannot be reused.</p>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <footer class="footnote">
+    <span>© Escalé · Screen 06 of 18</span>
+    <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
+  </footer>
+
+</div>
+
+<script>
+const t = {
+  en: {
+    ehLabel: "Screen 06 / Active Stay",
+    eh1: "The phone", eh2: "becomes the key.",
+    greet1: "Good evening", greet2: "Ahmed",
+    stayEb: "Checked in · Day 2 of 3",
+    stayH1: "Welcome back to", stayH2: "your stay.",
+    keyLbl: "Your digital key", keyHotel: "Dar AlUla · AlUla",
+    qrPulse: "Hold near room reader",
+    roomLbl: "Your room", expiresLbl: "Expires", expiresVal: "18 Mar · 12:00",
+    strip1: "Night left", strip2: "Breakfast", strip3: "Outside",
+    sectServices: "At your service", actionServices: "All →",
+    svc1: "Room service", svc2: "Housekeeping", svc3: "Restaurant",
+    svc4: "Wake-up", svc5: "Spa", svc6: "Excursions",
+    sectActivity: "Today", actionActivity: "View all →",
+    act1t: "Room serviced", act1s: "Towels & water refreshed", act1time: "1h ago",
+    act2t: "Dinner reservation", act2s: "8:30pm at the oasis terrace", act2time: "in 2h",
+    act3t: "Sunset walk · 6:18pm", act3s: "Mountain dunes, 20-min from lodge", act3time: "tip",
+    concT: "Mariam · Concierge",
+    concS: '"Anything for tonight? I\'m right here."',
+    concCta: "Chat",
+    navDiscover: "Discover", navStay: "My Stay", navInbox: "Inbox", navAccount: "Account",
+    ph1: "The key", ph1em: "is the product.",
+    phLede: "Most hotel apps hide the QR key deep inside. We made it the main thing on the screen. That one choice is what makes Escalé feel different straight away.",
+    pullQ: '"I tap, and the door opens. I tap, and breakfast appears. The hotel reorganised itself around <span class="em">my pocket.</span>"',
+    p1t: 'A "wow" in 2 seconds',
+    p1d: "When the screen opens, the colourful key card is the first thing you see. It also looks great in a screenshot.",
+    p2t: "The screen is about your stay",
+    p2d: "Your room number, your breakfast time, the weather, the nights left — all about this stay, not general features.",
+    p3t: "The concierge is always there",
+    p3d: "Mariam's banner reminds the guest a real person is ready to help. It calms first-time visitors.",
+    p4t: "Six services, easy to reach",
+    p4d: "Spa, restaurant, room service — all one tap away. Easy access means guests use them more.",
+    p5t: "Activity feels like care",
+    p5d: '"Towels refreshed 1h ago" shows the guest the hotel is looking after them, even when they don\'t see staff.',
+    techL: "How the digital key stays safe",
+    techB: "The QR key is a secure code that only this guest's phone can show. The door reader checks it without needing internet. The code changes every 30 seconds, so a screenshot of it cannot be reused."
+  },
+  ar: {
+    ehLabel: "الشاشة ٦ / الإقامة النشطة",
+    eh1: "الهاتف", eh2: "يصبح المفتاح.",
+    greet1: "مساء الخير", greet2: "أحمد",
+    stayEb: "مسجَّل دخول · اليوم الثاني من ٣",
+    stayH1: "مرحباً بعودتك إلى", stayH2: "إقامتك.",
+    keyLbl: "مفتاحك الرقمي", keyHotel: "دار العُلا · العُلا",
+    qrPulse: "اقترب من قارئ الغرفة",
+    roomLbl: "غرفتك", expiresLbl: "ينتهي", expiresVal: "١٨ مارس · ١٢:٠٠",
+    strip1: "ليلة متبقية", strip2: "الفطار", strip3: "خارجاً",
+    sectServices: "في خدمتك", actionServices: "الكل ←",
+    svc1: "خدمة الغرف", svc2: "تنظيف", svc3: "المطعم",
+    svc4: "الاستيقاظ", svc5: "السبا", svc6: "رحلات",
+    sectActivity: "اليوم", actionActivity: "عرض الكل ←",
+    act1t: "تم تجهيز الغرفة", act1s: "تم تجديد المناشف والمياه", act1time: "منذ ساعة",
+    act2t: "حجز العشاء", act2s: "٨:٣٠ مساءً في شرفة الواحة", act2time: "بعد ساعتين",
+    act3t: "نزهة الغروب · ٦:١٨ مساءً", act3s: "الكثبان الجبلية، على بُعد ٢٠ دقيقة", act3time: "اقتراح",
+    concT: "مريم · الكونسيرج",
+    concS: '"أي خدمة لهذه الليلة؟ أنا هنا."',
+    concCta: "محادثة",
+    navDiscover: "اكتشف", navStay: "إقامتي", navInbox: "الرسائل", navAccount: "حسابي",
+    ph1: "المفتاح", ph1em: "هو المنتج.",
+    phLede: "معظم تطبيقات الفنادق بتخبّي مفتاح الـ QR جوّه. إحنا خليناه الحاجة الرئيسية في الشاشة. القرار ده لوحده بيخلي إسكالي حسّه مختلف من أول لحظة.",
+    pullQ: '"أضغط، فيُفتح الباب. أضغط، فيظهر الفطار. الفندق أعاد تنظيم نفسه حول <span class="em">جيبي.</span>"',
+    p1t: "وَهلة في ثانيتين",
+    p1d: "أول ما الشاشة تفتح، كارت المفتاح الملوّن هو أول حاجة تشوفها. وكمان بيظهر حلو في لقطة الشاشة.",
+    p2t: "الشاشة عن إقامتك إنت",
+    p2d: "رقم غرفتك، وقت فطارك، الجو بره، الليالي المتبقية — كله عن الإقامة دي، مش ميزات عامة.",
+    p3t: "الكونسيرج موجود دايماً",
+    p3d: "شريط مريم بيفكّر الضيف إن في شخص حقيقي جاهز يساعده. بيطمّن الضيوف لأول مرة.",
+    p4t: "ست خدمات سهل توصلها",
+    p4d: "السبا، المطعم، خدمة الغرف — كلها بضغطة واحدة. السهولة بتخلي الضيوف يستخدموها أكتر.",
+    p5t: "النشاط إحساسه اهتمام",
+    p5d: '"تجديد المناشف من ساعة" بيوضّح للضيف إن الفندق بيهتم بيه، حتى لو مشافش الموظفين.',
+    techL: "إزاي المفتاح الرقمي يفضل آمن",
+    techB: "مفتاح الـ QR كود آمن، موبايل الضيف ده بس اللي يقدر يعرضه. قارئ الباب بيتأكد منه من غير إنترنت. الكود بيتغيّر كل ٣٠ ثانية، فلقطة شاشة منه ماينفعش تتعاد."
+  }
+};
+
+function setLocale(loc) {
+  const tt = t[loc];
+  const isRtl = loc === 'ar';
+
+  document.getElementById('screen').setAttribute('lang', loc);
+  document.getElementById('screen').setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+  document.getElementById('btnEn').classList.toggle('active', loc === 'en');
+  document.getElementById('btnAr').classList.toggle('active', loc === 'ar');
+
+  document.querySelector('.editorial-head').setAttribute('lang', loc);
+  document.querySelector('.side-panel').setAttribute('lang', loc);
+
+  document.getElementById('eh-label').textContent = tt.ehLabel;
+  document.getElementById('eh-1').textContent = tt.eh1;
+  document.getElementById('eh-2').textContent = tt.eh2;
+
+  document.getElementById('greet1').textContent = tt.greet1;
+  document.getElementById('greet2').textContent = tt.greet2;
+  document.getElementById('stay-eb').textContent = tt.stayEb;
+  document.getElementById('stay-h1').textContent = tt.stayH1;
+  document.getElementById('stay-h2').textContent = tt.stayH2;
+
+  document.getElementById('key-lbl').textContent = tt.keyLbl;
+  document.getElementById('key-hotel').textContent = tt.keyHotel;
+  document.getElementById('qr-pulse').textContent = tt.qrPulse;
+  document.getElementById('room-lbl').textContent = tt.roomLbl;
+  document.getElementById('expires-lbl').textContent = tt.expiresLbl;
+  document.getElementById('expires-val').textContent = tt.expiresVal;
+
+  document.getElementById('strip-1').textContent = tt.strip1;
+  document.getElementById('strip-2').textContent = tt.strip2;
+  document.getElementById('strip-3').textContent = tt.strip3;
+
+  document.getElementById('sect-services').textContent = tt.sectServices;
+  document.getElementById('action-services').textContent = tt.actionServices;
+  document.getElementById('svc-1').textContent = tt.svc1;
+  document.getElementById('svc-2').textContent = tt.svc2;
+  document.getElementById('svc-3').textContent = tt.svc3;
+  document.getElementById('svc-4').textContent = tt.svc4;
+  document.getElementById('svc-5').textContent = tt.svc5;
+  document.getElementById('svc-6').textContent = tt.svc6;
+
+  document.getElementById('sect-activity').textContent = tt.sectActivity;
+  document.getElementById('action-activity').textContent = tt.actionActivity;
+  document.getElementById('act-1-t').textContent = tt.act1t;
+  document.getElementById('act-1-s').textContent = tt.act1s;
+  document.getElementById('act-1-time').textContent = tt.act1time;
+  document.getElementById('act-2-t').textContent = tt.act2t;
+  document.getElementById('act-2-s').textContent = tt.act2s;
+  document.getElementById('act-2-time').textContent = tt.act2time;
+  document.getElementById('act-3-t').textContent = tt.act3t;
+  document.getElementById('act-3-s').textContent = tt.act3s;
+  document.getElementById('act-3-time').textContent = tt.act3time;
+
+  document.getElementById('conc-t').textContent = tt.concT;
+  document.getElementById('conc-s').textContent = tt.concS;
+  document.getElementById('conc-cta').textContent = tt.concCta;
+
+  document.getElementById('nav-discover').textContent = tt.navDiscover;
+  document.getElementById('nav-stay').textContent = tt.navStay;
+  document.getElementById('nav-inbox').textContent = tt.navInbox;
+  document.getElementById('nav-account').textContent = tt.navAccount;
+
+  document.getElementById('ph-1').textContent = tt.ph1;
+  document.getElementById('ph-1em').textContent = tt.ph1em;
+  document.getElementById('ph-lede').textContent = tt.phLede;
+  document.getElementById('pull-q').innerHTML = tt.pullQ;
+  document.getElementById('p1-t').textContent = tt.p1t;
+  document.getElementById('p1-d').textContent = tt.p1d;
+  document.getElementById('p2-t').textContent = tt.p2t;
+  document.getElementById('p2-d').textContent = tt.p2d;
+  document.getElementById('p3-t').textContent = tt.p3t;
+  document.getElementById('p3-d').textContent = tt.p3d;
+  document.getElementById('p4-t').textContent = tt.p4t;
+  document.getElementById('p4-d').textContent = tt.p4d;
+  document.getElementById('p5-t').textContent = tt.p5t;
+  document.getElementById('p5-d').textContent = tt.p5d;
+  document.getElementById('tech-l').textContent = tt.techL;
+  document.getElementById('tech-b').innerHTML = tt.techB;
+}
+</script>
+
+</body>
+</html>

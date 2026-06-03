@@ -1,0 +1,1050 @@
+// =============================================================================
+// Escalé — MVP Database Schema (Phase 1)
+// =============================================================================
+// Multilingual strategy:
+// - Curated content (Hotel, RoomType, HotelService, RatePlan, ServiceCategory,
+//   Amenity) uses translation tables. One row per locale.
+// - User-generated content (Reviews, ServiceRequest descriptions) is stored
+//   in the locale the user submitted in. An optional `language` column
+//   captures it for analytics / auto-translation later.
+// - System notifications are rendered server-side at send time. The locale
+//   is stored alongside the rendered text.
+// - Image alt text uses a JSON column keyed by locale.
+//
+// Supported locales are configured in code (packages/config/locales.ts),
+// not in the database. We use BCP 47 codes: "en", "ar", "fr", "de", "es",
+// "it", "ru", "zh-CN", "ja", "tr". Hotels can opt into a subset.
+//
+// Locale resolution chain (in the API):
+//   1. User.preferredLocale (if authenticated)
+//   2. Accept-Language header
+//   3. Hotel.defaultLocale (for hotel-scoped responses)
+//   4. Platform default "en"
+//
+// Other conventions:
+// - All IDs are cuid (sortable, URL-safe).
+// - Money columns use Decimal(12, 2). Always store currency alongside amount.
+// - Tenant-scoped tables include hotel_id and have RLS policies applied
+//   in packages/db/migrations/rls.sql.
+// - Soft delete via deleted_at on user-impacting tables.
+// =============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// =============================================================================
+// TENANTS — Hotels
+// =============================================================================
+
+model Hotel {
+  id               String          @id @default(cuid())
+  slug             String          @unique
+
+  // Classification
+  starRating       Int             @db.SmallInt
+  category         HotelCategory
+
+  // Location (non-translatable)
+  countryCode      String          @map("country_code") // ISO 3166-1 alpha-2
+  city             String
+  latitude         Decimal?        @db.Decimal(10, 7)
+  longitude        Decimal?        @db.Decimal(10, 7)
+  timezone         String          // IANA, e.g. "Africa/Cairo"
+
+  // Contact
+  primaryEmail     String          @map("primary_email")
+  primaryPhone     String          @map("primary_phone")
+  websiteUrl       String?         @map("website_url")
+
+  // Operational
+  defaultLocale    String          @default("en") @map("default_locale")
+  supportedLocales String[]        @default([]) @map("supported_locales")
+  defaultCurrency  String          @default("EGP") @map("default_currency")
+  checkInTime      String          @default("14:00") @map("check_in_time")
+  checkOutTime     String          @default("12:00") @map("check_out_time")
+
+  // Status
+  status           HotelStatus     @default(DRAFT)
+  publishedAt      DateTime?       @map("published_at")
+
+  // Commercial
+  subscriptionTier HotelTier       @default(BASIC) @map("subscription_tier")
+  commissionRate   Decimal         @default(0) @db.Decimal(5, 4) @map("commission_rate")
+
+  // Flexible settings (feature flags, notification prefs, etc.)
+  settings         Json            @default("{}")
+
+  createdAt        DateTime        @default(now()) @map("created_at")
+  updatedAt        DateTime        @updatedAt @map("updated_at")
+  deletedAt        DateTime?       @map("deleted_at")
+
+  // Relations
+  translations     HotelTranslation[]
+  rooms            Room[]
+  roomTypes        RoomType[]
+  ratePlans        RatePlan[]
+  bookings         Booking[]
+  staff            HotelStaff[]
+  services         HotelService[]
+  serviceRequests  ServiceRequest[]
+  staffTasks       StaffTask[]
+  reviews          Review[]
+  images           HotelImage[]
+  amenities        HotelAmenity[]
+  loyaltyAccounts  LoyaltyAccount[]
+
+  @@index([city, countryCode])
+  @@index([status, publishedAt])
+  @@map("hotels")
+}
+
+model HotelTranslation {
+  id          String   @id @default(cuid())
+  hotelId     String   @map("hotel_id")
+  locale      String   // BCP 47: "en", "ar", "fr-FR", "zh-CN", etc.
+
+  name        String
+  description String?
+  address     String   // Translated address; non-Latin scripts kept here too
+
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@unique([hotelId, locale])
+  @@index([locale])
+  @@map("hotel_translations")
+}
+
+enum HotelCategory {
+  CITY_HOTEL
+  RESORT
+  BOUTIQUE
+  HOSTEL
+  APARTMENT
+  VILLA
+}
+
+enum HotelStatus {
+  DRAFT
+  PENDING_REVIEW
+  ACTIVE
+  SUSPENDED
+  ARCHIVED
+}
+
+enum HotelTier {
+  BASIC
+  PRO
+  ENTERPRISE
+}
+
+model HotelImage {
+  id        String  @id @default(cuid())
+  hotelId   String  @map("hotel_id")
+  url       String
+  // Alt text per locale: { "en": "Pool view", "ar": "إطلالة على المسبح" }
+  altByLocale Json?  @map("alt_by_locale")
+  isPrimary Boolean @default(false) @map("is_primary")
+  order     Int     @default(0)
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@index([hotelId])
+  @@map("hotel_images")
+}
+
+// =============================================================================
+// AMENITIES (Master list shared across hotels)
+// =============================================================================
+
+model Amenity {
+  id       String                @id @default(cuid())
+  code     String                @unique // e.g. "wifi", "pool", "spa"
+  iconUrl  String?               @map("icon_url")
+  category AmenityCategory
+
+  translations AmenityTranslation[]
+  hotels       HotelAmenity[]
+
+  @@map("amenities")
+}
+
+model AmenityTranslation {
+  id        String   @id @default(cuid())
+  amenityId String   @map("amenity_id")
+  locale    String
+
+  name      String
+
+  amenity Amenity @relation(fields: [amenityId], references: [id], onDelete: Cascade)
+
+  @@unique([amenityId, locale])
+  @@index([locale])
+  @@map("amenity_translations")
+}
+
+enum AmenityCategory {
+  GENERAL
+  ROOM
+  WELLNESS
+  FOOD_DRINK
+  BUSINESS
+  FAMILY
+  ACCESSIBILITY
+}
+
+model HotelAmenity {
+  hotelId   String @map("hotel_id")
+  amenityId String @map("amenity_id")
+
+  hotel   Hotel   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  amenity Amenity @relation(fields: [amenityId], references: [id])
+
+  @@id([hotelId, amenityId])
+  @@map("hotel_amenities")
+}
+
+// =============================================================================
+// USERS & AUTH
+// =============================================================================
+
+model User {
+  id              String     @id @default(cuid())
+  email           String?    @unique
+  phone           String?    @unique
+  emailVerified   Boolean    @default(false) @map("email_verified")
+  phoneVerified   Boolean    @default(false) @map("phone_verified")
+  passwordHash    String?    @map("password_hash")
+
+  firstName       String     @map("first_name")
+  lastName        String     @map("last_name")
+
+  // BCP 47 locale code. Validated against supported list in app code.
+  preferredLocale String     @default("en") @map("preferred_locale")
+
+  // Profile
+  avatarUrl       String?    @map("avatar_url")
+  dateOfBirth     DateTime?  @db.Date @map("date_of_birth")
+  nationality     String?    // ISO 3166-1 alpha-2
+
+  // Identity (for Nafath / national ID — Phase 2)
+  nationalId      String?    @map("national_id")
+  passportNumber  String?    @map("passport_number")
+
+  // Status
+  status          UserStatus @default(ACTIVE)
+  lastLoginAt     DateTime?  @map("last_login_at")
+
+  createdAt       DateTime   @default(now()) @map("created_at")
+  updatedAt       DateTime   @updatedAt @map("updated_at")
+  deletedAt       DateTime?  @map("deleted_at")
+
+  // Relations
+  hotelStaffRoles HotelStaff[]
+  bookings        Booking[]
+  reviews         Review[]
+  loyaltyAccounts LoyaltyAccount[]
+  serviceRequests ServiceRequest[]
+  notifications   Notification[]
+  sessions        Session[]
+
+  @@index([email])
+  @@index([phone])
+  @@map("users")
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  DELETED
+}
+
+model Session {
+  id           String    @id @default(cuid())
+  userId       String    @map("user_id")
+  refreshToken String    @unique @map("refresh_token")
+  userAgent    String?   @map("user_agent")
+  ipAddress    String?   @map("ip_address")
+  expiresAt    DateTime  @map("expires_at")
+  revokedAt    DateTime? @map("revoked_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model HotelStaff {
+  id          String      @id @default(cuid())
+  userId      String      @map("user_id")
+  hotelId     String      @map("hotel_id")
+  role        StaffRole
+  department  Department?
+
+  // Permission overrides on top of role defaults
+  permissions String[]    @default([])
+
+  status      StaffStatus @default(ACTIVE)
+  hiredAt     DateTime    @default(now()) @map("hired_at")
+
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  user          User        @relation(fields: [userId], references: [id])
+  hotel         Hotel       @relation(fields: [hotelId], references: [id])
+  assignedTasks StaffTask[] @relation("AssignedTo")
+  createdTasks  StaffTask[] @relation("CreatedBy")
+
+  @@unique([userId, hotelId])
+  @@index([hotelId, role])
+  @@map("hotel_staff")
+}
+
+enum StaffRole {
+  HOTEL_ADMIN
+  HOTEL_MANAGER
+  SUPERVISOR
+  RECEPTIONIST
+  HOUSEKEEPING
+  RESTAURANT_STAFF
+  MAINTENANCE
+  CONCIERGE
+  SECURITY
+}
+
+enum Department {
+  FRONT_OFFICE
+  HOUSEKEEPING
+  FOOD_BEVERAGE
+  MAINTENANCE
+  SECURITY
+  MANAGEMENT
+  SPA_WELLNESS
+}
+
+enum StaffStatus {
+  ACTIVE
+  ON_LEAVE
+  TERMINATED
+}
+
+// =============================================================================
+// ROOMS & RATES
+// =============================================================================
+
+model RoomType {
+  id            String          @id @default(cuid())
+  hotelId       String          @map("hotel_id")
+  code          String          // hotel-internal code, e.g. "DLX-K"
+
+  // Capacity
+  maxAdults     Int             @map("max_adults")
+  maxChildren   Int             @default(0) @map("max_children")
+  bedConfig     String          @map("bed_config") // e.g. "1 king" or "2 twins"
+  sizeSqm       Decimal?        @db.Decimal(6, 2) @map("size_sqm")
+
+  // Visuals: [{ url, altByLocale: { en, ar, ... } }]
+  images        Json            @default("[]")
+
+  // Features
+  amenityCodes  String[]        @default([]) @map("amenity_codes")
+
+  status        RoomTypeStatus  @default(ACTIVE)
+
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
+  deletedAt     DateTime?       @map("deleted_at")
+
+  hotel        Hotel                  @relation(fields: [hotelId], references: [id])
+  translations RoomTypeTranslation[]
+  rooms        Room[]
+  ratePlans    RatePlan[]
+  bookingRooms BookingRoom[]
+
+  @@unique([hotelId, code])
+  @@index([hotelId, status])
+  @@map("room_types")
+}
+
+model RoomTypeTranslation {
+  id          String   @id @default(cuid())
+  roomTypeId  String   @map("room_type_id")
+  locale      String
+
+  name        String
+  description String?
+
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  roomType RoomType @relation(fields: [roomTypeId], references: [id], onDelete: Cascade)
+
+  @@unique([roomTypeId, locale])
+  @@index([locale])
+  @@map("room_type_translations")
+}
+
+enum RoomTypeStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model Room {
+  id           String     @id @default(cuid())
+  hotelId      String     @map("hotel_id")
+  roomTypeId   String     @map("room_type_id")
+
+  number       String     // physical room number, e.g. "204"
+  floor        Int?
+
+  // Operational status
+  status       RoomStatus @default(VACANT_CLEAN)
+  isOutOfOrder Boolean    @default(false) @map("is_out_of_order")
+  oooReason    String?    @map("ooo_reason")
+
+  // Position
+  view         String?    // "sea", "garden", "city"
+
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+
+  hotel        Hotel         @relation(fields: [hotelId], references: [id])
+  roomType     RoomType      @relation(fields: [roomTypeId], references: [id])
+  bookingRooms BookingRoom[]
+
+  @@unique([hotelId, number])
+  @@index([hotelId, status])
+  @@map("rooms")
+}
+
+enum RoomStatus {
+  VACANT_CLEAN
+  VACANT_DIRTY
+  OCCUPIED
+  INSPECTED
+  OUT_OF_ORDER
+  OUT_OF_SERVICE
+}
+
+model RatePlan {
+  id                 String         @id @default(cuid())
+  hotelId            String         @map("hotel_id")
+  roomTypeId         String         @map("room_type_id")
+
+  code               String         // "BAR", "NRF", "PKG-EARLY"
+
+  // Base pricing (per night)
+  basePrice          Decimal        @db.Decimal(12, 2) @map("base_price")
+  currency           String         @default("EGP")
+
+  // Meal plan included
+  mealPlan           MealPlan       @default(ROOM_ONLY) @map("meal_plan")
+
+  // Restrictions
+  minStay            Int?           @map("min_stay")
+  maxStay            Int?           @map("max_stay")
+  isRefundable       Boolean        @default(true) @map("is_refundable")
+  cancellationPolicy Json           @default("{}") @map("cancellation_policy")
+
+  // Audience
+  isB2B              Boolean        @default(false) @map("is_b2b")
+
+  // Validity window
+  validFrom          DateTime?      @db.Date @map("valid_from")
+  validUntil         DateTime?      @db.Date @map("valid_until")
+
+  status             RatePlanStatus @default(ACTIVE)
+
+  createdAt          DateTime       @default(now()) @map("created_at")
+  updatedAt          DateTime       @updatedAt @map("updated_at")
+
+  hotel        Hotel                 @relation(fields: [hotelId], references: [id])
+  roomType     RoomType              @relation(fields: [roomTypeId], references: [id])
+  translations RatePlanTranslation[]
+
+  @@unique([hotelId, code])
+  @@index([hotelId, roomTypeId, status])
+  @@map("rate_plans")
+}
+
+model RatePlanTranslation {
+  id          String   @id @default(cuid())
+  ratePlanId  String   @map("rate_plan_id")
+  locale      String
+
+  name        String
+  description String?
+
+  ratePlan RatePlan @relation(fields: [ratePlanId], references: [id], onDelete: Cascade)
+
+  @@unique([ratePlanId, locale])
+  @@index([locale])
+  @@map("rate_plan_translations")
+}
+
+enum MealPlan {
+  ROOM_ONLY
+  BED_BREAKFAST
+  HALF_BOARD
+  FULL_BOARD
+  ALL_INCLUSIVE
+}
+
+enum RatePlanStatus {
+  ACTIVE
+  INACTIVE
+}
+
+// =============================================================================
+// BOOKINGS
+// =============================================================================
+
+model Booking {
+  id                 String        @id @default(cuid())
+  reference          String        @unique // Public-facing: "BK-X7Y2A9"
+  hotelId            String        @map("hotel_id")
+  userId             String        @map("user_id")
+
+  // Dates (hotel calendar — date only, no time)
+  checkInDate        DateTime      @db.Date @map("check_in_date")
+  checkOutDate       DateTime      @db.Date @map("check_out_date")
+  nights             Int
+
+  // Aggregate guest counts
+  totalAdults        Int           @map("total_adults")
+  totalChildren      Int           @default(0) @map("total_children")
+
+  // Financials
+  subtotal           Decimal       @db.Decimal(12, 2)
+  taxes              Decimal       @db.Decimal(12, 2) @default(0)
+  fees               Decimal       @db.Decimal(12, 2) @default(0)
+  discount           Decimal       @db.Decimal(12, 2) @default(0)
+  totalAmount        Decimal       @db.Decimal(12, 2) @map("total_amount")
+  paidAmount         Decimal       @db.Decimal(12, 2) @default(0) @map("paid_amount")
+  currency           String        @default("EGP")
+
+  // State
+  status             BookingStatus @default(DRAFT)
+  source             BookingSource @default(GUEST_APP)
+
+  // Locale snapshot at time of booking (for receipts, notifications)
+  bookingLocale      String        @default("en") @map("booking_locale")
+
+  // Lifecycle timestamps
+  confirmedAt        DateTime?     @map("confirmed_at")
+  checkedInAt        DateTime?     @map("checked_in_at")
+  checkedOutAt       DateTime?     @map("checked_out_at")
+  cancelledAt        DateTime?     @map("cancelled_at")
+
+  // Cancellation
+  cancellationReason String?       @map("cancellation_reason")
+  cancellationFee    Decimal?      @db.Decimal(12, 2) @map("cancellation_fee")
+
+  // Guest-provided
+  specialRequests    String?       @map("special_requests")
+
+  // Staff-only
+  internalNotes      String?       @map("internal_notes")
+
+  createdAt          DateTime      @default(now()) @map("created_at")
+  updatedAt          DateTime      @updatedAt @map("updated_at")
+
+  hotel           Hotel            @relation(fields: [hotelId], references: [id])
+  user            User             @relation(fields: [userId], references: [id])
+  rooms           BookingRoom[]
+  guests          BookingGuest[]
+  payments        Payment[]
+  serviceRequests ServiceRequest[]
+  review          Review?
+
+  @@index([hotelId, status])
+  @@index([userId])
+  @@index([checkInDate, checkOutDate])
+  @@map("bookings")
+}
+
+enum BookingStatus {
+  DRAFT
+  PENDING_PAYMENT
+  CONFIRMED
+  CHECKED_IN
+  CHECKED_OUT
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum BookingSource {
+  GUEST_APP
+  WEB
+  B2B
+  WALK_IN
+  PHONE
+  OTA
+}
+
+model BookingRoom {
+  id            String   @id @default(cuid())
+  bookingId     String   @map("booking_id")
+  roomTypeId    String   @map("room_type_id")
+  roomId        String?  @map("room_id") // Assigned at check-in
+  ratePlanId    String?  @map("rate_plan_id")
+
+  adults        Int
+  children      Int      @default(0)
+
+  pricePerNight Decimal  @db.Decimal(12, 2) @map("price_per_night")
+  totalPrice    Decimal  @db.Decimal(12, 2) @map("total_price")
+  mealPlan      MealPlan @map("meal_plan")
+
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  booking  Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  roomType RoomType @relation(fields: [roomTypeId], references: [id])
+  room     Room?    @relation(fields: [roomId], references: [id])
+
+  @@index([bookingId])
+  @@map("booking_rooms")
+}
+
+model BookingGuest {
+  id             String  @id @default(cuid())
+  bookingId      String  @map("booking_id")
+
+  firstName      String  @map("first_name")
+  lastName       String  @map("last_name")
+  email          String?
+  phone          String?
+
+  isPrimary      Boolean @default(false) @map("is_primary")
+  isAdult        Boolean @default(true) @map("is_adult")
+
+  // Check-in identity
+  nationalId     String? @map("national_id")
+  passportNumber String? @map("passport_number")
+  nationality    String?
+
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@index([bookingId])
+  @@map("booking_guests")
+}
+
+// =============================================================================
+// PAYMENTS
+// =============================================================================
+
+model Payment {
+  id            String          @id @default(cuid())
+  bookingId     String?         @map("booking_id")
+
+  amount        Decimal         @db.Decimal(12, 2)
+  currency      String          @default("EGP")
+
+  provider      PaymentProvider
+  providerRef   String          @map("provider_ref")
+  method        PaymentMethod
+
+  status        PaymentStatus   @default(PENDING)
+
+  metadata      Json            @default("{}")
+
+  paidAt        DateTime?       @map("paid_at")
+  failedAt      DateTime?       @map("failed_at")
+  refundedAt    DateTime?       @map("refunded_at")
+  failureReason String?         @map("failure_reason")
+
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
+
+  booking Booking? @relation(fields: [bookingId], references: [id])
+
+  @@index([bookingId])
+  @@index([providerRef])
+  @@index([status])
+  @@map("payments")
+}
+
+enum PaymentProvider {
+  PAYMOB
+  STRIPE
+  FAWRY
+  CASH
+  BANK_TRANSFER
+}
+
+enum PaymentMethod {
+  CARD
+  WALLET
+  CASH
+  BANK_TRANSFER
+  LOYALTY_POINTS
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  SUCCEEDED
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+// =============================================================================
+// SERVICES & TASKS
+// =============================================================================
+
+model ServiceCategory {
+  id      String  @id @default(cuid())
+  code    String  @unique // "room_service", "housekeeping", "maintenance"
+  iconUrl String? @map("icon_url")
+  order   Int     @default(0)
+
+  translations ServiceCategoryTranslation[]
+  services     HotelService[]
+
+  @@map("service_categories")
+}
+
+model ServiceCategoryTranslation {
+  id                String   @id @default(cuid())
+  serviceCategoryId String   @map("service_category_id")
+  locale            String
+
+  name              String
+
+  category ServiceCategory @relation(fields: [serviceCategoryId], references: [id], onDelete: Cascade)
+
+  @@unique([serviceCategoryId, locale])
+  @@index([locale])
+  @@map("service_category_translations")
+}
+
+model HotelService {
+  id                String     @id @default(cuid())
+  hotelId           String     @map("hotel_id")
+  categoryId        String     @map("category_id")
+
+  price             Decimal?   @db.Decimal(12, 2)
+  currency          String?    @default("EGP")
+  isFree            Boolean    @default(false) @map("is_free")
+
+  // Availability window
+  isAvailable       Boolean    @default(true) @map("is_available")
+  availableFrom     String?    @map("available_from") // "08:00"
+  availableTo       String?    @map("available_to")   // "22:00"
+
+  // Routing
+  defaultDepartment Department @map("default_department")
+
+  createdAt         DateTime   @default(now()) @map("created_at")
+  updatedAt         DateTime   @updatedAt @map("updated_at")
+
+  hotel        Hotel                       @relation(fields: [hotelId], references: [id])
+  category     ServiceCategory             @relation(fields: [categoryId], references: [id])
+  translations HotelServiceTranslation[]
+  requests     ServiceRequest[]
+
+  @@index([hotelId, isAvailable])
+  @@map("hotel_services")
+}
+
+model HotelServiceTranslation {
+  id             String   @id @default(cuid())
+  hotelServiceId String   @map("hotel_service_id")
+  locale         String
+
+  name           String
+  description    String?
+
+  service HotelService @relation(fields: [hotelServiceId], references: [id], onDelete: Cascade)
+
+  @@unique([hotelServiceId, locale])
+  @@index([locale])
+  @@map("hotel_service_translations")
+}
+
+model ServiceRequest {
+  id             String               @id @default(cuid())
+  hotelId        String               @map("hotel_id")
+  bookingId      String?              @map("booking_id")
+  userId         String               @map("user_id")
+  serviceId      String?              @map("service_id")
+
+  // Single-language: stored in the language the guest submitted in.
+  title          String?
+  description    String
+  language       String?              // BCP 47, optional, for analytics / future auto-translate
+
+  priority       Priority             @default(NORMAL)
+
+  // Where
+  roomNumber     String?              @map("room_number")
+
+  // State
+  status         ServiceRequestStatus @default(SUBMITTED)
+
+  // Assignment
+  assignedToId   String?              @map("assigned_to_id")
+  assignedAt     DateTime?            @map("assigned_at")
+
+  // Resolution
+  startedAt      DateTime?            @map("started_at")
+  completedAt   DateTime?            @map("completed_at")
+  resolutionNote String?              @map("resolution_note")
+
+  // Rating
+  rating         Int?                 // 1-5
+  ratingComment  String?              @map("rating_comment")
+
+  createdAt      DateTime             @default(now()) @map("created_at")
+  updatedAt      DateTime             @updatedAt @map("updated_at")
+
+  hotel   Hotel         @relation(fields: [hotelId], references: [id])
+  booking Booking?      @relation(fields: [bookingId], references: [id])
+  user    User          @relation(fields: [userId], references: [id])
+  service HotelService? @relation(fields: [serviceId], references: [id])
+  tasks   StaffTask[]
+
+  @@index([hotelId, status])
+  @@index([assignedToId])
+  @@map("service_requests")
+}
+
+enum Priority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum ServiceRequestStatus {
+  SUBMITTED
+  ASSIGNED
+  IN_PROGRESS
+  COMPLETED
+  ESCALATED
+  CANCELLED
+}
+
+model StaffTask {
+  id               String     @id @default(cuid())
+  hotelId          String     @map("hotel_id")
+  serviceRequestId String?    @map("service_request_id")
+
+  // Assignment
+  assignedToId     String     @map("assigned_to_id")
+  createdById      String     @map("created_by_id")
+
+  // Single-language (in hotel's working language)
+  title            String?
+  description      String
+  language         String?    // BCP 47, optional
+
+  priority         Priority   @default(NORMAL)
+  status           TaskStatus @default(PENDING)
+
+  // Lifecycle
+  dueAt            DateTime?  @map("due_at")
+  startedAt        DateTime?  @map("started_at")
+  completedAt      DateTime?  @map("completed_at")
+
+  notes            String?
+
+  createdAt        DateTime   @default(now()) @map("created_at")
+  updatedAt        DateTime   @updatedAt @map("updated_at")
+
+  hotel          Hotel           @relation(fields: [hotelId], references: [id])
+  serviceRequest ServiceRequest? @relation(fields: [serviceRequestId], references: [id])
+  assignedTo     HotelStaff      @relation("AssignedTo", fields: [assignedToId], references: [id])
+  createdBy      HotelStaff      @relation("CreatedBy", fields: [createdById], references: [id])
+
+  @@index([hotelId, status])
+  @@index([assignedToId, status])
+  @@map("staff_tasks")
+}
+
+enum TaskStatus {
+  PENDING
+  ASSIGNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+// =============================================================================
+// REVIEWS
+// =============================================================================
+
+model Review {
+  id                String       @id @default(cuid())
+  hotelId           String       @map("hotel_id")
+  userId            String       @map("user_id")
+  bookingId         String       @unique @map("booking_id")
+
+  // Ratings (1-5)
+  overallRating     Int          @map("overall_rating")
+  cleanlinessRating Int?         @map("cleanliness_rating")
+  serviceRating     Int?         @map("service_rating")
+  locationRating    Int?         @map("location_rating")
+  valueRating       Int?         @map("value_rating")
+
+  // User-written, single language
+  title             String?
+  comment           String?
+  language          String?      // BCP 47, optional
+
+  // Moderation
+  status            ReviewStatus @default(PENDING)
+  moderatedAt       DateTime?    @map("moderated_at")
+
+  // Hotel response (single language, in hotel's reply language)
+  hotelResponse     String?      @map("hotel_response")
+  hotelResponseLang String?      @map("hotel_response_lang")
+  hotelRespondedAt  DateTime?    @map("hotel_responded_at")
+
+  createdAt         DateTime     @default(now()) @map("created_at")
+  updatedAt         DateTime     @updatedAt @map("updated_at")
+
+  hotel   Hotel   @relation(fields: [hotelId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+  booking Booking @relation(fields: [bookingId], references: [id])
+
+  @@index([hotelId, status])
+  @@map("reviews")
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// =============================================================================
+// LOYALTY
+// =============================================================================
+
+model LoyaltyAccount {
+  id             String      @id @default(cuid())
+  userId         String      @map("user_id")
+  hotelId        String?     @map("hotel_id") // null = platform-wide loyalty
+
+  pointsBalance  Int         @default(0) @map("points_balance")
+  lifetimePoints Int         @default(0) @map("lifetime_points")
+
+  tier           LoyaltyTier @default(BRONZE)
+  tierExpiresAt  DateTime?   @map("tier_expires_at")
+
+  createdAt      DateTime    @default(now()) @map("created_at")
+  updatedAt      DateTime    @updatedAt @map("updated_at")
+
+  user         User                 @relation(fields: [userId], references: [id])
+  hotel        Hotel?               @relation(fields: [hotelId], references: [id])
+  transactions LoyaltyTransaction[]
+
+  @@unique([userId, hotelId])
+  @@map("loyalty_accounts")
+}
+
+enum LoyaltyTier {
+  BRONZE
+  SILVER
+  GOLD
+  PLATINUM
+}
+
+model LoyaltyTransaction {
+  id        String        @id @default(cuid())
+  accountId String        @map("account_id")
+
+  type      LoyaltyTxType
+  points    Int           // Positive = earned, negative = redeemed
+
+  bookingId String?       @map("booking_id")
+  reason    String
+
+  expiresAt DateTime?     @map("expires_at")
+
+  createdAt DateTime      @default(now()) @map("created_at")
+
+  account LoyaltyAccount @relation(fields: [accountId], references: [id])
+
+  @@index([accountId])
+  @@map("loyalty_transactions")
+}
+
+enum LoyaltyTxType {
+  EARNED
+  REDEEMED
+  EXPIRED
+  ADJUSTED
+  BONUS
+}
+
+// =============================================================================
+// NOTIFICATIONS
+// =============================================================================
+// Notifications are rendered server-side from templates at send time. We store
+// the final rendered text plus the locale it was rendered in. Templates live
+// in packages/notifications/templates and are versioned in code.
+
+model Notification {
+  id          String              @id @default(cuid())
+  userId      String              @map("user_id")
+
+  type        NotificationType
+  channel     NotificationChannel
+
+  // Rendered text + the locale used at render time
+  locale      String              // BCP 47
+  title       String
+  body        String
+
+  // Deep-link payload
+  data        Json                @default("{}")
+
+  // State
+  readAt      DateTime?           @map("read_at")
+
+  // Delivery
+  sentAt      DateTime?           @map("sent_at")
+  deliveredAt DateTime?           @map("delivered_at")
+  failedAt    DateTime?           @map("failed_at")
+
+  createdAt   DateTime            @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, readAt])
+  @@map("notifications")
+}
+
+enum NotificationType {
+  BOOKING_CONFIRMED
+  BOOKING_REMINDER
+  CHECKIN_AVAILABLE
+  CHECKOUT_REMINDER
+  PAYMENT_RECEIVED
+  PAYMENT_FAILED
+  SERVICE_REQUEST_UPDATE
+  REVIEW_REQUEST
+  LOYALTY_EARNED
+  PROMOTION
+  GENERAL
+}
+
+enum NotificationChannel {
+  PUSH
+  EMAIL
+  SMS
+  IN_APP
+}

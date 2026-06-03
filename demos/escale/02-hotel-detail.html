@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Escalé · Hotel Detail · Design Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..900&family=Geist+Mono:wght@400..600&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --aubergine-900: #3A1234;
+  --aubergine-700: #4A1942;
+  --aubergine-500: #5B2C5F;
+  --aubergine-300: #8E5A8E;
+  --aubergine-100: #EFE3EF;
+  --magenta-500: #B8228C;
+  --magenta-300: #D86CB0;
+  --terracotta-700: #A05A3A;
+  --terracotta-500: #C9956B;
+  --terracotta-300: #E2BC9C;
+  --terracotta-100: #F5E8DC;
+  --ink-900: #1C1410;
+  --ink-700: #3D332D;
+  --ink-500: #6B5D54;
+  --ink-300: #A89A8E;
+  --sand-100: #F0E9DF;
+  --sand-50: #F7F2E9;
+  --cream: #FAF7F2;
+  --paper: #FDFBF7;
+  --success: #5A8C5F;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Geist', -apple-system, sans-serif;
+  --font-arabic: 'Tajawal', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
+  --shadow-sm: 0 1px 2px rgba(58, 18, 52, 0.04);
+  --shadow-md: 0 4px 12px rgba(58, 18, 52, 0.06), 0 1px 3px rgba(58, 18, 52, 0.04);
+  --shadow-lg: 0 12px 32px rgba(58, 18, 52, 0.08), 0 4px 8px rgba(58, 18, 52, 0.04);
+  --shadow-phone: 0 50px 100px -20px rgba(58, 18, 52, 0.25), 0 30px 60px -30px rgba(58, 18, 52, 0.3);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink-900);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 15% 5%, rgba(184, 34, 140, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 85% 90%, rgba(201, 149, 107, 0.06) 0%, transparent 40%);
+}
+
+[lang="ar"], [lang="ar"] * { font-family: var(--font-arabic); }
+[lang="ar"] { line-height: 1.6; }
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' /%3E%3C/svg%3E");
+}
+
+.page {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 48px 32px 96px;
+}
+
+.brand-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 56px;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.brand-identity { display: flex; align-items: center; gap: 20px; }
+.brand-logo { width: 48px; height: 48px; }
+.brand-name-wrap { display: flex; flex-direction: column; gap: 2px; }
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  color: var(--aubergine-900);
+  line-height: 1;
+}
+.brand-tagline {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  font-weight: 500;
+}
+
+.brand-meta { display: flex; align-items: center; gap: 24px; }
+.screen-stamp { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.screen-stamp .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-300); font-weight: 500; }
+.screen-stamp .val { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--terracotta-700); }
+
+.locale-switch {
+  display: flex;
+  background: var(--paper);
+  border: 1px solid var(--sand-100);
+  border-radius: 9999px;
+  padding: 4px;
+  box-shadow: var(--shadow-sm);
+}
+.locale-switch button {
+  border: 0;
+  background: transparent;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-500);
+  cursor: pointer;
+  transition: all 250ms var(--ease-out);
+  letter-spacing: 0.04em;
+}
+.locale-switch button.active {
+  background: var(--aubergine-700);
+  color: var(--paper);
+}
+
+.editorial-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 48px;
+  margin-bottom: 56px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--sand-100);
+}
+.editorial-head .label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--terracotta-700);
+  margin-bottom: 12px;
+}
+.editorial-head h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  color: var(--aubergine-900);
+  max-width: 18ch;
+}
+.editorial-head h1 em {
+  font-style: italic;
+  color: var(--magenta-500);
+}
+.editorial-head .colophon {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-500);
+  letter-spacing: 0.02em;
+  text-align: end;
+  line-height: 1.7;
+}
+
+/* Phone stage */
+.phone-stage {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+  position: relative;
+}
+.phone-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(91, 44, 95, 0.08) 0%, transparent 60%);
+  z-index: 0;
+}
+.phone {
+  position: relative;
+  width: 400px;
+  height: 840px;
+  background: var(--ink-900);
+  border-radius: 56px;
+  padding: 12px;
+  box-shadow: var(--shadow-phone);
+  z-index: 1;
+}
+.phone::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 30px;
+  background: var(--ink-900);
+  border-radius: 0 0 18px 18px;
+  z-index: 100;
+}
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  background: var(--paper);
+  border-radius: 44px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+.phone-screen::-webkit-scrollbar { display: none; }
+
+/* HERO IMAGE */
+.hero-image {
+  position: relative;
+  height: 480px;
+  width: 100%;
+  background:
+    linear-gradient(180deg, rgba(58, 18, 52, 0.4) 0%, transparent 25%, transparent 65%, rgba(58, 18, 52, 0.85) 100%),
+    linear-gradient(135deg, #E2BC9C 0%, #C9956B 30%, #A05A3A 60%, #5B2C5F 100%);
+}
+.hero-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 90 L18 70 L26 90 Z M30 90 L38 70 L46 90 Z M50 90 L58 70 L66 90 Z M70 90 L78 70 L86 90 Z' fill='rgba(255,255,255,0.06)'/%3E%3C/svg%3E");
+  background-size: 200px;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+}
+
+/* Top bar over hero */
+.hero-top {
+  position: absolute;
+  top: 52px;
+  inset-inline-start: 16px;
+  inset-inline-end: 16px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+}
+.circle-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(253, 251, 247, 0.92);
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--aubergine-900);
+  box-shadow: 0 2px 8px rgba(58, 18, 52, 0.15);
+}
+.circle-btn svg { width: 18px; height: 18px; }
+.right-actions { display: flex; gap: 8px; }
+[dir="rtl"] .circle-btn svg:not(.no-flip) { transform: scaleX(-1); }
+
+/* Image indicator */
+.image-indicator {
+  position: absolute;
+  bottom: 100px;
+  inset-inline-end: 16px;
+  background: rgba(28, 20, 16, 0.65);
+  backdrop-filter: blur(8px);
+  color: var(--paper);
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 5;
+}
+
+/* Hero text overlay */
+.hero-overlay {
+  position: absolute;
+  bottom: 24px;
+  inset-inline-start: 24px;
+  inset-inline-end: 24px;
+  color: var(--paper);
+  z-index: 5;
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(253, 251, 247, 0.16);
+  backdrop-filter: blur(8px);
+  padding: 5px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+[lang="ar"] .hero-eyebrow { letter-spacing: 0; text-transform: none; font-size: 12px; }
+
+/* Content body */
+.content {
+  padding: 24px;
+  position: relative;
+  background: var(--paper);
+  margin-top: -32px;
+  border-radius: 28px 28px 0 0;
+  z-index: 2;
+}
+
+.detail-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.detail-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--aubergine-900);
+  flex: 1;
+}
+[lang="ar"] .detail-name { font-weight: 700; letter-spacing: 0; font-size: 28px; }
+
+.rating-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--terracotta-100);
+  padding: 6px 10px;
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--terracotta-700);
+  flex-shrink: 0;
+}
+.rating-pill svg { width: 14px; height: 14px; color: var(--terracotta-700); fill: currentColor; }
+
+.location-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 24px;
+  color: var(--ink-500);
+  font-size: 14px;
+}
+.location-row svg { width: 14px; height: 14px; }
+.location-row .stars {
+  margin-inline-start: 8px;
+  padding-inline-start: 8px;
+  border-inline-start: 1px solid var(--sand-100);
+  color: var(--terracotta-500);
+  font-size: 13px;
+}
+
+/* Description */
+.description {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-700);
+  margin-bottom: 24px;
+}
+.description em {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--aubergine-900);
+}
+
+/* Amenities row */
+.amenities {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 28px;
+  padding: 16px;
+  background: var(--sand-50);
+  border-radius: 16px;
+}
+.amenity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.amenity-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--terracotta-700);
+  border: 1px solid var(--sand-100);
+}
+.amenity-icon svg { width: 16px; height: 16px; }
+.amenity-name {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--ink-700);
+  letter-spacing: 0.02em;
+}
+
+/* Section title */
+.sect-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 20px;
+  letter-spacing: -0.015em;
+  color: var(--aubergine-900);
+  margin-bottom: 14px;
+}
+[lang="ar"] .sect-title { font-weight: 700; letter-spacing: 0; }
+
+/* Room option card */
+.rooms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.room-card {
+  display: flex;
+  background: var(--paper);
+  border: 1px solid var(--sand-100);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.room-card.recommended {
+  border-color: var(--terracotta-500);
+  background: var(--terracotta-100);
+  position: relative;
+}
+.room-card.recommended::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  inset-inline-start: -1px;
+  height: 6px;
+  width: 60px;
+  background: var(--terracotta-500);
+  border-radius: 16px 0 16px 0;
+}
+.room-thumb {
+  width: 88px;
+  flex-shrink: 0;
+}
+.room-thumb.thumb-1 {
+  background: linear-gradient(135deg, #E2BC9C 0%, #C9956B 100%);
+}
+.room-thumb.thumb-2 {
+  background: linear-gradient(135deg, #8E5A8E 0%, #5B2C5F 100%);
+}
+.room-info {
+  flex: 1;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.room-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--aubergine-900);
+  letter-spacing: -0.01em;
+  margin-bottom: 2px;
+}
+[lang="ar"] .room-name { font-weight: 700; }
+.room-meta {
+  font-size: 11px;
+  color: var(--ink-500);
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+.room-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.room-tag {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--terracotta-700);
+}
+[lang="ar"] .room-tag { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.room-price {
+  text-align: end;
+}
+.room-price .amount {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--aubergine-900);
+  letter-spacing: -0.01em;
+}
+.room-price .currency {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--ink-500);
+  letter-spacing: 0.04em;
+  margin-inline-end: 2px;
+}
+.room-price .per {
+  font-size: 10px;
+  color: var(--ink-500);
+  display: block;
+}
+
+/* Reviews preview */
+.review-section {
+  margin-bottom: 100px;
+}
+.review-card {
+  background: var(--paper);
+  border: 1px solid var(--sand-100);
+  border-radius: 14px;
+  padding: 14px;
+}
+.review-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.reviewer-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--terracotta-300), var(--magenta-300));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--paper);
+}
+.reviewer-name { font-size: 13px; font-weight: 500; color: var(--ink-900); }
+.review-date { font-size: 11px; color: var(--ink-500); font-family: var(--font-mono); }
+.review-stars { margin-inline-start: auto; display: flex; gap: 2px; color: var(--terracotta-500); }
+.review-stars svg { width: 12px; height: 12px; fill: currentColor; }
+.review-text {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-700);
+}
+[lang="ar"] .review-text { font-family: var(--font-arabic); font-style: normal; }
+
+/* STICKY BOOK BAR */
+.book-bar {
+  position: sticky;
+  bottom: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  background: var(--paper);
+  border-top: 1px solid var(--sand-100);
+  padding: 16px 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 -8px 24px rgba(58, 18, 52, 0.06);
+}
+.bb-price-wrap { flex: 1; }
+.bb-price-from {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  font-weight: 500;
+}
+[lang="ar"] .bb-price-from { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.bb-price {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--aubergine-900);
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.bb-price .ccy {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-500);
+  letter-spacing: 0.04em;
+}
+.bb-price .per {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--ink-500);
+  font-weight: 400;
+  margin-inline-start: 2px;
+}
+
+.book-cta {
+  background: var(--aubergine-700);
+  color: var(--paper);
+  border: 0;
+  padding: 14px 24px;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 200ms var(--ease-out);
+  cursor: pointer;
+}
+.book-cta:hover { background: var(--aubergine-900); }
+.book-cta svg { width: 14px; height: 14px; }
+[dir="rtl"] .book-cta svg { transform: scaleX(-1); }
+
+/* SIDE PANEL */
+.composition {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+@media (max-width: 980px) {
+  .composition { grid-template-columns: 1fr; gap: 48px; }
+  .phone { transform: scale(0.85); transform-origin: top center; }
+}
+
+.side-panel {
+  position: sticky;
+  top: 32px;
+  padding-top: 32px;
+}
+.panel-section {
+  margin-bottom: 48px;
+}
+.panel-section h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 28px;
+  letter-spacing: -0.025em;
+  color: var(--aubergine-900);
+  margin-bottom: 8px;
+}
+.panel-section .lede {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-500);
+  max-width: 52ch;
+  margin-bottom: 24px;
+}
+
+.principle-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.principle-list li {
+  padding-inline-start: 28px;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-700);
+}
+.principle-list li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  background: linear-gradient(135deg, var(--terracotta-500), var(--magenta-500));
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.principle-list li strong {
+  display: block;
+  font-weight: 600;
+  color: var(--aubergine-900);
+  margin-bottom: 2px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: -0.01em;
+}
+[lang="ar"] .principle-list li strong { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+
+/* Color note */
+.note-block {
+  padding: 20px;
+  background: var(--terracotta-100);
+  border-radius: 16px;
+  border-inline-start: 3px solid var(--terracotta-500);
+}
+.note-block .note-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--terracotta-700);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+[lang="ar"] .note-block .note-label { letter-spacing: 0; text-transform: none; font-size: 12px; }
+.note-block .note-text {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-700);
+}
+
+.footnote {
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 1px solid var(--sand-100);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-500);
+}
+.footnote .accent { color: var(--magenta-500); font-weight: 600; }
+
+@media (max-width: 640px) {
+  .page { padding: 32px 20px 64px; }
+  .editorial-head { grid-template-columns: 1fr; gap: 24px; }
+  .editorial-head .colophon { text-align: start; }
+}
+</style>
+</head>
+<body>
+
+<div class="page" id="page">
+
+  <header class="brand-bar">
+    <div class="brand-identity">
+      <svg class="brand-logo" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#5B2C5F"/>
+            <stop offset="100%" stop-color="#B8228C"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="44" r="36" fill="url(#brandGrad)"/>
+        <circle cx="50" cy="44" r="22" fill="#FDFBF7"/>
+        <path d="M28 74 L36 60 L44 74 Z M44 74 L52 60 L60 74 Z M60 74 L68 60 L76 74 Z" fill="#FDFBF7"/>
+      </svg>
+      <div class="brand-name-wrap">
+        <div class="brand-name">Escalé</div>
+        <div class="brand-tagline">Design System · v0.1</div>
+      </div>
+    </div>
+    <div class="brand-meta">
+      <div class="screen-stamp">
+        <div class="lbl">Screen 02</div>
+        <div class="val">Hotel Detail</div>
+      </div>
+      <div class="locale-switch">
+        <button id="btnEn" class="active" onclick="setLocale('en')">EN</button>
+        <button id="btnAr" onclick="setLocale('ar')">ع</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="editorial-head">
+    <div>
+      <div class="label" id="eh-label">Screen 02 / Hotel Detail</div>
+      <h1 id="eh-title"><span id="eh-1">The conversion</span> <em id="eh-2">moment.</em></h1>
+    </div>
+    <div class="colophon">
+      <div>Sticky <strong>Book</strong> bar at bottom</div>
+      <div>Photography hero → editorial overlap</div>
+      <div>One <strong>recommended</strong> room highlighted</div>
+      <div>Reviews as italic editorial quotes</div>
+      <div style="margin-top:8px; opacity:0.6;">Preview · 22 May 2026</div>
+    </div>
+  </section>
+
+  <div class="composition">
+
+    <!-- PHONE -->
+    <div class="phone-stage">
+      <div class="phone">
+        <div class="phone-screen" id="screen" lang="en" dir="ltr">
+
+          <!-- HERO IMAGE -->
+          <div class="hero-image">
+            <div class="hero-top">
+              <button class="circle-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <div class="right-actions">
+                <button class="circle-btn">
+                  <svg class="no-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                </button>
+                <button class="circle-btn">
+                  <svg class="no-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="image-indicator">1 / 24</div>
+
+            <div class="hero-overlay">
+              <span class="hero-eyebrow" id="hero-eb">Editor's pick · Spring 2026</span>
+            </div>
+          </div>
+
+          <!-- CONTENT -->
+          <div class="content">
+
+            <div class="detail-head">
+              <div class="detail-name" id="hotel-name">Dar AlUla</div>
+              <div class="rating-pill">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span>4.92</span>
+              </div>
+            </div>
+
+            <div class="location-row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span id="hotel-location">AlUla, Saudi Arabia</span>
+              <span class="stars" id="hotel-stars">★★★★★</span>
+              <span id="hotel-reviews" style="margin-inline-start: auto; color: var(--ink-500); font-size: 12px;">248 reviews</span>
+            </div>
+
+            <p class="description" id="hotel-desc">
+              An <em id="desc-em">eco-lodge</em> built by hand from kershef on the shores of the salt lake. No electricity in the rooms — only beeswax candles, the desert sky, and a quiet that visitors say they remember for years.
+            </p>
+
+            <!-- AMENITIES -->
+            <div class="amenities">
+              <div class="amenity">
+                <div class="amenity-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg>
+                </div>
+                <span class="amenity-name" id="am-wifi">Wifi</span>
+              </div>
+              <div class="amenity">
+                <div class="amenity-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 18s2-2 5-2 5 2 8 2 5-2 5-2M2 22s2-2 5-2 5 2 8 2 5-2 5-2M9.5 11c1.93 0 3.5-1.57 3.5-3.5S11.43 4 9.5 4 6 5.57 6 7.5 7.57 11 9.5 11z"/></svg>
+                </div>
+                <span class="amenity-name" id="am-pool">Salt pool</span>
+              </div>
+              <div class="amenity">
+                <div class="amenity-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10h18M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zM7 18v2M17 18v2"/></svg>
+                </div>
+                <span class="amenity-name" id="am-rest">Restaurant</span>
+              </div>
+              <div class="amenity">
+                <div class="amenity-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                </div>
+                <span class="amenity-name" id="am-incl">All-incl.</span>
+              </div>
+            </div>
+
+            <!-- ROOMS -->
+            <h2 class="sect-title" id="sect-rooms">Choose your room</h2>
+            <div class="rooms-list">
+              <div class="room-card recommended">
+                <div class="room-thumb thumb-1"></div>
+                <div class="room-info">
+                  <div>
+                    <div class="room-name" id="r1-name">Garden Suite</div>
+                    <div class="room-meta" id="r1-meta">King bed · 48 m² · Salt-lake view</div>
+                  </div>
+                  <div class="room-bottom">
+                    <span class="room-tag" id="r1-tag">Recommended for 2</span>
+                    <div class="room-price">
+                      <div class="amount"><span class="currency">SAR</span>4,800</div>
+                      <span class="per" id="r1-per">/ night</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="room-card">
+                <div class="room-thumb thumb-2"></div>
+                <div class="room-info">
+                  <div>
+                    <div class="room-name" id="r2-name">Lake-Edge Room</div>
+                    <div class="room-meta" id="r2-meta">Twin beds · 32 m² · Lake view</div>
+                  </div>
+                  <div class="room-bottom">
+                    <span class="room-tag" id="r2-tag" style="color: var(--ink-500);">Standard</span>
+                    <div class="room-price">
+                      <div class="amount"><span class="currency">SAR</span>3,200</div>
+                      <span class="per" id="r2-per">/ night</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- REVIEWS -->
+            <div class="review-section">
+              <h2 class="sect-title" id="sect-reviews">Recent stays</h2>
+              <div class="review-card">
+                <div class="review-head">
+                  <div class="reviewer-avatar">L</div>
+                  <div>
+                    <div class="reviewer-name" id="rv-name">Leila K.</div>
+                    <div class="review-date" id="rv-date">Mar 2026</div>
+                  </div>
+                  <div class="review-stars">
+                    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  </div>
+                </div>
+                <p class="review-text" id="rv-text">"We didn't realise how much we needed the stillness. The candles, the lake, the way time slows — we'll be back next spring."</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- STICKY BOOK BAR -->
+          <div class="book-bar">
+            <div class="bb-price-wrap">
+              <div class="bb-price-from" id="bb-from">From / night</div>
+              <div class="bb-price">
+                <span class="ccy">SAR</span>
+                <span>3,200</span>
+                <span class="per" id="bb-per">avg</span>
+              </div>
+            </div>
+            <button class="book-cta">
+              <span id="bb-cta">Reserve</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- DESIGN NOTES PANEL -->
+    <aside class="side-panel">
+      <div class="panel-section">
+        <h2 id="ds-h-1">Why this works</h2>
+        <p class="lede" id="ds-lede-1">This is the page where a visitor decides to book. Everything on it is here to help the guest tap Reserve and feel sure about it.</p>
+        <ul class="principle-list">
+          <li id="principle-1">
+            <strong>Photo first, words second</strong>
+            The big photo fills most of the first screen. A guest trusts a real picture before any text.
+          </li>
+          <li id="principle-2">
+            <strong>One room suggested</strong>
+            Two room choices, with one clearly marked as the best fit. Too many choices slow people down.
+          </li>
+          <li id="principle-3">
+            <strong>Reserve button always visible</strong>
+            The Reserve bar stays on screen while scrolling, and shows the price, so the guest is never lost.
+          </li>
+          <li id="principle-4">
+            <strong>Reviews look like quotes</strong>
+            A guest review is shown like a nice quote, not an angry rating. It sets a warm tone.
+          </li>
+          <li id="principle-5">
+            <strong>Amenities as icons</strong>
+            Four small icons instead of a long list. The eye reads them instantly.
+          </li>
+        </ul>
+      </div>
+
+      <div class="panel-section">
+        <h2 id="ds-h-2">Parts we reused</h2>
+        <ul class="principle-list">
+          <li id="comp-1">
+            <strong>Big photo card</strong>
+            Used on any screen that leads with a photo.
+          </li>
+          <li id="comp-2">
+            <strong>Rating pill</strong>
+            The same small rating tag used across the app.
+          </li>
+          <li id="comp-3">
+            <strong>Room card</strong>
+            A normal one and a "recommended" one. Easy to add more later.
+          </li>
+          <li id="comp-4">
+            <strong>Sticky action bar</strong>
+            The bottom bar used on the booking, payment, and service screens.
+          </li>
+        </ul>
+      </div>
+
+      <div class="note-block">
+        <div class="note-label" id="note-lbl">A note about photos</div>
+        <p class="note-text" id="note-text">The coloured placeholder shows the photo style we want — warm, golden light, with deep colours in the shadows. Real photos should match this warm look. Avoid cold, bluish stock photos.</p>
+      </div>
+    </aside>
+
+  </div>
+
+  <footer class="footnote">
+    <span>© Escalé · Screen 02 of 18</span>
+    <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
+  </footer>
+
+</div>
+
+<script>
+const translations = {
+  en: {
+    ehLabel: "Screen 02 / Hotel Detail",
+    eh1: "The conversion",
+    eh2: "moment.",
+    heroEb: "Editor's pick · Spring 2026",
+    hotelName: "Dar AlUla",
+    hotelLocation: "AlUla, Saudi Arabia",
+    hotelReviews: "248 reviews",
+    hotelDesc: '<em>An eco-lodge</em> built by hand from kershef on the shores of the salt lake. No electricity in the rooms — only beeswax candles, the desert sky, and a quiet that visitors say they remember for years.',
+    amWifi: "Wifi", amPool: "Salt pool", amRest: "Restaurant", amIncl: "All-incl.",
+    sectRooms: "Choose your room",
+    r1Name: "Garden Suite", r1Meta: "King bed · 48 m² · Salt-lake view", r1Tag: "Recommended for 2", r1Per: "/ night",
+    r2Name: "Lake-Edge Room", r2Meta: "Twin beds · 32 m² · Lake view", r2Tag: "Standard", r2Per: "/ night",
+    sectReviews: "Recent stays",
+    rvName: "Leila K.", rvDate: "Mar 2026",
+    rvText: '"We didn\'t realise how much we needed the stillness. The candles, the lake, the way time slows — we\'ll be back next spring."',
+    bbFrom: "From / night", bbPer: "avg", bbCta: "Reserve",
+    dsH1: "Why this works",
+    dsLede1: "This is the page where a visitor decides to book. Everything on it is here to help the guest tap Reserve and feel sure about it.",
+    p1: "<strong>Photo first, words second</strong>The big photo fills most of the first screen. A guest trusts a real picture before any text.",
+    p2: "<strong>One room suggested</strong>Two room choices, with one clearly marked as the best fit. Too many choices slow people down.",
+    p3: "<strong>Reserve button always visible</strong>The Reserve bar stays on screen while scrolling, and shows the price, so the guest is never lost.",
+    p4: "<strong>Reviews look like quotes</strong>A guest review is shown like a nice quote, not an angry rating. It sets a warm tone.",
+    p5: "<strong>Amenities as icons</strong>Four small icons instead of a long list. The eye reads them instantly.",
+    dsH2: "Parts we reused",
+    c1: "<strong>Big photo card</strong>Used on any screen that leads with a photo.",
+    c2: "<strong>Rating pill</strong>The same small rating tag used across the app.",
+    c3: "<strong>Room card</strong>A normal one and a \"recommended\" one. Easy to add more later.",
+    c4: "<strong>Sticky action bar</strong>The bottom bar used on the booking, payment, and service screens.",
+    noteLbl: "A note about photos",
+    noteText: "The coloured placeholder shows the photo style we want — warm, golden light, with deep colours in the shadows. Real photos should match this warm look. Avoid cold, bluish stock photos."
+  },
+  ar: {
+    ehLabel: "الشاشة الثانية / تفاصيل الفندق",
+    eh1: "لحظة",
+    eh2: "الاختيار.",
+    heroEb: "اختيار المحرر · ربيع ٢٠٢٦",
+    hotelName: "دار العُلا",
+    hotelLocation: "العُلا، السعودية",
+    hotelReviews: "٢٤٨ تقييم",
+    hotelDesc: '<em>نزل بيئي</em> مبني يدوياً من الكِرشيف على ضفاف بحيرة الملح. لا كهرباء في الغرف — فقط شموع الشمع، وسماء الصحراء، وهدوء يقول الزوار إنهم يتذكرونه لسنوات.',
+    amWifi: "واي فاي", amPool: "بركة ملحية", amRest: "مطعم", amIncl: "شامل الكل",
+    sectRooms: "اختر غرفتك",
+    r1Name: "جناح الحديقة", r1Meta: "سرير كينج · ٤٨ م² · إطلالة على البحيرة", r1Tag: "موصى به لشخصين", r1Per: "/ ليلة",
+    r2Name: "غرفة طرف البحيرة", r2Meta: "سريران مفردان · ٣٢ م² · إطلالة على البحيرة", r2Tag: "قياسي", r2Per: "/ ليلة",
+    sectReviews: "إقامات حديثة",
+    rvName: "ليلى ك.", rvDate: "مارس ٢٠٢٦",
+    rvText: '"لم ندرك كم احتجنا لهذا السكون. الشموع، البحيرة، كيف يتباطأ الزمن — سنعود في الربيع القادم."',
+    bbFrom: "ابتداءً من / ليلة", bbPer: "متوسط", bbCta: "احجز",
+    dsH1: "ليه التصميم ده شغّال",
+    dsLede1: "دي الصفحة اللي الزائر بياخد فيها قرار الحجز. كل حاجة فيها موجودة عشان تساعد الضيف يضغط \"احجز\" وهو مطمن.",
+    p1: "<strong>الصورة الأول، الكلام بعدين</strong>الصورة الكبيرة بتملأ معظم أول الشاشة. الضيف بيثق في صورة حقيقية قبل أي كلام.",
+    p2: "<strong>غرفة واحدة مقترحة</strong>خيارين غرف، وواحد متعلّم بوضوح كأنسب اختيار. الخيارات الكتير بتبطّأ الناس.",
+    p3: "<strong>زر الحجز ظاهر دايماً</strong>شريط الحجز بيفضل على الشاشة وإنت بتنزل، وبيوضّح السعر، فالضيف عمره ما بيتوه.",
+    p4: "<strong>التقييمات شكلها اقتباس</strong>تقييم الضيف معروض زي اقتباس جميل، مش تقييم غاضب. ده بيحط جو دافئ.",
+    p5: "<strong>المرافق كأيقونات</strong>أربع أيقونات صغيرة بدل قائمة طويلة. العين بتقراها فوراً.",
+    dsH2: "أجزاء أعدنا استخدامها",
+    c1: "<strong>كارت صورة كبير</strong>بيُستخدم في أي شاشة بتبدأ بصورة.",
+    c2: "<strong>شارة التقييم</strong>نفس شارة التقييم الصغيرة المستخدمة في كل التطبيق.",
+    c3: "<strong>كارت الغرفة</strong>واحد عادي وواحد \"موصى به\". سهل نضيف غيرهم بعدين.",
+    c4: "<strong>شريط الإجراء الثابت</strong>الشريط السفلي المستخدم في شاشات الحجز والدفع والخدمة.",
+    noteLbl: "ملاحظة عن الصور",
+    noteText: "المكان الملوّن بيوضّح ستايل الصور اللي عايزينه — دافي، ضوء ذهبي، وألوان عميقة في الظل. الصور الحقيقية لازم تطابق الإحساس الدافي ده. تجنّب الصور الباردة المايلة للأزرق."
+  }
+};
+
+function setLocale(loc) {
+  const t = translations[loc];
+  const isRtl = loc === 'ar';
+
+  document.getElementById('screen').setAttribute('lang', loc);
+  document.getElementById('screen').setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+
+  document.getElementById('btnEn').classList.toggle('active', loc === 'en');
+  document.getElementById('btnAr').classList.toggle('active', loc === 'ar');
+
+  document.getElementById('eh-label').textContent = t.ehLabel;
+  document.getElementById('eh-1').textContent = t.eh1;
+  document.getElementById('eh-2').textContent = t.eh2;
+
+  document.querySelector('.editorial-head').setAttribute('lang', loc);
+  document.querySelectorAll('.panel-section').forEach(p => p.setAttribute('lang', loc));
+  document.querySelector('.note-block').setAttribute('lang', loc);
+
+  document.getElementById('hero-eb').textContent = t.heroEb;
+  document.getElementById('hotel-name').textContent = t.hotelName;
+  document.getElementById('hotel-location').textContent = t.hotelLocation;
+  document.getElementById('hotel-reviews').textContent = t.hotelReviews;
+  document.getElementById('hotel-desc').innerHTML = t.hotelDesc;
+
+  document.getElementById('am-wifi').textContent = t.amWifi;
+  document.getElementById('am-pool').textContent = t.amPool;
+  document.getElementById('am-rest').textContent = t.amRest;
+  document.getElementById('am-incl').textContent = t.amIncl;
+
+  document.getElementById('sect-rooms').textContent = t.sectRooms;
+  document.getElementById('r1-name').textContent = t.r1Name;
+  document.getElementById('r1-meta').textContent = t.r1Meta;
+  document.getElementById('r1-tag').textContent = t.r1Tag;
+  document.getElementById('r1-per').textContent = t.r1Per;
+  document.getElementById('r2-name').textContent = t.r2Name;
+  document.getElementById('r2-meta').textContent = t.r2Meta;
+  document.getElementById('r2-tag').textContent = t.r2Tag;
+  document.getElementById('r2-per').textContent = t.r2Per;
+
+  document.getElementById('sect-reviews').textContent = t.sectReviews;
+  document.getElementById('rv-name').textContent = t.rvName;
+  document.getElementById('rv-date').textContent = t.rvDate;
+  document.getElementById('rv-text').textContent = t.rvText;
+
+  document.getElementById('bb-from').textContent = t.bbFrom;
+  document.getElementById('bb-per').textContent = t.bbPer;
+  document.getElementById('bb-cta').textContent = t.bbCta;
+
+  document.getElementById('ds-h-1').textContent = t.dsH1;
+  document.getElementById('ds-lede-1').textContent = t.dsLede1;
+  document.getElementById('principle-1').innerHTML = t.p1;
+  document.getElementById('principle-2').innerHTML = t.p2;
+  document.getElementById('principle-3').innerHTML = t.p3;
+  document.getElementById('principle-4').innerHTML = t.p4;
+  document.getElementById('principle-5').innerHTML = t.p5;
+  document.getElementById('ds-h-2').textContent = t.dsH2;
+  document.getElementById('comp-1').innerHTML = t.c1;
+  document.getElementById('comp-2').innerHTML = t.c2;
+  document.getElementById('comp-3').innerHTML = t.c3;
+  document.getElementById('comp-4').innerHTML = t.c4;
+  document.getElementById('note-lbl').textContent = t.noteLbl;
+  document.getElementById('note-text').textContent = t.noteText;
+}
+</script>
+
+</body>
+</html>

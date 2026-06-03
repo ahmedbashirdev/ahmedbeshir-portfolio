@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Escalé · Service Detail · Design Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..900&family=Geist+Mono:wght@400..600&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --aubergine-900: #3A1234;
+  --aubergine-700: #4A1942;
+  --aubergine-500: #5B2C5F;
+  --aubergine-300: #8E5A8E;
+  --aubergine-100: #EFE3EF;
+  --magenta-500: #B8228C;
+  --magenta-300: #D86CB0;
+  --terracotta-700: #A05A3A;
+  --terracotta-500: #C9956B;
+  --terracotta-300: #E2BC9C;
+  --terracotta-100: #F5E8DC;
+  --ink-900: #1C1410;
+  --ink-700: #3D332D;
+  --ink-500: #6B5D54;
+  --ink-300: #A89A8E;
+  --sand-100: #F0E9DF;
+  --sand-50: #F7F2E9;
+  --cream: #FAF7F2;
+  --paper: #FDFBF7;
+  --success: #5A8C5F;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Geist', -apple-system, sans-serif;
+  --font-arabic: 'Tajawal', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
+  --shadow-sm: 0 1px 2px rgba(58, 18, 52, 0.04);
+  --shadow-md: 0 4px 12px rgba(58, 18, 52, 0.06), 0 1px 3px rgba(58, 18, 52, 0.04);
+  --shadow-phone: 0 50px 100px -20px rgba(58, 18, 52, 0.25), 0 30px 60px -30px rgba(58, 18, 52, 0.3);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink-900);
+  line-height: 1.5;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 88% 0%, rgba(184, 34, 140, 0.06), transparent 40%),
+    radial-gradient(circle at 4% 12%, rgba(91, 44, 95, 0.05), transparent 36%);
+}
+[lang="ar"], [lang="ar"] * { font-family: var(--font-arabic); }
+[lang="ar"] { line-height: 1.6; }
+
+.page { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 48px 32px 96px; }
+
+/* HEADER */
+.brand-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 24px; }
+.brand-identity { display: flex; align-items: center; gap: 20px; }
+.brand-logo { width: 48px; height: 48px; }
+.brand-name-wrap { display: flex; flex-direction: column; gap: 2px; }
+.brand-name { font-family: var(--font-display); font-weight: 500; font-size: 24px; letter-spacing: -0.02em; color: var(--aubergine-900); line-height: 1; }
+.brand-tagline { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-500); font-weight: 500; }
+.brand-meta { display: flex; align-items: center; gap: 24px; }
+.screen-stamp { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.screen-stamp .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-300); font-weight: 500; }
+.screen-stamp .val { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--terracotta-700); }
+.locale-switch { display: flex; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 9999px; padding: 4px; box-shadow: var(--shadow-sm); }
+.locale-switch button { border: 0; background: transparent; padding: 8px 18px; border-radius: 9999px; font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-500); cursor: pointer; }
+.locale-switch button.active { background: var(--aubergine-700); color: var(--paper); }
+
+/* EDITORIAL HEAD */
+.editorial-head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 48px; margin-bottom: 44px; padding-bottom: 32px; border-bottom: 1px solid var(--sand-100); }
+.editorial-head .label { font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--terracotta-700); margin-bottom: 12px; }
+.editorial-head h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(38px, 5vw, 64px); line-height: 0.98; letter-spacing: -0.035em; color: var(--aubergine-900); max-width: 16ch; }
+.editorial-head h1 em { font-style: italic; color: var(--magenta-500); }
+[lang="ar"] .editorial-head h1 { font-weight: 700; letter-spacing: 0; line-height: 1.15; }
+.editorial-head .colophon { font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); letter-spacing: 0.02em; text-align: end; line-height: 1.7; }
+.editorial-head .colophon strong { color: var(--aubergine-700); }
+[lang="ar"] .editorial-head .colophon { font-family: var(--font-arabic); }
+
+/* COMPOSITION */
+.composition { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+@media (max-width: 980px) { .composition { grid-template-columns: 1fr; gap: 48px; } .phone { transform: scale(0.9); transform-origin: top center; } }
+
+.phone-stage { display: flex; justify-content: center; position: relative; padding: 24px 0; }
+.phone-stage::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 58% 48% at 50% 26%, rgba(91, 44, 95, 0.08), transparent 62%); z-index: 0; }
+.phone { position: relative; width: 396px; height: 836px; background: var(--ink-900); border-radius: 54px; padding: 12px; box-shadow: var(--shadow-phone); z-index: 1; }
+.phone::before { content: ''; position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 108px; height: 29px; background: var(--ink-900); border-radius: 0 0 18px 18px; z-index: 100; }
+.phone-screen { width: 100%; height: 100%; background: var(--cream); border-radius: 43px; overflow-y: auto; overflow-x: hidden; position: relative; }
+.phone-screen::-webkit-scrollbar { display: none; }
+
+.status-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 30px 6px; font-size: 14px; font-weight: 600; color: var(--paper); position: absolute; top: 0; left: 0; right: 0; z-index: 6; }
+.status-bar .icons { display: flex; gap: 6px; align-items: center; }
+.status-bar svg { width: 17px; height: 17px; }
+
+/* HERO */
+.sd-hero {
+  position: relative; height: 286px; overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(58, 18, 52, 0.18) 0%, rgba(58, 18, 52, 0.20) 42%, rgba(58, 18, 52, 0.82) 100%),
+    linear-gradient(140deg, var(--terracotta-500), var(--terracotta-700) 54%, var(--aubergine-700));
+}
+.sd-hero::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 86 L20 58 L32 86 Z M32 86 L44 58 L56 86 Z M56 86 L68 58 L80 86 Z' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
+  background-size: 300px; background-position: bottom center; background-repeat: no-repeat;
+}
+.sd-hero-btn {
+  position: absolute; top: 50px; width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(253, 251, 247, 0.94); display: flex; align-items: center; justify-content: center;
+  border: 0; z-index: 3; box-shadow: var(--shadow-sm);
+}
+.sd-hero-btn svg { width: 17px; height: 17px; color: var(--aubergine-900); }
+.sd-hero-btn.back { inset-inline-start: 18px; }
+.sd-hero-btn.share { inset-inline-end: 18px; }
+[dir="rtl"] .sd-hero-btn.back svg { transform: scaleX(-1); }
+.sd-hero-foot { position: absolute; inset-inline: 20px; bottom: 18px; z-index: 2; }
+.sd-cat {
+  display: inline-block; background: rgba(253, 251, 247, 0.22); backdrop-filter: blur(6px);
+  color: var(--paper); font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+  padding: 4px 11px; border-radius: 9999px; margin-bottom: 9px;
+}
+[lang="ar"] .sd-cat { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.sd-name { font-family: var(--font-display); font-weight: 500; font-size: 27px; line-height: 1.08; letter-spacing: -0.02em; color: var(--paper); }
+[lang="ar"] .sd-name { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.sd-tagline { font-family: var(--font-display); font-style: italic; font-size: 13px; color: rgba(253, 251, 247, 0.85); margin-top: 6px; }
+[lang="ar"] .sd-tagline { font-family: var(--font-arabic); font-style: normal; }
+
+/* BODY */
+.sd-body { padding: 16px 20px 16px; }
+
+/* KEY FACTS */
+.kf-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 22px; }
+.kf-tile { background: var(--paper); border: 1px solid var(--sand-100); border-radius: 14px; padding: 11px 6px; text-align: center; }
+.kf-l { font-size: 9px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-500); font-weight: 600; margin-bottom: 5px; }
+[lang="ar"] .kf-l { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.kf-v { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--aubergine-900); }
+.kf-v .star { color: var(--terracotta-500); }
+
+/* SECTION */
+.sd-sect { margin-bottom: 22px; }
+.sd-sect-title { font-family: var(--font-display); font-weight: 500; font-size: 18px; letter-spacing: -0.015em; color: var(--aubergine-900); margin-bottom: 10px; }
+[lang="ar"] .sd-sect-title { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.sd-about { font-size: 13px; line-height: 1.68; color: var(--ink-700); }
+
+/* WHAT'S INCLUDED */
+.incl-list { display: flex; flex-direction: column; }
+.incl-row { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--sand-100); }
+.incl-row:last-child { border-bottom: 0; }
+.incl-check { width: 21px; height: 21px; border-radius: 50%; background: rgba(90, 140, 95, 0.16); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.incl-check svg { width: 12px; height: 12px; color: var(--success); }
+.incl-text { font-size: 12.5px; color: var(--ink-700); line-height: 1.45; padding-top: 2px; }
+
+/* OPTIONS */
+.opt-row { display: flex; align-items: center; gap: 11px; padding: 12px; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 13px; margin-bottom: 7px; }
+.opt-row.selected { border-color: var(--aubergine-700); background: var(--aubergine-100); }
+.opt-radio { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--ink-300); flex-shrink: 0; position: relative; }
+.opt-row.selected .opt-radio { border-color: var(--aubergine-700); }
+.opt-radio::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: var(--aubergine-700); opacity: 0; transition: opacity var(--duration-fast, 150ms); }
+.opt-row.selected .opt-radio::after { opacity: 1; }
+.opt-info { flex: 1; min-width: 0; }
+.opt-line { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.opt-name { font-family: var(--font-display); font-weight: 500; font-size: 13.5px; color: var(--aubergine-900); letter-spacing: -0.01em; }
+[lang="ar"] .opt-name { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.opt-tag { font-size: 9px; font-weight: 700; color: var(--magenta-500); background: rgba(184, 34, 140, 0.1); padding: 2px 7px; border-radius: 9999px; }
+[lang="ar"] .opt-tag { font-size: 10.5px; }
+.opt-sub { font-size: 10.5px; color: var(--ink-500); margin-top: 2px; }
+.opt-price { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--aubergine-900); flex-shrink: 0; }
+
+/* GOOD TO KNOW */
+.gtk-list { display: flex; flex-direction: column; }
+.gtk-row { display: flex; align-items: center; gap: 11px; padding: 10px 0; border-bottom: 1px solid var(--sand-100); }
+.gtk-row:last-child { border-bottom: 0; }
+.gtk-ic { width: 31px; height: 31px; border-radius: 9px; background: var(--aubergine-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gtk-ic svg { width: 15px; height: 15px; color: var(--aubergine-700); }
+.gtk-text { flex: 1; min-width: 0; }
+.gtk-label { font-size: 12.5px; font-weight: 600; color: var(--aubergine-900); }
+.gtk-val { font-size: 11.5px; color: var(--ink-500); margin-top: 1px; }
+
+/* REVIEW */
+.sd-review { background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 16px; padding: 15px 16px; }
+.sd-review-stars { color: var(--terracotta-500); font-size: 11px; letter-spacing: 2px; margin-bottom: 9px; }
+.sd-quote { font-family: var(--font-display); font-style: italic; font-size: 14.5px; line-height: 1.5; color: var(--aubergine-900); border-inline-start: 3px solid var(--magenta-500); padding-inline-start: 14px; }
+[lang="ar"] .sd-quote { font-family: var(--font-arabic); font-style: normal; font-weight: 500; }
+.sd-quote-by { font-size: 11.5px; color: var(--ink-500); margin-top: 10px; padding-inline-start: 17px; }
+
+/* STICKY CTA */
+.sd-cta { position: sticky; bottom: 0; background: var(--paper); border-top: 1px solid var(--sand-100); padding: 13px 18px 22px; display: flex; align-items: center; gap: 13px; box-shadow: 0 -8px 24px rgba(58, 18, 52, 0.06); }
+.sd-cta-price { flex-shrink: 0; }
+.sd-cta-l { font-size: 10px; color: var(--ink-500); }
+[lang="ar"] .sd-cta-l { font-size: 11px; }
+.sd-cta-v { font-family: var(--font-display); font-weight: 500; font-size: 19px; color: var(--aubergine-900); letter-spacing: -0.02em; }
+.sd-cta-v .ccy { font-family: var(--font-mono); font-size: 10px; color: var(--ink-500); margin-inline-end: 3px; }
+.sd-cta-btn { flex: 1; background: var(--magenta-500); color: var(--paper); border: 0; border-radius: 12px; padding: 13px 14px; font-family: var(--font-body); font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 7px; cursor: pointer; }
+[lang="ar"] .sd-cta-btn { font-family: var(--font-arabic); }
+.sd-cta-btn svg { width: 15px; height: 15px; }
+[dir="rtl"] .sd-cta-btn svg { transform: scaleX(-1); }
+
+/* SIDE PANEL */
+.side-panel { position: sticky; top: 32px; padding-top: 24px; }
+.panel-h { font-family: var(--font-display); font-weight: 500; font-size: 32px; letter-spacing: -0.025em; color: var(--aubergine-900); margin-bottom: 8px; line-height: 1.05; }
+[lang="ar"] .panel-h { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; line-height: 1.25; }
+.panel-h em { font-style: italic; color: var(--magenta-500); }
+.panel-lede { font-size: 15px; line-height: 1.65; color: var(--ink-500); max-width: 52ch; margin-bottom: 28px; }
+.principle-list { list-style: none; display: flex; flex-direction: column; gap: 18px; margin-bottom: 28px; }
+.principle-list li { padding-inline-start: 32px; position: relative; }
+.principle-list li::before { content: ''; position: absolute; inset-inline-start: 0; top: 4px; width: 16px; height: 16px; background: linear-gradient(135deg, var(--terracotta-500), var(--magenta-500)); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.principle-list li strong { display: block; font-family: var(--font-display); font-weight: 500; font-size: 16px; letter-spacing: -0.01em; color: var(--aubergine-900); margin-bottom: 4px; }
+[lang="ar"] .principle-list li strong { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.principle-list li p { font-size: 13px; line-height: 1.55; color: var(--ink-700); }
+.tech-callout { background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 14px; padding: 18px; }
+.tech-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta-700); font-weight: 600; margin-bottom: 8px; }
+[lang="ar"] .tech-label { letter-spacing: 0; text-transform: none; font-size: 12px; }
+.tech-body { font-size: 13px; line-height: 1.6; color: var(--ink-700); }
+
+.footnote { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--sand-100); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); }
+[lang="ar"] .footnote { font-family: var(--font-arabic); }
+.footnote .accent { color: var(--magenta-500); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="brand-bar">
+    <div class="brand-identity">
+      <svg class="brand-logo" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#5B2C5F"/>
+            <stop offset="100%" stop-color="#B8228C"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="44" r="36" fill="url(#brandGrad)"/>
+        <circle cx="50" cy="44" r="22" fill="#FDFBF7"/>
+        <path d="M28 74 L36 60 L44 74 Z M44 74 L52 60 L60 74 Z M60 74 L68 60 L76 74 Z" fill="#FDFBF7"/>
+      </svg>
+      <div class="brand-name-wrap">
+        <div class="brand-name">Escalé</div>
+        <div class="brand-tagline">Design System · v0.1</div>
+      </div>
+    </div>
+    <div class="brand-meta">
+      <div class="screen-stamp">
+        <div class="lbl">Screen 20</div>
+        <div class="val">Service Detail</div>
+      </div>
+      <div class="locale-switch">
+        <button id="btnEn" class="active" onclick="setLocale('en')">EN</button>
+        <button id="btnAr" onclick="setLocale('ar')">ع</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="editorial-head" id="editorialHead">
+    <div>
+      <div class="label" id="eh-label">Screen 20 / Service Detail</div>
+      <h1><span id="eh-1">Know it before</span> <em id="eh-2">you ask.</em></h1>
+    </div>
+    <div class="colophon">
+      <div><strong id="cl-1">One service —</strong> <span id="cl-1b">the full picture</span></div>
+      <div><strong id="cl-2">Sits between</strong> <span id="cl-2b">browsing &amp; requesting</span></div>
+      <div><strong id="cl-3">Like the HK screen, for a service</strong></div>
+      <div style="margin-top:8px; opacity:0.6;" id="cl-date">New screen · 24 May 2026</div>
+    </div>
+  </section>
+
+  <div class="composition" id="composition">
+
+    <!-- ============ PHONE ============ -->
+    <div class="phone-stage">
+      <div class="phone">
+        <div class="phone-screen">
+
+          <div class="status-bar">
+            <span>9:41</span>
+            <span class="icons">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 17h2v4H2zm5-4h2v8H7zm5-4h2v12h-2zm5-4h2v16h-2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.7 6 0 9l12 15L24 9c-2.7-3-7-5-12-5z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="18" height="10" rx="2.5"/><rect x="4" y="9" width="12" height="6" rx="1" fill="currentColor"/><path d="M22 10v4" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+
+          <!-- HERO -->
+          <div class="sd-hero">
+            <button class="sd-hero-btn back" aria-label="Back">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button class="sd-hero-btn share" aria-label="Save">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>
+            </button>
+            <div class="sd-hero-foot">
+              <span class="sd-cat" id="sd-cat">Spa &amp; wellness</span>
+              <div class="sd-name" id="sd-name">Desert Stone Massage</div>
+              <div class="sd-tagline" id="sd-tagline">Ninety minutes of deep desert calm</div>
+            </div>
+          </div>
+
+          <div class="sd-body">
+
+            <!-- KEY FACTS -->
+            <div class="kf-strip">
+              <div class="kf-tile">
+                <div class="kf-l" id="kf-1-l">Duration</div>
+                <div class="kf-v" id="kf-1-v">60–90 min</div>
+              </div>
+              <div class="kf-tile">
+                <div class="kf-l" id="kf-2-l">Price from</div>
+                <div class="kf-v">SAR 1,200</div>
+              </div>
+              <div class="kf-tile">
+                <div class="kf-l" id="kf-3-l">Rating</div>
+                <div class="kf-v"><span class="star">★</span> 4.9</div>
+              </div>
+            </div>
+
+            <!-- ABOUT -->
+            <div class="sd-sect">
+              <div class="sd-sect-title" id="sec-about">About this service</div>
+              <p class="sd-about" id="about-text">A slow, grounding massage with warm volcanic stones from the valley. The therapist works with desert herbs and oil pressed on site. It is the house signature — quiet, unhurried, and best taken near sunset.</p>
+            </div>
+
+            <!-- WHAT'S INCLUDED -->
+            <div class="sd-sect">
+              <div class="sd-sect-title" id="sec-incl">What's included</div>
+              <div class="incl-list">
+                <div class="incl-row">
+                  <span class="incl-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                  <span class="incl-text" id="incl-1">Warm volcanic-stone full-body massage</span>
+                </div>
+                <div class="incl-row">
+                  <span class="incl-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                  <span class="incl-text" id="incl-2">Foot ritual with desert herbs</span>
+                </div>
+                <div class="incl-row">
+                  <span class="incl-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                  <span class="incl-text" id="incl-3">Herbal tea in the relaxation lounge</span>
+                </div>
+                <div class="incl-row">
+                  <span class="incl-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                  <span class="incl-text" id="incl-4">Private room, towels and a robe</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- OPTIONS -->
+            <div class="sd-sect">
+              <div class="sd-sect-title" id="sec-opt">Choose your session</div>
+
+              <div class="opt-row">
+                <span class="opt-radio"></span>
+                <div class="opt-info">
+                  <div class="opt-line"><span class="opt-name" id="opt-1-n">Classic · 60 min</span></div>
+                  <div class="opt-sub" id="opt-1-s">Full-body massage</div>
+                </div>
+                <span class="opt-price">SAR 1,200</span>
+              </div>
+
+              <div class="opt-row selected">
+                <span class="opt-radio"></span>
+                <div class="opt-info">
+                  <div class="opt-line"><span class="opt-name" id="opt-2-n">Signature · 90 min</span><span class="opt-tag" id="opt-2-tag">Most chosen</span></div>
+                  <div class="opt-sub" id="opt-2-s">Massage, foot ritual and lounge time</div>
+                </div>
+                <span class="opt-price">SAR 1,650</span>
+              </div>
+
+              <div class="opt-row">
+                <span class="opt-radio"></span>
+                <div class="opt-info">
+                  <div class="opt-line"><span class="opt-name" id="opt-3-n">Couples · 90 min</span></div>
+                  <div class="opt-sub" id="opt-3-s">Two therapists, side by side</div>
+                </div>
+                <span class="opt-price">SAR 3,000</span>
+              </div>
+            </div>
+
+            <!-- GOOD TO KNOW -->
+            <div class="sd-sect">
+              <div class="sd-sect-title" id="sec-gtk">Good to know</div>
+              <div class="gtk-list">
+                <div class="gtk-row">
+                  <div class="gtk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg></div>
+                  <div class="gtk-text">
+                    <div class="gtk-label" id="gtk-1-l">Hours</div>
+                    <div class="gtk-val" id="gtk-1-v">Daily · 10:00–20:00</div>
+                  </div>
+                </div>
+                <div class="gtk-row">
+                  <div class="gtk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+                  <div class="gtk-text">
+                    <div class="gtk-label" id="gtk-2-l">Where</div>
+                    <div class="gtk-val" id="gtk-2-v">Spa house · garden level</div>
+                  </div>
+                </div>
+                <div class="gtk-row">
+                  <div class="gtk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke-linecap="round"/></svg></div>
+                  <div class="gtk-text">
+                    <div class="gtk-label" id="gtk-3-l">Booking</div>
+                    <div class="gtk-val" id="gtk-3-v">Same day, subject to a free slot</div>
+                  </div>
+                </div>
+                <div class="gtk-row">
+                  <div class="gtk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  <div class="gtk-text">
+                    <div class="gtk-label" id="gtk-4-l">Note</div>
+                    <div class="gtk-val" id="gtk-4-v">Best avoided right after a heavy meal</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- REVIEW -->
+            <div class="sd-sect">
+              <div class="sd-sect-title" id="sec-review">From a recent guest</div>
+              <div class="sd-review">
+                <div class="sd-review-stars">★★★★★</div>
+                <div class="sd-quote" id="review-text">I went in tired from the desert drive and floated out. The warm stones, the silence — I booked it again the next day.</div>
+                <div class="sd-quote-by" id="review-by">Layla — stayed in March</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- STICKY CTA -->
+          <div class="sd-cta">
+            <div class="sd-cta-price">
+              <div class="sd-cta-l" id="cta-l">Signature · 90 min</div>
+              <div class="sd-cta-v"><span class="ccy">SAR</span>1,650</div>
+            </div>
+            <button class="sd-cta-btn" id="cta-btn">
+              <span id="cta-btn-t">Request this service</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SIDE PANEL ============ -->
+    <aside class="side-panel" id="sidePanel">
+      <h2 class="panel-h"><span id="ph-1">Know it</span> <em id="ph-1em">before you ask.</em></h2>
+      <p class="panel-lede" id="ph-lede">The catalog gives a name and a price. But a spa treatment or an excursion is a real decision — the guest wants to know what's included, how long it takes, and what others felt. This screen is that step, between browsing and requesting.</p>
+
+      <ul class="principle-list">
+        <li>
+          <strong id="p1-t">One service, the full picture</strong>
+          <p id="p1-d">Just as the housekeeping screen shows staff everything about one room, this shows the guest everything about one service — what's included, how long, where, and the price.</p>
+        </li>
+        <li>
+          <strong id="p2-t">Pick the option here</strong>
+          <p id="p2-d">The guest chooses the session — 60 min, 90 min, or couples — on this screen, so the request screen stays short and simple.</p>
+        </li>
+        <li>
+          <strong id="p3-t">What's included, in plain words</strong>
+          <p id="p3-d">No surprises at the door. The guest sees exactly what they get before they ask for it.</p>
+        </li>
+        <li>
+          <strong id="p4-t">A real guest's words</strong>
+          <p id="p4-d">One honest line from a past guest builds more trust than a star rating on its own.</p>
+        </li>
+        <li>
+          <strong id="p5-t">Browse → detail → request</strong>
+          <p id="p5-d">Tapping a service in the catalog, or an offer on the Offers screen, opens this page. The request composer comes next.</p>
+        </li>
+      </ul>
+
+      <div class="tech-callout">
+        <div class="tech-label" id="tech-l">A note for the hotel</div>
+        <p class="tech-body" id="tech-b">The hotel writes each service once from its dashboard — description, what's included, sessions, hours, and photos. Escalé shows it here in each guest's language, for in-house guests and for visitors who open an offer.</p>
+      </div>
+    </aside>
+
+  </div>
+
+  <footer class="footnote" id="footnote">
+    <span id="ft-1">© Escalé · Screen 20 of 20 · New — service detail</span>
+    <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
+  </footer>
+
+</div>
+
+<script>
+const t = {
+  en: {
+    ehLabel: "Screen 20 / Service Detail",
+    eh1: "Know it before", eh2: "you ask.",
+    cl1: "One service —", cl1b: "the full picture",
+    cl2: "Sits between", cl2b: "browsing & requesting",
+    cl3: "Like the HK screen, for a service",
+    clDate: "New screen · 24 May 2026",
+    sdCat: "Spa & wellness",
+    sdName: "Desert Stone Massage",
+    sdTagline: "Ninety minutes of deep desert calm",
+    kf1l: "Duration", kf1v: "60–90 min",
+    kf2l: "Price from",
+    kf3l: "Rating",
+    secAbout: "About this service",
+    aboutText: "A slow, grounding massage with warm volcanic stones from the valley. The therapist works with desert herbs and oil pressed on site. It is the house signature — quiet, unhurried, and best taken near sunset.",
+    secIncl: "What's included",
+    incl1: "Warm volcanic-stone full-body massage",
+    incl2: "Foot ritual with desert herbs",
+    incl3: "Herbal tea in the relaxation lounge",
+    incl4: "Private room, towels and a robe",
+    secOpt: "Choose your session",
+    opt1n: "Classic · 60 min", opt1s: "Full-body massage",
+    opt2n: "Signature · 90 min", opt2tag: "Most chosen", opt2s: "Massage, foot ritual and lounge time",
+    opt3n: "Couples · 90 min", opt3s: "Two therapists, side by side",
+    secGtk: "Good to know",
+    gtk1l: "Hours", gtk1v: "Daily · 10:00–20:00",
+    gtk2l: "Where", gtk2v: "Spa house · garden level",
+    gtk3l: "Booking", gtk3v: "Same day, subject to a free slot",
+    gtk4l: "Note", gtk4v: "Best avoided right after a heavy meal",
+    secReview: "From a recent guest",
+    reviewText: "I went in tired from the desert drive and floated out. The warm stones, the silence — I booked it again the next day.",
+    reviewBy: "Layla — stayed in March",
+    ctaL: "Signature · 90 min",
+    ctaBtnT: "Request this service",
+    ph1: "Know it", ph1em: "before you ask.",
+    phLede: "The catalog gives a name and a price. But a spa treatment or an excursion is a real decision — the guest wants to know what's included, how long it takes, and what others felt. This screen is that step, between browsing and requesting.",
+    p1t: "One service, the full picture",
+    p1d: "Just as the housekeeping screen shows staff everything about one room, this shows the guest everything about one service — what's included, how long, where, and the price.",
+    p2t: "Pick the option here",
+    p2d: "The guest chooses the session — 60 min, 90 min, or couples — on this screen, so the request screen stays short and simple.",
+    p3t: "What's included, in plain words",
+    p3d: "No surprises at the door. The guest sees exactly what they get before they ask for it.",
+    p4t: "A real guest's words",
+    p4d: "One honest line from a past guest builds more trust than a star rating on its own.",
+    p5t: "Browse → detail → request",
+    p5d: "Tapping a service in the catalog, or an offer on the Offers screen, opens this page. The request composer comes next.",
+    techL: "A note for the hotel",
+    techB: "The hotel writes each service once from its dashboard — description, what's included, sessions, hours, and photos. Escalé shows it here in each guest's language, for in-house guests and for visitors who open an offer.",
+    ft1: "© Escalé · Screen 20 of 20 · New — service detail"
+  },
+  ar: {
+    ehLabel: "الشاشة ٢٠ / تفاصيل الخدمة",
+    eh1: "اعرفها قبل", eh2: "ما تطلبها.",
+    cl1: "خدمة واحدة —", cl1b: "الصورة كاملة",
+    cl2: "بتيجي ما بين", cl2b: "التصفّح والطلب",
+    cl3: "زي شاشة الـ HK، بس لخدمة",
+    clDate: "شاشة جديدة · ٢٤ مايو ٢٠٢٦",
+    sdCat: "سبا وعافية",
+    sdName: "مساج حجر الصحراء",
+    sdTagline: "تسعين دقيقة من هدوء الصحراء العميق",
+    kf1l: "المدة", kf1v: "60–90 دقيقة",
+    kf2l: "السعر من",
+    kf3l: "التقييم",
+    secAbout: "عن الخدمة",
+    aboutText: "مساج هادئ ومريّح بأحجار بركانية دافية من الوادي. المعالِج بيشتغل بأعشاب الصحراء وزيت معصور في المكان. ده توقيع البيت — هادي، على مهله، وأحلى وقت ليه عند الغروب.",
+    secIncl: "اللي بيشمله",
+    incl1: "مساج كامل للجسم بأحجار بركانية دافية",
+    incl2: "طقس للقدمين بأعشاب الصحراء",
+    incl3: "شاي أعشاب في صالة الاسترخاء",
+    incl4: "غرفة خاصة، فوط وروب",
+    secOpt: "اختار جلستك",
+    opt1n: "كلاسيك · 60 دقيقة", opt1s: "مساج كامل للجسم",
+    opt2n: "التوقيع · 90 دقيقة", opt2tag: "الأكثر اختياراً", opt2s: "مساج، طقس قدمين، ووقت في الصالة",
+    opt3n: "للثنائي · 90 دقيقة", opt3s: "معالِجَين، جنب بعض",
+    secGtk: "معلومات مفيدة",
+    gtk1l: "المواعيد", gtk1v: "يومياً · 10:00–20:00",
+    gtk2l: "المكان", gtk2v: "بيت السبا · مستوى الحديقة",
+    gtk3l: "الحجز", gtk3v: "نفس اليوم، حسب توفّر موعد",
+    gtk4l: "ملاحظة", gtk4v: "يُفضّل تجنّبه بعد وجبة دسمة على طول",
+    secReview: "من ضيف أقام مؤخراً",
+    reviewText: "دخلت تعبان من رحلة الصحرا وطلعت طاير. الأحجار الدافية، الهدوء — حجزته تاني في اليوم اللي بعده.",
+    reviewBy: "ليلى — أقامت في مارس",
+    ctaL: "التوقيع · 90 دقيقة",
+    ctaBtnT: "اطلب الخدمة دي",
+    ph1: "اعرفها", ph1em: "قبل ما تطلبها.",
+    phLede: "كتالوج الخدمات بيدّي اسم وسعر. لكن جلسة سبا أو رحلة قرار حقيقي — الضيف عايز يعرف الخدمة بتشمل إيه، بتاخد وقت قد إيه، والناس حسّت بإيه. الشاشة دي هي الخطوة دي، ما بين التصفّح والطلب.",
+    p1t: "خدمة واحدة، الصورة كاملة",
+    p1d: "زي ما شاشة التدبير الفندقي بتوري الموظف كل حاجة عن غرفة واحدة، الشاشة دي بتوري الضيف كل حاجة عن خدمة واحدة — بتشمل إيه، مدتها، مكانها، وسعرها.",
+    p2t: "اختار الخيار هنا",
+    p2d: "الضيف بيختار الجلسة — 60 دقيقة، 90 دقيقة، أو للثنائي — في الشاشة دي، فشاشة الطلب تفضل قصيرة وبسيطة.",
+    p3t: "اللي بتشمله بكلام واضح",
+    p3d: "مفيش مفاجآت عند الباب. الضيف بيشوف اللي هياخده بالظبط قبل ما يطلبه.",
+    p4t: "كلام ضيف حقيقي",
+    p4d: "سطر صادق من ضيف سابق بيبني ثقة أكتر من تقييم بالنجوم لوحده.",
+    p5t: "تصفّح ← تفاصيل ← طلب",
+    p5d: "الضغط على خدمة في الكتالوج، أو على عرض في شاشة العروض، بيفتح الصفحة دي. وشاشة الطلب بتيجي بعدها.",
+    techL: "ملاحظة للفندق",
+    techB: "الفندق بيكتب كل خدمة مرة واحدة من لوحة التحكم — الوصف، اللي بتشمله، الجلسات، المواعيد، والصور. وإسكالي بيعرضها هنا بلغة كل ضيف، للنزلاء جوّه الفندق وللزوّار اللي بيفتحوا عرض.",
+    ft1: "© إسكالي · الشاشة ٢٠ من ٢٠ · جديدة — تفاصيل الخدمة"
+  }
+};
+
+function setLocale(loc) {
+  const tt = t[loc];
+  const isRtl = loc === 'ar';
+
+  document.getElementById('btnEn').classList.toggle('active', loc === 'en');
+  document.getElementById('btnAr').classList.toggle('active', loc === 'ar');
+  ['editorialHead', 'composition', 'sidePanel', 'footnote'].forEach(function (id) {
+    const el = document.getElementById(id);
+    el.setAttribute('lang', loc);
+    el.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+  });
+
+  const set = function (id, val) { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+  set('eh-label', tt.ehLabel);
+  set('eh-1', tt.eh1); set('eh-2', tt.eh2);
+  set('cl-1', tt.cl1); set('cl-1b', tt.cl1b);
+  set('cl-2', tt.cl2); set('cl-2b', tt.cl2b);
+  set('cl-3', tt.cl3); set('cl-date', tt.clDate);
+
+  set('sd-cat', tt.sdCat);
+  set('sd-name', tt.sdName);
+  set('sd-tagline', tt.sdTagline);
+
+  set('kf-1-l', tt.kf1l); set('kf-1-v', tt.kf1v);
+  set('kf-2-l', tt.kf2l);
+  set('kf-3-l', tt.kf3l);
+
+  set('sec-about', tt.secAbout);
+  set('about-text', tt.aboutText);
+
+  set('sec-incl', tt.secIncl);
+  for (let i = 1; i <= 4; i++) set('incl-' + i, tt['incl' + i]);
+
+  set('sec-opt', tt.secOpt);
+  set('opt-1-n', tt.opt1n); set('opt-1-s', tt.opt1s);
+  set('opt-2-n', tt.opt2n); set('opt-2-tag', tt.opt2tag); set('opt-2-s', tt.opt2s);
+  set('opt-3-n', tt.opt3n); set('opt-3-s', tt.opt3s);
+
+  set('sec-gtk', tt.secGtk);
+  for (let i = 1; i <= 4; i++) { set('gtk-' + i + '-l', tt['gtk' + i + 'l']); set('gtk-' + i + '-v', tt['gtk' + i + 'v']); }
+
+  set('sec-review', tt.secReview);
+  set('review-text', tt.reviewText);
+  set('review-by', tt.reviewBy);
+
+  set('cta-l', tt.ctaL);
+  set('cta-btn-t', tt.ctaBtnT);
+
+  set('ph-1', tt.ph1); set('ph-1em', tt.ph1em); set('ph-lede', tt.phLede);
+  for (let i = 1; i <= 5; i++) { set('p' + i + '-t', tt['p' + i + 't']); set('p' + i + '-d', tt['p' + i + 'd']); }
+  set('tech-l', tt.techL); set('tech-b', tt.techB);
+  set('ft-1', tt.ft1);
+}
+</script>
+
+</body>
+</html>

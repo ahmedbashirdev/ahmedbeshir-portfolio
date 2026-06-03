@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>Escalé · معاينة التصميم · Design Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="معاينة تصميم تطبيق إسكالي — كل الشاشات في مكان واحد · Escalé app design preview">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..900&family=Geist+Mono:wght@400..600&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --aubergine-900: #3A1234;
+  --aubergine-700: #4A1942;
+  --aubergine-500: #5B2C5F;
+  --aubergine-300: #8E5A8E;
+  --aubergine-100: #EFE3EF;
+  --magenta-500: #B8228C;
+  --magenta-300: #D86CB0;
+  --terracotta-700: #A05A3A;
+  --terracotta-500: #C9956B;
+  --terracotta-300: #E2BC9C;
+  --terracotta-100: #F5E8DC;
+  --ink-900: #1C1410;
+  --ink-700: #3D332D;
+  --ink-500: #6B5D54;
+  --ink-300: #A89A8E;
+  --sand-100: #F0E9DF;
+  --sand-50: #F7F2E9;
+  --cream: #FAF7F2;
+  --paper: #FDFBF7;
+  --success: #5A8C5F;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Geist', -apple-system, sans-serif;
+  --font-arabic: 'Tajawal', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
+  --shadow-sm: 0 1px 2px rgba(58, 18, 52, 0.04);
+  --shadow-md: 0 4px 12px rgba(58, 18, 52, 0.06), 0 1px 3px rgba(58, 18, 52, 0.04);
+  --shadow-lg: 0 12px 32px rgba(58, 18, 52, 0.10), 0 4px 8px rgba(58, 18, 52, 0.05);
+  --shadow-xl: 0 28px 64px rgba(58, 18, 52, 0.16), 0 10px 20px rgba(58, 18, 52, 0.08);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: var(--font-arabic);
+  background: var(--cream);
+  color: var(--ink-900);
+  line-height: 1.6;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 88% -4%, rgba(184, 34, 140, 0.07), transparent 42%),
+    radial-gradient(circle at 4% 8%, rgba(91, 44, 95, 0.06), transparent 38%);
+  background-attachment: fixed;
+}
+
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Masthead ---------- */
+.masthead { padding: 56px 0 36px; }
+
+.brand-row { display: flex; align-items: center; gap: 14px; margin-bottom: 40px; }
+.brand-logo { width: 48px; height: 48px; flex-shrink: 0; }
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 26px; font-weight: 500; letter-spacing: -0.02em;
+  color: var(--aubergine-900);
+}
+.brand-tag {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ink-300);
+}
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--magenta-500); margin-bottom: 16px;
+}
+.title-ar {
+  font-family: var(--font-arabic);
+  font-size: clamp(34px, 5.4vw, 56px); font-weight: 800; line-height: 1.18;
+  color: var(--aubergine-900); letter-spacing: -0.01em;
+}
+.title-en {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.8vw, 30px); font-weight: 400; font-style: italic;
+  color: var(--terracotta-700); margin-top: 6px;
+}
+.intro {
+  display: flex; flex-wrap: wrap; gap: 10px 48px;
+  margin-top: 26px; max-width: 760px;
+}
+.intro p { font-size: 15.5px; color: var(--ink-700); flex: 1 1 320px; }
+.intro .en { font-family: var(--font-body); direction: ltr; text-align: left; color: var(--ink-500); font-size: 14px; }
+
+.note {
+  display: inline-flex; align-items: center; gap: 9px;
+  margin-top: 24px; padding: 11px 18px;
+  background: var(--terracotta-100);
+  border: 1px solid var(--terracotta-300);
+  border-radius: 999px;
+  font-size: 13.5px; color: var(--terracotta-700); font-weight: 500;
+}
+.note svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 30px; padding-top: 26px; border-top: 1px solid var(--sand-100); }
+.legend span { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-500); }
+.dot { width: 9px; height: 9px; border-radius: 50%; }
+.dot.ready { background: var(--success); }
+.dot.soon { background: transparent; border: 1.5px dashed var(--ink-300); }
+.legend .en { font-family: var(--font-body); direction: ltr; }
+
+/* ---------- Section ---------- */
+.group { padding: 30px 0 14px; }
+.group-head { margin-bottom: 26px; }
+.group-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-300); margin-bottom: 10px;
+}
+.group-title { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.group-title h2 {
+  font-family: var(--font-arabic);
+  font-size: 27px; font-weight: 800; color: var(--aubergine-900);
+}
+.group-title .en {
+  font-family: var(--font-display); font-style: italic;
+  font-size: 18px; font-weight: 400; color: var(--terracotta-700); direction: ltr;
+}
+.group-title .count {
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--ink-300); margin-inline-start: auto; direction: ltr;
+}
+.group-desc { font-size: 14px; color: var(--ink-500); margin-top: 7px; }
+
+/* ---------- Card grid ---------- */
+.grid { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; }
+
+.card {
+  width: 360px;
+  background: var(--paper);
+  border: 1px solid var(--sand-100);
+  border-radius: 18px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: flex; flex-direction: column;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--aubergine-100);
+}
+
+.shot {
+  position: relative;
+  width: 360px; height: 254px;
+  overflow: hidden;
+  background: var(--sand-50);
+  border-bottom: 1px solid var(--sand-100);
+}
+.shot iframe {
+  position: absolute; top: 0; left: 0;
+  width: 1366px; height: 2600px;
+  border: 0;
+  transform: scale(0.26354);
+  transform-origin: top left;
+  pointer-events: none;
+}
+.shot::after {
+  content: ""; position: absolute; inset: 0;
+  box-shadow: inset 0 0 0 1px rgba(58,18,52,0.04);
+  pointer-events: none;
+}
+
+.num {
+  position: absolute; top: 12px; inset-inline-start: 12px;
+  z-index: 2;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  color: var(--paper);
+  background: var(--aubergine-700);
+  padding: 5px 11px; border-radius: 999px;
+  letter-spacing: 0.04em;
+  box-shadow: var(--shadow-md);
+}
+.open-badge {
+  position: absolute; bottom: 12px; inset-inline-end: 12px;
+  z-index: 2;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-arabic); font-size: 12.5px; font-weight: 700;
+  color: var(--paper);
+  background: var(--magenta-500);
+  padding: 7px 13px; border-radius: 999px;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+  box-shadow: var(--shadow-md);
+}
+.card:hover .open-badge { opacity: 1; transform: translateY(0); }
+
+.card-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 9px; flex: 1; }
+.titles { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.t-ar { font-family: var(--font-arabic); font-size: 18px; font-weight: 700; color: var(--ink-900); }
+.t-en { font-family: var(--font-display); font-style: italic; font-size: 14px; font-weight: 400; color: var(--ink-300); direction: ltr; }
+.d-ar { font-size: 13.5px; color: var(--ink-700); line-height: 1.7; }
+.d-en { font-family: var(--font-body); font-size: 12px; color: var(--ink-500); line-height: 1.55; direction: ltr; text-align: left; }
+
+/* ---------- Coming-soon card ---------- */
+.card.soon { border-style: dashed; border-color: var(--ink-300); box-shadow: none; background: transparent; }
+.card.soon:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.soon-shot {
+  width: 360px; height: 254px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px;
+  background:
+    repeating-linear-gradient(135deg, rgba(91,44,95,0.025) 0 14px, transparent 14px 28px),
+    var(--sand-50);
+  border-bottom: 1px dashed var(--ink-300);
+}
+.soon-shot svg { width: 44px; height: 44px; color: var(--aubergine-300); }
+.soon-chip {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-500);
+  background: var(--paper); border: 1px solid var(--sand-100);
+  padding: 5px 12px; border-radius: 999px;
+}
+
+/* ---------- Footer ---------- */
+.foot {
+  margin-top: 56px; padding: 34px 0 48px;
+  border-top: 1px solid var(--sand-100);
+  display: flex; flex-wrap: wrap; gap: 12px 28px;
+  align-items: center; justify-content: space-between;
+}
+.foot .left { display: flex; align-items: center; gap: 10px; }
+.foot .left svg { width: 26px; height: 26px; }
+.foot .name { font-family: var(--font-display); font-size: 16px; color: var(--aubergine-900); }
+.foot .meta { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-300); letter-spacing: 0.03em; direction: ltr; }
+
+@media (max-width: 440px) {
+  .wrap { padding: 0 14px; }
+  .card, .shot, .soon-shot { width: 92vw; }
+  .shot iframe { transform: scale(calc(92vw / 1366)); }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ============ Masthead ============ -->
+  <header class="masthead">
+    <div class="brand-row">
+      <svg class="brand-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#5B2C5F"/>
+            <stop offset="100%" stop-color="#B8228C"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="44" r="36" fill="url(#brandGrad)"/>
+        <circle cx="50" cy="44" r="22" fill="#FDFBF7"/>
+        <path d="M28 74 L36 60 L44 74 Z M44 74 L52 60 L60 74 Z M60 74 L68 60 L76 74 Z" fill="#FDFBF7"/>
+      </svg>
+      <div>
+        <div class="brand-name">Escalé</div>
+        <div class="brand-tag">Design Preview · v0.1</div>
+      </div>
+    </div>
+
+    <div class="kicker">23 شاشة · 4 تطبيقات · للمراجعة</div>
+    <h1 class="title-ar">معاينة تصميم تطبيق إسكالي</h1>
+    <div class="title-en">Escalé — App Design Preview</div>
+
+    <div class="intro">
+      <p>كل شاشات المشروع في صفحة واحدة. اضغط على أي شاشة عشان تفتحها بالحجم الكامل وتشوف كل تفاصيلها.</p>
+      <p class="en">Every screen in one place. Click any screen to open it full size and see all of its details.</p>
+    </div>
+
+    <div class="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+      </svg>
+      ده تصميم مبدئي للمراجعة — هنعدّله كله حسب ملاحظاتك · Early preview, will change based on your notes
+    </div>
+
+    <div class="legend">
+      <span><i class="dot ready"></i> كل الشاشات جاهزة للمراجعة <b class="en">&nbsp;All 23 screens ready</b></span>
+    </div>
+  </header>
+
+  <!-- ============ Guest App ============ -->
+  <section class="group">
+    <div class="group-head">
+      <div class="group-kicker">Surface 01 — Mobile</div>
+      <div class="group-title">
+        <h2>تطبيق النزيل</h2>
+        <span class="en">Guest App</span>
+        <span class="count">13 screens</span>
+      </div>
+      <p class="group-desc">اللي بيستخدمه النزيل: من البحث عن فندق لحد طلب الخدمات أثناء الإقامة.</p>
+    </div>
+    <div class="grid">
+
+      <a class="card" href="01-guest-discover.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">01</span>
+          <iframe src="01-guest-discover.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة اكتشف الفنادق"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">اكتشف الفنادق</span><span class="t-en">Discover</span></div>
+          <p class="d-ar">الشاشة الرئيسية للنزيل: بحث عن فندق، عروض اللحظة الأخيرة، وأقسام.</p>
+          <p class="d-en">Guest home — search hotels, last-minute offers and categories.</p>
+        </div>
+      </a>
+
+      <a class="card" href="02-hotel-detail.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">02</span>
+          <iframe src="02-hotel-detail.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة تفاصيل الفندق"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">تفاصيل الفندق</span><span class="t-en">Hotel Detail</span></div>
+          <p class="d-ar">كل بيانات الفندق: صور، غرف، خدمات، وتقييمات النزلاء.</p>
+          <p class="d-en">Full hotel info — photos, rooms, services and guest reviews.</p>
+        </div>
+      </a>
+
+      <a class="card" href="03-05-booking-flow.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">03–05</span>
+          <iframe src="03-05-booking-flow.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة خطوات الحجز"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">خطوات الحجز</span><span class="t-en">Booking Flow</span></div>
+          <p class="d-ar">إتمام الحجز في 3 خطوات: التواريخ، بيانات النزيل، ثم الدفع.</p>
+          <p class="d-en">Complete a booking in 3 steps — dates, guest details, payment.</p>
+        </div>
+      </a>
+
+      <a class="card" href="06-active-stay.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">06</span>
+          <iframe src="06-active-stay.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة الإقامة الحالية"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">الإقامة الحالية</span><span class="t-en">Active Stay</span></div>
+          <p class="d-ar">أثناء الإقامة: مفتاح الغرفة الرقمي وكل الخدمات المتاحة.</p>
+          <p class="d-en">During the stay — the digital room key and all services.</p>
+        </div>
+      </a>
+
+      <a class="card" href="10-booking-confirmed.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">10</span>
+          <iframe src="10-booking-confirmed.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة تأكيد الحجز"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">تأكيد الحجز</span><span class="t-en">Booking Confirmed</span></div>
+          <p class="d-ar">صفحة تأكيد الحجز اللي بتظهر للنزيل بعد الدفع.</p>
+          <p class="d-en">The confirmation page shown to the guest after payment.</p>
+        </div>
+      </a>
+
+      <a class="card" href="11-12-service-request.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">11–12</span>
+          <iframe src="11-12-service-request.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة طلب خدمة"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">طلب خدمة</span><span class="t-en">Service Request</span></div>
+          <p class="d-ar">النزيل يطلب أي خدمة من الفندق بخطوات بسيطة.</p>
+          <p class="d-en">The guest requests any hotel service in a few simple steps.</p>
+        </div>
+      </a>
+
+      <a class="card" href="16-17-login.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">16–17</span>
+          <iframe src="16-17-login.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة تسجيل الدخول"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">تسجيل الدخول</span><span class="t-en">Login &amp; Sign-in</span></div>
+          <p class="d-ar">شاشة الترحيب وتسجيل الدخول برقم الموبايل.</p>
+          <p class="d-en">The welcome screen and phone-number sign-in.</p>
+        </div>
+      </a>
+
+      <a class="card" href="18-hotel-home.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">18</span>
+          <iframe src="18-hotel-home.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة الصفحة الرئيسية للفندق"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">الصفحة الرئيسية للفندق</span><span class="t-en">Hotel Home</span></div>
+          <p class="d-ar">صفحة الفندق للنزيل أثناء الإقامة: معلومات الفندق والخدمات المتاحة.</p>
+          <p class="d-en">The in-stay hotel page — hotel information and available services.</p>
+        </div>
+      </a>
+
+      <a class="card" href="19-offers.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">19</span>
+          <iframe src="19-offers.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة عروض الفندق"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">عروض الفندق</span><span class="t-en">Offers</span></div>
+          <p class="d-ar">تسويق خدمات الفندق — مطاعم، سبا، حمامات سباحة — للنزلاء وللزوّار القريبين من الفندق.</p>
+          <p class="d-en">Markets hotel services — dining, spa, pools — to guests and visitors near the hotel.</p>
+        </div>
+      </a>
+
+      <a class="card" href="20-service-detail.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">20</span>
+          <iframe src="20-service-detail.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة تفاصيل الخدمة"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">تفاصيل الخدمة</span><span class="t-en">Service Detail</span></div>
+          <p class="d-ar">صفحة كاملة لخدمة واحدة — الوصف، اللي بتشمله، الخيارات، والمواعيد — قبل ما يطلبها النزيل.</p>
+          <p class="d-en">A full page for one service — description, what's included, options and hours — before requesting.</p>
+        </div>
+      </a>
+
+      <a class="card" href="21-online-checkin.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">21</span>
+          <iframe src="21-online-checkin.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة تسجيل الوصول أونلاين"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">تسجيل الوصول أونلاين</span><span class="t-en">Online Check-in</span></div>
+          <p class="d-ar">النزيل يكمّل تسجيل الوصول قبل ما يجي — يعرف غرفته وياخد المفتاح الرقمي، فيطلع غرفته على طول.</p>
+          <p class="d-en">The guest checks in before arrival — gets their room and digital key, and goes straight up.</p>
+        </div>
+      </a>
+
+      <a class="card" href="22-live-chat.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">22</span>
+          <iframe src="22-live-chat.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة الشات المباشر"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">الشات المباشر</span><span class="t-en">Live Chat</span></div>
+          <p class="d-ar">شات مباشر بين النزيل والموظفين والإدارة — استجابة أسرع للطلبات وحلّ أي شكوى فوراً.</p>
+          <p class="d-en">Live chat between the guest, staff and management — faster requests, instant complaint resolution.</p>
+        </div>
+      </a>
+
+      <a class="card" href="23-request-tracking.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">23</span>
+          <iframe src="23-request-tracking.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة متابعة الطلب"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">متابعة الطلب</span><span class="t-en">Request Tracking</span></div>
+          <p class="d-ar">النزيل يتابع طلبه وهو شغّال — التوقيت، الموظف المسؤول، والتعليقات المباشرة التي تصل للإدارة.</p>
+          <p class="d-en">The guest tracks a request live — timing, the assigned staff, and live comments visible to management.</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ Hotel Admin ============ -->
+  <section class="group">
+    <div class="group-head">
+      <div class="group-kicker">Surface 02 — Web</div>
+      <div class="group-title">
+        <h2>لوحة تحكم الفندق</h2>
+        <span class="en">Hotel Admin</span>
+        <span class="count">2 screens</span>
+      </div>
+      <p class="group-desc">اللي بتستخدمه إدارة الفندق لمتابعة العمليات والطلبات والأسعار.</p>
+    </div>
+    <div class="grid">
+
+      <a class="card" href="07-admin-operations.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">07</span>
+          <iframe src="07-admin-operations.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة لوحة العمليات"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">لوحة العمليات</span><span class="t-en">Operations</span></div>
+          <p class="d-ar">شاشة إدارة الفندق: الإحصائيات، شبكة الغرف، والطلبات المفتوحة.</p>
+          <p class="d-en">Hotel management — stats, room grid and open requests.</p>
+        </div>
+      </a>
+
+      <a class="card" href="14-b2b-auctions.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">14</span>
+          <iframe src="14-b2b-auctions.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة مزادات الشركات"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">مزادات الشركات B2B</span><span class="t-en">B2B Auctions</span></div>
+          <p class="d-ar">الفندق يشوف طلبات شركات السياحة ويقدّم سعره عليها.</p>
+          <p class="d-en">The hotel sees travel-agency requests and submits its price.</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ B2B Agency Portal ============ -->
+  <section class="group">
+    <div class="group-head">
+      <div class="group-kicker">Surface 04 — Web · B2B</div>
+      <div class="group-title">
+        <h2>بوابة شركات السياحة</h2>
+        <span class="en">Agency Portal</span>
+        <span class="count">1 screen</span>
+      </div>
+      <p class="group-desc">اللي بتستخدمه شركات السياحة: تسجّل طلب الحجز وتستقبل أسعار الفنادق.</p>
+    </div>
+    <div class="grid">
+
+      <a class="card" href="15-b2b-agency-portal.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">15</span>
+          <iframe src="15-b2b-agency-portal.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة بوابة شركات السياحة"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">بوابة شركات السياحة</span><span class="t-en">Agency Portal</span></div>
+          <p class="d-ar">شركة السياحة تسجّل طلب الحجز، والفنادق تتنافس بأسعارها — فكرة InDrive.</p>
+          <p class="d-en">An agency posts a booking request and hotels compete with prices — InDrive-style.</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ Staff App ============ -->
+  <section class="group">
+    <div class="group-head">
+      <div class="group-kicker">Surface 03 — Mobile</div>
+      <div class="group-title">
+        <h2>تطبيق الموظفين</h2>
+        <span class="en">Staff App</span>
+        <span class="count">2 screens</span>
+      </div>
+      <p class="group-desc">اللي بيستخدمه موظفو الفندق لمتابعة المهام وحالة الغرف.</p>
+    </div>
+    <div class="grid">
+
+      <a class="card" href="08-09-staff-tasks.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">08–09</span>
+          <iframe src="08-09-staff-tasks.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة مهام الموظف"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">مهام الموظف</span><span class="t-en">Staff Tasks</span></div>
+          <p class="d-ar">الموظف يشوف مهامه ويتابع تنفيذها أول بأول.</p>
+          <p class="d-en">Staff see their tasks and track them step by step.</p>
+        </div>
+      </a>
+
+      <a class="card" href="13-hk-room-status.html" target="_blank" rel="noopener">
+        <div class="shot">
+          <span class="num">13</span>
+          <iframe src="13-hk-room-status.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="معاينة شاشة حالة الغرف"></iframe>
+          <span class="open-badge">افتح الشاشة ↗</span>
+        </div>
+        <div class="card-body">
+          <div class="titles"><span class="t-ar">حالة غرف التدبير</span><span class="t-en">Room Status</span></div>
+          <p class="d-ar">متابعة حالة نظافة كل الغرف في نظرة واحدة.</p>
+          <p class="d-en">Track every room's housekeeping status at a glance.</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ Footer ============ -->
+  <footer class="foot">
+    <div class="left">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="footGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#5B2C5F"/>
+            <stop offset="100%" stop-color="#B8228C"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="44" r="36" fill="url(#footGrad)"/>
+        <circle cx="50" cy="44" r="22" fill="#FDFBF7"/>
+        <path d="M28 74 L36 60 L44 74 Z M44 74 L52 60 L60 74 Z M60 74 L68 60 L76 74 Z" fill="#FDFBF7"/>
+      </svg>
+      <span class="name">Escalé</span>
+    </div>
+    <span class="meta">Design Preview · آخر تحديث 25 May 2026</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

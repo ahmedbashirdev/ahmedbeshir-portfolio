@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Escalé · Hotel Home · Design Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..900&family=Geist+Mono:wght@400..600&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --aubergine-900: #3A1234;
+  --aubergine-700: #4A1942;
+  --aubergine-500: #5B2C5F;
+  --aubergine-300: #8E5A8E;
+  --aubergine-100: #EFE3EF;
+  --magenta-500: #B8228C;
+  --magenta-300: #D86CB0;
+  --terracotta-700: #A05A3A;
+  --terracotta-500: #C9956B;
+  --terracotta-300: #E2BC9C;
+  --terracotta-100: #F5E8DC;
+  --ink-900: #1C1410;
+  --ink-700: #3D332D;
+  --ink-500: #6B5D54;
+  --ink-300: #A89A8E;
+  --sand-100: #F0E9DF;
+  --sand-50: #F7F2E9;
+  --cream: #FAF7F2;
+  --paper: #FDFBF7;
+  --success: #5A8C5F;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Geist', -apple-system, sans-serif;
+  --font-arabic: 'Tajawal', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
+  --shadow-sm: 0 1px 2px rgba(58, 18, 52, 0.04);
+  --shadow-md: 0 4px 12px rgba(58, 18, 52, 0.06), 0 1px 3px rgba(58, 18, 52, 0.04);
+  --shadow-phone: 0 50px 100px -20px rgba(58, 18, 52, 0.25), 0 30px 60px -30px rgba(58, 18, 52, 0.3);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink-900);
+  line-height: 1.5;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 88% 0%, rgba(184, 34, 140, 0.06), transparent 40%),
+    radial-gradient(circle at 4% 12%, rgba(91, 44, 95, 0.05), transparent 36%);
+}
+[lang="ar"], [lang="ar"] * { font-family: var(--font-arabic); }
+[lang="ar"] { line-height: 1.6; }
+
+.page { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 48px 32px 96px; }
+
+/* HEADER */
+.brand-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 24px; }
+.brand-identity { display: flex; align-items: center; gap: 20px; }
+.brand-logo { width: 48px; height: 48px; }
+.brand-name-wrap { display: flex; flex-direction: column; gap: 2px; }
+.brand-name { font-family: var(--font-display); font-weight: 500; font-size: 24px; letter-spacing: -0.02em; color: var(--aubergine-900); line-height: 1; }
+.brand-tagline { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-500); font-weight: 500; }
+.brand-meta { display: flex; align-items: center; gap: 24px; }
+.screen-stamp { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.screen-stamp .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-300); font-weight: 500; }
+.screen-stamp .val { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--terracotta-700); }
+.locale-switch { display: flex; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 9999px; padding: 4px; box-shadow: var(--shadow-sm); }
+.locale-switch button { border: 0; background: transparent; padding: 8px 18px; border-radius: 9999px; font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-500); cursor: pointer; }
+.locale-switch button.active { background: var(--aubergine-700); color: var(--paper); }
+
+/* EDITORIAL HEAD */
+.editorial-head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 48px; margin-bottom: 44px; padding-bottom: 32px; border-bottom: 1px solid var(--sand-100); }
+.editorial-head .label { font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--terracotta-700); margin-bottom: 12px; }
+.editorial-head h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(38px, 5vw, 64px); line-height: 0.98; letter-spacing: -0.035em; color: var(--aubergine-900); max-width: 16ch; }
+.editorial-head h1 em { font-style: italic; color: var(--magenta-500); }
+[lang="ar"] .editorial-head h1 { font-weight: 700; letter-spacing: 0; line-height: 1.15; }
+.editorial-head .colophon { font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); letter-spacing: 0.02em; text-align: end; line-height: 1.7; }
+.editorial-head .colophon strong { color: var(--aubergine-700); }
+[lang="ar"] .editorial-head .colophon { font-family: var(--font-arabic); }
+
+/* COMPOSITION */
+.composition { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+@media (max-width: 980px) { .composition { grid-template-columns: 1fr; gap: 48px; } .phone { transform: scale(0.9); transform-origin: top center; } }
+
+.phone-stage { display: flex; justify-content: center; position: relative; padding: 24px 0; }
+.phone-stage::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 58% 48% at 50% 26%, rgba(91, 44, 95, 0.08), transparent 62%); z-index: 0; }
+.phone { position: relative; width: 396px; height: 836px; background: var(--ink-900); border-radius: 54px; padding: 12px; box-shadow: var(--shadow-phone); z-index: 1; }
+.phone::before { content: ''; position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 108px; height: 29px; background: var(--ink-900); border-radius: 0 0 18px 18px; z-index: 100; }
+.phone-screen { width: 100%; height: 100%; background: var(--cream); border-radius: 43px; overflow-y: auto; overflow-x: hidden; position: relative; }
+.phone-screen::-webkit-scrollbar { display: none; }
+
+.status-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 30px 6px; font-size: 14px; font-weight: 600; color: var(--ink-900); position: relative; z-index: 5; }
+.status-bar.on-hero { color: var(--paper); }
+.status-bar .icons { display: flex; gap: 6px; align-items: center; }
+.status-bar svg { width: 17px; height: 17px; }
+
+/* HERO */
+.hh-hero {
+  margin-top: -44px; padding: 64px 24px 24px; position: relative; overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 22%, rgba(216, 108, 176, 0.45), transparent 55%),
+    linear-gradient(155deg, var(--aubergine-900), var(--aubergine-500) 60%, var(--terracotta-700));
+  border-radius: 0 0 28px 28px;
+}
+.hh-hero::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 92 L20 70 L30 92 Z M30 92 L40 70 L50 92 Z M50 92 L60 70 L70 92 Z M70 92 L80 70 L90 92 Z' fill='rgba(255,255,255,0.06)'/%3E%3C/svg%3E");
+  background-size: 260px; background-position: bottom center; background-repeat: no-repeat;
+}
+.hh-eyebrow { font-family: var(--font-display); font-style: italic; font-size: 13px; color: var(--terracotta-300); margin-bottom: 6px; position: relative; z-index: 1; }
+[lang="ar"] .hh-eyebrow { font-family: var(--font-arabic); }
+.hh-name { font-family: var(--font-display); font-weight: 500; font-size: 30px; line-height: 1.1; letter-spacing: -0.02em; color: var(--paper); position: relative; z-index: 1; }
+[lang="ar"] .hh-name { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.hh-loc { display: flex; align-items: center; gap: 6px; margin-top: 7px; font-size: 13px; color: rgba(253,251,247,0.8); position: relative; z-index: 1; }
+.hh-loc svg { width: 13px; height: 13px; }
+.hh-stars { margin-top: 10px; color: var(--terracotta-300); font-size: 13px; letter-spacing: 2px; position: relative; z-index: 1; }
+
+/* CONTENT */
+.hh-body { padding: 20px 22px 14px; }
+.hh-welcome { font-size: 14px; line-height: 1.6; color: var(--ink-700); margin-bottom: 18px; }
+.hh-welcome b { font-family: var(--font-display); font-weight: 500; color: var(--aubergine-900); }
+[lang="ar"] .hh-welcome b { font-family: var(--font-arabic); font-weight: 700; }
+
+/* QUICK INFO */
+.quick-info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-bottom: 24px; }
+.qi-card { background: var(--paper); border: 1px solid var(--sand-100); border-radius: 14px; padding: 12px 10px; text-align: center; }
+.qi-icon { width: 32px; height: 32px; margin: 0 auto 8px; border-radius: 9px; background: var(--aubergine-100); display: flex; align-items: center; justify-content: center; }
+.qi-icon svg { width: 16px; height: 16px; color: var(--aubergine-700); }
+.qi-l { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-500); font-weight: 600; margin-bottom: 3px; }
+[lang="ar"] .qi-l { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.qi-v { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--aubergine-900); }
+
+/* SECTION */
+.hh-sect { margin-bottom: 22px; }
+.hh-sect-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 11px; }
+.hh-sect-title { font-family: var(--font-display); font-weight: 500; font-size: 19px; letter-spacing: -0.015em; color: var(--aubergine-900); }
+[lang="ar"] .hh-sect-title { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.hh-sect-action { font-size: 12px; font-weight: 500; color: var(--terracotta-700); }
+.hh-about { font-size: 13.5px; line-height: 1.65; color: var(--ink-700); }
+
+/* DINING */
+.dine-card { display: flex; gap: 12px; align-items: center; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 14px; padding: 12px; margin-bottom: 9px; }
+.dine-thumb { width: 52px; height: 52px; border-radius: 11px; flex-shrink: 0; }
+.dine-thumb.t1 { background: linear-gradient(135deg, var(--terracotta-500), var(--terracotta-700)); }
+.dine-thumb.t2 { background: linear-gradient(135deg, var(--aubergine-500), var(--magenta-500)); }
+.dine-info { flex: 1; min-width: 0; }
+.dine-name { font-family: var(--font-display); font-weight: 500; font-size: 15px; color: var(--aubergine-900); letter-spacing: -0.01em; }
+[lang="ar"] .dine-name { font-family: var(--font-arabic); font-weight: 700; }
+.dine-type { font-size: 12px; color: var(--ink-500); margin-top: 1px; }
+.dine-hours { display: flex; align-items: center; gap: 5px; font-family: var(--font-mono); font-size: 11px; color: var(--success); margin-top: 4px; }
+.dine-hours .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--success); }
+
+/* SERVICES GRID */
+.svc-hint { font-size: 12px; color: var(--ink-500); margin-bottom: 11px; }
+.svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+.svc-tile { background: var(--paper); border: 1px solid var(--sand-100); border-radius: 14px; padding: 14px 8px; text-align: center; }
+.svc-ic { width: 38px; height: 38px; margin: 0 auto 8px; border-radius: 11px; background: var(--sand-50); display: flex; align-items: center; justify-content: center; }
+.svc-ic svg { width: 19px; height: 19px; color: var(--terracotta-700); }
+.svc-name { font-size: 11.5px; font-weight: 600; color: var(--aubergine-900); line-height: 1.3; }
+
+/* GOOD TO KNOW */
+.gtk-list { display: flex; flex-direction: column; gap: 2px; }
+.gtk-row { display: flex; align-items: center; gap: 11px; padding: 11px 0; border-bottom: 1px solid var(--sand-100); }
+.gtk-row:last-child { border-bottom: 0; }
+.gtk-ic { width: 30px; height: 30px; border-radius: 8px; background: var(--aubergine-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gtk-ic svg { width: 15px; height: 15px; color: var(--aubergine-700); }
+.gtk-text { flex: 1; }
+.gtk-label { font-size: 13px; font-weight: 600; color: var(--aubergine-900); }
+.gtk-val { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-500); }
+
+/* CONCIERGE CTA */
+.conc-cta {
+  display: flex; align-items: center; gap: 12px; margin: 4px 0 20px;
+  background: linear-gradient(135deg, var(--aubergine-900), var(--aubergine-700));
+  border-radius: 16px; padding: 14px 16px;
+}
+.conc-avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--terracotta-300), var(--terracotta-500)); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 500; color: var(--paper); flex-shrink: 0; }
+.conc-text { flex: 1; min-width: 0; }
+.conc-t { font-size: 13px; font-weight: 600; color: var(--paper); }
+.conc-s { font-size: 11.5px; color: rgba(253,251,247,0.7); margin-top: 1px; }
+.conc-btn { background: var(--magenta-500); color: var(--paper); border: 0; border-radius: 9999px; padding: 9px 16px; font-family: var(--font-body); font-size: 12px; font-weight: 600; cursor: pointer; flex-shrink: 0; }
+[lang="ar"] .conc-btn { font-family: var(--font-arabic); }
+
+/* BOTTOM NAV */
+.bottom-nav { display: flex; justify-content: space-around; padding: 10px 8px 22px; border-top: 1px solid var(--sand-100); background: var(--paper); position: sticky; bottom: 0; }
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; color: var(--ink-300); }
+.nav-item.active { color: var(--aubergine-700); }
+.nav-item svg { width: 21px; height: 21px; }
+.nav-item span { font-size: 10px; font-weight: 600; }
+
+/* SIDE PANEL */
+.side-panel { position: sticky; top: 32px; padding-top: 24px; }
+.panel-h { font-family: var(--font-display); font-weight: 500; font-size: 32px; letter-spacing: -0.025em; color: var(--aubergine-900); margin-bottom: 8px; line-height: 1.05; }
+[lang="ar"] .panel-h { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; line-height: 1.25; }
+.panel-h em { font-style: italic; color: var(--magenta-500); }
+.panel-lede { font-size: 15px; line-height: 1.65; color: var(--ink-500); max-width: 52ch; margin-bottom: 28px; }
+.principle-list { list-style: none; display: flex; flex-direction: column; gap: 18px; margin-bottom: 28px; }
+.principle-list li { padding-inline-start: 32px; position: relative; }
+.principle-list li::before { content: ''; position: absolute; inset-inline-start: 0; top: 4px; width: 16px; height: 16px; background: linear-gradient(135deg, var(--terracotta-500), var(--magenta-500)); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.principle-list li strong { display: block; font-family: var(--font-display); font-weight: 500; font-size: 16px; letter-spacing: -0.01em; color: var(--aubergine-900); margin-bottom: 4px; }
+[lang="ar"] .principle-list li strong { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.principle-list li p { font-size: 13px; line-height: 1.55; color: var(--ink-700); }
+.tech-callout { background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 14px; padding: 18px; }
+.tech-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta-700); font-weight: 600; margin-bottom: 8px; }
+[lang="ar"] .tech-label { letter-spacing: 0; text-transform: none; font-size: 12px; }
+.tech-body { font-size: 13px; line-height: 1.6; color: var(--ink-700); }
+
+.footnote { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--sand-100); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); }
+[lang="ar"] .footnote { font-family: var(--font-arabic); }
+.footnote .accent { color: var(--magenta-500); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="brand-bar">
+    <div class="brand-identity">
+      <svg class="brand-logo" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#5B2C5F"/>
+            <stop offset="100%" stop-color="#B8228C"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="44" r="36" fill="url(#brandGrad)"/>
+        <circle cx="50" cy="44" r="22" fill="#FDFBF7"/>
+        <path d="M28 74 L36 60 L44 74 Z M44 74 L52 60 L60 74 Z M60 74 L68 60 L76 74 Z" fill="#FDFBF7"/>
+      </svg>
+      <div class="brand-name-wrap">
+        <div class="brand-name">Escalé</div>
+        <div class="brand-tagline">Design System · v0.1</div>
+      </div>
+    </div>
+    <div class="brand-meta">
+      <div class="screen-stamp">
+        <div class="lbl">Screen 18</div>
+        <div class="val">Hotel Home</div>
+      </div>
+      <div class="locale-switch">
+        <button id="btnEn" class="active" onclick="setLocale('en')">EN</button>
+        <button id="btnAr" onclick="setLocale('ar')">ع</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="editorial-head" id="editorialHead">
+    <div>
+      <div class="label" id="eh-label">Screen 18 / Hotel Home</div>
+      <h1><span id="eh-1">Everything about</span> <em id="eh-2">your hotel.</em></h1>
+    </div>
+    <div class="colophon">
+      <div><strong id="cl-1">The in-room folder,</strong> <span id="cl-1b">gone digital</span></div>
+      <div><strong id="cl-2">Info, dining, services</strong> <span id="cl-2b">— one screen</span></div>
+      <div><strong id="cl-3">For every in-house guest</strong></div>
+      <div style="margin-top:8px; opacity:0.6;" id="cl-date">New screen · 23 May 2026</div>
+    </div>
+  </section>
+
+  <div class="composition" id="composition">
+
+    <!-- ============ PHONE ============ -->
+    <div class="phone-stage">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar on-hero">
+            <span>9:41</span>
+            <span class="icons">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 17h2v4H2zm5-4h2v8H7zm5-4h2v12h-2zm5-4h2v16h-2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.7 6 0 9l12 15L24 9c-2.7-3-7-5-12-5z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="18" height="10" rx="2.5"/><rect x="4" y="9" width="12" height="6" rx="1" fill="currentColor"/><path d="M22 10v4" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+
+          <!-- HERO -->
+          <div class="hh-hero">
+            <div class="hh-eyebrow" id="hh-eyebrow">Your hotel</div>
+            <div class="hh-name" id="hh-name">Beit Nubia</div>
+            <div class="hh-loc">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span id="hh-loc">Aswan, Egypt</span>
+            </div>
+            <div class="hh-stars">★★★★★</div>
+          </div>
+
+          <div class="hh-body">
+            <p class="hh-welcome" id="hh-welcome">Welcome, <b>Ahmed</b>. Here is everything you need during your stay.</p>
+
+            <!-- QUICK INFO -->
+            <div class="quick-info">
+              <div class="qi-card">
+                <div class="qi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg></div>
+                <div class="qi-l" id="qi-1-l">Wi-Fi</div>
+                <div class="qi-v">Escale_Guest</div>
+              </div>
+              <div class="qi-card">
+                <div class="qi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                <div class="qi-l" id="qi-2-l">Reception</div>
+                <div class="qi-v" id="qi-2-v">Dial 0</div>
+              </div>
+              <div class="qi-card">
+                <div class="qi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg></div>
+                <div class="qi-l" id="qi-3-l">Check-out</div>
+                <div class="qi-v">12:00</div>
+              </div>
+            </div>
+
+            <!-- ABOUT -->
+            <div class="hh-sect">
+              <div class="hh-sect-head"><div class="hh-sect-title" id="sec-about">About the hotel</div></div>
+              <p class="hh-about" id="about-text">A Nubian guesthouse built by hand on the banks of the Nile. No electricity in the rooms — only candlelight, the river breeze, and a deep quiet.</p>
+            </div>
+
+            <!-- DINING -->
+            <div class="hh-sect">
+              <div class="hh-sect-head">
+                <div class="hh-sect-title" id="sec-dining">Where to eat</div>
+                <span class="hh-sect-action" id="dining-action">All venues →</span>
+              </div>
+              <div class="dine-card">
+                <div class="dine-thumb t1"></div>
+                <div class="dine-info">
+                  <div class="dine-name" id="d1-name">Oasis Terrace</div>
+                  <div class="dine-type" id="d1-type">All-day dining · local &amp; mezze</div>
+                  <div class="dine-hours"><span class="dot"></span><span id="d1-open">Open now</span> · 07:00–23:00</div>
+                </div>
+              </div>
+              <div class="dine-card">
+                <div class="dine-thumb t2"></div>
+                <div class="dine-info">
+                  <div class="dine-name" id="d2-name">The Date Lounge</div>
+                  <div class="dine-type" id="d2-type">Drinks &amp; sunset views</div>
+                  <div class="dine-hours"><span class="dot"></span><span id="d2-open">Open now</span> · 17:00–00:00</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SERVICES -->
+            <div class="hh-sect">
+              <div class="hh-sect-head"><div class="hh-sect-title" id="sec-services">Hotel services</div></div>
+              <p class="svc-hint" id="svc-hint">Tap any service to ask for it.</p>
+              <div class="svc-grid">
+                <div class="svc-tile">
+                  <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11h18M5 11V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4M4 11v8M20 11v8M4 17h16"/></svg></div>
+                  <div class="svc-name" id="svc-1">Room service</div>
+                </div>
+                <div class="svc-tile">
+                  <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M6 21V8l6-5 6 5v13M10 21v-6h4v6"/></svg></div>
+                  <div class="svc-name" id="svc-2">Housekeeping</div>
+                </div>
+                <div class="svc-tile">
+                  <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a7 7 0 0 0-7 7c0 4 3 6 3 9h8c0-3 3-5 3-9a7 7 0 0 0-7-7zM9 22h6"/></svg></div>
+                  <div class="svc-name" id="svc-3">Spa &amp; wellness</div>
+                </div>
+                <div class="svc-tile">
+                  <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/></svg></div>
+                  <div class="svc-name" id="svc-4">Concierge</div>
+                </div>
+                <div class="svc-tile">
+                  <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 18l5-9 5 6 3-4 5 7zM3 18h18"/></svg></div>
+                  <div class="svc-name" id="svc-5">Excursions</div>
+                </div>
+                <div class="svc-tile">
+                  <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="6"/><path d="M9 4h6M12 7v3"/></svg></div>
+                  <div class="svc-name" id="svc-6">Laundry</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- GOOD TO KNOW -->
+            <div class="hh-sect">
+              <div class="hh-sect-head"><div class="hh-sect-title" id="sec-gtk">Good to know</div></div>
+              <div class="gtk-list">
+                <div class="gtk-row">
+                  <div class="gtk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4zM6 1v3M10 1v3M14 1v3"/></svg></div>
+                  <div class="gtk-text">
+                    <div class="gtk-label" id="gtk-1-l">Breakfast</div>
+                    <div class="gtk-val" id="gtk-1-v">07:00–10:30 · Oasis Terrace</div>
+                  </div>
+                </div>
+                <div class="gtk-row">
+                  <div class="gtk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M2 12a10 10 0 0 1 20 0M6 12v4a6 6 0 0 0 12 0v-4"/></svg></div>
+                  <div class="gtk-text">
+                    <div class="gtk-label" id="gtk-2-l">Salt pool</div>
+                    <div class="gtk-val" id="gtk-2-v">08:00–sunset</div>
+                  </div>
+                </div>
+                <div class="gtk-row">
+                  <div class="gtk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 1 0 9 9c0-.5 0-1-.1-1.5A6 6 0 0 1 12 3z"/></svg></div>
+                  <div class="gtk-text">
+                    <div class="gtk-label" id="gtk-3-l">Quiet hours</div>
+                    <div class="gtk-val" id="gtk-3-v">After 23:00</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CONCIERGE -->
+            <div class="conc-cta">
+              <div class="conc-avatar">M</div>
+              <div class="conc-text">
+                <div class="conc-t" id="conc-t">Mariam · Concierge</div>
+                <div class="conc-s" id="conc-s">Here to help, anytime</div>
+              </div>
+              <button class="conc-btn" id="conc-btn">Message</button>
+            </div>
+          </div>
+
+          <!-- BOTTOM NAV -->
+          <nav class="bottom-nav">
+            <div class="nav-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span id="nav-1">Discover</span>
+            </div>
+            <div class="nav-item active">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <span id="nav-2">My Stay</span>
+            </div>
+            <div class="nav-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <span id="nav-3">Inbox</span>
+            </div>
+            <div class="nav-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+              <span id="nav-4">Account</span>
+            </div>
+          </nav>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SIDE PANEL ============ -->
+    <aside class="side-panel" id="sidePanel">
+      <h2 class="panel-h"><span id="ph-1">The hotel</span> <em id="ph-1em">in your pocket.</em></h2>
+      <p class="panel-lede" id="ph-lede">Every hotel still hands the guest a paper folder. This screen takes its place — Wi-Fi, dining, services, and hours, always up to date.</p>
+
+      <ul class="principle-list">
+        <li>
+          <strong id="p1-t">One place for everything</strong>
+          <p id="p1-d">Wi-Fi, dining, services, and hours — all on one screen, instead of a folder in the drawer.</p>
+        </li>
+        <li>
+          <strong id="p2-t">For every guest in the hotel</strong>
+          <p id="p2-d">Any guest staying at the hotel sees this page, no matter where they booked.</p>
+        </li>
+        <li>
+          <strong id="p3-t">Services are one tap away</strong>
+          <p id="p3-d">Tapping a service opens the request screen, so the guest can ask for it right away.</p>
+        </li>
+        <li>
+          <strong id="p4-t">Only what the guest needs</strong>
+          <p id="p4-d">Short, clear, useful information — not a long brochure.</p>
+        </li>
+        <li>
+          <strong id="p5-t">The same warm look</strong>
+          <p id="p5-d">It feels like the rest of the app — calm, and easy to read at a glance.</p>
+        </li>
+      </ul>
+
+      <div class="tech-callout">
+        <div class="tech-label" id="tech-l">A note for the hotel</div>
+        <p class="tech-body" id="tech-b">The hotel fills this page once from its dashboard — name, photos, dining venues, services, and hours. Every guest then sees the same up-to-date page, in their own language.</p>
+      </div>
+    </aside>
+
+  </div>
+
+  <footer class="footnote" id="footnote">
+    <span id="ft-1">© Escalé · Screen 18 of 18 · New — in-stay hotel home</span>
+    <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
+  </footer>
+
+</div>
+
+<script>
+const t = {
+  en: {
+    ehLabel: "Screen 18 / Hotel Home",
+    eh1: "Everything about", eh2: "your hotel.",
+    cl1: "The in-room folder,", cl1b: "gone digital",
+    cl2: "Info, dining, services", cl2b: "— one screen",
+    cl3: "For every in-house guest",
+    clDate: "New screen · 23 May 2026",
+    hhEyebrow: "Your hotel",
+    hhName: "Beit Nubia",
+    hhLoc: "Aswan, Egypt",
+    hhWelcome: "Welcome, <b>Ahmed</b>. Here is everything you need during your stay.",
+    qi1l: "Wi-Fi", qi2l: "Reception", qi2v: "Dial 0", qi3l: "Check-out",
+    secAbout: "About the hotel",
+    aboutText: "A Nubian guesthouse built by hand on the banks of the Nile. No electricity in the rooms — only candlelight, the river breeze, and a deep quiet.",
+    secDining: "Where to eat", diningAction: "All venues →",
+    d1Name: "Oasis Terrace", d1Type: "All-day dining · local & mezze", d1Open: "Open now",
+    d2Name: "The Date Lounge", d2Type: "Drinks & sunset views", d2Open: "Open now",
+    secServices: "Hotel services",
+    svcHint: "Tap any service to ask for it.",
+    svc1: "Room service", svc2: "Housekeeping", svc3: "Spa & wellness",
+    svc4: "Concierge", svc5: "Excursions", svc6: "Laundry",
+    secGtk: "Good to know",
+    gtk1l: "Breakfast", gtk1v: "07:00–10:30 · Oasis Terrace",
+    gtk2l: "Salt pool", gtk2v: "08:00–sunset",
+    gtk3l: "Quiet hours", gtk3v: "After 23:00",
+    concT: "Mariam · Concierge", concS: "Here to help, anytime", concBtn: "Message",
+    nav1: "Discover", nav2: "My Stay", nav3: "Inbox", nav4: "Account",
+    ph1: "The hotel", ph1em: "in your pocket.",
+    phLede: "Every hotel still hands the guest a paper folder. This screen takes its place — Wi-Fi, dining, services, and hours, always up to date.",
+    p1t: "One place for everything",
+    p1d: "Wi-Fi, dining, services, and hours — all on one screen, instead of a folder in the drawer.",
+    p2t: "For every guest in the hotel",
+    p2d: "Any guest staying at the hotel sees this page, no matter where they booked.",
+    p3t: "Services are one tap away",
+    p3d: "Tapping a service opens the request screen, so the guest can ask for it right away.",
+    p4t: "Only what the guest needs",
+    p4d: "Short, clear, useful information — not a long brochure.",
+    p5t: "The same warm look",
+    p5d: "It feels like the rest of the app — calm, and easy to read at a glance.",
+    techL: "A note for the hotel",
+    techB: "The hotel fills this page once from its dashboard — name, photos, dining venues, services, and hours. Every guest then sees the same up-to-date page, in their own language.",
+    ft1: "© Escalé · Screen 18 of 18 · New — in-stay hotel home"
+  },
+  ar: {
+    ehLabel: "الشاشة ١٨ / الصفحة الرئيسية للفندق",
+    eh1: "كل حاجة عن", eh2: "فندقك.",
+    cl1: "ملف الغرفة الورق،", cl1b: "بقى رقمي",
+    cl2: "معلومات، مطاعم، خدمات", cl2b: "— شاشة واحدة",
+    cl3: "لكل نزيل في الفندق",
+    clDate: "شاشة جديدة · ٢٣ مايو ٢٠٢٦",
+    hhEyebrow: "فندقك",
+    hhName: "بيت النوبة",
+    hhLoc: "أسوان، مصر",
+    hhWelcome: "أهلاً يا <b>أحمد</b>. هنا كل اللي محتاجه أثناء إقامتك.",
+    qi1l: "واي فاي", qi2l: "الاستقبال", qi2v: "اتصل بـ 0", qi3l: "المغادرة",
+    secAbout: "عن الفندق",
+    aboutText: "بيت ضيافة نوبي مبني يدوياً على ضفاف النيل. لا كهرباء في الغرف — بس ضوء الشموع، ونسمة النهر، وهدوء عميق.",
+    secDining: "أماكن الأكل", diningAction: "كل الأماكن ←",
+    d1Name: "شرفة الواحة", d1Type: "مطعم طوال اليوم · أكل محلي ومزّة", d1Open: "مفتوح الآن",
+    d2Name: "صالة التمر", d2Type: "مشروبات وإطلالة على الغروب", d2Open: "مفتوح الآن",
+    secServices: "خدمات الفندق",
+    svcHint: "اضغط على أي خدمة عشان تطلبها.",
+    svc1: "خدمة الغرف", svc2: "التنظيف", svc3: "سبا وعافية",
+    svc4: "الكونسيرج", svc5: "رحلات", svc6: "غسيل الملابس",
+    secGtk: "معلومات مفيدة",
+    gtk1l: "الفطار", gtk1v: "07:00–10:30 · شرفة الواحة",
+    gtk2l: "بركة الملح", gtk2v: "08:00–الغروب",
+    gtk3l: "ساعات الهدوء", gtk3v: "بعد 23:00",
+    concT: "مريم · الكونسيرج", concS: "موجودة لمساعدتك في أي وقت", concBtn: "محادثة",
+    nav1: "اكتشف", nav2: "إقامتي", nav3: "الرسائل", nav4: "حسابي",
+    ph1: "الفندق", ph1em: "في جيبك.",
+    phLede: "كل فندق لسه بيدّي النزيل ملف ورق. الشاشة دي بتاخد مكانه — الواي فاي، المطاعم، الخدمات، والمواعيد، محدّثة دايماً.",
+    p1t: "كل حاجة في مكان واحد",
+    p1d: "الواي فاي، المطاعم، الخدمات، والمواعيد — كلها في شاشة واحدة، بدل ملف في الدرج.",
+    p2t: "لكل نزيل في الفندق",
+    p2d: "أي نزيل ساكن في الفندق بيشوف الصفحة دي، مهما كان حجز من فين.",
+    p3t: "الخدمات على بُعد ضغطة",
+    p3d: "الضغط على أي خدمة بيفتح شاشة الطلب، فالنزيل يطلبها على طول.",
+    p4t: "بس اللي النزيل محتاجه",
+    p4d: "معلومات قصيرة وواضحة وعملية — مش بروشور طويل.",
+    p5t: "نفس الإحساس الدافئ",
+    p5d: "إحساسها زي باقي التطبيق — هادية وسهلة القراءة بنظرة.",
+    techL: "ملاحظة للفندق",
+    techB: "الفندق بيملأ الصفحة دي مرة واحدة من لوحة التحكم — الاسم، الصور، المطاعم، الخدمات، والمواعيد. وبعدها كل نزيل بيشوف نفس الصفحة المحدّثة، بلغته هو.",
+    ft1: "© إسكالي · الشاشة ١٨ من ١٨ · جديدة — الصفحة الرئيسية للفندق"
+  }
+};
+
+function setLocale(loc) {
+  const tt = t[loc];
+  const isRtl = loc === 'ar';
+
+  document.getElementById('btnEn').classList.toggle('active', loc === 'en');
+  document.getElementById('btnAr').classList.toggle('active', loc === 'ar');
+  ['editorialHead', 'composition', 'sidePanel', 'footnote'].forEach(function (id) {
+    const el = document.getElementById(id);
+    el.setAttribute('lang', loc);
+    el.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+  });
+
+  const set = function (id, val) { const el = document.getElementById(id); if (el) el.textContent = val; };
+  const setHtml = function (id, val) { const el = document.getElementById(id); if (el) el.innerHTML = val; };
+
+  set('eh-label', tt.ehLabel);
+  set('eh-1', tt.eh1); set('eh-2', tt.eh2);
+  set('cl-1', tt.cl1); set('cl-1b', tt.cl1b);
+  set('cl-2', tt.cl2); set('cl-2b', tt.cl2b);
+  set('cl-3', tt.cl3); set('cl-date', tt.clDate);
+
+  set('hh-eyebrow', tt.hhEyebrow);
+  set('hh-name', tt.hhName);
+  set('hh-loc', tt.hhLoc);
+  setHtml('hh-welcome', tt.hhWelcome);
+  set('qi-1-l', tt.qi1l);
+  set('qi-2-l', tt.qi2l); set('qi-2-v', tt.qi2v);
+  set('qi-3-l', tt.qi3l);
+  set('sec-about', tt.secAbout);
+  set('about-text', tt.aboutText);
+  set('sec-dining', tt.secDining); set('dining-action', tt.diningAction);
+  set('d1-name', tt.d1Name); set('d1-type', tt.d1Type); set('d1-open', tt.d1Open);
+  set('d2-name', tt.d2Name); set('d2-type', tt.d2Type); set('d2-open', tt.d2Open);
+  set('sec-services', tt.secServices);
+  set('svc-hint', tt.svcHint);
+  for (let i = 1; i <= 6; i++) set('svc-' + i, tt['svc' + i]);
+  set('sec-gtk', tt.secGtk);
+  set('gtk-1-l', tt.gtk1l); set('gtk-1-v', tt.gtk1v);
+  set('gtk-2-l', tt.gtk2l); set('gtk-2-v', tt.gtk2v);
+  set('gtk-3-l', tt.gtk3l); set('gtk-3-v', tt.gtk3v);
+  set('conc-t', tt.concT); set('conc-s', tt.concS); set('conc-btn', tt.concBtn);
+  for (let i = 1; i <= 4; i++) set('nav-' + i, tt['nav' + i]);
+
+  set('ph-1', tt.ph1); set('ph-1em', tt.ph1em); set('ph-lede', tt.phLede);
+  for (let i = 1; i <= 5; i++) { set('p' + i + '-t', tt['p' + i + 't']); set('p' + i + '-d', tt['p' + i + 'd']); }
+  set('tech-l', tt.techL); set('tech-b', tt.techB);
+  set('ft-1', tt.ft1);
+}
+</script>
+
+</body>
+</html>
