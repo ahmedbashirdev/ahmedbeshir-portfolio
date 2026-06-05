@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>التصميم المبدئي — نظام إدارة الشقق والحجوزات | شركة مصر الكويت العقارية</title>
+<title>التصميم المبدئي — منصة العقارات والخدمات | شركة مصر الكويت العقارية</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
   :root{
@@ -16,7 +16,6 @@
   body{background:var(--bg);color:var(--ink);line-height:1.6}
   .wrap{max-width:1180px;margin:0 auto;padding:18px}
 
-  /* Brand header */
   .brand{display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,var(--navy),var(--navy2));
     color:#fff;border-radius:16px;padding:18px 24px;box-shadow:0 10px 28px rgba(21,41,77,.20)}
   .brand h1{font-size:20px;font-weight:800}
@@ -24,187 +23,402 @@
   .brand .tag{margin-inline-start:auto;text-align:left}
   .brand .tag b{color:var(--gold);font-size:13px}
   .brand .tag span{display:block;font-size:12px;color:#c7d0e3}
-
-  .note{background:#fff;border:1px dashed var(--gold);border-radius:12px;padding:12px 16px;margin:14px 0;
+  .note{background:#fff;border:1px dashed var(--gold);border-radius:12px;padding:12px 16px;margin:14px 0 6px;
     color:var(--muted);font-size:13px}
 
-  /* Tabs as segmented control */
-  .tabs{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0;background:#fff;padding:7px;border-radius:14px;
+  .group-label{font-size:13px;font-weight:800;color:var(--navy);margin:14px 4px 6px}
+  .tabs{display:flex;flex-wrap:wrap;gap:7px;background:#fff;padding:7px;border-radius:14px;
     border:1px solid var(--line);box-shadow:0 2px 8px rgba(21,41,77,.04)}
-  .tab{background:transparent;border:1px solid transparent;color:var(--navy);padding:8px 15px;border-radius:9px;
-    cursor:pointer;font-size:13.5px;font-weight:700;transition:.15s}
+  .tab{background:transparent;border:1px solid transparent;color:var(--navy);padding:7px 13px;border-radius:9px;
+    cursor:pointer;font-size:13px;font-weight:700;transition:.15s}
   .tab:hover{background:#f4f6fb}
   .tab.active{background:var(--navy);color:#fff;box-shadow:0 4px 12px rgba(21,41,77,.25)}
 
-  .screen{display:none;animation:fade .25s}
+  .screen{display:none;animation:fade .25s;margin-top:16px}
   .screen.active{display:block}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-  /* App shell */
-  .app{display:grid;grid-template-columns:230px 1fr;gap:0;background:var(--card);border:1px solid var(--line);
-    border-radius:18px;overflow:hidden;min-height:560px;box-shadow:0 8px 26px rgba(21,41,77,.08)}
+  /* ===== PUBLIC SITE ===== */
+  .site{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 8px 26px rgba(21,41,77,.08)}
+  .pub-head{display:flex;align-items:center;gap:16px;padding:13px 20px;border-bottom:1px solid var(--line);background:#fff;flex-wrap:wrap}
+  .pub-head img{height:42px;border-radius:8px}
+  .pub-nav{display:flex;gap:5px;flex-wrap:wrap}
+  .pub-nav a{font-size:13px;font-weight:700;color:var(--navy);text-decoration:none;padding:6px 11px;border-radius:8px}
+  .pub-nav a.on,.pub-nav a:hover{background:var(--gold-bg)}
+  .pub-right{margin-inline-start:auto;display:flex;align-items:center;gap:10px}
+  .country{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;font-size:12px;font-weight:700}
+  .country span{padding:6px 11px;cursor:pointer;color:var(--muted)}
+  .country span.on{background:var(--navy);color:#fff}
+  .pub-phone{font-size:12.5px;font-weight:700;color:var(--green)}
+  .pub-body{padding:22px}
+
+  .hero2{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:16px;padding:30px 26px;color:#fff;text-align:center;margin-bottom:18px}
+  .hero2 h2{font-size:24px;font-weight:800;margin-bottom:6px}
+  .hero2 p{color:#c7d0e3;font-size:14px}
+  .hero2 .srch{margin:16px auto 0;max-width:560px;background:#fff;border-radius:11px;display:flex;gap:8px;padding:8px}
+  .hero2 .srch input{flex:1;border:none;outline:none;padding:8px 10px;font-size:13px;font-family:inherit;background:transparent}
+  .hero2 .srch button{background:var(--gold);border:none;border-radius:8px;padding:8px 18px;font-weight:800;color:#3a2c05;cursor:pointer;font-size:13px}
+
+  .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:6px}
+  .cat-card{border:1px solid var(--line);border-radius:14px;padding:20px 14px;text-align:center;cursor:pointer;transition:.15s;background:#fff}
+  .cat-card:hover{border-color:var(--gold);box-shadow:0 8px 20px rgba(21,41,77,.08);transform:translateY(-2px)}
+  .cat-card .em{font-size:30px}
+  .cat-card .t{font-weight:800;color:var(--navy);margin-top:8px;font-size:15px}
+  .cat-card .d{font-size:12px;color:var(--muted);margin-top:3px}
+
+  .sec-row{display:flex;justify-content:space-between;align-items:center;margin:18px 0 12px;flex-wrap:wrap;gap:10px}
+  .sec-row b{color:var(--navy);font-size:16px}
+  .filters{display:flex;gap:8px;flex-wrap:wrap}
+  .filters select,.filters input{border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:12.5px;background:#fbfcfe;font-family:inherit}
+
+  .prop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .prop-card{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fff;transition:.15s}
+  .prop-card:hover{box-shadow:0 8px 20px rgba(21,41,77,.08)}
+  .prop-img{height:140px;background:linear-gradient(135deg,#dfe5f0,#eef1f7);display:flex;align-items:center;justify-content:center;color:#9aa6bd;font-size:34px;position:relative}
+  .prop-img .badge{position:absolute;top:9px;right:9px;font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:20px}
+  .b-sale{background:var(--navy);color:#fff} .b-rent{background:var(--gold);color:#3a2c05}
+  .prop-b{padding:12px}
+  .prop-b .pt{font-weight:800;color:var(--navy);font-size:14px}
+  .prop-b .pl{font-size:12px;color:var(--muted);margin:2px 0 8px}
+  .prop-spec{display:flex;gap:12px;font-size:11.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:8px}
+  .prop-price{display:flex;justify-content:space-between;align-items:center;margin-top:9px}
+  .prop-price .pr{font-weight:800;color:var(--green);font-size:15px}
+  .mini-btn{background:var(--gold);border:none;border-radius:8px;padding:6px 13px;font-weight:800;color:#3a2c05;cursor:pointer;font-size:12px}
+
+  /* detail */
+  .detail{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+  .gallery .big{height:230px;border-radius:13px;background:linear-gradient(135deg,#dfe5f0,#eef1f7);display:flex;align-items:center;justify-content:center;color:#9aa6bd;font-size:50px}
+  .gallery .thumbs{display:flex;gap:8px;margin-top:8px}
+  .gallery .thumbs i{flex:1;height:54px;border-radius:8px;background:linear-gradient(135deg,#e6ebf4,#f2f5fa);display:flex;align-items:center;justify-content:center;color:#aab4c8;font-style:normal}
+  .dbox{border:1px solid var(--line);border-radius:13px;padding:18px}
+  .dbox .dt{font-size:19px;font-weight:800;color:var(--navy)}
+  .dbox .dl{font-size:13px;color:var(--muted);margin:3px 0 12px}
+  .dspecs{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+  .dspecs div{background:#f7f9fd;border:1px solid var(--line);border-radius:9px;padding:9px;font-size:12.5px}
+  .dspecs b{display:block;color:var(--navy);font-size:14px}
+  .dprice{font-size:24px;font-weight:800;color:var(--green);margin-bottom:12px}
+  .btn{background:var(--gold);color:#3a2c05;border:none;padding:11px 16px;border-radius:9px;font-weight:800;cursor:pointer;font-size:14px;width:100%}
+  .btn.nav{background:var(--navy);color:#fff}
+
+  /* packages */
+  .pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .pkg-card{border:1px solid var(--line);border-radius:14px;padding:20px;background:#fff;text-align:center;position:relative}
+  .pkg-card.hot{border:2px solid var(--gold);box-shadow:0 10px 24px rgba(201,162,39,.18)}
+  .pkg-card .rib{position:absolute;top:-11px;right:50%;transform:translateX(50%);background:var(--gold);color:#3a2c05;font-size:11px;font-weight:800;padding:2px 12px;border-radius:20px}
+  .pkg-card .nm{font-weight:800;color:var(--navy);font-size:16px}
+  .pkg-card .pr{font-size:26px;font-weight:800;color:var(--navy);margin:8px 0 2px}
+  .pkg-card .pr small{font-size:12px;color:var(--muted);font-weight:700}
+  .pkg-card ul{list-style:none;text-align:right;margin:12px 0;font-size:12.5px;color:var(--ink)}
+  .pkg-card li{padding:5px 0;border-bottom:1px solid var(--line);display:flex;gap:7px}
+  .pkg-card li .c{color:var(--green);font-weight:800}
+
+  /* services */
+  .srv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .srv-card{border:1px solid var(--line);border-radius:14px;padding:18px;background:#fff;display:flex;gap:14px;align-items:flex-start}
+  .srv-card .em{font-size:34px}
+  .srv-card .st{font-weight:800;color:var(--navy);font-size:16px}
+  .srv-card .sd{font-size:12.5px;color:var(--muted);margin:4px 0 10px}
+
+  /* request + otp */
+  .req-wrap{max-width:440px;margin:0 auto;border:1px solid var(--line);border-radius:14px;padding:22px;background:#fff;box-shadow:0 8px 24px rgba(21,41,77,.08)}
+  .req-wrap h3{color:var(--navy);font-size:17px;margin-bottom:3px}
+  .field{margin-bottom:13px}
+  .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:700}
+  .field input,.field select{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:8px;font-size:13px;background:#fbfcfe;font-family:inherit}
+  .otp-step{border-top:1px dashed var(--line);margin-top:14px;padding-top:14px}
+  .otp-boxes{display:flex;gap:9px;justify-content:center;margin:10px 0}
+  .otp-boxes input{width:46px;height:52px;text-align:center;font-size:20px;font-weight:800;border:1px solid var(--line);border-radius:9px;background:#fbfcfe}
+  .summary{background:#f7f9fd;border:1px solid var(--line);border-radius:9px;padding:11px;font-size:12.5px;margin-bottom:14px}
+
+  /* ===== ADMIN ===== */
+  .app{display:grid;grid-template-columns:230px 1fr;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;min-height:540px;box-shadow:0 8px 26px rgba(21,41,77,.08)}
   .side{background:var(--navy);color:#cdd6ea;padding:18px 12px}
-  .side .mini{display:flex;align-items:center;gap:10px;color:#fff;font-weight:800;margin-bottom:20px;font-size:15px}
+  .side .mini{display:flex;align-items:center;gap:10px;color:#fff;font-weight:800;margin-bottom:18px;font-size:15px}
   .side .mini i{width:36px;height:36px;border-radius:9px;background:#fff;color:var(--navy);display:grid;place-items:center;border:2px solid var(--gold);font-style:normal;font-weight:800;font-size:13px}
-  .nav a{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:9px;color:#cdd6ea;
-    text-decoration:none;font-size:14px;margin-bottom:4px;font-weight:500;border-right:3px solid transparent;transition:.15s}
+  .nav a{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:9px;color:#cdd6ea;text-decoration:none;font-size:13.5px;margin-bottom:3px;font-weight:500;border-right:3px solid transparent}
   .nav a:hover{background:rgba(255,255,255,.06);color:#fff}
   .nav a.on{background:rgba(201,162,39,.16);color:#fff;border-right:3px solid var(--gold);font-weight:700}
-  .nav .ic{font-size:16px;width:20px;text-align:center}
-
-  .main{padding:0}
-  /* Top bar */
+  .nav .ic{font-size:15px;width:20px;text-align:center}
   .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid var(--line);background:#fcfdff}
   .topbar .pt{font-size:17px;font-weight:800;color:var(--navy)}
   .topbar .pt small{display:block;font-size:12px;color:var(--muted);font-weight:500}
   .userchip{display:flex;align-items:center;gap:10px}
-  .userchip .av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#a8821a);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px}
-  .userchip .nm{font-size:13px;font-weight:700;color:var(--ink)}
-  .userchip .rl{font-size:11px;font-weight:700;color:var(--navy);background:var(--gold-bg);padding:1px 8px;border-radius:20px;display:inline-block;margin-top:2px}
-  .bell{width:34px;height:34px;border-radius:9px;background:#f4f6fb;display:grid;place-items:center;color:var(--navy);font-size:15px}
+  .userchip .av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#a8821a);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px}
+  .userchip .nm{font-size:13px;font-weight:700}
+  .userchip .rl{font-size:11px;font-weight:700;color:var(--navy);background:var(--gold-bg);padding:1px 8px;border-radius:20px;margin-top:2px;display:inline-block}
   .content{padding:22px}
-
-  .h{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:14px}
-
   .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
   .kpi{background:#fff;border:1px solid var(--line);border-radius:13px;padding:14px;position:relative;overflow:hidden}
   .kpi::before{content:"";position:absolute;top:0;right:0;width:100%;height:3px;background:var(--gold)}
   .kpi.r::before{background:var(--red)} .kpi.g::before{background:var(--green)} .kpi.n::before{background:var(--navy)}
-  .kpi .n{font-size:24px;font-weight:800;color:var(--navy)}
-  .kpi .l{font-size:12px;color:var(--muted);font-weight:500}
-
+  .kpi .n{font-size:23px;font-weight:800;color:var(--navy)} .kpi .l{font-size:12px;color:var(--muted)}
   table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:13px;overflow:hidden}
-  th{background:var(--navy);color:#fff;font-size:12.5px;text-align:right;padding:11px 13px;font-weight:700}
-  td{padding:11px 13px;font-size:13px;border-bottom:1px solid var(--line)}
+  th{background:var(--navy);color:#fff;font-size:12.5px;text-align:right;padding:10px 13px;font-weight:700}
+  td{padding:10px 13px;font-size:13px;border-bottom:1px solid var(--line)}
   tbody tr:nth-child(even) td{background:#f9fafd}
   tr:last-child td{border-bottom:none}
   .pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block}
-  .ok{background:var(--green-bg);color:var(--green)}
-  .busy{background:var(--red-bg);color:var(--red)}
-  .pend{background:var(--amber-bg);color:var(--amber)}
-  .btn{background:var(--gold);color:#3a2c05;border:none;padding:9px 16px;border-radius:9px;font-weight:800;
-    cursor:pointer;font-size:13px}
-  .btn.nav{background:var(--navy);color:#fff}
+  .ok{background:var(--green-bg);color:var(--green)} .busy{background:var(--red-bg);color:var(--red)} .pend{background:var(--amber-bg);color:var(--amber)} .info{background:#e7eefb;color:var(--navy)}
   .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px;flex-wrap:wrap}
+  .ibtn{background:var(--gold);border:none;border-radius:8px;padding:8px 14px;font-weight:800;color:#3a2c05;cursor:pointer;font-size:12.5px}
+  .priceinput{display:flex;align-items:center;gap:6px}
+  .priceinput input{width:90px;padding:6px 8px;border:1px solid var(--line);border-radius:7px;font-size:12.5px;font-family:inherit;background:#fbfcfe}
+  .link{color:var(--navy);font-weight:700;font-size:12px;text-decoration:underline;cursor:pointer}
 
-  /* chips + search */
-  .chips{display:flex;gap:8px;flex-wrap:wrap}
-  .chip{font-size:12.5px;font-weight:700;padding:6px 13px;border-radius:20px;border:1px solid var(--line);background:#fff;color:var(--navy);cursor:pointer}
-  .chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-  .search{border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13px;min-width:200px;background:#fbfcfe}
-
-  /* Calendar */
-  .cal{background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px}
-  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:10px}
-  .cal-grid .d{aspect-ratio:1;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    font-size:12px;border:1px solid var(--line);color:#445;position:relative;font-weight:600}
-  .cal-grid .head{background:transparent;border:none;color:var(--muted);font-weight:700;aspect-ratio:auto;padding:4px}
-  .d.free{background:var(--green-bg);color:var(--green);border-color:#bfe8d6}
-  .d.book{background:var(--red-bg);color:var(--red);border-color:#f3c9c4}
-  .d.out{background:var(--amber-bg);color:var(--amber);border-color:#f0dfb6}
-  .d.today{outline:2.5px solid var(--navy);outline-offset:1px}
-  .d .tdy{position:absolute;bottom:3px;font-size:8px;background:var(--navy);color:#fff;padding:0 5px;border-radius:8px;font-weight:700}
-  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:13px}
-  .legend i{width:12px;height:12px;border-radius:3px;display:inline-block;margin-inline-end:5px;vertical-align:-1px}
-
-  /* Form */
-  .form{background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px;display:grid;
-    grid-template-columns:1fr 1fr;gap:14px}
-  .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:700}
-  .field input,.field select{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-size:13px;background:#fbfcfe;font-family:inherit}
-  .full{grid-column:1/-1}
-  .warn{grid-column:1/-1;background:var(--red-bg);color:var(--red);border:1px solid #f3c9c4;border-radius:9px;
-    padding:11px 14px;font-size:13px;font-weight:700;display:flex;gap:8px;align-items:center}
-
-  /* bars (reports) */
-  .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:11px}
-  .bar-row .lab{width:90px;font-size:13px;font-weight:700;color:var(--ink)}
-  .bar-track{flex:1;background:#eef1f7;border-radius:20px;height:14px;overflow:hidden}
-  .bar-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--navy2));border-radius:20px}
-  .bar-row .val{width:64px;text-align:left;font-size:12.5px;color:var(--muted);font-weight:700}
-
-  .login-card{max-width:370px;margin:34px auto;background:#fff;border:1px solid var(--line);border-radius:18px;
-    padding:30px;text-align:center;box-shadow:0 16px 40px rgba(21,41,77,.12)}
-  @media(max-width:760px){.app{grid-template-columns:1fr}.side{display:none}.kpis{grid-template-columns:repeat(2,1fr)}.form{grid-template-columns:1fr}}
+  @media(max-width:820px){.app{grid-template-columns:1fr}.side{display:none}.cat-grid{grid-template-columns:repeat(2,1fr)}.prop-grid,.pkg-grid{grid-template-columns:1fr 1fr}.detail{grid-template-columns:1fr}.srv-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <div class="brand">
-    <img src="logo.jpeg" alt="شركة مصر الكويت العقارية" style="height:74px;border-radius:12px;background:#fff;padding:5px;border:2px solid var(--gold)">
-    <div>
-      <h1>شركة مصر الكويت العقارية</h1>
-      <div class="en">EGYPT KUWAIT REAL ESTATE COMPANY</div>
-    </div>
-    <div class="tag">
-      <b>التصميم المبدئي للنظام</b>
-      <span>نظام إدارة الشقق والحجوزات — MVP</span>
-    </div>
+    <img src="logo.jpeg" alt="logo" style="height:74px;border-radius:12px;background:#fff;padding:5px;border:2px solid var(--gold)">
+    <div><h1>شركة مصر الكويت العقارية</h1><div class="en">EGYPT KUWAIT REAL ESTATE COMPANY</div></div>
+    <div class="tag"><b>التصميم المبدئي للمنصة</b><span>عقارات وخدمات — مصر والكويت</span></div>
   </div>
 
-  <div class="note">
-    💡 تصميم مبدئي توضيحي (Mockup) لشكل النظام وتسلسل الشاشات — البيانات افتراضية للعرض فقط. اضغط على التبويبات للتنقّل بين الشاشات.
-  </div>
+  <div class="note">💡 تصميم مبدئي توضيحي — البيانات والصور افتراضية للعرض فقط. اضغط على التبويبات للتنقّل بين شاشات واجهة العملاء ولوحة الأدمن.</div>
 
+  <div class="group-label">🌐 واجهة العملاء (الموقع)</div>
   <div class="tabs">
-    <div class="tab active" data-s="login">🔐 تسجيل الدخول</div>
-    <div class="tab" data-s="dash">📊 لوحة التحكم</div>
-    <div class="tab" data-s="apts">🏢 الشقق</div>
-    <div class="tab" data-s="cal">📅 تقويم الحجوزات</div>
-    <div class="tab" data-s="new">➕ حجز جديد</div>
-    <div class="tab" data-s="mkt">👥 المسوّقون</div>
-    <div class="tab" data-s="rep">📈 التقارير</div>
+    <div class="tab active" data-s="home">الرئيسية</div>
+    <div class="tab" data-s="sale">عقارات للبيع</div>
+    <div class="tab" data-s="detail">تفاصيل عقار</div>
+    <div class="tab" data-s="rent">إيجار مفروش</div>
+    <div class="tab" data-s="pkg">باقات التصميم والتشطيب</div>
+    <div class="tab" data-s="services">خدمات إضافية</div>
+    <div class="tab" data-s="request">طلب خدمة + تحقق</div>
   </div>
 
-  <!-- LOGIN -->
-  <div class="screen active" id="login">
-    <div class="login-card">
-      <img src="logo.jpeg" alt="logo" style="width:155px;margin:0 auto 16px;display:block;border-radius:12px">
-      <h2 style="color:var(--navy);font-size:19px">تسجيل الدخول</h2>
-      <p style="color:var(--muted);font-size:13px;margin-bottom:18px">نظام إدارة الشقق والحجوزات</p>
-      <div style="text-align:right">
-        <div class="field" style="margin-bottom:12px"><label>البريد الإلكتروني</label><input value="marketer@ekrealestate.com"></div>
-        <div class="field" style="margin-bottom:16px"><label>كلمة المرور</label><input type="password" value="••••••••"></div>
+  <div class="group-label">🏢 لوحة الأدمن (الإدارة)</div>
+  <div class="tabs">
+    <div class="tab" data-s="adash">لوحة التحكم</div>
+    <div class="tab" data-s="aprops">إدارة العقارات</div>
+    <div class="tab" data-s="apkg">الباقات والأسعار</div>
+    <div class="tab" data-s="areq">الطلبات (Leads)</div>
+    <div class="tab" data-s="acal">تقويم الحجوزات</div>
+    <div class="tab" data-s="amkt">المسوّقون</div>
+    <div class="tab" data-s="ausers">المستخدمون والصلاحيات</div>
+  </div>
+
+  <!-- ========== HOME ========== -->
+  <div class="screen active" id="home">
+    <div class="site">
+      <div class="pub-head">
+        <img src="logo.jpeg" alt="logo">
+        <div class="pub-nav"><a class="on">الرئيسية</a><a>بيع</a><a>إيجار</a><a>باقات</a><a>خدمات</a><a>تواصل</a></div>
+        <div class="pub-right">
+          <div class="country"><span class="on">🇪🇬 مصر</span><span>🇰🇼 الكويت</span></div>
+          <span class="pub-phone">📞 تواصل معنا</span>
+        </div>
       </div>
-      <button class="btn nav" style="width:100%">دخول</button>
-      <p style="color:var(--muted);font-size:11px;margin-top:14px">صلاحيات منفصلة: مدير / مسوّق</p>
+      <div class="pub-body">
+        <div class="hero2">
+          <h2>كل عقاراتك وخدماتك في مكان واحد</h2>
+          <p>بيع · إيجار مفروش · تصميم وتشطيب · خدمات إضافية — في مصر والكويت</p>
+          <div class="srch"><input placeholder="🔍 ابحث عن عقار أو منطقة..."><button>بحث</button></div>
+        </div>
+        <div class="cat-grid">
+          <div class="cat-card"><div class="em">🔑</div><div class="t">إيجار مفروش</div><div class="d">شقق يومية جاهزة</div></div>
+          <div class="cat-card"><div class="em">🏷️</div><div class="t">عقارات للبيع</div><div class="d">تمليك واستثمار</div></div>
+          <div class="cat-card"><div class="em">🎨</div><div class="t">تصميم وتشطيب</div><div class="d">باقات هندسية وديكور</div></div>
+          <div class="cat-card"><div class="em">🧰</div><div class="t">خدمات إضافية</div><div class="d">سيارات وتنظيف</div></div>
+        </div>
+        <div class="sec-row"><b>عقارات مميزة</b><span class="link">عرض الكل ←</span></div>
+        <div class="prop-grid">
+          <div class="prop-card"><div class="prop-img">🏢<span class="badge b-rent">إيجار</span></div><div class="prop-b"><div class="pt">شقة مفروشة فاخرة</div><div class="pl">السالمية — الكويت</div><div class="prop-spec"><span>🛏️ غرفتين</span><span>📐 120م²</span><span>🏢 الدور 5</span></div><div class="prop-price"><span class="pr">28 د.ك / ليلة</span><button class="mini-btn">تفاصيل</button></div></div></div>
+          <div class="prop-card"><div class="prop-img">🏠<span class="badge b-sale">بيع</span></div><div class="prop-b"><div class="pt">فيلا للبيع</div><div class="pl">الشيخ زايد — مصر</div><div class="prop-spec"><span>🛏️ 4 غرف</span><span>📐 300م²</span><span>🌳 حديقة</span></div><div class="prop-price"><span class="pr">8,500,000 ج.م</span><button class="mini-btn">تفاصيل</button></div></div></div>
+          <div class="prop-card"><div class="prop-img">🏢<span class="badge b-rent">إيجار</span></div><div class="prop-b"><div class="pt">استوديو مفروش</div><div class="pl">المهندسين — مصر</div><div class="prop-spec"><span>🛏️ استوديو</span><span>📐 65م²</span><span>🏢 الدور 3</span></div><div class="prop-price"><span class="pr">1,200 ج.م / ليلة</span><button class="mini-btn">تفاصيل</button></div></div></div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- DASHBOARD -->
-  <div class="screen" id="dash">
+  <!-- ========== SALE ========== -->
+  <div class="screen" id="sale">
+    <div class="site">
+      <div class="pub-head">
+        <img src="logo.jpeg" alt="logo">
+        <div class="pub-nav"><a>الرئيسية</a><a class="on">بيع</a><a>إيجار</a><a>باقات</a><a>خدمات</a><a>تواصل</a></div>
+        <div class="pub-right"><div class="country"><span class="on">🇪🇬 مصر</span><span>🇰🇼 الكويت</span></div></div>
+      </div>
+      <div class="pub-body">
+        <div class="sec-row"><b>عقارات للبيع</b>
+          <div class="filters">
+            <select><option>كل المناطق</option><option>الشيخ زايد</option><option>التجمع</option><option>المهندسين</option></select>
+            <select><option>النوع</option><option>شقة</option><option>فيلا</option><option>استوديو</option></select>
+            <select><option>السعر</option><option>أقل من 3 مليون</option><option>3 - 8 مليون</option></select>
+          </div>
+        </div>
+        <div class="prop-grid">
+          <div class="prop-card"><div class="prop-img">🏠<span class="badge b-sale">بيع</span></div><div class="prop-b"><div class="pt">فيلا للبيع</div><div class="pl">الشيخ زايد — مصر</div><div class="prop-spec"><span>🛏️ 4 غرف</span><span>📐 300م²</span></div><div class="prop-price"><span class="pr">8,500,000 ج.م</span><button class="mini-btn">تفاصيل</button></div></div></div>
+          <div class="prop-card"><div class="prop-img">🏢<span class="badge b-sale">بيع</span></div><div class="prop-b"><div class="pt">شقة تمليك</div><div class="pl">التجمع الخامس — مصر</div><div class="prop-spec"><span>🛏️ 3 غرف</span><span>📐 175م²</span></div><div class="prop-price"><span class="pr">4,200,000 ج.م</span><button class="mini-btn">تفاصيل</button></div></div></div>
+          <div class="prop-card"><div class="prop-img">🏢<span class="badge b-sale">بيع</span></div><div class="prop-b"><div class="pt">شقة بإطلالة بحرية</div><div class="pl">السالمية — الكويت</div><div class="prop-spec"><span>🛏️ غرفتين</span><span>📐 140م²</span></div><div class="prop-price"><span class="pr">120,000 د.ك</span><button class="mini-btn">تفاصيل</button></div></div></div>
+          <div class="prop-card"><div class="prop-img">🏠<span class="badge b-sale">بيع</span></div><div class="prop-b"><div class="pt">دوبلكس</div><div class="pl">الرحاب — مصر</div><div class="prop-spec"><span>🛏️ 5 غرف</span><span>📐 260م²</span></div><div class="prop-price"><span class="pr">6,800,000 ج.م</span><button class="mini-btn">تفاصيل</button></div></div></div>
+          <div class="prop-card"><div class="prop-img">🏢<span class="badge b-sale">بيع</span></div><div class="prop-b"><div class="pt">شقة استثمارية</div><div class="pl">حولي — الكويت</div><div class="prop-spec"><span>🛏️ غرفتين</span><span>📐 110م²</span></div><div class="prop-price"><span class="pr">85,000 د.ك</span><button class="mini-btn">تفاصيل</button></div></div></div>
+          <div class="prop-card"><div class="prop-img">🏠<span class="badge b-sale">بيع</span></div><div class="prop-b"><div class="pt">فيلا بحديقة</div><div class="pl">مدينتي — مصر</div><div class="prop-spec"><span>🛏️ 4 غرف</span><span>📐 320م²</span></div><div class="prop-price"><span class="pr">9,100,000 ج.م</span><button class="mini-btn">تفاصيل</button></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== DETAIL ========== -->
+  <div class="screen" id="detail">
+    <div class="site">
+      <div class="pub-head">
+        <img src="logo.jpeg" alt="logo">
+        <div class="pub-nav"><a>الرئيسية</a><a class="on">بيع</a><a>إيجار</a><a>باقات</a><a>خدمات</a><a>تواصل</a></div>
+        <div class="pub-right"><span class="link">← رجوع للقائمة</span></div>
+      </div>
+      <div class="pub-body">
+        <div class="detail">
+          <div class="gallery">
+            <div class="big">🏠</div>
+            <div class="thumbs"><i>📷</i><i>📷</i><i>📷</i><i>📷</i></div>
+          </div>
+          <div class="dbox">
+            <div class="dt">فيلا للبيع — الشيخ زايد</div>
+            <div class="dl">📍 الشيخ زايد، مصر · كود العقار: V-1042</div>
+            <div class="dspecs">
+              <div>النوع<b>فيلا</b></div>
+              <div>المساحة<b>300 م²</b></div>
+              <div>الغرف<b>4 غرف</b></div>
+              <div>الحالة<b>تشطيب سوبر لوكس</b></div>
+            </div>
+            <div class="dprice">8,500,000 ج.م</div>
+            <button class="btn">اطلب / استفسر عن العقار</button>
+            <p style="font-size:11.5px;color:var(--muted);text-align:center;margin-top:9px">سيتم التواصل معك خلال 24 ساعة</p>
+          </div>
+        </div>
+        <div class="sec-row" style="margin-top:20px"><b>الوصف</b></div>
+        <p style="font-size:13px;color:var(--ink);line-height:1.9">فيلا مستقلة بموقع متميز في الشيخ زايد، تشطيب سوبر لوكس، حديقة خاصة وجراج، قريبة من الخدمات والمولات. مناسبة للسكن أو الاستثمار.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== RENT ========== -->
+  <div class="screen" id="rent">
+    <div class="site">
+      <div class="pub-head">
+        <img src="logo.jpeg" alt="logo">
+        <div class="pub-nav"><a>الرئيسية</a><a>بيع</a><a class="on">إيجار</a><a>باقات</a><a>خدمات</a><a>تواصل</a></div>
+        <div class="pub-right"><div class="country"><span>🇪🇬 مصر</span><span class="on">🇰🇼 الكويت</span></div></div>
+      </div>
+      <div class="pub-body">
+        <div class="sec-row"><b>عقارات مفروشة للإيجار</b>
+          <div class="filters">
+            <select><option>كل المناطق</option><option>السالمية</option><option>حولي</option><option>الجابرية</option></select>
+            <input type="date" value="2026-06-10"><input type="date" value="2026-06-14">
+          </div>
+        </div>
+        <div class="prop-grid">
+          <div class="prop-card"><div class="prop-img">🏢<span class="badge b-rent">متاح</span></div><div class="prop-b"><div class="pt">شقة مفروشة فاخرة</div><div class="pl">السالمية — الكويت</div><div class="prop-spec"><span>🛏️ غرفتين</span><span>📐 120م²</span><span>🏢 الدور 5</span></div><div class="prop-price"><span class="pr">28 د.ك / ليلة</span><button class="mini-btn">احجز</button></div></div></div>
+          <div class="prop-card"><div class="prop-img">🏢<span class="badge b-rent">متاح</span></div><div class="prop-b"><div class="pt">استوديو مفروش</div><div class="pl">حولي — الكويت</div><div class="prop-spec"><span>🛏️ استوديو</span><span>📐 65م²</span><span>🏢 الدور 3</span></div><div class="prop-price"><span class="pr">18 د.ك / ليلة</span><button class="mini-btn">احجز</button></div></div></div>
+          <div class="prop-card"><div class="prop-img" style="opacity:.7">🏢<span class="badge" style="background:var(--red);color:#fff">محجوز</span></div><div class="prop-b"><div class="pt">شقة بإطلالة</div><div class="pl">الجابرية — الكويت</div><div class="prop-spec"><span>🛏️ غرفتين</span><span>📐 130م²</span><span>🏢 الدور 7</span></div><div class="prop-price"><span class="pr">30 د.ك / ليلة</span><button class="mini-btn" style="background:#dfe3ec;color:#8a93a6">محجوز</button></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PACKAGES ========== -->
+  <div class="screen" id="pkg">
+    <div class="site">
+      <div class="pub-head">
+        <img src="logo.jpeg" alt="logo">
+        <div class="pub-nav"><a>الرئيسية</a><a>بيع</a><a>إيجار</a><a class="on">باقات</a><a>خدمات</a><a>تواصل</a></div>
+        <div class="pub-right"><div class="country"><span class="on">🇪🇬 مصر</span><span>🇰🇼 الكويت</span></div></div>
+      </div>
+      <div class="pub-body">
+        <div class="sec-row"><b>باقات التصميم الهندسي والديكور والتشطيب</b></div>
+        <div class="pkg-grid">
+          <div class="pkg-card"><div class="nm">الباقة الأساسية</div><div class="pr">15,000 <small>ج.م</small></div><ul><li><span class="c">✓</span> تصميم هندسي للمساحة</li><li><span class="c">✓</span> مخطط توزيع أولي</li><li><span class="c">✓</span> استشارة ديكور</li></ul><button class="btn nav">اطلب الباقة</button></div>
+          <div class="pkg-card hot"><div class="rib">الأكثر طلباً</div><div class="nm">الباقة المميزة</div><div class="pr">35,000 <small>ج.م</small></div><ul><li><span class="c">✓</span> كل ما في الأساسية</li><li><span class="c">✓</span> تصميم ديكور 3D</li><li><span class="c">✓</span> اختيار الخامات</li><li><span class="c">✓</span> إشراف على التنفيذ</li></ul><button class="btn">اطلب الباقة</button></div>
+          <div class="pkg-card"><div class="nm">الباقة المتكاملة</div><div class="pr">70,000 <small>ج.م</small></div><ul><li><span class="c">✓</span> كل ما في المميزة</li><li><span class="c">✓</span> تشطيب كامل تسليم مفتاح</li><li><span class="c">✓</span> ضمان وصيانة</li></ul><button class="btn nav">اطلب الباقة</button></div>
+        </div>
+        <p class="note" style="margin-top:16px">💡 الأسعار يحدّدها ويعدّلها الأدمن لكل باقة ولكل دولة (ج.م / د.ك).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SERVICES ========== -->
+  <div class="screen" id="services">
+    <div class="site">
+      <div class="pub-head">
+        <img src="logo.jpeg" alt="logo">
+        <div class="pub-nav"><a>الرئيسية</a><a>بيع</a><a>إيجار</a><a>باقات</a><a class="on">خدمات</a><a>تواصل</a></div>
+        <div class="pub-right"><div class="country"><span class="on">🇪🇬 مصر</span><span>🇰🇼 الكويت</span></div></div>
+      </div>
+      <div class="pub-body">
+        <div class="sec-row"><b>خدمات إضافية</b></div>
+        <div class="srv-grid">
+          <div class="srv-card"><div class="em">🚗</div><div style="flex:1"><div class="st">تأجير السيارات</div><div class="sd">سيارات بسائق أو بدون، بالساعة أو باليوم. اختر السيارة وأرسل طلبك.</div><button class="mini-btn">اطلب الخدمة</button></div></div>
+          <div class="srv-card"><div class="em">🧹</div><div style="flex:1"><div class="st">خدمة التنظيف</div><div class="sd">تنظيف منازل وشقق مفروشة — باقات حسب المساحة وعدد الغرف.</div><button class="mini-btn">اطلب الخدمة</button></div></div>
+        </div>
+        <p class="note" style="margin-top:16px">💡 «المسار السريع» المذكور في متطلبات العميل غير مفهوم بعد — بانتظار توضيحه لإضافته كخدمة.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== REQUEST + OTP ========== -->
+  <div class="screen" id="request">
+    <div class="site">
+      <div class="pub-head">
+        <img src="logo.jpeg" alt="logo">
+        <div class="pub-nav"><a>الرئيسية</a><a>بيع</a><a>إيجار</a><a>باقات</a><a>خدمات</a><a>تواصل</a></div>
+        <div class="pub-right"></div>
+      </div>
+      <div class="pub-body">
+        <div class="req-wrap">
+          <h3>طلب خدمة</h3>
+          <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">بدون تسجيل حساب — فقط رقم موبايلك للتأكيد</p>
+          <div class="summary">📦 الطلب: <b>الباقة المميزة — تصميم وديكور</b> · 35,000 ج.م</div>
+          <div class="field"><label>الاسم</label><input value="محمد عبد الله"></div>
+          <div class="field"><label>رقم الموبايل</label><input value="+20 10xxxxxxxx"></div>
+          <div class="otp-step">
+            <label style="font-size:12px;color:var(--muted);font-weight:700">أدخل كود التحقق المُرسل برسالة (OTP)</label>
+            <div class="otp-boxes"><input value="4"><input value="8"><input value="2"><input value="1"></div>
+            <p style="font-size:11.5px;color:var(--muted);text-align:center">لم يصلك الكود؟ <span class="link">إعادة الإرسال</span></p>
+          </div>
+          <button class="btn" style="margin-top:6px">تأكيد وإرسال الطلب</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== ADMIN DASHBOARD ========== -->
+  <div class="screen" id="adash">
     <div class="app">
       <div class="side">
         <div class="mini"><i>KC</i> مصر الكويت</div>
         <div class="nav">
           <a class="on"><span class="ic">📊</span> لوحة التحكم</a>
-          <a><span class="ic">🏢</span> الشقق</a>
+          <a><span class="ic">🏠</span> العقارات</a>
+          <a><span class="ic">🎨</span> الباقات والأسعار</a>
+          <a><span class="ic">📥</span> الطلبات</a>
           <a><span class="ic">📅</span> تقويم الحجوزات</a>
-          <a><span class="ic">📋</span> الحجوزات</a>
           <a><span class="ic">👥</span> المسوّقون</a>
-          <a><span class="ic">📈</span> التقارير</a>
+          <a><span class="ic">👤</span> المستخدمون</a>
+          <a><span class="ic">⚙️</span> الإعدادات</a>
         </div>
       </div>
       <div class="main">
-        <div class="topbar">
-          <div class="pt">لوحة التحكم<small>اليوم 3 يونيو 2026</small></div>
-          <div class="userchip"><span class="bell">🔔</span><div style="text-align:left"><div class="nm">أحمد سمير</div><span class="rl">مدير النظام</span></div><span class="av">أ</span></div>
-        </div>
+        <div class="topbar"><div class="pt">لوحة التحكم<small>اليوم 6 يونيو 2026</small></div>
+          <div class="userchip"><div style="text-align:left"><div class="nm">أحمد سمير</div><span class="rl">مدير النظام</span></div><span class="av">أ</span></div></div>
         <div class="content">
           <div class="kpis">
-            <div class="kpi n"><div class="n">18</div><div class="l">إجمالي الشقق</div></div>
-            <div class="kpi r"><div class="n">12</div><div class="l">محجوزة حالياً</div></div>
-            <div class="kpi g"><div class="n">6</div><div class="l">متاحة</div></div>
-            <div class="kpi"><div class="n">67%</div><div class="l">نسبة الإشغال</div></div>
+            <div class="kpi n"><div class="n">23</div><div class="l">طلبات جديدة اليوم</div></div>
+            <div class="kpi"><div class="n">142</div><div class="l">إجمالي العقارات</div></div>
+            <div class="kpi g"><div class="n">12</div><div class="l">باقات خدمات</div></div>
+            <div class="kpi r"><div class="n">8</div><div class="l">طلبات بانتظار الرد</div></div>
           </div>
-          <div class="row"><b style="color:var(--navy)">وصول / مغادرة اليوم</b></div>
+          <div class="row"><b style="color:var(--navy)">أحدث الطلبات</b><span class="link">عرض الكل ←</span></div>
           <table>
-            <thead><tr><th>الشقة</th><th>النزيل</th><th>الإجراء</th><th>المسوّق</th><th>الحالة</th></tr></thead>
+            <thead><tr><th>العميل</th><th>الطلب</th><th>الدولة</th><th>المصدر</th><th>الحالة</th></tr></thead>
             <tbody>
-            <tr><td>A-101 — السالمية</td><td>محمد العنزي</td><td>وصول</td><td>أحمد س.</td><td><span class="pill ok">دخول اليوم</span></td></tr>
-            <tr><td>B-204 — حولي</td><td>سارة الخالد</td><td>مغادرة</td><td>منى ع.</td><td><span class="pill pend">خروج اليوم</span></td></tr>
-            <tr><td>C-310 — الجابرية</td><td>خالد المطيري</td><td>وصول</td><td>أحمد س.</td><td><span class="pill ok">دخول اليوم</span></td></tr>
+            <tr><td>محمد عبد الله</td><td>الباقة المميزة (تصميم)</td><td>مصر</td><td>واتساب</td><td><span class="pill info">جديد</span></td></tr>
+            <tr><td>فهد الرشيدي</td><td>إيجار شقة A-101</td><td>الكويت</td><td>إنستجرام</td><td><span class="pill pend">تم التواصل</span></td></tr>
+            <tr><td>سارة خالد</td><td>خدمة تنظيف</td><td>الكويت</td><td>الموقع</td><td><span class="pill ok">مؤكّد</span></td></tr>
+            <tr><td>أحمد ماهر</td><td>فيلا للبيع V-1042</td><td>مصر</td><td>الموقع</td><td><span class="pill info">جديد</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -212,38 +426,37 @@
     </div>
   </div>
 
-  <!-- APARTMENTS -->
-  <div class="screen" id="apts">
+  <!-- ========== ADMIN PROPERTIES ========== -->
+  <div class="screen" id="aprops">
     <div class="app">
       <div class="side">
         <div class="mini"><i>KC</i> مصر الكويت</div>
         <div class="nav">
           <a><span class="ic">📊</span> لوحة التحكم</a>
-          <a class="on"><span class="ic">🏢</span> الشقق</a>
+          <a class="on"><span class="ic">🏠</span> العقارات</a>
+          <a><span class="ic">🎨</span> الباقات والأسعار</a>
+          <a><span class="ic">📥</span> الطلبات</a>
           <a><span class="ic">📅</span> تقويم الحجوزات</a>
-          <a><span class="ic">📋</span> الحجوزات</a>
           <a><span class="ic">👥</span> المسوّقون</a>
-          <a><span class="ic">📈</span> التقارير</a>
+          <a><span class="ic">👤</span> المستخدمون</a>
+          <a><span class="ic">⚙️</span> الإعدادات</a>
         </div>
       </div>
       <div class="main">
-        <div class="topbar">
-          <div class="pt">إدارة الشقق<small>١٨ شقة</small></div>
-          <div class="userchip"><span class="bell">🔔</span><div style="text-align:left"><div class="nm">أحمد سمير</div><span class="rl">مدير النظام</span></div><span class="av">أ</span></div>
-        </div>
+        <div class="topbar"><div class="pt">إدارة العقارات<small>١٤٢ عقار</small></div>
+          <div class="userchip"><div style="text-align:left"><div class="nm">أحمد سمير</div><span class="rl">مدير النظام</span></div><span class="av">أ</span></div></div>
         <div class="content">
           <div class="row">
-            <div class="chips"><span class="chip on">الكل</span><span class="chip">متاحة</span><span class="chip">محجوزة</span><span class="chip">صيانة</span></div>
-            <div style="display:flex;gap:10px"><input class="search" placeholder="🔍 بحث عن شقة أو منطقة..."><button class="btn">+ إضافة شقة</button></div>
+            <div class="filters"><select><option>كل الأنواع</option><option>بيع</option><option>إيجار مفروش</option><option>تمليك</option></select><select><option>مصر</option><option>الكويت</option></select></div>
+            <button class="ibtn">+ إضافة عقار</button>
           </div>
           <table>
-            <thead><tr><th>الكود</th><th>المنطقة</th><th>النوع</th><th>سعر الليلة</th><th>الحالة</th></tr></thead>
+            <thead><tr><th>الكود</th><th>العنوان</th><th>النوع</th><th>المنطقة</th><th>السعر</th><th>الحالة</th></tr></thead>
             <tbody>
-            <tr><td>A-101</td><td>السالمية</td><td>غرفتين</td><td>28 د.ك</td><td><span class="pill busy">محجوزة</span></td></tr>
-            <tr><td>A-102</td><td>السالمية</td><td>استوديو</td><td>18 د.ك</td><td><span class="pill ok">متاحة</span></td></tr>
-            <tr><td>B-204</td><td>حولي</td><td>غرفة</td><td>22 د.ك</td><td><span class="pill busy">محجوزة</span></td></tr>
-            <tr><td>C-310</td><td>الجابرية</td><td>غرفتين</td><td>30 د.ك</td><td><span class="pill pend">صيانة</span></td></tr>
-            <tr><td>C-311</td><td>الجابرية</td><td>استوديو</td><td>17 د.ك</td><td><span class="pill ok">متاحة</span></td></tr>
+            <tr><td>V-1042</td><td>فيلا للبيع</td><td><span class="pill info">بيع</span></td><td>الشيخ زايد</td><td>8,500,000 ج.م</td><td><span class="pill ok">منشور</span></td></tr>
+            <tr><td>A-101</td><td>شقة مفروشة</td><td><span class="pill pend">إيجار</span></td><td>السالمية</td><td>28 د.ك / ليلة</td><td><span class="pill busy">محجوز</span></td></tr>
+            <tr><td>A-102</td><td>استوديو مفروش</td><td><span class="pill pend">إيجار</span></td><td>حولي</td><td>18 د.ك / ليلة</td><td><span class="pill ok">متاح</span></td></tr>
+            <tr><td>S-220</td><td>شقة تمليك</td><td><span class="pill info">تمليك</span></td><td>التجمع</td><td>4,200,000 ج.م</td><td><span class="pill ok">منشور</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -251,43 +464,107 @@
     </div>
   </div>
 
-  <!-- CALENDAR -->
-  <div class="screen" id="cal">
+  <!-- ========== ADMIN PACKAGES ========== -->
+  <div class="screen" id="apkg">
     <div class="app">
       <div class="side">
         <div class="mini"><i>KC</i> مصر الكويت</div>
         <div class="nav">
           <a><span class="ic">📊</span> لوحة التحكم</a>
-          <a><span class="ic">🏢</span> الشقق</a>
+          <a><span class="ic">🏠</span> العقارات</a>
+          <a class="on"><span class="ic">🎨</span> الباقات والأسعار</a>
+          <a><span class="ic">📥</span> الطلبات</a>
+          <a><span class="ic">📅</span> تقويم الحجوزات</a>
+          <a><span class="ic">👥</span> المسوّقون</a>
+          <a><span class="ic">👤</span> المستخدمون</a>
+          <a><span class="ic">⚙️</span> الإعدادات</a>
+        </div>
+      </div>
+      <div class="main">
+        <div class="topbar"><div class="pt">الباقات والأسعار<small>تعديل مباشر للأسعار</small></div>
+          <div class="userchip"><div style="text-align:left"><div class="nm">أحمد سمير</div><span class="rl">مدير النظام</span></div><span class="av">أ</span></div></div>
+        <div class="content">
+          <div class="row"><div class="filters"><select><option>التصميم والتشطيب</option><option>تأجير السيارات</option><option>التنظيف</option></select><select><option>مصر (ج.م)</option><option>الكويت (د.ك)</option></select></div><button class="ibtn">+ باقة جديدة</button></div>
+          <table>
+            <thead><tr><th>الباقة</th><th>الفئة</th><th>السعر (قابل للتعديل)</th><th>الحالة</th><th></th></tr></thead>
+            <tbody>
+            <tr><td>الباقة الأساسية</td><td>تصميم وتشطيب</td><td><div class="priceinput"><input value="15000"> ج.م</div></td><td><span class="pill ok">مفعّلة</span></td><td><span class="link">حفظ</span></td></tr>
+            <tr><td>الباقة المميزة</td><td>تصميم وتشطيب</td><td><div class="priceinput"><input value="35000"> ج.م</div></td><td><span class="pill ok">مفعّلة</span></td><td><span class="link">حفظ</span></td></tr>
+            <tr><td>الباقة المتكاملة</td><td>تصميم وتشطيب</td><td><div class="priceinput"><input value="70000"> ج.م</div></td><td><span class="pill ok">مفعّلة</span></td><td><span class="link">حفظ</span></td></tr>
+            <tr><td>تنظيف شقة (حتى 3 غرف)</td><td>تنظيف</td><td><div class="priceinput"><input value="900"> ج.م</div></td><td><span class="pill ok">مفعّلة</span></td><td><span class="link">حفظ</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== ADMIN REQUESTS ========== -->
+  <div class="screen" id="areq">
+    <div class="app">
+      <div class="side">
+        <div class="mini"><i>KC</i> مصر الكويت</div>
+        <div class="nav">
+          <a><span class="ic">📊</span> لوحة التحكم</a>
+          <a><span class="ic">🏠</span> العقارات</a>
+          <a><span class="ic">🎨</span> الباقات والأسعار</a>
+          <a class="on"><span class="ic">📥</span> الطلبات</a>
+          <a><span class="ic">📅</span> تقويم الحجوزات</a>
+          <a><span class="ic">👥</span> المسوّقون</a>
+          <a><span class="ic">👤</span> المستخدمون</a>
+          <a><span class="ic">⚙️</span> الإعدادات</a>
+        </div>
+      </div>
+      <div class="main">
+        <div class="topbar"><div class="pt">الطلبات (Leads)<small>متابعة وتعيين الطلبات</small></div>
+          <div class="userchip"><div style="text-align:left"><div class="nm">أحمد سمير</div><span class="rl">مدير النظام</span></div><span class="av">أ</span></div></div>
+        <div class="content">
+          <div class="row"><div class="filters"><select><option>كل الحالات</option><option>جديد</option><option>تم التواصل</option><option>مؤكّد</option><option>مكتمل</option></select><select><option>كل الأنواع</option><option>عقار</option><option>باقة</option><option>خدمة</option></select></div></div>
+          <table>
+            <thead><tr><th>العميل</th><th>الموبايل</th><th>الطلب</th><th>النوع</th><th>المسؤول</th><th>الحالة</th></tr></thead>
+            <tbody>
+            <tr><td>محمد عبد الله</td><td>+20 10xxxx</td><td>الباقة المميزة</td><td><span class="pill info">باقة</span></td><td>منى ع.</td><td><span class="pill info">جديد</span></td></tr>
+            <tr><td>فهد الرشيدي</td><td>+965 9xxxx</td><td>إيجار A-101</td><td><span class="pill pend">عقار</span></td><td>أحمد س.</td><td><span class="pill pend">تم التواصل</span></td></tr>
+            <tr><td>سارة خالد</td><td>+965 6xxxx</td><td>خدمة تنظيف</td><td><span class="pill ok">خدمة</span></td><td>منى ع.</td><td><span class="pill ok">مؤكّد</span></td></tr>
+            <tr><td>أحمد ماهر</td><td>+20 11xxxx</td><td>فيلا V-1042</td><td><span class="pill pend">عقار</span></td><td>—</td><td><span class="pill info">جديد</span></td></tr>
+            <tr><td>خالد المطيري</td><td>+965 5xxxx</td><td>تأجير سيارة</td><td><span class="pill ok">خدمة</span></td><td>أحمد س.</td><td><span class="pill" style="background:#e9ecef;color:#566">مكتمل</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== ADMIN CALENDAR ========== -->
+  <div class="screen" id="acal">
+    <div class="app">
+      <div class="side">
+        <div class="mini"><i>KC</i> مصر الكويت</div>
+        <div class="nav">
+          <a><span class="ic">📊</span> لوحة التحكم</a>
+          <a><span class="ic">🏠</span> العقارات</a>
+          <a><span class="ic">🎨</span> الباقات والأسعار</a>
+          <a><span class="ic">📥</span> الطلبات</a>
           <a class="on"><span class="ic">📅</span> تقويم الحجوزات</a>
-          <a><span class="ic">📋</span> الحجوزات</a>
           <a><span class="ic">👥</span> المسوّقون</a>
-          <a><span class="ic">📈</span> التقارير</a>
+          <a><span class="ic">👤</span> المستخدمون</a>
+          <a><span class="ic">⚙️</span> الإعدادات</a>
         </div>
       </div>
       <div class="main">
-        <div class="topbar">
-          <div class="pt">تقويم الحجوزات<small>عرض التوفّر لكل شقة</small></div>
-          <div class="userchip"><span class="bell">🔔</span><div style="text-align:left"><div class="nm">أحمد سمير</div><span class="rl">مدير النظام</span></div><span class="av">أ</span></div>
-        </div>
+        <div class="topbar"><div class="pt">تقويم الحجوزات<small>النظام التشغيلي للإيجار</small></div>
+          <div class="userchip"><div style="text-align:left"><div class="nm">أحمد سمير</div><span class="rl">مدير النظام</span></div><span class="av">أ</span></div></div>
         <div class="content">
-          <div class="row">
-            <b style="color:var(--navy)">الشقة A-101 — السالمية · يونيو 2026</b>
-            <select class="search" style="min-width:auto"><option>A-101 — السالمية</option><option>B-204 — حولي</option></select>
-          </div>
-          <div class="cal">
-            <div class="cal-grid">
-              <div class="d head">سبت</div><div class="d head">أحد</div><div class="d head">إثنين</div><div class="d head">ثلاثاء</div><div class="d head">أربعاء</div><div class="d head">خميس</div><div class="d head">جمعة</div>
-              <div class="d free">1</div><div class="d free">2</div><div class="d book today">3<span class="tdy">اليوم</span></div><div class="d book">4</div><div class="d book">5</div><div class="d out">6</div><div class="d free">7</div>
-              <div class="d free">8</div><div class="d free">9</div><div class="d free">10</div><div class="d book">11</div><div class="d book">12</div><div class="d book">13</div><div class="d out">14</div>
-              <div class="d free">15</div><div class="d free">16</div><div class="d free">17</div><div class="d free">18</div><div class="d book">19</div><div class="d book">20</div><div class="d out">21</div>
-              <div class="d free">22</div><div class="d free">23</div><div class="d free">24</div><div class="d free">25</div><div class="d free">26</div><div class="d free">27</div><div class="d free">28</div>
+          <div class="row"><b style="color:var(--navy)">الشقة A-101 — السالمية · يونيو 2026</b><select style="border:1px solid var(--line);border-radius:8px;padding:7px"><option>A-101 — السالمية</option></select></div>
+          <div style="background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px">
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">
+              <div style="color:var(--muted);font-weight:700;font-size:12px;text-align:center">سبت</div><div style="color:var(--muted);font-weight:700;font-size:12px;text-align:center">أحد</div><div style="color:var(--muted);font-weight:700;font-size:12px;text-align:center">إثنين</div><div style="color:var(--muted);font-weight:700;font-size:12px;text-align:center">ثلاثاء</div><div style="color:var(--muted);font-weight:700;font-size:12px;text-align:center">أربعاء</div><div style="color:var(--muted);font-weight:700;font-size:12px;text-align:center">خميس</div><div style="color:var(--muted);font-weight:700;font-size:12px;text-align:center">جمعة</div>
             </div>
-            <div class="legend">
-              <span><i style="background:var(--green-bg);border:1px solid #bfe8d6"></i> متاح</span>
-              <span><i style="background:var(--red-bg);border:1px solid #f3c9c4"></i> محجوز</span>
-              <span><i style="background:var(--amber-bg);border:1px solid #f0dfb6"></i> يوم مغادرة</span>
-              <span><i style="border:2px solid var(--navy)"></i> اليوم</span>
+            <div id="calx" style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:6px"></div>
+            <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:12px">
+              <span><i style="width:12px;height:12px;border-radius:3px;display:inline-block;background:var(--green-bg);border:1px solid #bfe8d6;vertical-align:-1px;margin-inline-end:5px"></i> متاح</span>
+              <span><i style="width:12px;height:12px;border-radius:3px;display:inline-block;background:var(--red-bg);border:1px solid #f3c9c4;vertical-align:-1px;margin-inline-end:5px"></i> محجوز</span>
+              <span><i style="width:12px;height:12px;border-radius:3px;display:inline-block;border:2px solid var(--navy);vertical-align:-1px;margin-inline-end:5px"></i> اليوم</span>
             </div>
           </div>
         </div>
@@ -295,119 +572,98 @@
     </div>
   </div>
 
-  <!-- NEW BOOKING -->
-  <div class="screen" id="new">
+  <!-- ========== ADMIN MARKETERS ========== -->
+  <div class="screen" id="amkt">
     <div class="app">
       <div class="side">
         <div class="mini"><i>KC</i> مصر الكويت</div>
         <div class="nav">
           <a><span class="ic">📊</span> لوحة التحكم</a>
-          <a><span class="ic">🏢</span> الشقق</a>
+          <a><span class="ic">🏠</span> العقارات</a>
+          <a><span class="ic">🎨</span> الباقات والأسعار</a>
+          <a><span class="ic">📥</span> الطلبات</a>
           <a><span class="ic">📅</span> تقويم الحجوزات</a>
-          <a class="on"><span class="ic">📋</span> الحجوزات</a>
-          <a><span class="ic">👥</span> المسوّقون</a>
-          <a><span class="ic">📈</span> التقارير</a>
-        </div>
-      </div>
-      <div class="main">
-        <div class="topbar">
-          <div class="pt">حجز جديد<small>الحجوزات / إنشاء حجز</small></div>
-          <div class="userchip"><span class="bell">🔔</span><div style="text-align:left"><div class="nm">منى علي</div><span class="rl">مسوّقة</span></div><span class="av">م</span></div>
-        </div>
-        <div class="content">
-          <div class="form">
-            <div class="warn">⛔ لا يمكن الحجز: الشقة A-101 محجوزة في الفترة (3 → 6 يونيو). النظام يمنع التضارب تلقائياً.</div>
-            <div class="field"><label>الشقة</label><select><option>A-101 — السالمية</option></select></div>
-            <div class="field"><label>المسوّق المسؤول</label><select><option>منى علي</option><option>أحمد سمير</option></select></div>
-            <div class="field"><label>اسم النزيل</label><input value="فهد الرشيدي"></div>
-            <div class="field"><label>رقم الهاتف</label><input value="+965 9xxxxxxx"></div>
-            <div class="field"><label>تاريخ الدخول</label><input value="2026-06-04"></div>
-            <div class="field"><label>تاريخ الخروج</label><input value="2026-06-06"></div>
-            <div class="field"><label>مصدر الحجز</label><select><option>واتساب</option><option>إنستجرام</option><option>اتصال مباشر</option><option>عميل سابق</option></select></div>
-            <div class="field"><label>السعر الإجمالي</label><input value="56 د.ك"></div>
-            <div class="full" style="text-align:left"><button class="btn">حفظ الحجز</button></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MARKETERS -->
-  <div class="screen" id="mkt">
-    <div class="app">
-      <div class="side">
-        <div class="mini"><i>KC</i> مصر الكويت</div>
-        <div class="nav">
-          <a><span class="ic">📊</span> لوحة التحكم</a>
-          <a><span class="ic">🏢</span> الشقق</a>
-          <a><span class="ic">📅</span> تقويم الحجوزات</a>
-          <a><span class="ic">📋</span> الحجوزات</a>
           <a class="on"><span class="ic">👥</span> المسوّقون</a>
-          <a><span class="ic">📈</span> التقارير</a>
+          <a><span class="ic">⚙️</span> الإعدادات</a>
         </div>
       </div>
       <div class="main">
-        <div class="topbar">
-          <div class="pt">حسابات المسوّقين<small>٣ مسوّقين نشطين</small></div>
-          <div class="userchip"><span class="bell">🔔</span><div style="text-align:left"><div class="nm">أحمد سمير</div><span class="rl">مدير النظام</span></div><span class="av">أ</span></div>
-        </div>
+        <div class="topbar"><div class="pt">المسوّقون<small>أداء الفريق</small></div>
+          <div class="userchip"><div style="text-align:left"><div class="nm">أحمد سمير</div><span class="rl">مدير النظام</span></div><span class="av">أ</span></div></div>
         <div class="content">
-          <div class="row"><b style="color:var(--navy)">أداء الفريق — يونيو 2026</b><button class="btn">+ مسوّق جديد</button></div>
+          <div class="row"><b style="color:var(--navy)">يونيو 2026</b><button class="ibtn">+ مسوّق جديد</button></div>
           <table>
-            <thead><tr><th>الاسم</th><th>عدد الحجوزات (الشهر)</th><th>إجمالي المبيعات</th><th>العمولة</th><th>الحالة</th></tr></thead>
+            <thead><tr><th>الاسم</th><th>طلبات مُسندة</th><th>مؤكّدة</th><th>إجمالي القيمة</th><th>العمولة</th></tr></thead>
             <tbody>
-            <tr><td>أحمد سمير</td><td>14</td><td>720 د.ك</td><td>72 د.ك</td><td><span class="pill ok">نشط</span></td></tr>
-            <tr><td>منى علي</td><td>9</td><td>410 د.ك</td><td>41 د.ك</td><td><span class="pill ok">نشط</span></td></tr>
-            <tr><td>يوسف ماهر</td><td>6</td><td>280 د.ك</td><td>28 د.ك</td><td><span class="pill ok">نشط</span></td></tr>
+            <tr><td>أحمد سمير</td><td>22</td><td>14</td><td>720 د.ك</td><td>72 د.ك</td></tr>
+            <tr><td>منى علي</td><td>17</td><td>9</td><td>410 د.ك</td><td>41 د.ك</td></tr>
+            <tr><td>يوسف ماهر</td><td>11</td><td>6</td><td>280 د.ك</td><td>28 د.ك</td></tr>
             </tbody>
           </table>
-          <div class="note" style="margin-top:14px">المسوّق يدخل بحسابه فيرى تقويم التوفّر وحجوزاته فقط — بدون رؤية بيانات باقي الفريق.</div>
+          <div class="note" style="margin-top:14px">المسوّق يدخل بحسابه فيرى الطلبات المُسندة إليه وتقويم التوفّر فقط — بدون بيانات باقي الفريق.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- REPORTS -->
-  <div class="screen" id="rep">
+  <!-- ========== ADMIN USERS & ROLES ========== -->
+  <div class="screen" id="ausers">
     <div class="app">
       <div class="side">
         <div class="mini"><i>KC</i> مصر الكويت</div>
         <div class="nav">
           <a><span class="ic">📊</span> لوحة التحكم</a>
-          <a><span class="ic">🏢</span> الشقق</a>
+          <a><span class="ic">🏠</span> العقارات</a>
+          <a><span class="ic">🎨</span> الباقات والأسعار</a>
+          <a><span class="ic">📥</span> الطلبات</a>
           <a><span class="ic">📅</span> تقويم الحجوزات</a>
-          <a><span class="ic">📋</span> الحجوزات</a>
           <a><span class="ic">👥</span> المسوّقون</a>
-          <a class="on"><span class="ic">📈</span> التقارير</a>
+          <a class="on"><span class="ic">👤</span> المستخدمون</a>
+          <a><span class="ic">⚙️</span> الإعدادات</a>
         </div>
       </div>
       <div class="main">
-        <div class="topbar">
-          <div class="pt">التقارير<small>ملخّص الأداء الشهري</small></div>
-          <div class="userchip"><span class="bell">🔔</span><div style="text-align:left"><div class="nm">أحمد سمير</div><span class="rl">مدير النظام</span></div><span class="av">أ</span></div>
-        </div>
+        <div class="topbar"><div class="pt">المستخدمون والصلاحيات<small>إدارة الحسابات والأدوار</small></div>
+          <div class="userchip"><div style="text-align:left"><div class="nm">أحمد سمير</div><span class="rl">مدير عام</span></div><span class="av">أ</span></div></div>
         <div class="content">
-          <div class="row"><b style="color:var(--navy)">يونيو 2026</b><button class="btn">⬇ تصدير Excel / PDF</button></div>
-          <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
-            <div class="kpi n"><div class="n">29</div><div class="l">حجوزات الشهر</div></div>
-            <div class="kpi g"><div class="n">1,410 د.ك</div><div class="l">إجمالي الإيراد</div></div>
-            <div class="kpi"><div class="n">67%</div><div class="l">متوسط الإشغال</div></div>
+          <div class="row"><b style="color:var(--navy)">المستخدمون</b><button class="ibtn">+ إضافة مستخدم</button></div>
+          <table>
+            <thead><tr><th>الاسم</th><th>البريد / الموبايل</th><th>الدور</th><th>آخر دخول</th><th>الحالة</th></tr></thead>
+            <tbody>
+            <tr><td>أحمد سمير</td><td>admin@ekrealestate.com</td><td><span class="pill" style="background:var(--navy);color:#fff">مدير عام</span></td><td>اليوم 09:14</td><td><span class="pill ok">نشط</span></td></tr>
+            <tr><td>سارة خالد</td><td>sara@ekrealestate.com</td><td><span class="pill info">محرّر محتوى</span></td><td>أمس</td><td><span class="pill ok">نشط</span></td></tr>
+            <tr><td>خالد المطيري</td><td>+965 5xxxx</td><td><span class="pill pend">موظف خدمة عملاء</span></td><td>اليوم 08:02</td><td><span class="pill ok">نشط</span></td></tr>
+            <tr><td>منى علي</td><td>+20 10xxxx</td><td><span class="pill" style="background:var(--gold-bg);color:#3a2c05">مسوّق</span></td><td>أمس</td><td><span class="pill ok">نشط</span></td></tr>
+            <tr><td>يوسف ماهر</td><td>+20 11xxxx</td><td><span class="pill" style="background:var(--gold-bg);color:#3a2c05">مسوّق</span></td><td>منذ 3 أيام</td><td><span class="pill" style="background:#e9ecef;color:#566">موقوف</span></td></tr>
+            </tbody>
+          </table>
+
+          <div class="row" style="margin:22px 0 10px"><b style="color:var(--navy)">مصفوفة الصلاحيات حسب الدور</b><button class="ibtn">+ دور جديد</button></div>
+          <table>
+            <thead><tr><th>الصلاحية / الوحدة</th><th style="text-align:center">مدير عام</th><th style="text-align:center">مدير</th><th style="text-align:center">محرّر محتوى</th><th style="text-align:center">موظف خدمة</th><th style="text-align:center">مسوّق</th></tr></thead>
+            <tbody>
+            <tr><td class="lbl" style="font-weight:700">إدارة العقارات</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:var(--amber);font-weight:800">◐</td><td style="text-align:center;color:#c2c9d6">—</td></tr>
+            <tr><td class="lbl" style="font-weight:700">الباقات والأسعار</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:var(--amber);font-weight:800">◐</td><td style="text-align:center;color:#c2c9d6">—</td></tr>
+            <tr><td class="lbl" style="font-weight:700">الطلبات (Leads)</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:#c2c9d6">—</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:var(--amber);font-weight:800">◐</td></tr>
+            <tr><td class="lbl" style="font-weight:700">تقويم الحجوزات</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:#c2c9d6">—</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:var(--amber);font-weight:800">◐</td></tr>
+            <tr><td class="lbl" style="font-weight:700">المسوّقون والعمولات</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:#c2c9d6">—</td><td style="text-align:center;color:#c2c9d6">—</td><td style="text-align:center;color:#c2c9d6">—</td></tr>
+            <tr><td class="lbl" style="font-weight:700">المستخدمون والصلاحيات</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:#c2c9d6">—</td><td style="text-align:center;color:#c2c9d6">—</td><td style="text-align:center;color:#c2c9d6">—</td><td style="text-align:center;color:#c2c9d6">—</td></tr>
+            <tr><td class="lbl" style="font-weight:700">الإعدادات العامة</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:#c2c9d6">—</td><td style="text-align:center;color:#c2c9d6">—</td><td style="text-align:center;color:#c2c9d6">—</td><td style="text-align:center;color:#c2c9d6">—</td></tr>
+            <tr><td class="lbl" style="font-weight:700">التقارير</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:var(--green);font-weight:800">✓</td><td style="text-align:center;color:var(--amber);font-weight:800">◐</td><td style="text-align:center;color:var(--amber);font-weight:800">◐</td><td style="text-align:center;color:var(--amber);font-weight:800">◐</td></tr>
+            </tbody>
+          </table>
+          <div style="display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:12px">
+            <span><b style="color:var(--green)">✓</b> صلاحية كاملة (عرض/إضافة/تعديل/حذف)</span>
+            <span><b style="color:var(--amber)">◐</b> محدودة (عرض أو على بياناته فقط)</span>
+            <span><b style="color:#c2c9d6">—</b> بدون صلاحية</span>
           </div>
-          <div class="row" style="margin-top:6px"><b style="color:var(--navy)">الحجوزات حسب المصدر</b></div>
-          <div style="background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px">
-            <div class="bar-row"><span class="lab">واتساب</span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><span class="val">13 (45%)</span></div>
-            <div class="bar-row"><span class="lab">إنستجرام</span><div class="bar-track"><div class="bar-fill" style="width:62%"></div></div><span class="val">9 (31%)</span></div>
-            <div class="bar-row"><span class="lab">اتصال مباشر</span><div class="bar-track"><div class="bar-fill" style="width:28%"></div></div><span class="val">4 (14%)</span></div>
-            <div class="bar-row"><span class="lab">عميل سابق</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="val">3 (10%)</span></div>
-          </div>
+          <div class="note" style="margin-top:14px">💡 الأدوار والصلاحيات قابلة للتعديل بالكامل من لوحة الأدمن — يمكن إنشاء أدوار جديدة وتخصيص صلاحيات كل وحدة.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <p style="text-align:center;color:var(--muted);font-size:12px;margin-top:22px">
-    تصميم مبدئي — شركة مصر الكويت العقارية · نظام إدارة الشقق والحجوزات · يونيو 2026
-  </p>
+  <p style="text-align:center;color:var(--muted);font-size:12px;margin-top:22px">تصميم مبدئي — شركة مصر الكويت العقارية · منصة العقارات والخدمات · يونيو 2026</p>
 </div>
 
 <script>
@@ -419,6 +675,15 @@
     document.getElementById(t.dataset.s).classList.add('active');
     window.scrollTo({top:0,behavior:'smooth'});
   }));
+  // build calendar
+  const booked={3:1,4:1,5:1,11:1,12:1,13:1,19:1,20:1}, out={6:1,14:1,21:1}, today=6;
+  const cx=document.getElementById('calx');
+  if(cx){for(let d=1;d<=28;d++){const e=document.createElement('div');
+    let bg='var(--green-bg)',cl='var(--green)',bd='#bfe8d6';
+    if(booked[d]){bg='var(--red-bg)';cl='var(--red)';bd='#f3c9c4'}
+    if(out[d]){bg='var(--amber-bg)';cl='var(--amber)';bd='#f0dfb6'}
+    e.style.cssText='aspect-ratio:1;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;border:1px solid '+bd+';background:'+bg+';color:'+cl+(d===today?';outline:2.5px solid var(--navy);outline-offset:1px':'');
+    e.textContent=d;cx.appendChild(e);}}
 </script>
 </body>
 </html>
