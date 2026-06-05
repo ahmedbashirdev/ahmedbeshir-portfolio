@@ -59,32 +59,11 @@ a{color:inherit;text-decoration:none}
 .side{width:248px;background:var(--card);border-inline-start:1px solid var(--line);
   padding:16px 12px;flex-shrink:0}
 .side .grp{font-size:11px;color:var(--muted);font-weight:700;padding:14px 12px 6px}
-/* بنود المستوى الأعلى: هيكل واحد وارتفاع ثابت 44px للجميع */
-.navrow{display:flex;align-items:center;height:44px;border-radius:11px;margin:2px 0;overflow:hidden}
-.navrow:hover{background:var(--bg)}
-.navrow.on{background:var(--soft)}
-.navitem.main{flex:1;min-width:0;height:100%;display:flex;align-items:center;gap:11px;padding:0 12px;margin:0;
-  background:none;border:0;border-radius:0;color:var(--slate);font-weight:600;font-size:13.5px;
-  text-align:start;cursor:pointer;font-family:inherit}
-.navrow.on .navitem.main{color:var(--brand)}
-.navitem.main span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-/* السهم: خانة جانبية ثابتة بخطّ فاصل */
-.navchev{display:flex;align-items:center;justify-content:center;width:34px;height:100%;flex-shrink:0;
-  border:0;background:none;color:var(--muted);cursor:pointer;border-inline-start:1px solid var(--line)}
-.navrow:hover .navchev{color:var(--brand)}
-.navrow.on .navchev{color:var(--brand);border-inline-start-color:rgba(13,148,136,.25)}
-.navchev svg{transition:transform .2s ease}
-.navchev.open svg{transform:rotate(180deg)}
-/* القائمة الفرعية: أصغر (38px) + خطّ إرشادي + إزاحة */
-.navsub{margin:2px 8px 6px;border-inline-start:1.5px solid var(--soft)}
-.navitem.sub{display:flex;align-items:center;gap:9px;height:38px;width:100%;padding:0 12px;padding-inline-start:26px;
-  margin:1px 0;border:0;background:none;border-radius:8px;color:var(--slate);font-size:13px;
-  text-align:start;cursor:pointer;font-family:inherit}
-.navitem.sub:hover{background:var(--bg)}
-.navitem.sub.on{background:var(--soft);color:var(--brand);font-weight:600}
-.navitem.sub .ic{width:16px;height:16px;opacity:.85;flex-shrink:0}
-/* أيقونة وبادج المستوى الأعلى */
-.navitem.main .ic{width:20px;height:20px;flex-shrink:0}
+.navitem{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;
+  color:var(--slate);font-weight:600;font-size:13.5px;margin-bottom:2px;width:100%;text-align:start}
+.navitem:hover{background:var(--bg)}
+.navitem.on{background:var(--soft);color:var(--brand)}
+.navitem .ic{width:20px;height:20px;flex-shrink:0}
 .navitem .badge{margin-inline-start:auto;background:var(--danger);color:#fff;font-size:10.5px;
   font-weight:700;padding:1px 7px;border-radius:9px}
 .main{flex:1;padding:24px 28px;min-width:0}
@@ -230,12 +209,9 @@ tbody tr:hover{background:var(--bg)}
 .filter-bar select,.filter-bar input{padding:7px 11px;border:1px solid var(--line);
   border-radius:8px;font-family:inherit;font-size:12.5px;background:var(--bg);color:var(--ink)}
 .filter-bar label{font-size:12px;font-weight:700;color:var(--muted)}
-.tabs{display:flex;flex-wrap:wrap;gap:4px;background:var(--bg);padding:5px;border-radius:12px;margin-bottom:18px}
-.tabs button{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;font-size:13px;font-weight:700;color:var(--slate);background:none;border:0;border-radius:9px;cursor:pointer;transition:background .15s,color .15s}
-.tabs button:hover{color:var(--brand-d)}
-.tabs button.on{color:var(--brand);background:var(--card);box-shadow:0 1px 2px rgba(15,23,42,.08)}
-.tabs button .n{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--line);color:var(--slate);font-size:11px;font-weight:700;line-height:1}
-.tabs button.on .n{background:var(--soft);color:var(--brand)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px}
+.tabs button{padding:9px 16px;font-size:13px;font-weight:700;color:var(--slate);border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;background:none}
+.tabs button.on{color:var(--brand);border-bottom-color:var(--brand)}
 .tabpane{display:none}
 .tabpane.on{display:block}
 
@@ -375,7 +351,7 @@ const I18N={
   approvals:"اعتماد المنتجات",review:"مراجعة منتج",
   categories:"التصنيفات",kyc:"مراجعة التوثيق",reports:"التقارير الموسّعة",
   warehouses:"المخازن والمخزون",coupons:"الكوبونات",returns:"المرتجعات",
-  wishlist:"منتجاتي المفضلة",cart:"السلة",errors:"كتالوج أكواد الأخطاء",bulkupload:"رفع جماعي",pdetail:"تفاصيل المنتج",
+  wishlist:"المفضّلة",bulkupload:"رفع جماعي",pdetail:"تفاصيل المنتج",
   activity:"سجل النشاط",
   act_auth:"دخول/خروج",act_security:"أمان",act_product:"منتجات",act_order:"طلبات",act_integration:"تكاملات",act_finance:"مالية",act_admin:"إجراء إداري",
   c_when:"التاريخ والوقت",c_actor:"المُستخدِم",c_category:"التصنيف",c_event:"الحدث",c_ip:"IP / الجهاز",
@@ -465,7 +441,7 @@ const I18N={
   shippingAdminSub:"فعّل أو أوقف شركات الشحن لكل دولة على مستوى المنصّة",
   marketerShipNote:"شركات الشحن تُفعَّل من إدارة المنصّة. يمكنك اختيار شركتك الافتراضية من الشركات النشطة.",
   adminToggleNote:"التبديل هنا يؤثّر على جميع المسوّقين في دولة",
-  courierMgmt:"الإدارة",qd_today:"اليوم",qd_yesterday:"أمس",qd_month:"هذا الشهر"},
+  courierMgmt:"الإدارة"},
  en:{dir:"ltr",app:"Soyoula",appSub:"سيولة",lang:"ع",
   admin:"Admin",merchant:"Merchant",marketer:"Marketer",
   rl_admin:"Platform Manager",rl_merchant:"Merchant",rl_marketer:"Marketer",
@@ -482,7 +458,7 @@ const I18N={
   approvals:"Product Approvals",review:"Review Product",
   categories:"Categories",kyc:"KYC Review",reports:"Reports",
   warehouses:"Warehouses & Stock",coupons:"Coupons",returns:"Returns",
-  wishlist:"My Favorites",cart:"Cart",errors:"Error Codes Catalog",bulkupload:"Bulk Upload",pdetail:"Product Detail",
+  wishlist:"Wishlist",bulkupload:"Bulk Upload",pdetail:"Product Detail",
   activity:"Activity Log",
   act_auth:"Sign-in",act_security:"Security",act_product:"Products",act_order:"Orders",act_integration:"Integrations",act_finance:"Finance",act_admin:"Admin Action",
   c_when:"Date & Time",c_actor:"User",c_category:"Category",c_event:"Event",c_ip:"IP / Device",
@@ -561,7 +537,7 @@ const I18N={
   shippingAdminSub:"Activate or deactivate couriers per country platform-wide",
   marketerShipNote:"Couriers are activated by platform admin. You can pick your default from the active ones.",
   adminToggleNote:"Toggling here affects all marketers in",
-  courierMgmt:"Management",qd_today:"Today",qd_yesterday:"Yesterday",qd_month:"This Month"}
+  courierMgmt:"Management"}
 };
 let lang="ar";
 let country = "EG";
@@ -598,8 +574,7 @@ const IC={
  history:'<path d="M3 3v6h6"/><path d="M3.5 9A9 9 0 1 1 3 12"/><path d="M12 7v5l3 2"/>',
  star:'<polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/>',
  settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1A1.7 1.7 0 004.6 9a1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/>',
- truck:'<path d="M1 3h15v13H1zM16 8h4l3 3v5h-7zM5.5 18.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 18.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>',
- plug:'<path d="M7 2v5M17 2v5M5 7h14v4a7 7 0 01-14 0V7zM12 11v7M9 18h6"/>'
+ truck:'<path d="M1 3h15v13H1zM16 8h4l3 3v5h-7zM5.5 18.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 18.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>'
 };
 const svg=p=>'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';
 
@@ -642,30 +617,20 @@ const INTEGRATIONS = {
 const ROLES={
  admin:{nav:[
    {g:"g_main"},{id:"dashboard",ic:"dashboard"},
-   {g:"g_manage"},
-   {id:"users",ic:"users",badge:6,sub:[{id:"kyc",ic:"users"}]},
-   {id:"products",ic:"box",badge:5,sub:[{id:"categories",ic:"box"}]},
-   {id:"orders",ic:"cart",sub:[{id:"shipping",ic:"truck"},{id:"failed",ic:"alert"}]},
-   {id:"activity",ic:"history"},
-   {g:"g_money"},{id:"settlements",ic:"money"},{id:"reports",ic:"chart"},
-   {id:"settings",ic:"settings",sub:[{id:"integrations",ic:"plug"},{id:"errors",ic:"alert"}]}]},
+   {g:"g_manage"},{id:"users",ic:"users",badge:6},{id:"approvals",ic:"check",badge:5},{id:"activity",ic:"history"},
+   {id:"orders",ic:"cart"},{id:"failed",ic:"alert"},{id:"shipping",ic:"truck"},{id:"categories",ic:"box"},{id:"kyc",ic:"users"},
+   {g:"g_money"},{id:"settlements",ic:"money"},{id:"reports",ic:"chart"},{id:"settings",ic:"settings"}]},
  merchant:{nav:[
-   {g:"g_main"},{id:"dashboard",ic:"dashboard"},
-   {g:"g_manage"},
-   {id:"products",ic:"box",sub:[{id:"addproduct",ic:"plus"}]},
-   {id:"orders",ic:"cart",badge:6,sub:[{id:"shipping",ic:"truck"},{id:"returns",ic:"refresh"}]},
-   {id:"activity",ic:"history"},
-   {g:"g_money"},{id:"mstats",ic:"chart"},{id:"wallet",ic:"wallet"},
-   {id:"settings",ic:"settings",sub:[{id:"integrations",ic:"plug"}]}]},
+   {g:"g_main"},{id:"dashboard",ic:"dashboard"},{id:"orders",ic:"cart",badge:6},
+   {g:"g_manage"},{id:"products",ic:"box"},{id:"addproduct",ic:"plus"},{id:"activity",ic:"history"},{id:"warehouses",ic:"box"},{id:"returns",ic:"refresh"},{id:"coupons",ic:"star"},
+   {g:"g_money"},{id:"mstats",ic:"chart"},{id:"settings",ic:"settings"}]},
  marketer:{nav:[
-   {g:"g_main"},{id:"dashboard",ic:"dashboard"},
-   {id:"marketplace",ic:"store"},{id:"cart",ic:"cart"},{id:"wishlist",ic:"star"},
-   {id:"orders",ic:"cart",sub:[{id:"shipping",ic:"truck"},{id:"bulkupload",ic:"plus"},{id:"failed",ic:"alert"}]},
-   {g:"g_money"},{id:"stats",ic:"chart"},{id:"wallet",ic:"wallet"},{id:"activity",ic:"history"},
-   {id:"settings",ic:"settings",sub:[{id:"integrations",ic:"plug"}]}]}
+   {g:"g_main"},{id:"dashboard",ic:"dashboard"},{id:"marketplace",ic:"store"},{id:"wishlist",ic:"star"},
+   {id:"mystore",ic:"store"},{id:"orders",ic:"cart"},{id:"addorder",ic:"plus"},{id:"bulkupload",ic:"plus"},
+   {g:"g_money"},{id:"stats",ic:"chart"},{id:"failed",ic:"alert"},{id:"wallet",ic:"wallet"},{id:"activity",ic:"history"},{id:"settings",ic:"settings"}]}
 };
 const FIRST={admin:"dashboard",merchant:"dashboard",marketer:"dashboard"};
-let state={role:"merchant",screen:"dashboard",open:{}};
+let state={role:"merchant",screen:"dashboard"};
 
 /* ============ helpers ============ */
 const STC={pending:"#F59E0B",confirmed:"#0D9488",review:"#2DC2B0",packing:"#0EA5E9",
@@ -735,9 +700,7 @@ S["admin/kyc"]=()=>head(t("admin")+" · "+t("kyc"),t("kyc"),
 
 S["admin/reports"]=()=>head(t("admin")+" · "+t("reports"),t("reports"),
   lang=="ar"?"أربع لوحات: التسويات والتدفّق النقدي · أداء الشحن ورفض COD · حركة المخزون · مصادر الطلبات":"Four panels: settlements & cash flow · shipping & COD rejection · inventory · order sources")
- +quickDate()
  +`<div class="grid kpis" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px">
-   ${kpi('cart','#D8F1ED','#0D9488',t('t_orders'),"1,284","12%",true)}
    ${kpi('money','#D8F1ED','#0D9488',lang=="ar"?"صافي التدفّق النقدي":"Net cash flow","312,400 "+ccy(),"8.4%",true)}
    ${kpi('truck','#DBEAFE','#1D4ED8',lang=="ar"?"نسبة التسليم":"Delivery rate","71%","2.1%",true)}
    ${kpi('alert','#FEE2E2','#DC2626',lang=="ar"?"رفض COD":"COD rejection","29%","1.3%",false)}
@@ -875,12 +838,9 @@ S["marketer/pdetail"]=()=>{
            <div><div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px">${t("yourProfit")}</div>
              <div style="padding:9px 12px;border-radius:9px;background:var(--soft);color:#0D9488;font-weight:800;font-size:15px">${profit} ${ccy()}</div></div>
          </div>
-         <div style="display:flex;flex-direction:column;gap:9px">
-           <div style="display:flex;gap:9px">
-             <button class="btn ok" style="flex:1;justify-content:center" onclick="go('cart')">${svg(IC.cart)} ${lang=="ar"?"أضف إلى السلة":"Add to Cart"}</button>
-             <button class="btn" style="flex:1;justify-content:center" onclick="go('cart')">${lang=="ar"?"اطلب الآن":"Order Now"}</button>
-           </div>
-           <button class="btn ghost sm" style="width:100%;justify-content:center" onclick="go('wishlist')">${svg(IC.star)} ${t("wishlist")}</button>
+         <div style="display:flex;gap:9px">
+           <button class="btn" style="flex:1;justify-content:center">${t("importToStore")}</button>
+           <button class="btn ghost sm">${svg(IC.star)} ${t("wishlist")}</button>
          </div>
        </div></div>
        <div class="card"><div class="ch"><h3>${lang=="ar"?"الوصف":"Description"}</h3></div><div class="cb">
@@ -930,67 +890,6 @@ S["marketer/bulkupload"]=()=>head(t("marketer")+" · "+t("bulkupload"),t("bulkup
   <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:11px 16px;margin-top:14px;font-size:12.5px;color:#1E40AF;font-weight:600">
     ${lang=="ar"?"3 صفوف صالحة ستُعتمد · صفّان بهما أخطاء يجب تصحيحهما قبل الاعتماد":"3 valid rows will be imported · 2 rows have errors to fix before import"}</div>`;
 
-S["marketer/cart"]=()=>{
-  const G=govs();
-  const cs=couriersActive();
-  const ph=country==='EG'?'01xxxxxxxxx':'05xxxxxxxx';
-  const cartItems=[
-    {emoji:'👕',name:lang=='ar'?'تيشيرت رياضي نص كم':'Sport Half-Sleeve Tee',base:185,sell:240,qty:1},
-    {emoji:'🩳',name:lang=='ar'?'بنطلون شورت رياضي':'Sport Shorts',base:210,sell:270,qty:2}
-  ];
-  const totalSell=cartItems.reduce((s,i)=>s+i.sell*i.qty,0);
-  const totalProfit=cartItems.reduce((s,i)=>s+(i.sell-i.base)*i.qty,0);
-  return head(t("marketer")+" · "+t("cart"),t("cart"),'',
-    `<button class="btn ok">${t('submitOrder')}</button>`)
-  +`<div class="card" style="margin-bottom:16px"><div class="ch"><h3>${lang=='ar'?'عناصر السلة':'Cart Items'}</h3>
-    <span class="note">${cartItems.length} ${lang=='ar'?'منتج':'items'}</span></div>
-    <div class="cb" style="padding:0">${tbl(
-      [t('c_product'),t('qty'),t('yourSellPrice')+' ('+ccy()+')',t('yourProfit')+' ('+ccy()+')'],
-      cartItems.map(it=>[
-        prod(it.emoji,it.name,''),
-        `<input type="number" value="${it.qty}" min="1" style="width:60px;padding:5px 8px;border:1px solid var(--line);border-radius:7px;font-family:inherit;text-align:center">`,
-        `<input type="number" value="${it.sell}" min="${it.base}" style="width:80px;padding:5px 8px;border:1px solid var(--line);border-radius:7px;font-family:inherit">`,
-        `<b style="color:#0D9488">${it.sell-it.base}</b>`
-      ])
-    )}</div></div>
-  <div class="split3">
-    <div class="card"><div class="ch"><h3>${t('customerInfo')}</h3></div><div class="cb">
-      <div class="field"><label>${lang=='ar'?'الاسم الكامل':'Full Name'}</label><input placeholder="${lang=='ar'?'اسم العميل':'Customer Name'}"></div>
-      <div class="field"><label>${lang=='ar'?'رقم الهاتف':'Phone'}</label><input type="tel" placeholder="${ph}"></div>
-      <div class="frow">
-        <div class="field"><label>${lang=='ar'?'المحافظة':'Governorate'}</label>
-          <select><option value="">${lang=='ar'?'اختر…':'Select…'}</option>${G.map(g=>`<option>${g}</option>`).join('')}</select></div>
-        <div class="field"><label>${lang=='ar'?'المدينة':'City'}</label><input placeholder="${lang=='ar'?'المدينة أو الحي':'City / District'}"></div>
-      </div>
-      <div class="field"><label>${lang=='ar'?'العنوان التفصيلي':'Detailed Address'}</label>
-        <textarea rows="2" placeholder="${lang=='ar'?'شارع، عمارة، دور، شقة':'Street, building, floor, apt'}"></textarea></div>
-      <div class="field"><label>${t('clientNote')}</label>
-        <textarea rows="2" placeholder="${lang=='ar'?'ملاحظة خاصة…':'Customer note…'}"></textarea></div>
-    </div></div>
-    <div>
-      <div class="card"><div class="ch"><h3>${lang=='ar'?'الشحن والدفع':'Shipping & Payment'}</h3></div><div class="cb">
-        <div class="field"><label>${lang=='ar'?'شركة الشحن':'Courier'}</label>
-          <select>${cs.map(c=>`<option>${c.name} — ${c.fee} ${ccy()}</option>`).join('')}</select></div>
-        <div class="info-banner" style="margin-top:8px">${svg(IC.alert)} ${lang=='ar'?'تكلفة الشحن على العميل':'Shipping cost is charged to the customer'}</div>
-        <div style="border-top:1px solid var(--line);margin:14px 0 10px"></div>
-        <div class="minirow"><span class="note">${lang=='ar'?'إجمالي البيع':'Total Sell'}</span><b>${totalSell} ${ccy()}</b></div>
-        <div class="minirow" style="color:#0D9488"><span style="font-weight:700">${lang=='ar'?'إجمالي ربحك':'Your Total Profit'}</span><b>${totalProfit} ${ccy()}</b></div>
-        <button class="btn ok" style="width:100%;justify-content:center;margin-top:12px">${t('submitOrder')}</button>
-      </div></div>
-    </div>
-  </div>`;
-};
-
-S["marketer/shipping"]=()=>head(t("marketer")+" · "+t("shipping"),t("shipping"),
-  lang=="ar"?"تتبّع شحنات طلباتك عبر شركات الشحن":"Track your order shipments across couriers")
-+`<div class="card"><div class="cb" style="padding:0">${tbl(
-  [t("orderCode"),lang=="ar"?"شركة الشحن":"Courier",lang=="ar"?"حالة الشحنة":"Shipment Status",lang=="ar"?"آخر تحديث":"Last Update",t("trackingNo")],
-  [["M0042-00012350",couriersActive()[0]?.name||"—",stTag("shipped"),"2026/05/31 10:20","BOS-M0042-00012350"],
-   ["M0042-00012340",couriersActive()[0]?.name||"—",stTag("delivered"),"2026/05/30 16:45","BOS-M0042-00012340"],
-   ["M0042-00012320",couriersActive()[0]?.name||"—",stTag("packing"),"2026/05/28 09:10","—"],
-   ["M0042-00012310",couriersActive()[0]?.name||"—",stTag("pending"),"2026/05/27 14:30","—"]])
-}</div></div>`;
-
 function kpi(ic,icbg,iccol,lbl,val,trend,up){
   return `<div class="kpi"><div class="top">
     <div class="ico" style="background:${icbg};color:${iccol}">${svg(IC[ic])}</div>
@@ -1020,46 +919,6 @@ function head(crumb,h1,sub,actions){
     ${sub?`<div class="sub" style="margin:0">${sub}</div>`:''}</div>
     <div style="display:flex;gap:9px">${actions||''}</div></div>`;
 }
-
-S["admin/products"]=()=>head(t("admin")+" · "+t("products"),t("products"),
-  lang=="ar"?"كتالوج منتجات المنصّة — نشطة · قيد المراجعة · ملغية":"Platform product catalog — active · under review · cancelled",
-  `<button class="btn ghost sm">${t("export")}</button>`)
-+`<div class="tabs">
-  <button class="on" onclick="setTab('pr_active',this)">${lang=='ar'?'نشطة':'Active'} <span class="n">312</span></button>
-  <button onclick="setTab('pr_review',this)">${lang=='ar'?'قيد المراجعة':'Under Review'} <span class="n">5</span></button>
-  <button onclick="setTab('pr_cancelled',this)">${lang=='ar'?'ملغية':'Cancelled'} <span class="n">18</span></button>
-</div>
-<div id="tab-pr_active" class="tabpane on">
-  <div class="card"><div class="cb" style="padding:0">${tbl(
-    [t("c_product"),"SKU",lang=="ar"?"التاجر":"Merchant",t("country"),t("c_price"),t("c_stock"),t("c_status"),t("c_action")],
-    [[prod("👕","تيشيرت رياضي نص كم","SKU-TS-104"),"SKU-TS-104",uChip("م","متجر بيسوهولا"),cName(),"185 "+ccy(),"320",tag(t("active"),"#16A34A"),`<button class="btn ghost sm">…</button>`],
-     [prod("🩳","بنطلون شورت رياضي","SKU-SH-088"),"SKU-SH-088",uChip("ه","هبة سامي"),cName(),"210 "+ccy(),"96",tag(t("active"),"#16A34A"),`<button class="btn ghost sm">…</button>`],
-     [prod("👟","حذاء رياضي","SKU-SN-210"),"SKU-SN-210",uChip("ع","عمرو زكي"),cName(),"560 "+ccy(),"74",tag(t("active"),"#16A34A"),`<button class="btn ghost sm">…</button>`],
-     [prod("🎒","شنطة ظهر","SKU-BG-055"),"SKU-BG-055",uChip("ي","يوسف نبيل"),cName(),"320 "+ccy(),"108",tag(t("active"),"#16A34A"),`<button class="btn ghost sm">…</button>`]])
-  }</div></div>
-</div>
-<div id="tab-pr_review" class="tabpane">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
-    <input style="flex:1;min-width:200px;padding:9px 12px;border:1px solid var(--line);border-radius:9px;font-family:inherit;font-size:13px" placeholder="${t("search")}">
-    <button class="btn ok sm">${t("bulkApprove")}</button>
-    <span class="tag" style="color:#F59E0B;background:#FEF3C7">${t("pendingCount")}</span>
-  </div>
-  <div class="card"><div class="cb" style="padding:0">${tbl(
-    ['<input type="checkbox">',t("c_product"),lang=="ar"?"التاجر":"Merchant",t("country"),t("c_price"),t("c_date"),t("apprStatus"),t("c_action")],
-    [['<input type="checkbox">',prod("👕","تيشيرت رياضي نص كم","SKU-TS-999"),uChip("م","متجر بيسوهولا"),cName(),"185 "+ccy(),"2026/05/31",apprTag("pending"),`<button class="btn sm" onclick="go('review')">${lang=="ar"?"مراجعة":"Review"}</button>`],
-     ['<input type="checkbox">',prod("🩳","بنطلون شورت جديد","SKU-SH-300"),uChip("ه","هبة سامي"),cName(),"210 "+ccy(),"2026/05/30",apprTag("pending"),`<button class="btn sm" onclick="go('review')">${lang=="ar"?"مراجعة":"Review"}</button>`],
-     ['<input type="checkbox">',prod("🧢","قبعة رياضية","SKU-CP-041"),uChip("ع","عمرو زكي"),cName(),"95 "+ccy(),"2026/05/29",apprTag("pending"),`<button class="btn sm" onclick="go('review')">${lang=="ar"?"مراجعة":"Review"}</button>`],
-     ['<input type="checkbox">',prod("🧥","جاكيت شتوي","SKU-WJ-018"),uChip("م","متجر بيسوهولا"),cName(),"650 "+ccy(),"2026/05/28",apprTag("pending"),`<button class="btn sm" onclick="go('review')">${lang=="ar"?"مراجعة":"Review"}</button>`],
-     ['<input type="checkbox">',prod("👟","حذاء كاجوال","SKU-CS-088"),uChip("ي","يوسف نبيل"),cName(),"380 "+ccy(),"2026/05/27",apprTag("pending"),`<button class="btn sm" onclick="go('review')">${lang=="ar"?"مراجعة":"Review"}</button>`]])
-  }</div></div>
-</div>
-<div id="tab-pr_cancelled" class="tabpane">
-  <div class="card"><div class="cb" style="padding:0">${tbl(
-    [t("c_product"),lang=="ar"?"التاجر":"Merchant",t("c_price"),t("c_date"),t("c_action")],
-    [[prod("🧥","جاكيت شتوي","SKU-WJ-999"),uChip("م","متجر بيسوهولا"),"650 "+ccy(),"2026/04/10",`<button class="btn ghost sm">${lang=="ar"?"عرض":"View"}</button>`],
-     [prod("👟","حذاء قديم","SKU-SH-001"),uChip("ه","هبة سامي"),"280 "+ccy(),"2026/03/15",`<button class="btn ghost sm">${lang=="ar"?"عرض":"View"}</button>`]])
-  }</div></div>
-</div>`;
 
 S["admin/approvals"]=()=>head(t("admin")+" · "+t("approvals"),t("approvals"),
   lang=="ar"?"راجع المنتجات الجديدة والتعديلات قبل نشرها — الأحدث أولاً":"Review new products and edits before publishing — newest first")
@@ -1137,7 +996,7 @@ S["admin/failed"]=()=>{
     lang=="ar"?"توزيع الفشل على الأكواد آخر 30 يومًا — لمراقبة المعدّلات غير الاعتيادية":"Failure distribution by code over last 30 days — to monitor abnormal rates")
   +dateFilterBar()
   +`<div class="tabs">
-    <button class="on" onclick="setTab('f_orders',this)">${lang=='ar'?'الطلبات الفاشلة':'Failed Orders'} <span class="n">${total}</span></button>
+    <button class="on" onclick="setTab('f_orders',this)">${lang=='ar'?'الطلبات الفاشلة':'Failed Orders'} (${total})</button>
     <button onclick="setTab('f_codes',this)">${lang=='ar'?'الأكواد والإحصائيات':'Codes & Stats'}</button>
   </div>
   <div id="tab-f_orders" class="tabpane on">
@@ -1182,51 +1041,17 @@ S["admin/orders"]=()=>{
   return head(t("admin")+" · "+t("orders"),t("orders"),
     lang=="ar"?"نظرة شاملة على كل الطلبات عبر المنصّة":"Platform-wide view of all orders",
     `<button class="btn ghost sm">${t("export")}</button>`)
-  +quickDate()
   +orderFilterBar({marketer:true,cod:true})
-  +`<div class="tabs">
-    <button class="on" onclick="setTab('ao_all',this)">${t("allStatuses")} <span class="n">1,284</span></button>
-    <button onclick="setTab('ao_confirm',this)">${lang=='ar'?'قيد التأكيد':'Pending Confirmation'}</button>
-    <button onclick="setTab('ao_ship',this)">${lang=='ar'?'في انتظار الشحن':'Awaiting Shipment'}</button>
-    <button onclick="setTab('ao_shipped',this)">${lang=='ar'?'مشحونة':'Shipped'}</button>
-    <button onclick="setTab('ao_delivered',this)">${lang=='ar'?'تم التسليم':'Delivered'}</button>
-    <button onclick="setTab('ao_returned',this)">${lang=='ar'?'مرتجع':'Returned'}</button>
-  </div>
-  <div id="tab-ao_all" class="tabpane on">
-    <div class="card"><div class="cb" style="padding:0">
-      ${ordTableRich(rows,{marketer:true,cod:true})}
-    </div>${pager(1284)}</div>
-  </div>
-  <div id="tab-ao_confirm" class="tabpane">
-    <div class="card"><div class="cb" style="padding:0">
-      ${ordTableRich(rows.filter(r=>r.status==='pending'),{marketer:true,cod:true})}
-    </div>${pager(rows.filter(r=>r.status==='pending').length)}</div>
-  </div>
-  <div id="tab-ao_ship" class="tabpane">
-    <div class="card"><div class="cb" style="padding:0">
-      ${ordTableRich(rows.filter(r=>r.status==='confirmed'||r.status==='packing'),{marketer:true,cod:true})}
-    </div>${pager(rows.filter(r=>r.status==='confirmed'||r.status==='packing').length)}</div>
-  </div>
-  <div id="tab-ao_shipped" class="tabpane">
-    <div class="card"><div class="cb" style="padding:0">
-      ${ordTableRich(rows.filter(r=>r.status==='shipped'),{marketer:true,cod:true})}
-    </div>${pager(rows.filter(r=>r.status==='shipped').length)}</div>
-  </div>
-  <div id="tab-ao_delivered" class="tabpane">
-    <div class="card"><div class="cb" style="padding:0">
-      ${ordTableRich(rows.filter(r=>r.status==='delivered'),{marketer:true,cod:true})}
-    </div>${pager(rows.filter(r=>r.status==='delivered').length)}</div>
-  </div>
-  <div id="tab-ao_returned" class="tabpane">
-    <div class="card"><div class="cb" style="padding:0">
-      ${ordTableRich(rows.filter(r=>r.status==='returned'),{marketer:true,cod:true})}
-    </div>${pager(rows.filter(r=>r.status==='returned').length)}</div>
-  </div>`;
+  +`<div class="chips"><button class="chip on" onclick="chip(this)">${t("allStatuses")} <span class="n">1,284</span></button>
+    ${sts.map(s=>`<button class="chip" onclick="chip(this)">${t("st_"+s)}</button>`).join('')}</div>
+  <div class="card"><div class="cb" style="padding:0">
+    ${ordTableRich(rows,{marketer:true,cod:true})}
+  </div>${pager(1284)}</div>`;
 };
 
 S["admin/dashboard"]=()=>head(t("admin")+" · "+t("dashboard"),t("dashboard"),
   lang=="ar"?"نظرة شاملة على أداء المنصّة وكل المتاجر":"Platform-wide performance across all stores")
- +quickDate()+dateFilterBar()
+ +dateFilterBar()
  +`<div class="grid kpis" style="margin-bottom:16px">
    ${kpi("cart","#D8F1ED","#0D9488",t("t_orders"),"1,284","12%",1)}
    ${kpi("money","#ECFDF5","#16A34A",t("t_sales"),"412,500 "+ccy(),"8%",1)}
@@ -1344,7 +1169,7 @@ S["merchant/mstats"]=()=>{
   const topProds=[["👕","تيشيرت رياضي نص كم","320","96,000 "+ccy()],["🩳","بنطلون شورت رياضي","218","45,780 "+ccy()],["👟","حذاء رياضي","142","79,520 "+ccy()],["🎒","شنطة ظهر","66","21,120 "+ccy()]];
   const mkts=[["محمد سمير","248","78%"],["رنا خالد","196","74%"],["عمرو زكي","164","71%"],["هبة سامي","138","76%"]];
   return head(t("merchant")+" · "+t("mstats"),t("mstats"),lang=="ar"?"أداء منتجاتك ومبيعاتك عبر كل المسوّقين":"Your products and sales performance across all marketers")
-  +quickDate()+dateFilterBar()
+  +dateFilterBar()
   +statHero("١ → ٣٠ مايو ٢٠٢٦",cName(),"1,284",t("totalOrders"),"75%","248,000 "+ccy(),t("netDue"))
   +statTiles([
     [t("st_pending"),"112",STC.pending],
@@ -1372,15 +1197,8 @@ S["merchant/mstats"]=()=>{
 };
 
 S["merchant/dashboard"]=()=>head(t("merchant")+" · "+t("dashboard"),t("dashboard"))
- +quickDate()+dateFilterBar()
- +`<div style="background:linear-gradient(110deg,#ECFDF5,#D8F1ED);border:1px solid #A7F3D0;border-radius:var(--r);padding:18px 22px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:16px">
-   <div>
-     <div style="font-weight:800;font-size:15px;margin-bottom:4px">${lang=="ar"?"ابدأ بإضافة منتجك الأول 🚀":"Add your first product 🚀"}</div>
-     <div class="note">${lang=="ar"?"أضِف منتجًا وابدأ في الحصول على طلبات من المسوّقين":"Add a product and start receiving orders from marketers"}</div>
-   </div>
-   <button class="btn ok" onclick="go('addproduct')">+ ${t("addproduct")}</button>
- </div>
- <div class="banner"><div><h2>${t("bannerH")}</h2><p>${t("bannerP")}</p></div>
+ +dateFilterBar()
+ +`<div class="banner"><div><h2>${t("bannerH")}</h2><p>${t("bannerP")}</p></div>
     <button class="btn" style="background:#fff;color:#0D9488" onclick="go('orders')">${t("orders")}</button></div>
   <div class="grid kpis" style="margin-bottom:16px">
    ${kpi("cart","#D8F1ED","#0D9488",t("m_orders"),"326","9%",1)}
@@ -1413,106 +1231,47 @@ S["merchant/orders"]=()=>{
   return head(t("merchant")+" · "+t("orders"),t("orders"),
     lang=="ar"?"إدارة الطلبات عبر دورة حياتها الكاملة":"Manage orders across their full lifecycle",
     `<button class="btn ghost sm">${t("export")}</button>`)
-  +quickDate()
   +orderFilterBar({marketer:true})
-  +`<div class="tabs">
-    <button class="on" onclick="setTab('mo_pending',this)">${lang=='ar'?'مطلوب تسليمها':'To Deliver'} <span class="n">${rows.filter(r=>!['delivered','cancelled','returned'].includes(r.status)).length}</span></button>
-    <button onclick="setTab('mo_shipped',this)">${t('st_shipped')} <span class="n">${rows.filter(r=>r.status==='shipped').length}</span></button>
-    <button onclick="setTab('mo_delivered',this)">${t('st_delivered')} <span class="n">${rows.filter(r=>r.status==='delivered').length}</span></button>
-    <button onclick="setTab('mo_returned',this)">${t('st_returned')} <span class="n">${rows.filter(r=>r.status==='returned').length}</span></button>
-  </div>
-  <div id="tab-mo_pending" class="tabpane on">
-    <div class="card"><div class="cb" style="padding:0">
-      ${ordTableRich(rows.filter(r=>!['delivered','cancelled','returned'].includes(r.status)),{due:true,marketer:true})}
-    </div>${pager(rows.filter(r=>!['delivered','cancelled','returned'].includes(r.status)).length)}</div>
-  </div>
-  <div id="tab-mo_shipped" class="tabpane">
-    <div class="card"><div class="cb" style="padding:0">
-      ${ordTableRich(rows.filter(r=>r.status==='shipped'),{due:true,marketer:true})}
-    </div>${pager(rows.filter(r=>r.status==='shipped').length)}</div>
-  </div>
-  <div id="tab-mo_delivered" class="tabpane">
-    <div class="card"><div class="cb" style="padding:0">
-      ${ordTableRich(rows.filter(r=>r.status==='delivered'),{due:true,marketer:true})}
-    </div>${pager(rows.filter(r=>r.status==='delivered').length)}</div>
-  </div>
-  <div id="tab-mo_returned" class="tabpane">
-    <div class="card"><div class="cb" style="padding:0">
-      ${ordTableRich(rows.filter(r=>r.status==='returned'),{due:true,marketer:true})}
-    </div>${pager(rows.filter(r=>r.status==='returned').length)}</div>
-  </div>`;
+  +`<div class="chips"><button class="chip on" onclick="chip(this)">${t("allStatuses")} <span class="n">326</span></button>
+    ${sts.map(s=>`<button class="chip" onclick="chip(this)">${t("st_"+s)}</button>`).join('')}</div>
+  <div class="card"><div class="cb" style="padding:0">
+    ${ordTableRich(rows,{due:true,marketer:true})}
+  </div>${pager(326)}</div>`;
 };
-
-S["merchant/shipping"]=()=>head(t("merchant")+" · "+t("shipping"),t("shipping"),
-  lang=="ar"?"تتبّع شحنات طلباتك عبر شركات الشحن":"Track your order shipments across couriers")
-+`<div class="card"><div class="cb" style="padding:0">${tbl(
-  [t("orderCode"),lang=="ar"?"شركة الشحن":"Courier",lang=="ar"?"حالة الشحنة":"Shipment Status",lang=="ar"?"آخر تحديث":"Last Update",t("trackingNo")],
-  [["M0001-00012350",couriersActive()[0]?.name||"—",stTag("shipped"),"2026/05/31 10:20","BOS-M0001-00012350"],
-   ["M0001-00012340",couriersActive()[0]?.name||"—",stTag("delivered"),"2026/05/30 16:45","BOS-M0001-00012340"],
-   ["M0001-00012320",couriersActive()[0]?.name||"—",stTag("packing"),"2026/05/28 09:10","—"],
-   ["M0001-00012310",couriersActive()[0]?.name||"—",stTag("pending"),"2026/05/27 14:30","—"]])
-}</div></div>`;
 
 S["merchant/products"]=()=>head(t("merchant")+" · "+t("products"),t("products"),
   lang=="ar"?"كل منتجاتك ومخزونها وحالة اعتمادها":"All your products, stock and approval status",
   `<button class="btn sm" onclick="go('addproduct')">+ ${t("addproduct")}</button>`)
- +`<div class="tabs">
-  <button class="on" onclick="setTab('mp_active',this)">${lang=='ar'?'فعّالة':'Active'} <span class="n">2</span></button>
-  <button onclick="setTab('mp_review',this)">${lang=='ar'?'قيد المراجعة':'Under Review'} <span class="n">2</span></button>
-  <button onclick="setTab('mp_rejected',this)">${lang=='ar'?'مرفوضة':'Rejected'} <span class="n">1</span></button>
-</div>
-<div id="tab-mp_active" class="tabpane on">
-  <div class="card"><div class="cb" style="padding:0">${tbl(
-    [t("c_product"),"SKU",t("c_price"),t("c_stock"),t("c_action")],
-    [[prod("👕","تيشيرت رياضي نص كم","SKU-TS-104"),"SKU-TS-104","185 "+ccy(),"320",`<button class="btn ghost sm">…</button>`],
-     [prod("👕","تيشيرت كاجوال قطن","SKU-TS-077"),"SKU-TS-077","165 "+ccy(),"190",`<button class="btn ghost sm">…</button>`]])
-  }</div></div>
-</div>
-<div id="tab-mp_review" class="tabpane">
-  <div class="card"><div class="cb" style="padding:0">${tbl(
-    [t("c_product"),"SKU",t("c_price"),t("c_stock"),t("apprStatus"),t("c_action")],
-    [[prod("🩳","بنطلون شورت رياضي","SKU-SH-088"),"SKU-SH-088","210 "+ccy(),tag("12 — "+(lang=="ar"?"منخفض":"low"),"#F59E0B"),apprTag("pending"),`<button class="btn ghost sm">…</button>`],
-     [prod("👟","حذاء رياضي","SKU-SN-210"),"SKU-SN-210","560 "+ccy(),"74",apprTag("draft"),`<button class="btn ghost sm">…</button>`]])
-  }</div></div>
-</div>
-<div id="tab-mp_rejected" class="tabpane">
-  <div class="card"><div class="cb" style="padding:0">${tbl(
-    [t("c_product"),"SKU",t("c_price"),lang=="ar"?"سبب الرفض":"Rejection Reason",t("c_action")],
-    [[prod("🧥","جاكيت خفيف","SKU-JK-031"),"SKU-JK-031","430 "+ccy(),lang=="ar"?"جودة صور منخفضة":"Low image quality",`<button class="btn sm" style="background:#FEE2E2;color:#DC2626" onclick="go('rejected')">${t("editResubmit")}</button>`]])
-  }</div></div>
-</div>`;
+ +`<div class="card"><div class="cb" style="padding:0">${tbl(
+   [t("c_product"),"SKU",t("c_price"),t("c_stock"),t("apprStatus"),t("c_action")],
+   [[prod("👕","تيشيرت رياضي نص كم","SKU-TS-104"),"SKU-TS-104","185 "+ccy(),"320",apprTag("approved"),`<button class="btn ghost sm">…</button>`],
+    [prod("🩳","بنطلون شورت رياضي","SKU-SH-088"),"SKU-SH-088","210 "+ccy(),tag("12 — "+(lang=="ar"?"منخفض":"low"),"#F59E0B"),apprTag("pending"),`<button class="btn ghost sm">…</button>`],
+    [prod("👕","تيشيرت كاجوال قطن","SKU-TS-077"),"SKU-TS-077","165 "+ccy(),"190",apprTag("approved"),`<button class="btn ghost sm">…</button>`],
+    [prod("🧥","جاكيت خفيف","SKU-JK-031"),"SKU-JK-031","430 "+ccy(),"0",apprTag("rejected"),`<button class="btn sm" style="background:#FEE2E2;color:#DC2626" onclick="go('rejected')">${t("editResubmit")}</button>`],
+    [prod("👟","حذاء رياضي","SKU-SN-210"),"SKU-SN-210","560 "+ccy(),"74",apprTag("draft"),`<button class="btn ghost sm">…</button>`]])}</div></div>`;
 
 S["merchant/addproduct"]=()=>head(t("merchant")+" · "+t("addproduct"),t("addproduct"),
-  lang=="ar"?"أدخل بيانات المنتج وسعره وصوره":"Enter product details, price, and images",
+  lang=="ar"?"أدخل بيانات المنتج ومتغيّراته والسعر الأساسي":"Enter product details, variants and base price",
   `<button class="btn sm">${t("save")}</button>`)
  +`<div class="info-banner">${svg(IC.alert)} ${t("adminReviewNote")}</div>
   <div class="split3">
    <div class="card"><div class="ch"><h3>${lang=="ar"?"بيانات أساسية":"Basic info"}</h3></div><div class="cb">
      <div class="field"><label>${t("f_name")}</label><input value="${lang=="ar"?'تيشيرت رياضي نص كم':'Sport Half-Sleeve Tee'}"></div>
-     <div class="field"><label>${t("f_cat")}</label>
-       <select><option>${lang=="ar"?'ملابس رجالي':'Men Clothing'}</option><option>${lang=="ar"?'معدّات رياضية':'Sportswear'}</option></select></div>
-     <div class="field"><label>${t("f_desc")}</label>
-       <textarea rows="3">${lang=="ar"?'تيشيرت قطن مريح بقصّة عصرية، متوفّر بعدة ألوان ومقاسات.':'Comfortable cotton tee with a modern fit, available in several colors and sizes.'}</textarea></div>
-     <div class="field"><label>${lang=="ar"?'سعر القطعة':'Unit Price'} (${ccy()})</label><input type="number" value="185">
+     <div class="frow">
+       <div class="field"><label>${t("f_cat")}</label><select><option>${lang=="ar"?'ملابس رجالي':'Men Clothing'}</option><option>${lang=="ar"?'معدّات رياضية':'Sportswear'}</option></select></div>
+       <div class="field"><label>${t("c_store")}</label><select><option>Energy Affiliate</option></select></div>
+     </div>
+     <div class="field"><label>${t("f_desc")}</label><textarea rows="3">${lang=="ar"?'تيشيرت قطن مريح بقصّة عصرية، متوفّر بعدة ألوان ومقاسات.':'Comfortable cotton tee with a modern fit, available in several colors and sizes.'}</textarea></div>
+     <div class="frow">
+       <div class="field"><label>${t("f_price")} (${ccy()})</label><input value="142"></div>
+       <div class="field"><label>${t("f_cost")} (${ccy()})</label><input value="78"></div>
+     </div>
+     <div class="field"><label>${t("basePrice")} (${ccy()})</label><input value="185">
        <div class="note" style="margin-top:5px">${t("basePriceNote")}</div></div>
-     <div style="margin-bottom:14px">
-       <label style="display:flex;align-items:center;gap:9px;font-size:13px;font-weight:700;cursor:pointer">
-         <input type="checkbox" id="hasVariants" onchange="document.getElementById('varSection').style.display=this.checked?'block':'none';document.getElementById('simpleQty').style.display=this.checked?'none':'block'" style="width:auto">
-         ${lang=="ar"?'منتج بمتغيّرات (لون/مقاس)':'Product with variants (color/size)'}
-       </label>
-     </div>
-     <div id="simpleQty">
-       <div class="field"><label>${t("f_qty")}</label><input type="number" value="100" min="1"></div>
-     </div>
    </div></div>
    <div>
      <div class="card" style="margin-bottom:16px"><div class="ch"><h3>${t("f_images")}</h3></div>
-       <div class="cb">
-         <div class="field"><label>${lang=="ar"?'الصورة الأساسية':'Main Image'}</label>
-           <div class="dropz">⬆️<br>${lang=="ar"?'صورة واحدة للعرض الرئيسي':'Single main display image'}</div></div>
-         <div class="field"><label>${lang=="ar"?'باقي الصور':'Additional Images'}</label>
-           <div class="dropz">⬆️<br>${lang=="ar"?'صور إضافية (متعدّدة)':'Additional images (multiple)'}</div></div>
-       </div></div>
+       <div class="cb"><div class="dropz">⬆️<br>${t("dropmsg")}</div></div></div>
      <div class="card"><div class="ch"><h3>${lang=="ar"?'الحالة':'Status'}</h3></div><div class="cb">
        <div class="field"><label>${lang=="ar"?'حالة النشر':'Publish status'}</label>
          <select><option>${t("active")}</option><option>${lang=="ar"?'مسوّدة':'Draft'}</option></select></div>
@@ -1520,19 +1279,18 @@ S["merchant/addproduct"]=()=>head(t("merchant")+" · "+t("addproduct"),t("addpro
          <input type="checkbox" checked style="width:auto"> ${lang=="ar"?'إتاحته في سوق المسوّقين':'List in marketer marketplace'}</label>
      </div></div>
    </div></div>
-   <div id="varSection" class="card" style="margin-top:16px;display:none"><div class="ch"><h3>${t("f_variants")}</h3>
+   <div class="card" style="margin-top:16px"><div class="ch"><h3>${t("f_variants")}</h3>
      <button class="btn ghost sm">+ ${t("addvar")}</button></div>
-     <div class="cb" style="padding:0">${tbl([t("f_color"),t("f_size"),t("f_qty"),"SKU"],
-       [[lang=="ar"?'أسود':'Black',"M","120","TS-104-BM"],
-        [lang=="ar"?'أسود':'Black',"L","96","TS-104-BL"],
-        [lang=="ar"?'أبيض':'White',"M","64","TS-104-WM"],
-        [lang=="ar"?'كحلي':'Navy',"L","40","TS-104-NL"]])}</div></div>`;
+     <div class="cb" style="padding:0">${tbl([t("f_color"),t("f_size"),t("f_price"),t("f_qty"),"SKU"],
+       [[lang=="ar"?'أسود':'Black',"M","142","120","TS-104-BM"],
+        [lang=="ar"?'أسود':'Black',"L","142","96","TS-104-BL"],
+        [lang=="ar"?'أبيض':'White',"M","142","64","TS-104-WM"],
+        [lang=="ar"?'كحلي':'Navy',"L","152","40","TS-104-NL"]])}</div></div>`;
 
 S["marketer/dashboard"]=()=>head(t("marketer")+" · "+t("dashboard"),t("dashboard"),
   lang=="ar"?"أرباحك وأداء متجرك ومنتجاتك المستوردة":"Your earnings and your store's imported products performance")
- +quickDate()+dateFilterBar()
+ +dateFilterBar()
  +`<div class="grid kpis" style="margin-bottom:16px">
-   ${kpi("cart","#D8F1ED","#0D9488",t("t_orders"),"746","18%",1)}
    ${kpi("wallet","#ECFDF5","#16A34A",t("k_earn"),"4,820 "+ccy(),"",1)}
    ${kpi("money","#FEF3C7","#D97706",t("k_pending"),"1,260 "+ccy(),"",1)}
    ${kpi("money","#D8F1ED","#0D9488",t("k_paid"),"38,400 "+ccy(),"22%",1)}
@@ -1549,25 +1307,21 @@ S["marketer/dashboard"]=()=>head(t("marketer")+" · "+t("dashboard"),t("dashboar
    </div></div></div>`;
 
 S["marketer/marketplace"]=()=>{
-  const ps=[["🎒","شنطة ظهر","SKU-BG-055",320],["👕","تيشيرت كاجوال قطن","SKU-TS-077",165],
-   ["🧥","جاكيت خفيف","SKU-JK-031",430],["👟","حذاء رياضي","SKU-SN-210",560],
-   ["🩳","بنطلون شورت رياضي","SKU-SH-088",210],["👕","تيشيرت رياضي نص كم","SKU-TS-104",185]];
-  return head(t("marketer")+" · "+t("marketplace"),t("marketplace"),lang=="ar"?"أحدث المنتجات المعتمَدة أولًا — اطلب الآن أو أضِف لمفضّلتك":"Newest approved products first — order now or save to favorites")
-  +`<div class="filter-bar" style="margin-bottom:14px">
-     <input type="search" placeholder="${t('search')}" style="flex:1;min-width:200px">
-     <label>${lang=="ar"?'التصنيف':'Category'}</label>
-     <select><option>${t('allStatuses')}</option><option>${lang=="ar"?'ملابس':'Clothing'}</option><option>${lang=="ar"?'أحذية':'Shoes'}</option><option>${lang=="ar"?'إكسسوارات':'Accessories'}</option></select>
-     <label>${lang=="ar"?'الترتيب':'Sort'}</label>
-     <select><option>${lang=="ar"?'الأحدث':'Newest'}</option><option>${lang=="ar"?'الأعلى ربحًا':'Top profit'}</option></select>
-     <button class="btn sm">${t('applyFilter')}</button>
-   </div>
-   <div class="pgrid">${ps.map((p,i)=>{
+  const ps=[["👕","تيشيرت رياضي نص كم","SKU-TS-104",185],["🩳","بنطلون شورت رياضي","SKU-SH-088",210],
+   ["👟","حذاء رياضي","SKU-SN-210",560],["🧥","جاكيت خفيف","SKU-JK-031",430],
+   ["👕","تيشيرت كاجوال قطن","SKU-TS-077",165],["🎒","شنطة ظهر","SKU-BG-055",320]];
+  return head(t("marketer")+" · "+t("marketplace"),t("marketplace"),lang=="ar"?"اختر منتجات واستوردها لمتجرك بسعر بيعك الخاص":"Pick products and import to your store with your own sell price")
+  +`<div class="chips">
+     <button class="chip on" onclick="chip(this)">${t("allStatuses")}</button>
+     <button class="chip" onclick="chip(this)">${lang=="ar"?'ملابس':'Clothing'}</button>
+     <button class="chip" onclick="chip(this)">${lang=="ar"?'أحذية':'Shoes'}</button>
+     <button class="chip" onclick="chip(this)">${lang=="ar"?'الأعلى ربحًا':'Top profit'}</button></div>
+   <div class="pgrid">${ps.map(p=>{
      const defSell=Math.round(p[3]*1.3);
      const defProfit=defSell-p[3];
      return `<div class="pcard">
-       <div class="img" style="cursor:pointer;position:relative" onclick="go('pdetail')">${p[0]}${i<4?`<span style="position:absolute;top:8px;inset-inline-start:8px;background:#0D9488;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px">${lang=="ar"?'جديد':'New'}</span>`:''}
-       </div><div class="body">
-         <div style="font-weight:700;font-size:13px;margin-bottom:4px;cursor:pointer" onclick="go('pdetail')">${p[1]}</div>
+       <div class="img" style="cursor:pointer" onclick="go('pdetail')">${p[0]}</div><div class="body">
+         <div style="font-weight:700;font-size:13px;margin-bottom:4px">${p[1]}</div>
          <div class="note" style="margin-bottom:8px">${p[2]}</div>
          <div style="font-size:12px;color:var(--muted);margin-bottom:3px">${t("basePrice")}: <b style="color:var(--ink)">${p[3]} ${ccy()}</b></div>
          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
@@ -1576,10 +1330,7 @@ S["marketer/marketplace"]=()=>{
            <div><div style="font-size:11px;color:var(--muted);font-weight:700;margin-bottom:3px">${t("yourProfit")}</div>
              <div style="padding:6px 9px;border-radius:8px;background:var(--soft);color:#0D9488;font-weight:800;font-size:13px">${defProfit} ${ccy()}</div></div>
          </div>
-         <div style="display:flex;gap:7px">
-           <button class="btn sm" style="flex:1;justify-content:center" onclick="go('cart')">${lang=="ar"?"اطلب الآن":"Order Now"}</button>
-           <button class="btn ghost sm" title="${t('wishlist')}" onclick="go('wishlist')">${svg(IC.star)}</button>
-         </div>
+         <button class="btn sm" style="width:100%;justify-content:center">${t("importToStore")}</button>
        </div></div>`;}).join('')}</div>`;
 };
 
@@ -1596,7 +1347,7 @@ S["marketer/orders"]=()=>{
     {emoji:"🩳",name:"بنطلون شورت",sku:"SKU-SH-088",code:"M0042-00012290",date:"2026/05/24",customer:"عمرو زكي",phone:"01099887766",gov:G[5],city:"أسيوط",street:"شارع الحرية",bldg:"عمارة 2",floor:"دور 4",apt:"شقة 14",qty:2,total:540,profit:120,items:[{n:'بنطلون شورت',sku:'SKU-SH-088',qty:1,price:270},{n:'تيشيرت كاجوال',sku:'SKU-TS-077',qty:1,price:270}],status:"returned",cod:"returned",courier:PC,note:"المنتج لا يناسب",calls:2}
   ];
   return head(t("marketer")+" · "+t("orders"),t("orders"),lang=="ar"?"كل طلباتك — فلتر موحّد بالحالات وإجراءات حسب حالة كل طلب":"All your orders — unified status filter with conditional actions")
-  +quickDate()+orderFilterBar({})
+  +orderFilterBar({})
   +`<div class="chips"><button class="chip on" onclick="chip(this)">${t("allStatuses")} <span class="n">38</span></button>
     ${sts.map(s=>`<button class="chip" onclick="chip(this)">${t("st_"+s)}</button>`).join('')}</div>
   <div class="card"><div class="cb" style="padding:0">
@@ -1612,7 +1363,7 @@ S["marketer/stats"]=()=>{
   const maxGov = Math.max(...D);
   const govArr = G.map((n,i)=>[n, D[i], R[i]]);
   return head(t("marketer")+" · "+t("stats"),t("stats"),lang=="ar"?"أداء منتجاتك التي بِعتها في دولتك خلال الفترة":"Your sold products performance in your country for the period")
-  +quickDate()+dateFilterBar()
+  +dateFilterBar()
   +statHero("١ → ٣٠ مايو ٢٠٢٦",cName(),"746",t("totalOrders"),"76%","13,900 "+ccy(),t("netProfit"))
   +statTiles([
     [t("st_review"),"42",STC.review],
@@ -1760,12 +1511,21 @@ S["marketer/settings"]=()=>{
       <div class="field"><label>${lang=='ar'?'شركتي الافتراضية':'My Default Courier'}</label>
         <select>${couriersActive().map(c=>`<option>${c.name} — ${c.fee} ${ccy()}</option>`).join('')}</select>
         <div class="note" style="margin-top:5px">${lang=='ar'?'تختار من الشركات التي فعّلتها الإدارة فقط':'You can only pick from couriers activated by admin'}</div></div>
-      <div class="info-banner">${svg(IC.alert)} ${lang=='ar'?'تكلفة الشحن على العميل':'Shipping cost is charged to the customer'}</div>
+      <div class="field"><label>${lang=='ar'?'من يتحمّل تكلفة الشحن':'Who pays shipping?'}</label>
+        <select><option>${lang=='ar'?'العميل':'Customer'}</option><option>${lang=='ar'?'المسوّق':'Marketer'}</option><option>${lang=='ar'?'مشترك':'Split'}</option></select></div>
       <button class="btn">${t('saveChanges')}</button>
     </div></div>
   </div>
   <div id="tab-s_intg" class="tabpane">
-    ${intgBody()}
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      ${INTEGRATIONS[country].map(int=>`
+        <div class="card"><div class="cb" style="display:flex;align-items:center;gap:14px">
+          <div style="width:46px;height:46px;border-radius:12px;background:${int.color}22;display:grid;place-items:center;font-weight:800;font-size:20px;color:${int.color};flex-shrink:0">${int.icon}</div>
+          <div style="flex:1"><div style="font-weight:800;font-size:14px">${int.name}</div>
+            <div class="note">${int.status==='connected'?(lang=='ar'?'متصل':'Connected'):(lang=='ar'?'متاح':'Available')}</div></div>
+          <button class="btn sm" ${int.status==='connected'?'style="background:var(--soft);color:var(--brand)"':''}>${int.status==='connected'?t('manage'):t('connect')}</button>
+        </div></div>`).join('')}
+    </div>
   </div>
   <div id="tab-s_id" class="tabpane">
     <div class="card"><div class="cb">
@@ -1923,30 +1683,6 @@ function dateFilterBar(){
   </div>`;
 }
 
-function quickDate(){return `<div class="chips qd" style="margin-bottom:14px">
-  <span class="chip" onclick="chip(this)">${t('qd_today')}</span>
-  <span class="chip" onclick="chip(this)">${t('qd_yesterday')}</span>
-  <span class="chip on" onclick="chip(this)">${t('qd_month')}</span>
-</div>`;}
-
-function intgBody(){
-  return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-    ${INTEGRATIONS[country].map(int=>`
-      <div class="card"><div class="cb" style="display:flex;align-items:center;gap:14px">
-        <div style="width:46px;height:46px;border-radius:12px;background:${int.color}22;display:grid;place-items:center;font-weight:800;font-size:20px;color:${int.color};flex-shrink:0">${int.icon}</div>
-        <div style="flex:1"><div style="font-weight:800;font-size:14px">${int.name}</div>
-          <div class="note">${int.status==='connected'?(lang=='ar'?'متصل':'Connected'):(lang=='ar'?'متاح':'Available')}</div></div>
-        <button class="btn sm" ${int.status==='connected'?'style="background:var(--soft);color:var(--brand)"':''}>${int.status==='connected'?t('manage'):t('connect')}</button>
-      </div></div>`).join('')}
-  </div>`;}
-
-S["admin/integrations"]=()=>head(t("admin")+" · "+t("integrations"),t("integrations"),
-  lang=="ar"?"إدارة تكاملات المنصّة مع منصّات التجارة الإلكترونية":"Manage platform integrations with e-commerce platforms")+intgBody();
-S["merchant/integrations"]=()=>head(t("merchant")+" · "+t("integrations"),t("integrations"),
-  lang=="ar"?"ربط متجرك بمنصّات التجارة الإلكترونية":"Connect your store to e-commerce platforms")+intgBody();
-S["marketer/integrations"]=()=>head(t("marketer")+" · "+t("integrations"),t("integrations"),
-  lang=="ar"?"ربط متجرك بمنصّات التجارة الإلكترونية":"Connect your store to e-commerce platforms")+intgBody();
-
 function failTag(code){
   const C={INVALID_PHONE:['#B45309','#FEF3C7'],OUT_OF_STOCK:['#C2410C','#FFEDD5'],
     STORE_CLOSED:['#475569','#F1F5F9'],PRICE_BELOW_BASE:['#DC2626','#FEE2E2'],
@@ -2090,14 +1826,8 @@ function renderRoleSwitch(){
 function renderNav(){
   document.getElementById("nav").innerHTML=ROLES[state.role].nav.map(n=>{
     if(n.g)return `<div class="grp">${t(n.g)}</div>`;
-    const hasSub=!!n.sub;
-    const open = hasSub && ((n.id in state.open) ? state.open[n.id] : (n.id===state.screen || n.sub.some(c=>c.id===state.screen)));
-    const chev = hasSub ? `<button class="navchev ${open?'open':''}" onclick="event.stopPropagation();toggleSub('${n.id}')" aria-label="${t(n.id)}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg></button>` : '';
-    const kids = open ? `<div class="navsub">`+n.sub.map(c=>`<button class="navitem sub ${c.id==state.screen?'on':''}" onclick="go('${c.id}')">${svg(IC[c.ic])}<span>${t(c.id)}</span>${c.badge?`<span class="badge">${c.badge}</span>`:''}</button>`).join('')+`</div>` : '';
-    return `<div class="navrow ${n.id==state.screen?'on':''}">
-      <button class="navitem main" onclick="go('${n.id}')">${svg(IC[n.ic])}<span>${t(n.id)}</span>${n.badge?`<span class="badge">${n.badge}</span>`:''}</button>
-      ${chev}
-    </div>${kids}`;
+    return `<button class="navitem ${n.id==state.screen?'on':''}" onclick="go('${n.id}')">
+      ${svg(IC[n.ic])}<span>${t(n.id)}</span>${n.badge?`<span class="badge">${n.badge}</span>`:''}</button>`;
   }).join('');
 }
 function renderScreen(){
@@ -2117,18 +1847,7 @@ function renderChrome(){
   document.getElementById("cFlag").textContent = COUNTRIES[country].flag;
   document.getElementById("cName").textContent = cName();
 }
-function go(id){
-  state.screen=id;
-  ROLES[state.role].nav.forEach(n=>{ if(n.sub && n.sub.some(c=>c.id===id)) state.open[n.id]=true; });
-  renderNav();renderScreen();closeNav();
-}
-function toggleSub(id){
-  const n=ROLES[state.role].nav.find(x=>x.id===id);
-  const auto = id===state.screen || (n&&n.sub ? n.sub.some(c=>c.id===state.screen) : false);
-  const cur = (id in state.open) ? state.open[id] : auto;
-  state.open[id]=!cur;
-  renderNav();
-}
+function go(id){state.screen=id;renderNav();renderScreen();closeNav();}
 function setRole(r){state.role=r;state.screen=FIRST[r];renderRoleSwitch();renderChrome();renderNav();renderScreen();closeNav();}
 function toggleNav(){const s=document.getElementById("side"),sc=document.getElementById("scrim");const open=s.classList.toggle("open");sc.classList.toggle("show",open);}
 function closeNav(){const s=document.getElementById("side"),sc=document.getElementById("scrim");if(s)s.classList.remove("open");if(sc)sc.classList.remove("show");}
