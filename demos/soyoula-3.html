@@ -59,12 +59,32 @@ a{color:inherit;text-decoration:none}
 .side{width:248px;background:var(--card);border-inline-start:1px solid var(--line);
   padding:16px 12px;flex-shrink:0}
 .side .grp{font-size:11px;color:var(--muted);font-weight:700;padding:14px 12px 6px}
-.navitem{display:flex;align-items:center;gap:11px;height:44px;padding:0 12px;border-radius:10px;margin:2px 0;
-  width:100%;border:0;background:none;color:var(--slate);font-weight:600;font-size:13.5px;
+/* بنود المستوى الأعلى: هيكل واحد وارتفاع ثابت 44px للجميع */
+.navrow{display:flex;align-items:center;height:44px;border-radius:11px;margin:2px 0;overflow:hidden}
+.navrow:hover{background:var(--bg)}
+.navrow.on{background:var(--soft)}
+.navitem.main{flex:1;min-width:0;height:100%;display:flex;align-items:center;gap:11px;padding:0 12px;margin:0;
+  background:none;border:0;border-radius:0;color:var(--slate);font-weight:600;font-size:13.5px;
   text-align:start;cursor:pointer;font-family:inherit}
-.navitem:hover{background:var(--bg)}
-.navitem.on{background:var(--soft);color:var(--brand)}
-.navitem .ic{width:20px;height:20px;flex-shrink:0}
+.navrow.on .navitem.main{color:var(--brand)}
+.navitem.main span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* السهم: خانة جانبية ثابتة بخطّ فاصل */
+.navchev{display:flex;align-items:center;justify-content:center;width:34px;height:100%;flex-shrink:0;
+  border:0;background:none;color:var(--muted);cursor:pointer;border-inline-start:1px solid var(--line)}
+.navrow:hover .navchev{color:var(--brand)}
+.navrow.on .navchev{color:var(--brand);border-inline-start-color:rgba(13,148,136,.25)}
+.navchev svg{transition:transform .2s ease}
+.navchev.open svg{transform:rotate(180deg)}
+/* القائمة الفرعية: أصغر (38px) + خطّ إرشادي + إزاحة */
+.navsub{margin:2px 8px 6px;border-inline-start:1.5px solid var(--soft)}
+.navitem.sub{display:flex;align-items:center;gap:9px;height:38px;width:100%;padding:0 12px;padding-inline-start:26px;
+  margin:1px 0;border:0;background:none;border-radius:8px;color:var(--slate);font-size:13px;
+  text-align:start;cursor:pointer;font-family:inherit}
+.navitem.sub:hover{background:var(--bg)}
+.navitem.sub.on{background:var(--soft);color:var(--brand);font-weight:600}
+.navitem.sub .ic{width:16px;height:16px;opacity:.85;flex-shrink:0}
+/* أيقونة وبادج المستوى الأعلى */
+.navitem.main .ic{width:20px;height:20px;flex-shrink:0}
 .navitem .badge{margin-inline-start:auto;background:var(--danger);color:#fff;font-size:10.5px;
   font-weight:700;padding:1px 7px;border-radius:9px}
 .main{flex:1;padding:24px 28px;min-width:0}
@@ -343,7 +363,6 @@ const I18N={
   rl_admin:"مدير المنصّة",rl_merchant:"تاجر",rl_marketer:"مسوّق",
   u_admin:"إدارة",u_merchant:"أحمد الراوي",u_marketer:"محمد سمير",
   g_main:"الرئيسية",g_manage:"الإدارة",g_money:"المالية",
-  g_market:"السوق",g_catalog:"المنتجات",g_orders:"الطلبات",g_ship:"الشحن",g_settings:"الإعدادات",
   dashboard:"لوحة التحكم",users:"المستخدمون",settlements:"التسويات",
   products:"منتجاتي",addproduct:"إضافة منتج",orders:"الطلبات",
   marketplace:"سوق المنتجات",links:"روابط الإحالة",wallet:"المحفظة",
@@ -393,12 +412,12 @@ const I18N={
   clientNote:"ملاحظة العميل",callAttempts:"محاولات الاتصال",perPage:"لكل صفحة",
   // failed codes
   fix_INVALID_PHONE:"تعديل رقم الهاتف",fix_OUT_OF_STOCK:"استبدال المنتج",
-  fix_MARKETER_INACTIVE:"مراجعة حالة المسوّق",fix_PRICE_BELOW_BASE:"تعديل سعر البيع",
+  fix_STORE_CLOSED:"فتح المتجر",fix_PRICE_BELOW_BASE:"تعديل سعر البيع",
   fix_INTEGRATION_TIMEOUT:"إعادة محاولة يدوية",fix_INTEGRATION_SCHEMA:"عرض تقرير الـSchema",
   autoRetry:"إعادة تلقائية",
   desc_INVALID_PHONE:"رقم العميل لا يطابق صيغة مصر (11 رقم تبدأ بـ01)",
   desc_OUT_OF_STOCK:"المنتج غير متوفّر في المخزون",
-  desc_MARKETER_INACTIVE:"حساب المسوّق موقوف أو غير مفعَّل في الدولة",
+  desc_STORE_CLOSED:"المتجر مغلق ولا يقبل طلبات جديدة",
   desc_PRICE_BELOW_BASE:"سعر البيع أقل من السعر الأساسي للمنتج",
   desc_INTEGRATION_TIMEOUT:"انتهت مهلة الاتصال بخدمة التكامل",
   desc_INTEGRATION_SCHEMA:"حقل ناقص في بيانات الـAPI",
@@ -446,19 +465,12 @@ const I18N={
   shippingAdminSub:"فعّل أو أوقف شركات الشحن لكل دولة على مستوى المنصّة",
   marketerShipNote:"شركات الشحن تُفعَّل من إدارة المنصّة. يمكنك اختيار شركتك الافتراضية من الشركات النشطة.",
   adminToggleNote:"التبديل هنا يؤثّر على جميع المسوّقين في دولة",
-  courierMgmt:"الإدارة",qd_today:"اليوم",qd_yesterday:"أمس",qd_month:"هذا الشهر",
-  confirmation:"وكيل التأكيد",u_confirmation:"سارة الحسن",rl_confirmation:"وكيل تأكيد",
-  queue:"طابور التأكيد",myorders:"قيد المعالجة",perf:"أدائي",
-  desc_ORDER_TOTAL_MISMATCH:"إجمالي الطلب لا يساوي مجموع (سعر×كمية) لأصنافه",
-  fix_ORDER_TOTAL_MISMATCH:"مراجعة التسعير",
-  pushToStore:"ادفع إلى متجري (Easy Orders)",pushedBadge:"مدفوع",notPushedBadge:"غير مدفوع",
-  selectPush:"اختر منتجات للدفع",lastPush:"آخر دفع",pushedCount:"عدد المنتجات المدفوعة"},
+  courierMgmt:"الإدارة",qd_today:"اليوم",qd_yesterday:"أمس",qd_month:"هذا الشهر"},
  en:{dir:"ltr",app:"Soyoula",appSub:"سيولة",lang:"ع",
   admin:"Admin",merchant:"Merchant",marketer:"Marketer",
   rl_admin:"Platform Manager",rl_merchant:"Merchant",rl_marketer:"Marketer",
   u_admin:"Admin",u_merchant:"Ahmed Elrawy",u_marketer:"Mohamed Samir",
   g_main:"Main",g_manage:"Management",g_money:"Finance",
-  g_market:"Marketplace",g_catalog:"Products",g_orders:"Orders",g_ship:"Shipping",g_settings:"Settings",
   dashboard:"Dashboard",users:"Users",settlements:"Settlements",
   products:"My Products",addproduct:"Add Product",orders:"Orders",
   marketplace:"Marketplace",links:"Referral Links",wallet:"Wallet",
@@ -501,12 +513,12 @@ const I18N={
   notesAttempts:"Notes & Attempts",trackingNo:"Tracking No.",codLabel:"Cash on Delivery",
   clientNote:"Client Note",callAttempts:"Call Attempts",perPage:"Per page",
   fix_INVALID_PHONE:"Edit Phone Number",fix_OUT_OF_STOCK:"Replace Product",
-  fix_MARKETER_INACTIVE:"Review Marketer Status",fix_PRICE_BELOW_BASE:"Edit Sell Price",
+  fix_STORE_CLOSED:"Open Store",fix_PRICE_BELOW_BASE:"Edit Sell Price",
   fix_INTEGRATION_TIMEOUT:"Manual Retry",fix_INTEGRATION_SCHEMA:"View Schema Report",
   autoRetry:"Auto-retry",
   desc_INVALID_PHONE:"Client number doesn't match Egypt format (11 digits starting with 01)",
   desc_OUT_OF_STOCK:"Product is out of stock",
-  desc_MARKETER_INACTIVE:"Marketer account is suspended or not activated in the country",
+  desc_STORE_CLOSED:"Store is closed and not accepting new orders",
   desc_PRICE_BELOW_BASE:"Sell price is below the product base price",
   desc_INTEGRATION_TIMEOUT:"Integration service timed out",
   desc_INTEGRATION_SCHEMA:"Missing field in API data",
@@ -549,13 +561,7 @@ const I18N={
   shippingAdminSub:"Activate or deactivate couriers per country platform-wide",
   marketerShipNote:"Couriers are activated by platform admin. You can pick your default from the active ones.",
   adminToggleNote:"Toggling here affects all marketers in",
-  courierMgmt:"Management",qd_today:"Today",qd_yesterday:"Yesterday",qd_month:"This Month",
-  confirmation:"Confirmation Agent",u_confirmation:"Sara Hassan",rl_confirmation:"Confirmation Agent",
-  queue:"Confirmation Queue",myorders:"In Progress",perf:"My Performance",
-  desc_ORDER_TOTAL_MISMATCH:"Order total doesn't equal sum of (price×qty) for its items",
-  fix_ORDER_TOTAL_MISMATCH:"Review Pricing",
-  pushToStore:"Push to My Store (Easy Orders)",pushedBadge:"Pushed",notPushedBadge:"Not Pushed",
-  selectPush:"Select Products to Push",lastPush:"Last push",pushedCount:"Products pushed"}
+  courierMgmt:"Management",qd_today:"Today",qd_yesterday:"Yesterday",qd_month:"This Month"}
 };
 let lang="ar";
 let country = "EG";
@@ -636,32 +642,30 @@ const INTEGRATIONS = {
 const ROLES={
  admin:{nav:[
    {g:"g_main"},{id:"dashboard",ic:"dashboard"},
-   {g:"g_manage"},{id:"users",ic:"users",badge:6},{id:"kyc",ic:"users"},
-   {g:"g_catalog"},{id:"products",ic:"box",badge:5},{id:"categories",ic:"box"},
-   {g:"g_orders"},{id:"orders",ic:"cart"},{id:"failed",ic:"alert"},
-   {g:"g_ship"},{id:"shipping",ic:"truck"},
+   {g:"g_manage"},
+   {id:"users",ic:"users",badge:6,sub:[{id:"kyc",ic:"users"}]},
+   {id:"products",ic:"box",badge:5,sub:[{id:"categories",ic:"box"}]},
+   {id:"orders",ic:"cart",sub:[{id:"shipping",ic:"truck"},{id:"failed",ic:"alert"}]},
+   {id:"activity",ic:"history"},
    {g:"g_money"},{id:"settlements",ic:"money"},{id:"reports",ic:"chart"},
-   {g:"g_settings"},{id:"activity",ic:"history"},{id:"settings",ic:"settings"},{id:"integrations",ic:"plug"},{id:"errors",ic:"alert"}]},
+   {id:"settings",ic:"settings",sub:[{id:"integrations",ic:"plug"},{id:"errors",ic:"alert"}]}]},
  merchant:{nav:[
    {g:"g_main"},{id:"dashboard",ic:"dashboard"},
-   {g:"g_catalog"},{id:"products",ic:"box"},{id:"addproduct",ic:"plus"},
-   {g:"g_orders"},{id:"orders",ic:"cart",badge:6},{id:"returns",ic:"refresh"},
-   {g:"g_ship"},{id:"shipping",ic:"truck"},
+   {g:"g_manage"},
+   {id:"products",ic:"box",sub:[{id:"addproduct",ic:"plus"}]},
+   {id:"orders",ic:"cart",badge:6,sub:[{id:"shipping",ic:"truck"},{id:"returns",ic:"refresh"}]},
+   {id:"activity",ic:"history"},
    {g:"g_money"},{id:"mstats",ic:"chart"},{id:"wallet",ic:"wallet"},
-   {g:"g_settings"},{id:"activity",ic:"history"},{id:"settings",ic:"settings"},{id:"integrations",ic:"plug"}]},
+   {id:"settings",ic:"settings",sub:[{id:"integrations",ic:"plug"}]}]},
  marketer:{nav:[
    {g:"g_main"},{id:"dashboard",ic:"dashboard"},
-   {g:"g_market"},{id:"marketplace",ic:"store"},{id:"wishlist",ic:"star"},{id:"cart",ic:"cart"},
-   {g:"g_orders"},{id:"orders",ic:"cart"},{id:"bulkupload",ic:"plus"},{id:"failed",ic:"alert"},
-   {g:"g_ship"},{id:"shipping",ic:"truck"},
-   {g:"g_money"},{id:"stats",ic:"chart"},{id:"wallet",ic:"wallet"},
-   {g:"g_settings"},{id:"activity",ic:"history"},{id:"settings",ic:"settings"},{id:"integrations",ic:"plug"}]},
- confirmation:{nav:[
-   {g:"g_main"},{id:"queue",ic:"history",badge:8},{id:"myorders",ic:"cart"},
-   {g:"g_money"},{id:"perf",ic:"chart"},{id:"activity",ic:"history"}]}
+   {id:"marketplace",ic:"store"},{id:"cart",ic:"cart"},{id:"wishlist",ic:"star"},
+   {id:"orders",ic:"cart",sub:[{id:"shipping",ic:"truck"},{id:"bulkupload",ic:"plus"},{id:"failed",ic:"alert"}]},
+   {g:"g_money"},{id:"stats",ic:"chart"},{id:"wallet",ic:"wallet"},{id:"activity",ic:"history"},
+   {id:"settings",ic:"settings",sub:[{id:"integrations",ic:"plug"}]}]}
 };
-const FIRST={admin:"dashboard",merchant:"dashboard",marketer:"dashboard",confirmation:"queue"};
-let state={role:"merchant",screen:"dashboard"};
+const FIRST={admin:"dashboard",merchant:"dashboard",marketer:"dashboard"};
+let state={role:"merchant",screen:"dashboard",open:{}};
 
 /* ============ helpers ============ */
 const STC={pending:"#F59E0B",confirmed:"#0D9488",review:"#2DC2B0",packing:"#0EA5E9",
@@ -887,23 +891,20 @@ S["marketer/pdetail"]=()=>{
 };
 
 S["marketer/wishlist"]=()=>{
-  const ps=[["👟","حذاء رياضي","SKU-SN-210",560,true],["🧥","جاكيت خفيف","SKU-JK-031",430,false],
-   ["🎒","شنطة ظهر","SKU-BG-055",320,true],["⌚","ساعة رياضية","SKU-WT-014",890,false]];
+  const ps=[["👟","حذاء رياضي","SKU-SN-210",560],["🧥","جاكيت خفيف","SKU-JK-031",430],
+   ["🎒","شنطة ظهر","SKU-BG-055",320],["⌚","ساعة رياضية","SKU-WT-014",890]];
   return head(t("marketer")+" · "+t("wishlist"),t("wishlist"),lang=="ar"?"المنتجات التي حفظتها تمهيدًا لاستيرادها":"Products you saved to import later")
   +`<div class="pgrid">${ps.map(p=>{
-     const defSell=Math.round(p[3]*1.3), defProfit=defSell-p[3], pushed=p[4];
+     const defSell=Math.round(p[3]*1.3), defProfit=defSell-p[3];
      return `<div class="pcard">
-       <div class="img" style="cursor:pointer;position:relative" onclick="go('pdetail')">${p[0]}
-         <span style="position:absolute;top:8px;inset-inline-end:8px;background:${pushed?'#ECFDF5':'#F1F5F9'};color:${pushed?'#16A34A':'#64748B'};font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;border:1px solid ${pushed?'#A7F3D0':'#E2E8F0'}">${pushed?t('pushedBadge'):t('notPushedBadge')}</span>
-       </div><div class="body">
+       <div class="img" style="cursor:pointer" onclick="go('pdetail')">${p[0]}</div><div class="body">
          <div style="font-weight:700;font-size:13px;margin-bottom:4px">${p[1]}</div>
          <div class="note" style="margin-bottom:8px">${p[2]}</div>
          <div style="font-size:12px;color:var(--muted);margin-bottom:3px">${t("basePrice")}: <b style="color:var(--ink)">${p[3]} ${ccy()}</b></div>
          <div style="font-size:12px;color:var(--muted);margin-bottom:10px">${t("yourProfit")}: <b style="color:#0D9488">${defProfit} ${ccy()}</b></div>
-         <div style="display:flex;gap:6px;flex-wrap:wrap">
-           <button class="btn sm" style="flex:1;justify-content:center;min-width:0;font-size:11.5px">${t("importToStore")}</button>
-           <button class="btn ghost sm" title="${t('pushToStore')}" style="color:#0EA5E9;border-color:#0EA5E9;font-size:11px;padding:5px 8px">↑ Easy</button>
-           <button class="btn ghost sm" style="color:#DC2626;padding:5px 8px">${svg(IC.xmark)}</button>
+         <div style="display:flex;gap:8px">
+           <button class="btn sm" style="flex:1;justify-content:center">${t("importToStore")}</button>
+           <button class="btn ghost sm" style="color:#DC2626">${svg(IC.xmark)}</button>
          </div>
        </div></div>`;}).join('')}</div>`;
 };
@@ -1113,26 +1114,23 @@ S["admin/review"]=()=>head(t("admin")+" · "+t("review"),t("review"),
 
 S["admin/failed"]=()=>{
   const codeStats=[
-    {code:"INVALID_PHONE",count:42,pct:27},
-    {code:"PRICE_BELOW_BASE",count:31,pct:20},
-    {code:"OUT_OF_STOCK",count:27,pct:17},
-    {code:"INTEGRATION_TIMEOUT",count:24,pct:15},
-    {code:"MARKETER_INACTIVE",count:15,pct:10},
-    {code:"INTEGRATION_SCHEMA",count:11,pct:7},
-    {code:"ORDER_TOTAL_MISMATCH",count:8,pct:4}
+    {code:"INVALID_PHONE",count:42,pct:28},
+    {code:"PRICE_BELOW_BASE",count:31,pct:21},
+    {code:"OUT_OF_STOCK",count:27,pct:18},
+    {code:"INTEGRATION_TIMEOUT",count:24,pct:16},
+    {code:"STORE_CLOSED",count:15,pct:10},
+    {code:"INTEGRATION_SCHEMA",count:11,pct:7}
   ];
   const C={INVALID_PHONE:['#B45309','#FEF3C7'],OUT_OF_STOCK:['#C2410C','#FFEDD5'],
-    MARKETER_INACTIVE:['#475569','#F1F5F9'],PRICE_BELOW_BASE:['#DC2626','#FEE2E2'],
-    INTEGRATION_TIMEOUT:['#1D4ED8','#DBEAFE'],INTEGRATION_SCHEMA:['#7C3AED','#EDE9FE'],
-    ORDER_TOTAL_MISMATCH:['#EA580C','#FFF7ED']};
+    STORE_CLOSED:['#475569','#F1F5F9'],PRICE_BELOW_BASE:['#DC2626','#FEE2E2'],
+    INTEGRATION_TIMEOUT:['#1D4ED8','#DBEAFE'],INTEGRATION_SCHEMA:['#7C3AED','#EDE9FE']};
   const total=codeStats.reduce((s,c)=>s+c.count,0);
   const cards=[
     {code:"INVALID_PHONE",order:"A0001-00098721",src:lang=='ar'?'متجر بيسوهولا':'Besouhola',attempts:lang=='ar'?'محاولة يدوية — لم تُصحَّح بعد':'Manual — not fixed yet',auto:false},
     {code:"OUT_OF_STOCK",order:"A0001-00098715",src:lang=='ar'?'متجر Energy Affiliate':'Energy Affiliate',attempts:lang=='ar'?'تلقائي — في انتظار إعادة التوفّر':'Auto — awaiting restock',auto:true},
-    {code:"MARKETER_INACTIVE",order:"A0001-00098710",src:lang=='ar'?'متجر بيسوهولا':'Besouhola',attempts:lang=='ar'?'يدوي — يحتاج مراجعة حالة المسوّق':'Manual — marketer status review needed',auto:false},
+    {code:"STORE_CLOSED",order:"A0001-00098710",src:lang=='ar'?'متجر بيسوهولا':'Besouhola',attempts:lang=='ar'?'تلقائي — ستُرسَل الدفعة عند الفتح':'Auto — batch on open',auto:true},
     {code:"PRICE_BELOW_BASE",order:"A0001-00098702",src:lang=='ar'?'متجر Energy Affiliate':'Energy Affiliate',attempts:lang=='ar'?'يدوي — يحتاج تعديل سعر البيع':'Manual — sell price update needed',auto:false},
-    {code:"ORDER_TOTAL_MISMATCH",order:"A0001-00098698",src:lang=='ar'?'متجر بيسوهولا':'Besouhola',attempts:lang=='ar'?'يدوي — مراجعة تسعير الأصناف مطلوبة':'Manual — item pricing review needed',auto:false},
-    {code:"INTEGRATION_TIMEOUT",order:"A0001-00098693",src:lang=='ar'?'متجر بيسوهولا':'Besouhola',attempts:lang=='ar'?'تلقائي — المحاولة 3 من 5':'Auto — attempt 3/5',auto:true},
+    {code:"INTEGRATION_TIMEOUT",order:"A0001-00098698",src:lang=='ar'?'متجر بيسوهولا':'Besouhola',attempts:lang=='ar'?'تلقائي — المحاولة 3 من 5':'Auto — attempt 3/5',auto:true},
     {code:"INTEGRATION_SCHEMA",order:"A0001-00098690",src:lang=='ar'?'متجر Energy Affiliate':'Energy Affiliate',attempts:lang=='ar'?'يدوي — حقل city مفقود':'Manual — field city missing',auto:false}
   ];
   return head(t("admin")+" · "+t("failed"),t("failed"),
@@ -1161,9 +1159,8 @@ S["admin/failed"]=()=>{
         [t("failCodeLabel"),lang=='ar'?'الاسم بالإنجليزية':'English Name',t("fixAction")],
         [["INVALID_PHONE","Invalid Phone",t("fix_INVALID_PHONE")],
          ["OUT_OF_STOCK","Out of Stock",t("fix_OUT_OF_STOCK")],
-         ["MARKETER_INACTIVE","Marketer Inactive",t("fix_MARKETER_INACTIVE")],
+         ["STORE_CLOSED","Store Closed",t("fix_STORE_CLOSED")],
          ["PRICE_BELOW_BASE","Price Below Base",t("fix_PRICE_BELOW_BASE")],
-         ["ORDER_TOTAL_MISMATCH","Order Total Mismatch",t("fix_ORDER_TOTAL_MISMATCH")],
          ["INTEGRATION_TIMEOUT","Integration Timeout",t("fix_INTEGRATION_TIMEOUT")],
          ["INTEGRATION_SCHEMA","Integration Schema",t("fix_INTEGRATION_SCHEMA")]].map(r=>[failTag(r[0]),r[1],r[2]])
       )}</div></div>
@@ -1489,10 +1486,6 @@ S["merchant/addproduct"]=()=>head(t("merchant")+" · "+t("addproduct"),t("addpro
   lang=="ar"?"أدخل بيانات المنتج وسعره وصوره":"Enter product details, price, and images",
   `<button class="btn sm">${t("save")}</button>`)
  +`<div class="info-banner">${svg(IC.alert)} ${t("adminReviewNote")}</div>
-  <div style="display:flex;gap:0;margin-bottom:16px;border:1px solid var(--line);border-radius:10px;overflow:hidden;width:fit-content">
-    <button id="apToggleSimple" onclick="document.getElementById('apSimple').style.display='';document.getElementById('apVariants').style.display='none';this.style.background='var(--brand)';this.style.color='#fff';document.getElementById('apToggleVar').style.background='';document.getElementById('apToggleVar').style.color=''" style="padding:8px 20px;font-size:12.5px;font-weight:700;border:none;cursor:pointer;background:var(--brand);color:#fff">${lang=="ar"?'منتج بسيط':'Simple Product'}</button>
-    <button id="apToggleVar" onclick="document.getElementById('apVariants').style.display='';document.getElementById('apSimple').style.display='none';this.style.background='var(--brand)';this.style.color='#fff';document.getElementById('apToggleSimple').style.background='';document.getElementById('apToggleSimple').style.color=''" style="padding:8px 20px;font-size:12.5px;font-weight:700;border:none;cursor:pointer;background:;color:''">${lang=="ar"?'منتج بمتغيّرات':'Product with Variants'}</button>
-  </div>
   <div class="split3">
    <div class="card"><div class="ch"><h3>${lang=="ar"?"بيانات أساسية":"Basic info"}</h3></div><div class="cb">
      <div class="field"><label>${t("f_name")}</label><input value="${lang=="ar"?'تيشيرت رياضي نص كم':'Sport Half-Sleeve Tee'}"></div>
@@ -1500,9 +1493,15 @@ S["merchant/addproduct"]=()=>head(t("merchant")+" · "+t("addproduct"),t("addpro
        <select><option>${lang=="ar"?'ملابس رجالي':'Men Clothing'}</option><option>${lang=="ar"?'معدّات رياضية':'Sportswear'}</option></select></div>
      <div class="field"><label>${t("f_desc")}</label>
        <textarea rows="3">${lang=="ar"?'تيشيرت قطن مريح بقصّة عصرية، متوفّر بعدة ألوان ومقاسات.':'Comfortable cotton tee with a modern fit, available in several colors and sizes.'}</textarea></div>
-     <div id="apSimple">
-       <div class="field"><label>${lang=="ar"?'سعر القطعة':'Unit Price'} (${ccy()})</label><input type="number" value="185">
-         <div class="note" style="margin-top:5px">${t("basePriceNote")}</div></div>
+     <div class="field"><label>${lang=="ar"?'سعر القطعة':'Unit Price'} (${ccy()})</label><input type="number" value="185">
+       <div class="note" style="margin-top:5px">${t("basePriceNote")}</div></div>
+     <div style="margin-bottom:14px">
+       <label style="display:flex;align-items:center;gap:9px;font-size:13px;font-weight:700;cursor:pointer">
+         <input type="checkbox" id="hasVariants" onchange="document.getElementById('varSection').style.display=this.checked?'block':'none';document.getElementById('simpleQty').style.display=this.checked?'none':'block'" style="width:auto">
+         ${lang=="ar"?'منتج بمتغيّرات (لون/مقاس)':'Product with variants (color/size)'}
+       </label>
+     </div>
+     <div id="simpleQty">
        <div class="field"><label>${t("f_qty")}</label><input type="number" value="100" min="1"></div>
      </div>
    </div></div>
@@ -1521,13 +1520,13 @@ S["merchant/addproduct"]=()=>head(t("merchant")+" · "+t("addproduct"),t("addpro
          <input type="checkbox" checked style="width:auto"> ${lang=="ar"?'إتاحته في سوق المسوّقين':'List in marketer marketplace'}</label>
      </div></div>
    </div></div>
-   <div id="apVariants" class="card" style="margin-top:16px;display:none"><div class="ch"><h3>${t("f_variants")}</h3>
+   <div id="varSection" class="card" style="margin-top:16px;display:none"><div class="ch"><h3>${t("f_variants")}</h3>
      <button class="btn ghost sm">+ ${t("addvar")}</button></div>
-     <div class="cb" style="padding:0">${tbl([t("f_color"),t("f_size"),lang=="ar"?'سعر القطعة':'Unit Price',t("f_qty"),"SKU"],
-       [[lang=="ar"?'أسود':'Black',"M","185 "+ccy(),"120","TS-104-BM"],
-        [lang=="ar"?'أسود':'Black',"L","185 "+ccy(),"96","TS-104-BL"],
-        [lang=="ar"?'أبيض':'White',"M","195 "+ccy(),"64","TS-104-WM"],
-        [lang=="ar"?'كحلي':'Navy',"L","195 "+ccy(),"40","TS-104-NL"]])}</div></div>`;
+     <div class="cb" style="padding:0">${tbl([t("f_color"),t("f_size"),t("f_qty"),"SKU"],
+       [[lang=="ar"?'أسود':'Black',"M","120","TS-104-BM"],
+        [lang=="ar"?'أسود':'Black',"L","96","TS-104-BL"],
+        [lang=="ar"?'أبيض':'White',"M","64","TS-104-WM"],
+        [lang=="ar"?'كحلي':'Navy',"L","40","TS-104-NL"]])}</div></div>`;
 
 S["marketer/dashboard"]=()=>head(t("marketer")+" · "+t("dashboard"),t("dashboard"),
   lang=="ar"?"أرباحك وأداء متجرك ومنتجاتك المستوردة":"Your earnings and your store's imported products performance")
@@ -1661,13 +1660,12 @@ S["marketer/failed"]=()=>{
   const cards=[
     {code:"INVALID_PHONE",order:"M0042-00012388",src:"متجر Energy Affiliate",attempts:lang=="ar"?"محاولة يدوية — لم تُصحَّح بعد":"Manual — not fixed yet",auto:false},
     {code:"OUT_OF_STOCK",order:"M0042-00012371",src:"متجر Energy Affiliate",attempts:lang=="ar"?"تلقائي — في انتظار إعادة التوفّر":"Auto — awaiting restock",auto:true},
-    {code:"ORDER_TOTAL_MISMATCH",order:"M0042-00012366",src:"متجر Energy Affiliate",attempts:lang=="ar"?"يدوي — مراجعة تسعير الأصناف مطلوبة":"Manual — item pricing review needed",auto:false},
-    {code:"MARKETER_INACTIVE",order:"M0042-00012365",src:"متجر Energy Affiliate",attempts:lang=="ar"?"يدوي — يحتاج مراجعة حالة المسوّق":"Manual — marketer status review needed",auto:false},
+    {code:"STORE_CLOSED",order:"M0042-00012365",src:"متجر Energy Affiliate",attempts:lang=="ar"?"تلقائي — ستُرسَل الدفعة عند الفتح":"Auto — batch on open",auto:true},
     {code:"PRICE_BELOW_BASE",order:"M0042-00012359",src:"متجر Energy Affiliate",attempts:lang=="ar"?"يدوي — يحتاج تعديل سعر البيع":"Manual — sell price update needed",auto:false},
     {code:"INTEGRATION_TIMEOUT",order:"M0042-00012341",src:"متجر Energy Affiliate",attempts:lang=="ar"?"تلقائي — المحاولة 3 من 5":"Auto — attempt 3/5",auto:true},
     {code:"INTEGRATION_SCHEMA",order:"M0042-00012330",src:"متجر Energy Affiliate",attempts:lang=="ar"?"يدوي — حقل 'city' مفقود":"Manual — field 'city' missing",auto:false}
   ];
-  const causes=["INVALID_PHONE","OUT_OF_STOCK","ORDER_TOTAL_MISMATCH","MARKETER_INACTIVE","PRICE_BELOW_BASE","INTEGRATION_TIMEOUT","INTEGRATION_SCHEMA"];
+  const causes=["INVALID_PHONE","OUT_OF_STOCK","STORE_CLOSED","PRICE_BELOW_BASE","INTEGRATION_TIMEOUT","INTEGRATION_SCHEMA"];
   return head(t("marketer")+" · "+t("failed"),t("failed"),lang=="ar"?"كل طلب فاشل له سبب واضح وزرّ إصلاح؛ بعض الأسباب تُعاد محاولتها تلقائيًا":"Every failed order has a clear reason and a fix button; some causes retry automatically")
   +`<div class="chips"><button class="chip on" onclick="chip(this)">${t("allCauses")}</button>
     ${causes.map(c=>`<button class="chip" onclick="chip(this)">${c.replace('_',' ')}</button>`).join('')}</div>
@@ -1857,17 +1855,13 @@ S["marketer/wallet"]=()=>head(t("marketer")+" · "+t("wallet"),t("wallet"),
    <button onclick="setTab('earn',this)">${lang=='ar'?'إحصائيات الأرباح':'Earnings Stats'}</button>
  </div>
  <div id="tab-txns" class="tabpane on">
-   <div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:12.5px;color:#92400E;font-weight:600">
-     ${svg(IC.alert)} ${lang=='ar'?'تُخصَم تكلفة الشحن والإرجاع من رصيدك عند رفض/إرجاع الطلب':'Shipping and return costs are deducted from your balance when an order is rejected/returned'}
-   </div>
    <div class="card"><div class="cb" style="padding:0">${tbl(
-     [lang=="ar"?'النوع':'Type',t("c_product"),t("orderCode"),t("deliveryDate"),lang=="ar"?'المبلغ':'Amount',t("availableOn"),t("c_status")],
-     [[tag(lang=="ar"?'ربح توصيل':'Delivery Profit','#16A34A'),prod("👕","تيشيرت رياضي",""),"M0042-00012345","2026/05/19",`<b style="color:#16A34A">+ 55 ${ccy()}</b>`,"2026/05/26",tag(t("availableStatus"),"#16A34A")],
-      [tag(lang=="ar"?'ربح توصيل':'Delivery Profit','#16A34A'),prod("🩳","بنطلون شورت",""),"M0042-00012312","2026/05/17",`<b style="color:#16A34A">+ 60 ${ccy()}</b>`,"2026/05/24",tag(t("pendingStatus"),"#F59E0B")],
-      [tag(lang=="ar"?'ربح توصيل':'Delivery Profit','#16A34A'),prod("👟","حذاء رياضي",""),"M0042-00012290","2026/05/15",`<b style="color:#16A34A">+ 160 ${ccy()}</b>`,"—",tag(t("returnedStatus"),"#DC2626")],
-      [tag(lang=="ar"?'خصم شحن إرجاع':'Return Shipping Deduct','#DC2626'),prod("👟","حذاء رياضي",""),"M0042-00012290","2026/05/17",`<b style="color:#DC2626">- 25 ${ccy()}</b>`,"—",tag(lang=="ar"?'مُخصوم':'Deducted','#DC2626')],
-      [tag(lang=="ar"?'ربح توصيل':'Delivery Profit','#16A34A'),prod("🎒","شنطة ظهر",""),"M0042-00012280","2026/05/14",`<b style="color:#16A34A">+ 95 ${ccy()}</b>`,"2026/05/21",tag(t("pendingStatus"),"#F59E0B")],
-      [tag(lang=="ar"?'ربح توصيل':'Delivery Profit','#16A34A'),prod("👕","تيشيرت كاجوال",""),"M0042-00012270","2026/05/13",`<b style="color:#16A34A">+ 40 ${ccy()}</b>`,"2026/05/20",tag(t("availableStatus"),"#16A34A")]])
+     [t("c_product"),t("orderCode"),t("deliveryDate"),lang=="ar"?'ربحك':'Profit',t("availableOn"),t("c_status")],
+     [[prod("👕","تيشيرت رياضي",""),"M0042-00012345","2026/05/19","+ 55 "+ccy(),"2026/05/26",tag(t("availableStatus"),"#16A34A")],
+      [prod("🩳","بنطلون شورت",""),"M0042-00012312","2026/05/17","+ 60 "+ccy(),"2026/05/24",tag(t("pendingStatus"),"#F59E0B")],
+      [prod("👟","حذاء رياضي",""),"M0042-00012290","2026/05/15","+ 160 "+ccy(),"—",tag(t("returnedStatus"),"#DC2626")],
+      [prod("🎒","شنطة ظهر",""),"M0042-00012280","2026/05/14","+ 95 "+ccy(),"2026/05/21",tag(t("pendingStatus"),"#F59E0B")],
+      [prod("👕","تيشيرت كاجوال",""),"M0042-00012270","2026/05/13","+ 40 "+ccy(),"2026/05/20",tag(t("availableStatus"),"#16A34A")]])
    }</div></div>
    ${pager(38)}
  </div>
@@ -1898,10 +1892,6 @@ function orderFilterBar(opts){
   opts=opts||{};
   return `<div class="filter-bar" style="margin-bottom:10px">
     <input type="search" placeholder="${lang=='ar'?'بحث: كود الطلب أو اسم العميل أو الهاتف':'Search: order code, customer, phone'}" style="flex:1;min-width:220px">
-    <label>${t('fromDate')}</label>
-    <input type="text" value="${lang=='ar'?'١ مايو ٢٠٢٦':'1 May 2026'}" style="width:110px">
-    <label>${t('toDate')}</label>
-    <input type="text" value="${lang=='ar'?'٣٠ مايو ٢٠٢٦':'30 May 2026'}" style="width:110px">
     <label>${t('govLabel')}</label>
     <select><option>${lang=='ar'?'كل المحافظات':'All'}</option>${govs().map(g=>`<option>${g}</option>`).join('')}</select>
     ${opts.marketer?`<label>${t('marketerLabel')}</label><select><option>${lang=='ar'?'كل المسوّقين':'All'}</option><option>محمد سمير</option><option>رنا خالد</option><option>عمرو زكي</option><option>هبة سامي</option></select>`:''}
@@ -1927,6 +1917,8 @@ function dateFilterBar(){
     <input type="text" value="${lang=='ar'?'١ مايو ٢٠٢٦':'1 May 2026'}" style="width:140px">
     <label>${t("toDate")}</label>
     <input type="text" value="${lang=='ar'?'٣٠ مايو ٢٠٢٦':'30 May 2026'}" style="width:140px">
+    <label>${t("country")}</label>
+    <select onchange="country=this.value;renderAll()" style="padding:7px 11px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:12.5px;background:var(--bg);color:var(--ink)"><option value="EG"${country==='EG'?' selected':''}>${t('country_EG')}</option><option value="SA"${country==='SA'?' selected':''}>${t('country_SA')}</option></select>
     <button class="btn sm">${t("applyFilter")}</button>
   </div>`;
 }
@@ -1938,88 +1930,15 @@ function quickDate(){return `<div class="chips qd" style="margin-bottom:14px">
 </div>`;}
 
 function intgBody(){
-  const isMarketer=state.role==='marketer';
   return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-    ${INTEGRATIONS[country].map(int=>{
-      const isEasyConn=isMarketer&&int.id==='easy'&&int.status==='connected';
-      return `<div class="card"><div class="cb" style="display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap">
+    ${INTEGRATIONS[country].map(int=>`
+      <div class="card"><div class="cb" style="display:flex;align-items:center;gap:14px">
         <div style="width:46px;height:46px;border-radius:12px;background:${int.color}22;display:grid;place-items:center;font-weight:800;font-size:20px;color:${int.color};flex-shrink:0">${int.icon}</div>
-        <div style="flex:1;min-width:0">
-          <div style="font-weight:800;font-size:14px">${int.name}</div>
-          <div class="note">${int.status==='connected'?(lang=='ar'?'متصل':'Connected'):(lang=='ar'?'متاح':'Available')}</div>
-          ${isEasyConn?`<div class="note" style="margin-top:4px">${t('lastPush')}: <b>2026/06/01 12:30</b></div>
-          <div class="note">${t('pushedCount')}: <b style="color:#0D9488">4</b></div>`:''}
-        </div>
-        <div style="display:flex;flex-direction:column;gap:7px;align-items:flex-end;flex-shrink:0">
-          <button class="btn sm" ${int.status==='connected'?'style="background:var(--soft);color:var(--brand)"':''}>${int.status==='connected'?t('manage'):t('connect')}</button>
-          ${isEasyConn?`<button class="btn ghost sm" style="font-size:11.5px;white-space:nowrap">${t('selectPush')}</button>`:''}
-        </div>
-      </div></div>`;
-    }).join('')}
+        <div style="flex:1"><div style="font-weight:800;font-size:14px">${int.name}</div>
+          <div class="note">${int.status==='connected'?(lang=='ar'?'متصل':'Connected'):(lang=='ar'?'متاح':'Available')}</div></div>
+        <button class="btn sm" ${int.status==='connected'?'style="background:var(--soft);color:var(--brand)"':''}>${int.status==='connected'?t('manage'):t('connect')}</button>
+      </div></div>`).join('')}
   </div>`;}
-
-S["admin/errors"]=()=>{
-  const C={INVALID_PHONE:['#B45309','#FEF3C7'],OUT_OF_STOCK:['#C2410C','#FFEDD5'],
-    MARKETER_INACTIVE:['#475569','#F1F5F9'],PRICE_BELOW_BASE:['#DC2626','#FEE2E2'],
-    INTEGRATION_TIMEOUT:['#1D4ED8','#DBEAFE'],INTEGRATION_SCHEMA:['#7C3AED','#EDE9FE'],
-    ORDER_TOTAL_MISMATCH:['#EA580C','#FFF7ED']};
-  return head(t("admin")+" · "+t("errors"),t("errors"),
-    lang=="ar"?"مرجع شامل لأكواد أخطاء المنصّة وإجراءات الإصلاح":"Comprehensive reference for platform error codes and fix actions")
-  +`<div class="card"><div class="ch"><h3>${t("failedCatalog")}</h3></div>
-    <div class="cb" style="padding:0">${tbl(
-      [t("failCodeLabel"),lang=='ar'?'الاسم بالإنجليزية':'English Name',lang=='ar'?'الوصف':'Description',t("fixAction"),lang=='ar'?'تلقائي؟':'Auto?'],
-      [["INVALID_PHONE","Invalid Phone",t("desc_INVALID_PHONE"),t("fix_INVALID_PHONE"),lang=='ar'?'لا':'No'],
-       ["OUT_OF_STOCK","Out of Stock",t("desc_OUT_OF_STOCK"),t("fix_OUT_OF_STOCK"),lang=='ar'?'جزئياً':'Partial'],
-       ["MARKETER_INACTIVE","Marketer Inactive",t("desc_MARKETER_INACTIVE"),t("fix_MARKETER_INACTIVE"),lang=='ar'?'لا':'No'],
-       ["PRICE_BELOW_BASE","Price Below Base",t("desc_PRICE_BELOW_BASE"),t("fix_PRICE_BELOW_BASE"),lang=='ar'?'لا':'No'],
-       ["INTEGRATION_TIMEOUT","Integration Timeout",t("desc_INTEGRATION_TIMEOUT"),t("fix_INTEGRATION_TIMEOUT"),lang=='ar'?'نعم':'Yes'],
-       ["INTEGRATION_SCHEMA","Integration Schema",t("desc_INTEGRATION_SCHEMA"),t("fix_INTEGRATION_SCHEMA"),lang=='ar'?'لا':'No'],
-       ["ORDER_TOTAL_MISMATCH","Order Total Mismatch",t("desc_ORDER_TOTAL_MISMATCH"),t("fix_ORDER_TOTAL_MISMATCH"),lang=='ar'?'لا':'No']]
-      .map(r=>[`<span class="ftag" style="color:${C[r[0]][0]};background:${C[r[0]][1]}">${r[0]}</span>`,r[1],`<span style="font-size:12px;color:var(--slate)">${r[2]}</span>`,r[3],r[4]])
-    )}</div></div>`;
-};
-
-S["merchant/wallet"]=()=>head(t("merchant")+" · "+t("wallet"),t("wallet"),
-  lang=="ar"?"مستحقّاتك وحركاتك المالية وتسويات المنصّة":"Your dues, financial transactions and platform settlements")
- +`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px">
-   <div class="banner" style="margin:0;flex-direction:column;align-items:flex-start;gap:5px;padding:18px 20px">
-     <p style="color:#93DDD2;font-size:12px">${t("netDue")}</p>
-     <h2 style="font-size:28px">12,480 <span style="font-size:16px">${ccy()}</span></h2>
-     <button class="btn" style="background:#fff;color:#0D9488;margin-top:6px;font-size:12px;padding:7px 14px">${lang=='ar'?'طلب تسوية':'Request Settlement'}</button></div>
-   <div class="kpi"><div class="top"><div class="ico" style="background:#FEF3C7;color:#D97706">${svg(IC.money)}</div></div>
-     <div class="lbl">${lang=='ar'?'قيد التحصيل':'Pending Collection'}</div><div class="val">3,840 <small style="font-size:14px">${ccy()}</small></div></div>
-   <div class="kpi"><div class="top"><div class="ico" style="background:#ECFDF5;color:#16A34A">${svg(IC.money)}</div></div>
-     <div class="lbl">${lang=='ar'?'إجمالي المستحقّات':'Total Dues'}</div><div class="val">94,200 <small style="font-size:14px">${ccy()}</small></div></div>
- </div>
- <div class="info-banner">${svg(IC.alert)}${lang=='ar'?'يُحتسب مستحقّك بسعر القطعة عن كل طلب مُسلَّم، وتُصرف عبر تسوية دورية من المنصّة.':'Your dues are calculated at the unit price for each delivered order and disbursed via periodic platform settlements.'}</div>
- <div class="tabs">
-   <button class="on" onclick="setTab('mw_txns',this)">${lang=='ar'?'الحركات':'Transactions'}</button>
-   <button onclick="setTab('mw_settle',this)">${lang=='ar'?'التسويات':'Settlements'}</button>
- </div>
- <div id="tab-mw_txns" class="tabpane on">
-   ${quickDate()}${orderFilterBar({})}
-   <div class="card"><div class="cb" style="padding:0">${tbl(
-     [t("c_product"),t("orderCode"),lang=='ar'?'تاريخ التسليم':'Delivery Date',lang=='ar'?'مستحقّك':'Due to You',t("c_status")],
-     [[prod("👕","تيشيرت رياضي نص كم","SKU-4821"),"M0042-00015301","2026/05/28","+ 85 "+ccy(),tag(lang=='ar'?'مستحق':'Due','#0D9488')],
-      [prod("👟","حذاء رياضي جلد","SKU-3147"),"M0042-00015288","2026/05/27","+ 120 "+ccy(),tag(lang=='ar'?'قيد التحصيل':'Pending','#F59E0B')],
-      [prod("🎒","شنطة ظهر كانفاس","SKU-2093"),"M0042-00015271","2026/05/26","+ 95 "+ccy(),tag(lang=='ar'?'مُسوَّى':'Settled','#16A34A')],
-      [prod("🩳","بنطلون شورت","SKU-5512"),"M0042-00015260","2026/05/25","+ 65 "+ccy(),tag(lang=='ar'?'مُسوَّى':'Settled','#16A34A')],
-      [prod("🧢","قبّعة رياضية","SKU-1834"),"M0042-00015244","2026/05/24","+ 40 "+ccy(),tag(lang=='ar'?'مرتجع':'Returned','#DC2626')]]
-   )}</div></div>
-   ${pager(148)}
- </div>
- <div id="tab-mw_settle" class="tabpane">
-   ${dateFilterBar()}
-   <div class="card"><div class="cb" style="padding:0">${tbl(
-     [lang=='ar'?'رقم التسوية':'Settlement No.',lang=='ar'?'التاريخ':'Date',lang=='ar'?'عدد الطلبات':'Orders',lang=='ar'?'المبلغ':'Amount',t("c_status")],
-     [["SET-2026-005","2026/05/31","38","3,240 "+ccy(),tag(lang=='ar'?'مدفوعة':'Paid','#16A34A')],
-      ["SET-2026-004","2026/04/30","51","4,590 "+ccy(),tag(lang=='ar'?'مدفوعة':'Paid','#16A34A')],
-      ["SET-2026-003","2026/03/31","44","3,960 "+ccy(),tag(lang=='ar'?'مدفوعة':'Paid','#16A34A')],
-      ["SET-2026-002","2026/02/28","29","2,610 "+ccy(),tag(lang=='ar'?'مدفوعة':'Paid','#16A34A')],
-      ["SET-2026-001","2026/01/31","22","1,980 "+ccy(),tag(lang=='ar'?'مدفوعة':'Paid','#16A34A')]]
-   )}</div></div>
-   ${pager(5)}
- </div>`;
 
 S["admin/integrations"]=()=>head(t("admin")+" · "+t("integrations"),t("integrations"),
   lang=="ar"?"إدارة تكاملات المنصّة مع منصّات التجارة الإلكترونية":"Manage platform integrations with e-commerce platforms")+intgBody();
@@ -2030,9 +1949,8 @@ S["marketer/integrations"]=()=>head(t("marketer")+" · "+t("integrations"),t("in
 
 function failTag(code){
   const C={INVALID_PHONE:['#B45309','#FEF3C7'],OUT_OF_STOCK:['#C2410C','#FFEDD5'],
-    MARKETER_INACTIVE:['#475569','#F1F5F9'],PRICE_BELOW_BASE:['#DC2626','#FEE2E2'],
-    INTEGRATION_TIMEOUT:['#1D4ED8','#DBEAFE'],INTEGRATION_SCHEMA:['#7C3AED','#EDE9FE'],
-    ORDER_TOTAL_MISMATCH:['#EA580C','#FFF7ED']};
+    STORE_CLOSED:['#475569','#F1F5F9'],PRICE_BELOW_BASE:['#DC2626','#FEE2E2'],
+    INTEGRATION_TIMEOUT:['#1D4ED8','#DBEAFE'],INTEGRATION_SCHEMA:['#7C3AED','#EDE9FE']};
   const [c,b]=C[code]||['#475569','#F1F5F9'];
   return `<span class="ftag" style="color:${c};background:${b}">${code}</span>`;
 }
@@ -2164,127 +2082,22 @@ function ordTableRich(rows,opts){
   return html;
 }
 
-/* ============ confirmation screens ============ */
-S["confirmation/queue"]=()=>head(t("confirmation")+" · "+t("queue"),t("queue"),
-  lang=="ar"?"الطلبات المعيَّنة إليك تلقائيًا — افتح أي طلب لبدء التأكيد":"Orders auto-assigned to you — open any order to start confirmation")
- +`<div class="info-banner">${svg(IC.alert)} ${lang=="ar"?"التوزيع تلقائي — يُسنَد التالي إليك آليًا":"Distribution is automatic — the next order is assigned to you automatically"}</div>
- <div class="grid kpis" style="margin-bottom:16px">
-   ${kpi('history','#D8F1ED','#0D9488',lang=='ar'?'في الطابور':'In Queue',"8","",true)}
-   ${kpi('cart','#FEF3C7','#D97706',lang=='ar'?'قيد المعالجة':'In Progress',"3","",true)}
-   ${kpi('check','#ECFDF5','#16A34A',lang=='ar'?'تم اليوم':'Done Today',"14","",true)}
-   ${kpi('chart','#D8F1ED','#2DC2B0',lang=='ar'?'نسبة نجاحي':'My Success Rate',"84%","",true)}
- </div>
- <div class="card"><div class="cb" style="padding:0">${tbl(
-   [t("orderCode"),t("c_customer"),lang=='ar'?'الهاتف':'Phone',t("govLabel"),lang=='ar'?'المنتج/الكمية':'Product/Qty',t("c_total"),lang=='ar'?'المصدر':'Source',t("c_action")],
-   [["M0042-00012388",lang=='ar'?'سارة محمود':'Sara Mahmoud',"010•••5678",govs()[0],prod("👕",lang=='ar'?'تيشيرت':'Tee',"×1"),"240 "+ccy(),"Easy Orders",`<button class="btn sm" onclick="go('order')">${lang=='ar'?'ابدأ التأكيد':'Start'}</button>`],
-    ["M0042-00012385",lang=='ar'?'كريم فؤاد':'Karim Fouad',"011•••3456",govs()[1],prod("🩳",lang=='ar'?'شورت':'Shorts',"×2"),"540 "+ccy(),lang=='ar'?'يدوي':'Manual',`<button class="btn sm" onclick="go('order')">${lang=='ar'?'ابدأ التأكيد':'Start'}</button>`],
-    ["M0042-00012381",lang=='ar'?'منى عبدالله':'Mona Abdullah',"015•••1234",govs()[2],prod("👟",lang=='ar'?'حذاء':'Shoes',"×1"),"720 "+ccy(),"Easy Orders",`<button class="btn sm" onclick="go('order')">${lang=='ar'?'ابدأ التأكيد':'Start'}</button>`],
-    ["M0042-00012379",lang=='ar'?'طارق سمير':'Tarek Samir',"012•••9876",govs()[3],prod("🎒",lang=='ar'?'شنطة':'Bag',"×1"),"415 "+ccy(),lang=='ar'?'يدوي':'Manual',`<button class="btn sm" onclick="go('order')">${lang=='ar'?'ابدأ التأكيد':'Start'}</button>`],
-    ["M0042-00012374",lang=='ar'?'ليلى حسن':'Layla Hassan',"010•••7722",govs()[4],prod("👕",lang=='ar'?'تيشيرت':'Tee',"×1"),"205 "+ccy(),"Easy Orders",`<button class="btn sm" onclick="go('order')">${lang=='ar'?'ابدأ التأكيد':'Start'}</button>`],
-    ["M0042-00012368",lang=='ar'?'أحمد نبيل':'Ahmed Nabil',"011•••4411",govs()[5],prod("🩳",lang=='ar'?'شورت':'Shorts',"×1"),"270 "+ccy(),lang=='ar'?'يدوي':'Manual',`<button class="btn sm" onclick="go('order')">${lang=='ar'?'ابدأ التأكيد':'Start'}</button>`]]
- )}</div>${pager(8)}</div>`;
-
-S["confirmation/order"]=()=>head(t("confirmation")+" · "+(lang=='ar'?'تأكيد طلب':'Confirm Order'),
-  lang=='ar'?'تأكيد طلب':'Confirm Order','',
-  `<button class="btn ghost sm" onclick="go('queue')">← ${t("queue")}</button>`)
- +`<div class="info-banner">${svg(IC.alert)} ${lang=='ar'?'تأكيد الطلب يحجز المخزون تلقائيًا':'Confirming the order automatically reserves inventory'}</div>
-  <div class="split2" style="margin-bottom:16px">
-    <div class="card"><div class="ch">
-      <h3>${lang=='ar'?'بيانات العميل':'Customer Info'}</h3>
-      <button class="btn ghost sm" style="color:#0D9488;border-color:#0D9488">${svg(IC.check)} ${lang=='ar'?'اتصلت بالعميل':'Called Customer'}</button>
-    </div><div class="cb">
-      <div class="frow">
-        <div class="field"><label>${lang=='ar'?'الاسم':'Name'}</label><input value="${lang=='ar'?'سارة محمود':'Sara Mahmoud'}"></div>
-        <div class="field"><label>${lang=='ar'?'الهاتف':'Phone'}</label><input value="01012345678"></div>
-      </div>
-      <div class="frow">
-        <div class="field"><label>${t('govLabel')}</label>
-          <select>${govs().map((g,i)=>`<option${i===0?' selected':''}>${g}</option>`).join('')}</select></div>
-        <div class="field"><label>${lang=='ar'?'المدينة':'City'}</label><input value="${lang=='ar'?'مدينة نصر':'Nasr City'}"></div>
-      </div>
-      <div class="field"><label>${lang=='ar'?'العنوان التفصيلي':'Address'}</label>
-        <input value="${lang=='ar'?'شارع عباس — عمارة 12 — دور 2 — شقة 8':'Abbas St, Bldg 12, Fl. 2, Apt. 8'}"></div>
-      <div class="field"><label>${lang=='ar'?'ملاحظة':'Note'}</label>
-        <textarea rows="2" placeholder="${lang=='ar'?'ملاحظة حول الطلب…':'Order note…'}"></textarea></div>
-    </div></div>
-    <div>
-      <div class="card" style="margin-bottom:14px"><div class="ch"><h3>${lang=='ar'?'نتيجة التأكيد':'Confirmation Result'}</h3></div>
-        <div class="cb" style="display:flex;flex-direction:column;gap:8px">
-          <button class="btn ok" style="width:100%;justify-content:center">${svg(IC.check)} ${lang=='ar'?'تأكيد الطلب':'Confirm Order'}</button>
-          <button class="btn" style="width:100%;justify-content:center;background:#DC2626">${svg(IC.xmark)} ${lang=='ar'?'رفض الطلب':'Reject Order'}</button>
-          <div style="display:flex;gap:8px;align-items:center">
-            <button class="btn ghost" style="flex:1;justify-content:center;color:#7C3AED;border-color:#7C3AED">
-              📅 ${lang=='ar'?'تأجيل / إعادة جدولة':'Reschedule'}
-            </button>
-            <input type="date" style="padding:7px 10px;border:1px solid #C4B5FD;border-radius:8px;font-family:inherit;font-size:12px;color:#7C3AED;background:var(--card)">
-          </div>
-          <button class="btn ghost" style="width:100%;justify-content:center;color:#25D366;border-color:#25D366">
-            💬 ${lang=='ar'?'واتساب':'WhatsApp'}
-          </button>
-        </div></div>
-      <div class="card"><div class="ch"><h3>${lang=='ar'?'ملخّص الطلب':'Order Summary'} <span class="note">${lang=='ar'?'للقراءة فقط':'read-only'}</span></h3></div>
-        <div class="cb" style="padding:0">${tbl(
-          [lang=='ar'?'الصنف':'Item','SKU',t('qty'),lang=='ar'?'سعر البيع':'Price',t('c_total')],
-          [[lang=='ar'?'تيشيرت رياضي':'Sport Tee',"SKU-TS-104","1","240 "+ccy(),"240 "+ccy()],
-           [lang=='ar'?'بنطلون شورت':'Sport Shorts',"SKU-SH-088","2","270 "+ccy(),"540 "+ccy()]]
-        )}
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid var(--line)">
-          <b>${lang=='ar'?'الإجمالي الكلي':'Grand Total'}</b>
-          <b style="font-size:17px;color:#0D9488">780 ${ccy()}</b>
-        </div></div></div>
-    </div>
-  </div>`;
-
-S["confirmation/myorders"]=()=>head(t("confirmation")+" · "+t("myorders"),t("myorders"),
-  lang=="ar"?"الطلبات التي تعمل عليها حاليًا أو أكّدتها":"Orders you are currently working on or have confirmed")
- +`<div class="grid kpis" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px">
-   ${kpi('cart','#D8F1ED','#0D9488',lang=='ar'?'قيد العمل':'Active',"3","",true)}
-   ${kpi('check','#ECFDF5','#16A34A',lang=='ar'?'أكّدت اليوم':'Confirmed Today',"14","",true)}
-   ${kpi('xmark','#FEE2E2','#DC2626',lang=='ar'?'مرفوضة اليوم':'Rejected Today',"2","",false)}
- </div>
- <div class="card"><div class="cb" style="padding:0">${tbl(
-   [t("orderCode"),t("c_customer"),t("govLabel"),lang=='ar'?'المنتج':'Product',t("c_total"),t("c_status"),t("c_action")],
-   [["M0042-00012388",lang=='ar'?'سارة محمود':'Sara Mahmoud',govs()[0],prod("👕",lang=='ar'?'تيشيرت':'Tee',""),"240 "+ccy(),stTag("confirmed"),`<button class="btn ghost sm">${lang=='ar'?'عرض':'View'}</button>`],
-    ["M0042-00012385",lang=='ar'?'كريم فؤاد':'Karim Fouad',govs()[1],prod("🩳",lang=='ar'?'شورت':'Shorts',""),"540 "+ccy(),stTag("pending"),`<button class="btn sm" onclick="go('order')">${lang=='ar'?'تأكيد':'Confirm'}</button>`],
-    ["M0042-00012379",lang=='ar'?'طارق سمير':'Tarek Samir',govs()[3],prod("🎒",lang=='ar'?'شنطة':'Bag',""),"415 "+ccy(),stTag("delay"),`<button class="btn ghost sm">${lang=='ar'?'إعادة جدولة':'Reschedule'}</button>`]]
- )}</div></div>`;
-
-S["confirmation/perf"]=()=>head(t("confirmation")+" · "+t("perf"),t("perf"),
-  lang=='ar'?'أداؤك كوكيل تأكيد — آخر 7 أيام':'Your performance as a confirmation agent — last 7 days')
- +quickDate()
- +`<div class="grid kpis" style="margin-bottom:16px">
-   ${kpi('check','#ECFDF5','#16A34A',lang=='ar'?'عدد التأكيدات':'Confirmations',"84","5%",true)}
-   ${kpi('chart','#D8F1ED','#0D9488',lang=='ar'?'نسبة النجاح':'Success Rate',"84%","2%",true)}
-   ${kpi('history','#D8F1ED','#2DC2B0',lang=='ar'?'متوسط زمن المعالجة':'Avg Handle Time',"3:40","0:20",false)}
-   ${kpi('alert','#FEE2E2','#DC2626',lang=='ar'?'مرفوضة':'Rejected',"12","1",false)}
- </div>
- <div class="card"><div class="ch"><h3>${lang=='ar'?'التأكيدات — آخر 7 أيام':'Confirmations — last 7 days'}</h3></div>
-   <div class="cb">${bars(lang=='ar'?
-     [["السبت",10],["الأحد",14],["الاثنين",12],["الثلاثاء",15],["الأربعاء",11],["الخميس",17],["الجمعة",5]]
-     :[["Sat",10],["Sun",14],["Mon",12],["Tue",15],["Wed",11],["Thu",17],["Fri",5]])}
-   </div></div>`;
-
-S["confirmation/activity"]=()=>head(t("confirmation")+" · "+t("activity"),t("activity"),t("actSubMine"))
- +actFilter()
- +`<div class="card"><div class="cb" style="padding:0">${tbl(
-   [t("c_when"),t("c_category"),t("c_event"),t("c_ip")],
-   [["2026/06/01 14:32",actTag("order"),lang=="ar"?"أكّدت الطلب M0042-00012388 — سارة محمود":"Confirmed order M0042-00012388 — Sara Mahmoud","156.200.8.91"],
-    ["2026/06/01 14:18",actTag("order"),lang=="ar"?"رفضت الطلب M0042-00012385 — كريم فؤاد":"Rejected order M0042-00012385 — Karim Fouad","156.200.8.91"],
-    ["2026/06/01 13:55",actTag("order"),lang=="ar"?"أجّلت الطلب M0042-00012381 إلى 5 يونيو":"Rescheduled M0042-00012381 to Jun 5","156.200.8.91"],
-    ["2026/06/01 13:30",actTag("order"),lang=="ar"?"أكّدت الطلب M0042-00012379 — طارق سمير":"Confirmed order M0042-00012379 — Tarek Samir","156.200.8.91"],
-    ["2026/06/01 09:05",actTag("auth"),lang=="ar"?"تسجيل دخول ناجح":"Successful sign-in","156.200.8.91"]])
- }</div></div>`;
-
 /* ============ render ============ */
 function renderRoleSwitch(){
-  document.getElementById("roleSwitch").innerHTML=["admin","merchant","marketer","confirmation"]
+  document.getElementById("roleSwitch").innerHTML=["admin","merchant","marketer"]
     .map(r=>`<button class="${r==state.role?'on':''}" onclick="setRole('${r}')">${t(r)}</button>`).join('');
 }
 function renderNav(){
   document.getElementById("nav").innerHTML=ROLES[state.role].nav.map(n=>{
     if(n.g)return `<div class="grp">${t(n.g)}</div>`;
-    return `<button class="navitem ${n.id==state.screen?'on':''}" onclick="go('${n.id}')">
-      ${svg(IC[n.ic])}<span>${t(n.id)}</span>${n.badge?`<span class="badge">${n.badge}</span>`:''}</button>`;
+    const hasSub=!!n.sub;
+    const open = hasSub && ((n.id in state.open) ? state.open[n.id] : (n.id===state.screen || n.sub.some(c=>c.id===state.screen)));
+    const chev = hasSub ? `<button class="navchev ${open?'open':''}" onclick="event.stopPropagation();toggleSub('${n.id}')" aria-label="${t(n.id)}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg></button>` : '';
+    const kids = open ? `<div class="navsub">`+n.sub.map(c=>`<button class="navitem sub ${c.id==state.screen?'on':''}" onclick="go('${c.id}')">${svg(IC[c.ic])}<span>${t(c.id)}</span>${c.badge?`<span class="badge">${c.badge}</span>`:''}</button>`).join('')+`</div>` : '';
+    return `<div class="navrow ${n.id==state.screen?'on':''}">
+      <button class="navitem main" onclick="go('${n.id}')">${svg(IC[n.ic])}<span>${t(n.id)}</span>${n.badge?`<span class="badge">${n.badge}</span>`:''}</button>
+      ${chev}
+    </div>${kids}`;
   }).join('');
 }
 function renderScreen(){
@@ -2304,7 +2117,18 @@ function renderChrome(){
   document.getElementById("cFlag").textContent = COUNTRIES[country].flag;
   document.getElementById("cName").textContent = cName();
 }
-function go(id){state.screen=id;renderNav();renderScreen();closeNav();}
+function go(id){
+  state.screen=id;
+  ROLES[state.role].nav.forEach(n=>{ if(n.sub && n.sub.some(c=>c.id===id)) state.open[n.id]=true; });
+  renderNav();renderScreen();closeNav();
+}
+function toggleSub(id){
+  const n=ROLES[state.role].nav.find(x=>x.id===id);
+  const auto = id===state.screen || (n&&n.sub ? n.sub.some(c=>c.id===state.screen) : false);
+  const cur = (id in state.open) ? state.open[id] : auto;
+  state.open[id]=!cur;
+  renderNav();
+}
 function setRole(r){state.role=r;state.screen=FIRST[r];renderRoleSwitch();renderChrome();renderNav();renderScreen();closeNav();}
 function toggleNav(){const s=document.getElementById("side"),sc=document.getElementById("scrim");const open=s.classList.toggle("open");sc.classList.toggle("show",open);}
 function closeNav(){const s=document.getElementById("side"),sc=document.getElementById("scrim");if(s)s.classList.remove("open");if(sc)sc.classList.remove("show");}
