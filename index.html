@@ -110,8 +110,8 @@
     color-scheme: dark;
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; overflow-x: hidden; }
-  body { margin: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; transition: background .3s, color .3s; overflow-x: hidden; max-width: 100vw; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { margin: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; transition: background .3s, color .3s; overflow-x: clip; max-width: 100vw; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *,*::before,*::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
   a { color: var(--brand-1); text-decoration: none; }
   a:hover { text-decoration: underline; }
@@ -191,7 +191,7 @@
   .section-head { margin-bottom: 48px; max-width: 740px; }
   .section-head .kicker { font-size: 13px; font-weight: 700; color: var(--brand-1); text-transform: uppercase; letter-spacing: .15em; margin-bottom: 14px; display: block; }
   .section-head h2 { font-size: clamp(30px, 4vw, 44px); letter-spacing: -0.02em; margin-bottom: 14px; }
-  .section-head h2 .grad { background: var(--grad-accent); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .section-head h2 .grad { color: var(--accent); }
   .section-head p { font-size: 17px; }
   .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
   .service { padding: 30px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-card); position: relative; overflow: hidden; transition: transform .25s, box-shadow .25s, border-color .25s; }
@@ -221,6 +221,10 @@
   .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
   .project { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--bg-card); transition: transform .25s, box-shadow .25s, border-color .25s, opacity .3s; display: flex; flex-direction: column; position: relative; }
   .project.hidden { display: none; }
+  .project.cta-tile { border: 1.5px dashed var(--line-strong); background: transparent; box-shadow: none; clip-path: none; align-items: center; justify-content: center; text-align: center; padding: 40px 28px; min-height: 300px; gap: 6px; }
+  .project.cta-tile:hover { border-color: var(--brand-1); transform: none; }
+  .project.cta-tile h3 { font-size: 20px; margin-bottom: 4px; }
+  .project.cta-tile p { flex: 0 0 auto; max-width: 320px; }
   .project:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: transparent; }
   .project-thumb { aspect-ratio: 16/10; overflow: hidden; display: block; background: var(--bg-soft); position: relative; }
   .project-thumb img, .project-thumb > svg { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s; }
@@ -280,7 +284,8 @@
   footer { padding: 40px 0; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
   footer .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
   footer a { color: var(--muted); }
-  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s, transform .6s; }
+  .ico { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -3px; margin-inline-end: 7px; display: inline-block; flex-shrink: 0; }
+  .reveal { opacity: 0; transform: translateY(12px); transition: opacity .4s ease-out, transform .4s ease-out; }
   .reveal.in { opacity: 1; transform: none; }
   @media (max-width: 920px) {
     .hero-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -489,21 +494,14 @@
   @media (max-width: 1024px) { .bento { grid-template-columns: repeat(2, 1fr); } .b-big, .b-wide { grid-column: span 2; } .b-tall { grid-row: span 1; } .b-big { grid-row: span 2; } }
   @media (max-width: 600px) { .bento { grid-template-columns: 1fr; } .b-big, .b-wide, .b-tall { grid-column: span 1; grid-row: span 1; } }
 
-  @supports (animation-timeline: view()) {
-    /* Items light up as scroll passes them — dim at first, bright when reached */
-    .timeline-item { animation: tl-light linear both; animation-timeline: view(); animation-range: entry 0% entry 90%; }
-    @keyframes tl-light {
-      0% { opacity: 0; transform: translateY(24px); filter: saturate(.4); }
-      55% { opacity: .45; transform: none; filter: saturate(.6); }
-      100% { opacity: 1; transform: none; filter: saturate(1); }
-    }
-    /* Circle gets a soft glow ring once scroll reaches it */
-    .timeline-item:not(.current)::before { animation: tl-circle linear both; animation-timeline: view(); animation-range: entry 55% entry 85%; }
-    @keyframes tl-circle {
-      from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand-1) 0%, transparent); border-color: color-mix(in srgb, var(--brand-1) 50%, var(--line-strong)); }
-      to { box-shadow: 0 0 0 5px color-mix(in srgb, var(--brand-1) 18%, transparent); border-color: var(--brand-1); }
-    }
-  }
+  /* Timeline scroll lighting — driven by JS (see script section) for reliability
+     across all browsers. The line fills downward as you scroll and circles
+     shade in as the fill reaches them. */
+  .timeline-item.reveal { opacity: 1; transform: none; transition: none; }
+  .timeline::after { content: ''; position: absolute; left: -.5px; top: var(--tl-top); width: 3px; height: var(--tl-fill, 0px); max-height: calc(100% - var(--tl-top) - var(--tl-bottom)); background: linear-gradient(to bottom, var(--brand-1), var(--brand-2)); border-radius: 2px; pointer-events: none; z-index: 2; }
+  .timeline-item::before { transition: box-shadow .35s, border-color .35s, background .35s; }
+  .timeline-item:not(.current):not(.lit)::before { border-color: color-mix(in srgb, var(--brand-1) 45%, var(--line-strong)); }
+  .timeline-item.lit:not(.current)::before { box-shadow: 0 0 0 5px color-mix(in srgb, var(--brand-1) 18%, transparent); border-color: var(--brand-1); background: color-mix(in srgb, var(--brand-1) 30%, var(--bg-card)); }
 
   /* View Transitions API — cross-document smooth language switch */
   @view-transition { navigation: auto; }
@@ -754,8 +752,8 @@
     </div>
     <div class="filter-bar reveal" role="tablist">
       <button class="filter-btn active" data-filter="all">All <span class="count">10</span></button>
-      <button class="filter-btn" data-filter="shopify">🛍️ Shopify stores <span class="count">4</span></button>
-      <button class="filter-btn" data-filter="platforms">⚡ Platforms &amp; apps <span class="count">6</span></button>
+      <button class="filter-btn" data-filter="shopify"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>Shopify stores <span class="count">4</span></button>
+      <button class="filter-btn" data-filter="platforms"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>Platforms &amp; apps <span class="count">6</span></button>
     </div>
     <div class="projects-grid" id="projectsGrid">
       <a href="https://biostream.bio" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/biostream.jpg" alt="Biostream Shopify storefront preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Bilingual AR/EN · Live</span><h3>Biostream</h3><p>Full theme rebuild for a bilingual health-tech storefront with RTL/LTR switching, localized navigation, and optimized product pages.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>RTL</span><span>i18n</span></div></div></a>
@@ -768,6 +766,7 @@
       <a href="https://proposal.twindix.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel</span><img src="images/proposal.svg" alt="Twindix Proposal Builder preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Twindix · From scratch · Live</span><h3>Proposal Builder</h3><p>Bilingual (AR/EN) self-service tool where clients pick services and quantities, approve online, and automatically receive a signed PDF contract stamped with the company seal.</p><div class="project-stack"><span>Laravel</span><span>PDF</span><span>E-signature</span><span>Bilingual</span></div></div></a>
       <div class="project reveal" data-type="platforms"><div class="project-thumb"><span class="platform-badge laravel">Laravel</span><img src="images/twindix-performance.jpg" alt="Twindix Performance Indicator sprint dashboard preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Twindix · From scratch</span><h3>Performance Indicator</h3><p>Sprint dashboard and ticketing system — real-time sprint health, KPI cards (alert response, red flags, delivery, comments), and cross-team task tracking in one place.</p><div class="project-stack"><span>Laravel</span><span>Dashboards</span><span>KPIs</span><span>Workflow</span></div></div></div>
       <div class="project reveal" data-type="platforms"><div class="project-thumb" style="background:linear-gradient(135deg,#1e3a8a,#2563eb);display:grid;place-items:center"><span class="platform-badge python">Python · Bot</span><svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" style="width:70%;height:70%;object-fit:contain"><rect x="10" y="10" width="180" height="110" rx="8" fill="rgba(255,255,255,.08)"/><circle cx="60" cy="65" r="22" fill="rgba(255,255,255,.9)"/><path d="M52 58 l 8 -6 l 16 12 l -8 4 l -2 8 l -8 -4 l -6 6 z" fill="#1e3a8a"/><rect x="100" y="45" width="70" height="40" rx="4" fill="rgba(255,255,255,.75)"/><rect x="108" y="53" width="40" height="3" rx="1" fill="#1e3a8a"/><rect x="108" y="60" width="50" height="3" rx="1" fill="#2563eb"/><rect x="108" y="67" width="30" height="3" rx="1" fill="#2563eb"/></svg></div><div class="project-body"><span class="tag">Illa Holding · Automation</span><h3>Front-Door Ticketing</h3><p>Telegram-bot ticketing + live dashboard connecting customer reps and driver assistants, built in Python with AI-assisted pair programming.</p><div class="project-stack"><span>Python</span><span>Telegram Bot API</span><span>Dashboard</span></div></div></div>
+      <div class="project cta-tile reveal" data-type="cta"><h3>Your project could be next</h3><p>Shopify storefront, Laravel platform, or an automation that saves your team hours — let's scope it.</p><a class="btn" href="#contact">Get a quote in 24h →</a></div>
     </div>
   </div>
 </section>
@@ -801,7 +800,7 @@
       <!-- Big primary: Shopify -->
       <div class="bento-card b-shopify b-big reveal">
         <span class="bento-meta">Primary stack</span>
-        <h3>🛍️ Shopify · Liquid · Themes</h3>
+        <h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>Shopify · Liquid · Themes</h3>
         <p style="margin:0;font-size:14px;color:var(--ink-soft)">Bilingual AR/EN storefronts, custom Liquid themes, app integrations, conversion-focused checkouts.</p>
         <ul class="bento-list">
           <li>Liquid theme development &amp; sections</li>
@@ -820,7 +819,7 @@
       <!-- Big primary: Laravel -->
       <div class="bento-card b-laravel b-big reveal">
         <span class="bento-meta">Primary stack</span>
-        <h3>⚙️ Laravel 11 · Filament · APIs</h3>
+        <h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.11-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.56-1.11 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34h.09a1.7 1.7 0 0 0 1.03-1.56V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1.03 1.56h.09a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87v.09a1.7 1.7 0 0 0 1.56 1.03H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.56 1.03z"/></svg>Laravel 11 · Filament · APIs</h3>
         <p style="margin:0;font-size:14px;color:var(--ink-soft)">Multi-tenant SaaS, internal dashboards, ticketing systems, and clean REST APIs with deep third-party integrations.</p>
         <ul class="bento-list">
           <li>Filament 3 admin &amp; Nova</li>
@@ -834,7 +833,7 @@
       <!-- Frontend -->
       <div class="bento-card b-frontend reveal">
         <span class="bento-meta">Frontend</span>
-        <h3>🎨 Modern UI</h3>
+        <h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Modern UI</h3>
         <ul class="bento-list">
           <li>Tailwind · Vanilla CSS</li>
           <li>JavaScript · Alpine</li>
@@ -845,7 +844,7 @@
       <!-- Data & APIs -->
       <div class="bento-card b-data reveal">
         <span class="bento-meta">Integrations</span>
-        <h3>🔗 APIs &amp; webhooks</h3>
+        <h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>APIs &amp; webhooks</h3>
         <ul class="bento-list">
           <li>Zoom OAuth · Google Calendar</li>
           <li>WhatsApp · Telegram bots</li>
@@ -856,7 +855,7 @@
       <!-- AI-assisted (wide, sits on bottom row) -->
       <div class="bento-card b-ai b-wide reveal">
         <span class="bento-meta">Modern workflow</span>
-        <h3>🤖 AI-assisted dev</h3>
+        <h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/><path d="M19 15l.9 2.4L22 18.3l-2.1.9L19 21.6l-.9-2.4-2.1-.9 2.1-.9L19 15z"/></svg>AI-assisted dev</h3>
         <p style="margin:0;font-size:14px;color:var(--ink-soft)">Pair programming with modern AI tools — faster delivery, cleaner code, automation where it pays off.</p>
         <span class="bento-pulse">Daily driver</span>
       </div>
@@ -1011,16 +1010,16 @@
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const f = btn.dataset.filter;
-      projects.forEach(p => p.classList.toggle('hidden', f !== 'all' && p.dataset.type !== f));
+      projects.forEach(p => p.classList.toggle('hidden', f !== 'all' && p.dataset.type !== f && p.dataset.type !== 'cta'));
     });
   });
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.12 });
+  }, { threshold: 0, rootMargin: '0px 0px 12% 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-  /* Safety fallback: if IO doesn't fire within 2.5s (e.g. tab loaded in background),
+  /* Safety fallback: if IO doesn't fire within 1.5s (e.g. tab loaded in background),
      reveal everything so content never stays invisible */
-  setTimeout(() => { document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in')); }, 2500);
+  setTimeout(() => { document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in')); }, 1500);
 
   /* ========== MODERN INTERACTIONS ========== */
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1139,6 +1138,47 @@
     cio.observe(codeEl);
     /* Safety fallback */
     setTimeout(begin, 2800);
+  })();
+
+  /* 5a. Timeline scroll lighting — JS-driven so it works in every browser.
+     The progress line fills to a fixed "activation" point (~66% of viewport
+     height); items and circles light exactly when the fill reaches them. */
+  (function () {
+    const tls = document.querySelectorAll('.timeline');
+    const items = document.querySelectorAll('.timeline-item');
+    if (!items.length) return;
+    if (reduced) {
+      items.forEach(it => { it.style.opacity = 1; it.classList.add('lit'); });
+      tls.forEach(t => t.style.setProperty('--tl-fill', '100%'));
+      return;
+    }
+    const clamp01 = v => Math.max(0, Math.min(1, v));
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const vh = window.innerHeight;
+      const activation = vh * 0.6625; /* same point where item p hits .75 below */
+      items.forEach(it => {
+        const r = it.getBoundingClientRect();
+        /* 0 when the item is at the viewport bottom → 1 once it has risen 45% up */
+        const p = clamp01((vh - r.top) / (vh * 0.45));
+        const e = p * (2 - p); /* easeOutQuad */
+        it.style.opacity = (0.3 + 0.7 * e).toFixed(3);
+        it.style.transform = 'translateY(' + ((1 - e) * 14).toFixed(1) + 'px)';
+        it.style.filter = 'saturate(' + (0.5 + 0.5 * e).toFixed(3) + ')';
+        it.classList.toggle('lit', r.top + 6 < activation);
+      });
+      tls.forEach(t => {
+        const r = t.getBoundingClientRect();
+        const topOff = parseFloat(getComputedStyle(t).getPropertyValue('--tl-top')) || 14;
+        const fill = Math.max(0, activation - (r.top + topOff));
+        t.style.setProperty('--tl-fill', Math.round(fill) + 'px');
+      });
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
   })();
 
   /* 5. Timeline line: calc top/bottom so line spans first→last circle center */
