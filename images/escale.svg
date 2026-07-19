@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="Inter,-apple-system,Segoe UI,Arial,sans-serif">
+  <defs>
+    <linearGradient id="esBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101d33"/><stop offset="1" stop-color="#1d3252"/></linearGradient>
+    <linearGradient id="esGold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d4af6a"/><stop offset="1" stop-color="#b8944e"/></linearGradient>
+  </defs>
+  <rect width="800" height="500" rx="10" fill="url(#esBg)"/>
+  <text x="60" y="80" font-size="26" fill="#f4ede0" font-weight="800" letter-spacing="4">ESCALE</text>
+  <text x="60" y="104" font-size="11" fill="#d4af6a" letter-spacing="2">HOSPITALITY PLATFORM · منصة الضيافة</text>
+  <g font-size="10" fill="#aebad0">
+    <text x="60" y="150">✓ طلبات خدمة بتتبّع لحظي و SLA</text>
+    <text x="60" y="175">✓ تسجيل وصول أونلاين + مفتاح رقمي</text>
+    <text x="60" y="200">✓ محادثات مباشرة · حجوزات · مزاد B2B</text>
+  </g>
+  <rect x="58" y="225" width="150" height="30" rx="15" fill="url(#esGold)"/>
+  <text x="133" y="245" text-anchor="middle" font-size="10" fill="#101d33" font-weight="700">23 شاشة ثنائية اللغة</text>
+  <g transform="translate(300,120) rotate(-4 100 180)">
+    <rect width="170" height="340" rx="24" fill="#0b1526" stroke="#31456b" stroke-width="2"/>
+    <rect x="10" y="12" width="150" height="316" rx="16" fill="#f7f4ee"/>
+    <text x="85" y="44" text-anchor="middle" font-size="10" fill="#1d3252" font-weight="800">تتبّع الطلب</text>
+    <g transform="translate(28,64)" font-size="7" fill="#5b6472">
+      <circle cx="6" cy="6" r="5" fill="#22c55e"/><text x="20" y="9">تم الإرسال</text>
+      <rect x="5" y="12" width="2" height="26" fill="#22c55e"/>
+      <circle cx="6" cy="44" r="5" fill="#22c55e"/><text x="20" y="47">تم التعيين — أحمد</text>
+      <rect x="5" y="50" width="2" height="26" fill="#d4af6a"/>
+      <circle cx="6" cy="82" r="5" fill="#d4af6a"/><text x="20" y="85">جاري التنفيذ</text>
+      <rect x="5" y="88" width="2" height="26" fill="#d8dce2"/>
+      <circle cx="6" cy="120" r="5" fill="#fff" stroke="#d8dce2" stroke-width="2"/><text x="20" y="123">اكتمل</text>
+    </g>
+    <rect x="24" y="210" width="122" height="46" rx="8" fill="#eef1f6"/>
+    <text x="85" y="228" text-anchor="middle" font-size="7" fill="#5b6472">الوقت المتوقع</text>
+    <text x="85" y="244" text-anchor="middle" font-size="11" fill="#1d3252" font-weight="800">12 دقيقة</text>
+    <rect x="24" y="268" width="122" height="30" rx="15" fill="#1d3252"/>
+    <text x="85" y="288" text-anchor="middle" font-size="8" fill="#f4ede0">مراسلة الاستقبال</text>
+  </g>
+  <g transform="translate(520,90) rotate(5 100 180)">
+    <rect width="170" height="340" rx="24" fill="#0b1526" stroke="#31456b" stroke-width="2"/>
+    <rect x="10" y="12" width="150" height="316" rx="16" fill="#f7f4ee"/>
+    <text x="85" y="44" text-anchor="middle" font-size="10" fill="#1d3252" font-weight="800">Online Check-in</text>
+    <rect x="24" y="60" width="122" height="34" rx="8" fill="#eef1f6"/><text x="34" y="81" font-size="8" fill="#5b6472">Guest ID · Payment ✓</text>
+    <rect x="24" y="102" width="122" height="110" rx="10" fill="#1d3252"/>
+    <rect x="52" y="118" width="66" height="66" rx="8" fill="#fff"/>
+    <g fill="#1d3252">
+      <rect x="58" y="124" width="12" height="12"/><rect x="74" y="124" width="6" height="6"/><rect x="86" y="124" width="6" height="12"/><rect x="98" y="124" width="12" height="12"/>
+      <rect x="58" y="142" width="6" height="6"/><rect x="70" y="140" width="10" height="10"/><rect x="86" y="142" width="8" height="8"/><rect x="100" y="140" width="10" height="6"/>
+      <rect x="58" y="154" width="12" height="12"/><rect x="76" y="156" width="8" height="10"/><rect x="90" y="152" width="6" height="6"/><rect x="98" y="158" width="12" height="8"/>
+    </g>
+    <text x="85" y="200" text-anchor="middle" font-size="7" fill="#d4af6a">Digital Room Key</text>
+    <rect x="24" y="222" width="122" height="30" rx="8" fill="#eef1f6"/>
+    <text x="85" y="241" text-anchor="middle" font-size="9" fill="#1d3252" font-weight="800">Room 304 🔑</text>
+    <rect x="24" y="262" width="122" height="30" rx="15" fill="url(#esGold)"/>
+    <text x="85" y="281" text-anchor="middle" font-size="8" fill="#101d33" font-weight="700">Open Door</text>
+  </g>
+</svg>
