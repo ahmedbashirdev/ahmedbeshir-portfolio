@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Escalé · My Orders · Design Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..900&family=Geist+Mono:wght@400..600&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --aubergine-900: #3A1234;
+  --aubergine-700: #4A1942;
+  --aubergine-500: #5B2C5F;
+  --aubergine-300: #8E5A8E;
+  --aubergine-100: #EFE3EF;
+  --magenta-500: #B8228C;
+  --magenta-300: #D86CB0;
+  --terracotta-700: #A05A3A;
+  --terracotta-500: #C9956B;
+  --terracotta-300: #E2BC9C;
+  --terracotta-100: #F5E8DC;
+  --ink-900: #1C1410;
+  --ink-700: #3D332D;
+  --ink-500: #6B5D54;
+  --ink-300: #A89A8E;
+  --sand-100: #F0E9DF;
+  --sand-50: #F7F2E9;
+  --cream: #FAF7F2;
+  --paper: #FDFBF7;
+  --success: #5A8C5F;
+  --danger: #B53F3F;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Geist', -apple-system, sans-serif;
+  --font-arabic: 'Tajawal', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
+  --shadow-sm: 0 1px 2px rgba(58, 18, 52, 0.04);
+  --shadow-md: 0 4px 12px rgba(58, 18, 52, 0.06), 0 1px 3px rgba(58, 18, 52, 0.04);
+  --shadow-phone: 0 50px 100px -20px rgba(58, 18, 52, 0.25), 0 30px 60px -30px rgba(58, 18, 52, 0.3);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink-900);
+  line-height: 1.5;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 88% 0%, rgba(184, 34, 140, 0.06), transparent 40%),
+    radial-gradient(circle at 4% 12%, rgba(91, 44, 95, 0.05), transparent 36%);
+}
+[lang="ar"], [lang="ar"] * { font-family: var(--font-arabic); }
+[lang="ar"] { line-height: 1.6; }
+
+.page { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 48px 32px 96px; }
+
+/* HEADER */
+.brand-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 24px; }
+.brand-identity { display: flex; align-items: center; gap: 20px; }
+.brand-logo { width: 48px; height: 48px; }
+.brand-name-wrap { display: flex; flex-direction: column; gap: 2px; }
+.brand-name { font-family: var(--font-display); font-weight: 500; font-size: 24px; letter-spacing: -0.02em; color: var(--aubergine-900); line-height: 1; }
+.brand-tagline { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-500); font-weight: 500; }
+.brand-meta { display: flex; align-items: center; gap: 24px; }
+.screen-stamp { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.screen-stamp .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-300); font-weight: 500; }
+.screen-stamp .val { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--terracotta-700); }
+.locale-switch { display: flex; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 9999px; padding: 4px; box-shadow: var(--shadow-sm); }
+.locale-switch button { border: 0; background: transparent; padding: 8px 18px; border-radius: 9999px; font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-500); cursor: pointer; }
+.locale-switch button.active { background: var(--aubergine-700); color: var(--paper); }
+
+/* EDITORIAL HEAD */
+.editorial-head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 48px; margin-bottom: 44px; padding-bottom: 32px; border-bottom: 1px solid var(--sand-100); }
+.editorial-head .label { font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--terracotta-700); margin-bottom: 12px; }
+.editorial-head h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(38px, 5vw, 64px); line-height: 0.98; letter-spacing: -0.035em; color: var(--aubergine-900); max-width: 16ch; }
+.editorial-head h1 em { font-style: italic; color: var(--magenta-500); }
+[lang="ar"] .editorial-head h1 { font-weight: 700; letter-spacing: 0; line-height: 1.15; }
+.editorial-head .colophon { font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); letter-spacing: 0.02em; text-align: end; line-height: 1.7; }
+.editorial-head .colophon strong { color: var(--aubergine-700); }
+[lang="ar"] .editorial-head .colophon { font-family: var(--font-arabic); }
+
+/* COMPOSITION */
+.composition { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+@media (max-width: 980px) { .composition { grid-template-columns: 1fr; gap: 48px; } .phone { transform: scale(0.9); transform-origin: top center; } }
+
+.phone-stage { display: flex; justify-content: center; position: relative; padding: 24px 0; }
+.phone-stage::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 58% 48% at 50% 26%, rgba(91, 44, 95, 0.08), transparent 62%); z-index: 0; }
+.phone { position: relative; width: 396px; height: 836px; background: var(--ink-900); border-radius: 54px; padding: 12px; box-shadow: var(--shadow-phone); z-index: 1; }
+.phone::before { content: ''; position: absolute; top: 12px; inset-inline: 0; margin-inline: auto; width: 108px; height: 29px; background: var(--ink-900); border-radius: 0 0 18px 18px; z-index: 100; }
+.phone-screen { width: 100%; height: 100%; background: var(--cream); border-radius: 43px; overflow-y: auto; overflow-x: hidden; position: relative; display: flex; flex-direction: column; }
+.phone-screen::-webkit-scrollbar { display: none; }
+
+.status-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 30px 6px; font-size: 14px; font-weight: 600; color: var(--paper); position: absolute; top: 0; inset-inline: 0; z-index: 6; }
+.status-bar .icons { display: flex; gap: 6px; align-items: center; }
+.status-bar svg { width: 17px; height: 17px; }
+
+/* TOP BAR */
+.mo-top {
+  position: relative; flex-shrink: 0; overflow: hidden;
+  padding: 50px 20px 20px;
+  background:
+    linear-gradient(180deg, rgba(58, 18, 52, 0.10) 0%, rgba(58, 18, 52, 0.28) 100%),
+    linear-gradient(140deg, var(--terracotta-500), var(--terracotta-700) 52%, var(--aubergine-700));
+}
+.mo-top::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 86 L20 58 L32 86 Z M32 86 L44 58 L56 86 Z M56 86 L68 58 L80 86 Z' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
+  background-size: 240px; background-position: bottom center; background-repeat: no-repeat;
+}
+.mo-top-body { position: relative; z-index: 2; }
+.mo-title { font-family: var(--font-display); font-weight: 500; font-size: 26px; line-height: 1.1; letter-spacing: -0.025em; color: var(--paper); }
+[lang="ar"] .mo-title { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.mo-stay { display: flex; align-items: center; gap: 6px; margin-top: 7px; font-size: 11.5px; color: rgba(253, 251, 247, 0.86); }
+[lang="ar"] .mo-stay { font-size: 12.5px; }
+.mo-stay svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* FILTERS */
+.mo-filters { display: flex; gap: 7px; padding: 14px 20px 4px; flex-shrink: 0; }
+.mo-pill {
+  border: 1px solid var(--sand-100); background: var(--paper); color: var(--ink-500);
+  border-radius: 9999px; padding: 7px 15px; font-size: 12px; font-weight: 600;
+  font-family: var(--font-body); cursor: pointer;
+}
+[lang="ar"] .mo-pill { font-family: var(--font-arabic); font-size: 12.5px; }
+.mo-pill.on { background: var(--aubergine-700); border-color: var(--aubergine-700); color: var(--paper); }
+
+/* SUMMARY STRIP */
+.mo-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 20px 4px; flex-shrink: 0; }
+.mo-sum-tile { background: var(--paper); border: 1px solid var(--sand-100); border-radius: 14px; padding: 11px 13px; }
+.mo-sum-l { font-size: 9.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-500); font-weight: 600; margin-bottom: 5px; }
+[lang="ar"] .mo-sum-l { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.mo-sum-v { font-family: var(--font-display); font-weight: 500; font-size: 16px; letter-spacing: -0.02em; color: var(--aubergine-900); line-height: 1.15; }
+[lang="ar"] .mo-sum-v { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.mo-sum-v .ccy { font-family: var(--font-mono); font-size: 10px; color: var(--ink-500); margin-inline-end: 4px; }
+
+/* LIST */
+.mo-list { padding: 16px 20px 14px; display: flex; flex-direction: column; gap: 10px; }
+.mo-list-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.mo-list-h { font-family: var(--font-display); font-weight: 500; font-size: 14.5px; letter-spacing: -0.015em; color: var(--aubergine-900); }
+[lang="ar"] .mo-list-h { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+
+/* CARD */
+.mo-card {
+  background: var(--paper); border: 1px solid var(--sand-100); border-radius: 16px;
+  padding: 13px 14px; position: relative;
+}
+.mo-card.late { border-color: rgba(181, 63, 63, 0.35); border-inline-start: 3px solid var(--danger); }
+.mo-card.past { background: var(--sand-50); }
+
+.mo-row-1 { display: flex; align-items: center; gap: 10px; }
+.mo-mark {
+  width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.mo-mark svg { width: 16px; height: 16px; }
+.mo-mark.dine { background: var(--terracotta-100); color: var(--terracotta-700); }
+.mo-mark.hk { background: var(--aubergine-100); color: var(--aubergine-700); }
+.mo-mark.spa { background: rgba(90, 140, 95, 0.14); color: var(--success); }
+.mo-mark.fix { background: var(--sand-100); color: var(--ink-500); }
+.mo-head { flex: 1; min-width: 0; }
+.mo-outlet { font-family: var(--font-display); font-weight: 500; font-size: 14px; letter-spacing: -0.015em; color: var(--aubergine-900); line-height: 1.2; }
+[lang="ar"] .mo-outlet { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.mo-cat { font-size: 10px; color: var(--ink-500); margin-top: 2px; }
+[lang="ar"] .mo-cat { font-size: 11px; }
+.mo-chev { flex-shrink: 0; color: var(--ink-300); display: flex; align-items: center; }
+.mo-chev svg { width: 15px; height: 15px; }
+[dir="rtl"] .mo-chev svg { transform: scaleX(-1); }
+
+.mo-row-2 { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-top: 9px; }
+.mo-items { font-size: 12px; color: var(--ink-700); line-height: 1.4; min-width: 0; }
+[lang="ar"] .mo-items { font-size: 12.5px; }
+.mo-amount { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--aubergine-900); flex-shrink: 0; text-align: end; }
+.mo-amount.free { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--ink-500); }
+[lang="ar"] .mo-amount.free { font-family: var(--font-arabic); font-size: 11.5px; }
+
+.mo-row-3 { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.mo-status {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 9999px;
+}
+[lang="ar"] .mo-status { font-size: 11px; }
+.mo-status .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; animation: mo-pulse 1.8s infinite var(--ease-out); }
+@keyframes mo-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+.mo-status.prep { background: rgba(184, 34, 140, 0.1); color: var(--magenta-500); }
+.mo-status.otw { background: rgba(160, 90, 58, 0.14); color: var(--terracotta-700); }
+.mo-status.sched { background: var(--aubergine-100); color: var(--aubergine-700); }
+.mo-status.done { background: rgba(90, 140, 95, 0.14); color: var(--success); }
+.mo-status svg { width: 11px; height: 11px; }
+.mo-when { font-family: var(--font-mono); font-size: 9.5px; color: var(--ink-300); }
+.mo-ref { font-family: var(--font-mono); font-size: 9.5px; color: var(--ink-300); margin-inline-start: auto; letter-spacing: 0.02em; }
+
+/* LIVE PROGRESS */
+.mo-live { margin-top: 11px; }
+.mo-live-l { display: flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 600; color: var(--magenta-500); margin-bottom: 6px; }
+[lang="ar"] .mo-live-l { font-size: 11.5px; }
+.mo-live-l svg { width: 12px; height: 12px; }
+.mo-track { height: 4px; border-radius: 9999px; background: var(--sand-100); overflow: hidden; }
+.mo-track-fill { height: 100%; width: 58%; border-radius: 9999px; background: linear-gradient(90deg, var(--terracotta-500), var(--magenta-500)); }
+[dir="rtl"] .mo-track-fill { background: linear-gradient(270deg, var(--terracotta-500), var(--magenta-500)); }
+
+/* STAFF LINE */
+.mo-staff { display: flex; align-items: center; gap: 8px; margin-top: 11px; }
+.mo-avatar {
+  width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--terracotta-300), var(--terracotta-500));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 600; font-size: 10px; color: var(--paper);
+}
+.mo-staff-t { font-size: 11px; color: var(--ink-700); }
+[lang="ar"] .mo-staff-t { font-size: 12px; }
+
+/* LATE WARNING */
+.mo-late {
+  display: flex; align-items: center; gap: 7px; margin-top: 10px;
+  background: rgba(181, 63, 63, 0.08); border-radius: 10px; padding: 8px 10px;
+}
+.mo-late svg { width: 14px; height: 14px; color: var(--danger); flex-shrink: 0; }
+.mo-late span { font-size: 10.5px; font-weight: 600; color: var(--danger); line-height: 1.4; }
+[lang="ar"] .mo-late span { font-size: 11.5px; }
+
+/* SCHEDULED SLOT */
+.mo-slot {
+  display: flex; align-items: center; gap: 7px; margin-top: 11px;
+  background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 10px; padding: 8px 10px;
+}
+.mo-slot svg { width: 14px; height: 14px; color: var(--aubergine-700); flex-shrink: 0; }
+.mo-slot span { font-size: 11px; font-weight: 600; color: var(--aubergine-900); }
+[lang="ar"] .mo-slot span { font-size: 12px; }
+
+/* RATE PROMPT */
+.mo-rate { display: flex; align-items: center; gap: 8px; margin-top: 11px; padding-top: 10px; border-top: 1px solid var(--sand-100); }
+.mo-rate-t { font-size: 11px; color: var(--ink-500); flex: 1; min-width: 0; }
+[lang="ar"] .mo-rate-t { font-size: 12px; }
+.mo-stars { color: var(--terracotta-300); font-size: 12px; letter-spacing: 2px; flex-shrink: 0; }
+.mo-rate-btn {
+  flex-shrink: 0; border: 1px solid var(--aubergine-700); background: transparent;
+  color: var(--aubergine-700); border-radius: 9999px; padding: 5px 12px;
+  font-family: var(--font-body); font-size: 10.5px; font-weight: 600; cursor: pointer;
+}
+[lang="ar"] .mo-rate-btn { font-family: var(--font-arabic); font-size: 11.5px; }
+
+/* STICKY FOOTER */
+.mo-foot {
+  position: sticky; bottom: 0; flex-shrink: 0;
+  background: var(--paper); border-top: 1px solid var(--sand-100);
+  padding: 12px 18px 22px; display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 -8px 24px rgba(58, 18, 52, 0.06);
+}
+.mo-foot-info { flex: 1; min-width: 0; }
+.mo-foot-l { font-size: 10px; color: var(--ink-500); }
+[lang="ar"] .mo-foot-l { font-size: 11px; }
+.mo-foot-v { font-family: var(--font-display); font-weight: 500; font-size: 19px; color: var(--aubergine-900); letter-spacing: -0.02em; line-height: 1.2; margin-top: 1px; }
+.mo-foot-v .ccy { font-family: var(--font-mono); font-size: 10px; color: var(--ink-500); margin-inline-end: 3px; }
+.mo-foot-btn {
+  flex-shrink: 0; background: var(--aubergine-700); color: var(--paper); border: 0;
+  border-radius: 12px; padding: 12px 16px; font-family: var(--font-body);
+  font-size: 12.5px; font-weight: 600; display: flex; align-items: center; gap: 7px; cursor: pointer;
+}
+[lang="ar"] .mo-foot-btn { font-family: var(--font-arabic); }
+.mo-foot-btn svg { width: 14px; height: 14px; }
+[dir="rtl"] .mo-foot-btn svg { transform: scaleX(-1); }
+
+/* SIDE PANEL */
+.side-panel { position: sticky; top: 32px; padding-top: 24px; }
+.panel-h { font-family: var(--font-display); font-weight: 500; font-size: 32px; letter-spacing: -0.025em; color: var(--aubergine-900); margin-bottom: 8px; line-height: 1.05; }
+[lang="ar"] .panel-h { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; line-height: 1.25; }
+.panel-h em { font-style: italic; color: var(--magenta-500); }
+.panel-lede { font-size: 15px; line-height: 1.65; color: var(--ink-500); max-width: 52ch; margin-bottom: 28px; }
+.principle-list { list-style: none; display: flex; flex-direction: column; gap: 18px; margin-bottom: 28px; }
+.principle-list li { padding-inline-start: 32px; position: relative; }
+.principle-list li::before { content: ''; position: absolute; inset-inline-start: 0; top: 4px; width: 16px; height: 16px; background: linear-gradient(135deg, var(--terracotta-500), var(--magenta-500)); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.principle-list li strong { display: block; font-family: var(--font-display); font-weight: 500; font-size: 16px; letter-spacing: -0.01em; color: var(--aubergine-900); margin-bottom: 4px; }
+[lang="ar"] .principle-list li strong { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.principle-list li p { font-size: 13px; line-height: 1.55; color: var(--ink-700); }
+.tech-callout { background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 14px; padding: 18px; }
+.tech-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta-700); font-weight: 600; margin-bottom: 8px; }
+[lang="ar"] .tech-label { letter-spacing: 0; text-transform: none; font-size: 12px; }
+.tech-body { font-size: 13px; line-height: 1.6; color: var(--ink-700); }
+
+.footnote { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--sand-100); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); }
+[lang="ar"] .footnote { font-family: var(--font-arabic); }
+.footnote .accent { color: var(--magenta-500); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="brand-bar">
+    <div class="brand-identity">
+      <svg class="brand-logo" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#5B2C5F"/>
+            <stop offset="100%" stop-color="#B8228C"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="44" r="36" fill="url(#brandGrad)"/>
+        <circle cx="50" cy="44" r="22" fill="#FDFBF7"/>
+        <path d="M28 74 L36 60 L44 74 Z M44 74 L52 60 L60 74 Z M60 74 L68 60 L76 74 Z" fill="#FDFBF7"/>
+      </svg>
+      <div class="brand-name-wrap">
+        <div class="brand-name">Escalé</div>
+        <div class="brand-tagline">Design System · v0.1</div>
+      </div>
+    </div>
+    <div class="brand-meta">
+      <div class="screen-stamp">
+        <div class="lbl" id="stamp-lbl">Screen 28</div>
+        <div class="val" id="stamp-val">My Orders</div>
+      </div>
+      <div class="locale-switch">
+        <button id="btnEn" class="active" onclick="setLocale('en')">EN</button>
+        <button id="btnAr" onclick="setLocale('ar')">ع</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="editorial-head" id="editorialHead">
+    <div>
+      <div class="label" id="eh-label">Screen 28 / My Orders</div>
+      <h1><span id="eh-1">Everything you asked for,</span> <em id="eh-2">in one place.</em></h1>
+    </div>
+    <div class="colophon">
+      <div><strong id="cl-1">One list —</strong> <span id="cl-1b">every order this stay</span></div>
+      <div><strong id="cl-2">Brings back</strong> <span id="cl-2b">the old My Orders tab</span></div>
+      <div><strong id="cl-3">Covers gaps G10 and G11</strong></div>
+      <div style="margin-top:8px; opacity:0.6;" id="cl-date">New screen · 9 Aug 2026</div>
+    </div>
+  </section>
+
+  <div class="composition" id="composition">
+
+    <!-- ============ PHONE ============ -->
+    <div class="phone-stage">
+      <div class="phone">
+        <div class="phone-screen">
+
+          <div class="status-bar">
+            <span>9:41</span>
+            <span class="icons">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 17h2v4H2zm5-4h2v8H7zm5-4h2v12h-2zm5-4h2v16h-2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.7 6 0 9l12 15L24 9c-2.7-3-7-5-12-5z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="18" height="10" rx="2.5"/><rect x="4" y="9" width="12" height="6" rx="1" fill="currentColor"/><path d="M22 10v4" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+
+          <!-- TOP BAR -->
+          <div class="mo-top">
+            <div class="mo-top-body">
+              <div class="mo-title" id="mo-title">My Orders</div>
+              <div class="mo-stay">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-4 7 4v13"/><path d="M10 21v-5h4v5"/></svg>
+                <span id="mo-stay">Beit Zamalek · Room 312</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- FILTERS -->
+          <div class="mo-filters">
+            <button class="mo-pill on" id="f-0">All</button>
+            <button class="mo-pill" id="f-1">Active</button>
+            <button class="mo-pill" id="f-2">Scheduled</button>
+            <button class="mo-pill" id="f-3">Past</button>
+          </div>
+
+          <!-- SUMMARY -->
+          <div class="mo-summary">
+            <div class="mo-sum-tile">
+              <div class="mo-sum-l" id="sum-1-l">Active now</div>
+              <div class="mo-sum-v" id="sum-1-v">2 orders</div>
+            </div>
+            <div class="mo-sum-tile">
+              <div class="mo-sum-l" id="sum-2-l">Charged to room</div>
+              <div class="mo-sum-v"><span class="ccy">EGP</span>2,150</div>
+            </div>
+          </div>
+
+          <!-- LIST -->
+          <div class="mo-list">
+
+            <div class="mo-list-head">
+              <div class="mo-list-h" id="list-h">This stay · newest first</div>
+            </div>
+
+            <!-- CARD 1 — RESTAURANT, PREPARING -->
+            <article class="mo-card">
+              <div class="mo-row-1">
+                <span class="mo-mark dine">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v8a3 3 0 0 0 6 0V3M8 11v10"/><path d="M17 3c-1.5 2-2 4-2 6h4c0-2-.5-4-2-6zM17 9v12"/></svg>
+                </span>
+                <div class="mo-head">
+                  <div class="mo-outlet" id="o1-outlet">Bab Al Nile</div>
+                  <div class="mo-cat" id="o1-cat">Restaurant · room service</div>
+                </div>
+                <span class="mo-chev">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+                </span>
+              </div>
+              <div class="mo-row-2">
+                <div class="mo-items" id="o1-items">Mezze plate + 1 more</div>
+                <div class="mo-amount">EGP 680</div>
+              </div>
+              <div class="mo-row-3">
+                <span class="mo-status prep"><span class="dot"></span><span id="o1-status">Preparing</span></span>
+                <span class="mo-when" id="o1-when">20:14</span>
+                <span class="mo-ref">REQ-X7Y2A9</span>
+              </div>
+              <div class="mo-live">
+                <div class="mo-live-l">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span id="o1-live">Ready in about 12 min</span>
+                </div>
+                <div class="mo-track"><div class="mo-track-fill"></div></div>
+              </div>
+            </article>
+
+            <!-- CARD 2 — HOUSEKEEPING, ON THE WAY, LATE -->
+            <article class="mo-card late">
+              <div class="mo-row-1">
+                <span class="mo-mark hk">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/><path d="M3 18h18M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"/></svg>
+                </span>
+                <div class="mo-head">
+                  <div class="mo-outlet" id="o2-outlet">Housekeeping</div>
+                  <div class="mo-cat" id="o2-cat">Amenity request</div>
+                </div>
+                <span class="mo-chev">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+                </span>
+              </div>
+              <div class="mo-row-2">
+                <div class="mo-items" id="o2-items">Extra towels and two pillows</div>
+                <div class="mo-amount free" id="o2-amount">No charge</div>
+              </div>
+              <div class="mo-row-3">
+                <span class="mo-status otw"><span class="dot"></span><span id="o2-status">On the way</span></span>
+                <span class="mo-when" id="o2-when">20:02</span>
+                <span class="mo-ref">REQ-K4M8B1</span>
+              </div>
+              <div class="mo-staff">
+                <span class="mo-avatar">M</span>
+                <span class="mo-staff-t" id="o2-staff">Mona is bringing it up</span>
+              </div>
+              <div class="mo-late">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17h.01"/></svg>
+                <span id="o2-late">Running late — the manager has been notified</span>
+              </div>
+            </article>
+
+            <!-- CARD 3 — SPA, SCHEDULED -->
+            <article class="mo-card">
+              <div class="mo-row-1">
+                <span class="mo-mark spa">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6 3-10 8-11-1 6-4 9-8 11z"/><path d="M12 21C12 15 9 11 4 10c1 6 4 9 8 11z"/><path d="M12 21v-4"/></svg>
+                </span>
+                <div class="mo-head">
+                  <div class="mo-outlet" id="o3-outlet">Zeina Spa</div>
+                  <div class="mo-cat" id="o3-cat">Spa &amp; wellness · appointment</div>
+                </div>
+                <span class="mo-chev">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+                </span>
+              </div>
+              <div class="mo-row-2">
+                <div class="mo-items" id="o3-items">Desert stone massage · 90 min</div>
+                <div class="mo-amount">EGP 1,400</div>
+              </div>
+              <div class="mo-row-3">
+                <span class="mo-status sched">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>
+                  <span id="o3-status">Scheduled</span>
+                </span>
+                <span class="mo-when" id="o3-when">Booked 18:40</span>
+                <span class="mo-ref">REQ-9P4L2C</span>
+              </div>
+              <div class="mo-slot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span id="o3-slot">Tomorrow · 10 Aug, 16:00</span>
+              </div>
+              <div class="mo-slot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20" stroke-linecap="round"/></svg>
+                <span id="o3-pay">Goes on your room after the treatment</span>
+              </div>
+            </article>
+
+            <!-- CARD 4 — MAINTENANCE, COMPLETED -->
+            <article class="mo-card past">
+              <div class="mo-row-1">
+                <span class="mo-mark fix">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6 2.6 2.6 6-6a4 4 0 0 0 5.4-5.4l-2.6 2.6-2-2 2-2.2z"/></svg>
+                </span>
+                <div class="mo-head">
+                  <div class="mo-outlet" id="o4-outlet">Maintenance desk</div>
+                  <div class="mo-cat" id="o4-cat">Maintenance · in-room</div>
+                </div>
+                <span class="mo-chev">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+                </span>
+              </div>
+              <div class="mo-row-2">
+                <div class="mo-items" id="o4-items">Air conditioning — not cooling</div>
+                <div class="mo-amount free" id="o4-amount">No charge</div>
+              </div>
+              <div class="mo-row-3">
+                <span class="mo-status done">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span id="o4-status">Completed</span>
+                </span>
+                <span class="mo-when" id="o4-when">Finished 15:26</span>
+                <span class="mo-ref">REQ-3F8A21</span>
+              </div>
+              <div class="mo-rate">
+                <span class="mo-stars">★★★★★</span>
+                <span class="mo-rate-t" id="o4-rate">How did it go?</span>
+                <button class="mo-rate-btn" id="o4-rate-btn">Rate it</button>
+              </div>
+            </article>
+
+            <!-- CARD 5 — EARLIER ORDERS, COLLAPSED -->
+            <article class="mo-card past">
+              <div class="mo-row-1">
+                <span class="mo-mark fix">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 4v4h4"/><path d="M12 8v4l3 2"/></svg>
+                </span>
+                <div class="mo-head">
+                  <div class="mo-outlet" id="o5-outlet">Earlier this stay</div>
+                  <div class="mo-cat" id="o5-cat">5 orders · 7–8 Aug</div>
+                </div>
+                <span class="mo-chev">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+                </span>
+              </div>
+              <div class="mo-row-2">
+                <div class="mo-items" id="o5-items">All completed and closed</div>
+                <div class="mo-amount">EGP 1,470</div>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- STICKY FOOTER -->
+          <div class="mo-foot">
+            <div class="mo-foot-info">
+              <div class="mo-foot-l" id="foot-l">Charged to your room so far</div>
+              <div class="mo-foot-v"><span class="ccy">EGP</span>2,150</div>
+            </div>
+            <button class="mo-foot-btn" id="foot-btn">
+              <span id="foot-btn-t">View folio</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SIDE PANEL ============ -->
+    <aside class="side-panel" id="sidePanel">
+      <h2 class="panel-h"><span id="ph-1">Everything you asked for,</span> <em id="ph-1em">in one place.</em></h2>
+      <p class="panel-lede" id="ph-lede">In three nights a guest orders dinner, asks for towels, books a massage and reports a broken air conditioner. Four different things — but to the guest they are all "what I asked the hotel for". This is the one screen that holds them.</p>
+
+      <ul class="principle-list">
+        <li>
+          <strong id="p1-t">One place for everything you asked for</strong>
+          <p id="p1-d">Today the guest has to remember what they ordered and who they ordered it from. Lose the notification and the order disappears. One list means nothing gets lost — and it is the first place to look when something is late.</p>
+        </li>
+        <li>
+          <strong id="p2-t">Four kinds of order, one list</strong>
+          <p id="p2-d">A meal, a towel request, a massage appointment and a repair look different, but underneath they are the same thing: the guest asked, the hotel answers, and there is a time it should be done by. So they sit together, with the same words on every card.</p>
+        </li>
+        <li>
+          <strong id="p3-t">Words the guest already understands</strong>
+          <p id="p3-d">Preparing means the kitchen has it. On the way means someone is walking to the room. Scheduled means it has a time in the future. Completed means it is done. No codes, no internal language — the same four words on every kind of order.</p>
+        </li>
+        <li>
+          <strong id="p4-t">A late order says so out loud</strong>
+          <p id="p4-d">When an order passes the time it was promised, the card says it plainly and tells the guest the manager already knows. Hiding a delay only makes the guest ask twice. Admitting it turns a complaint into a hotel that is clearly paying attention.</p>
+        </li>
+        <li>
+          <strong id="p5-t">The room bill, always visible</strong>
+          <p id="p5-d">Every charge lands on the room, and the running total sits at the bottom of the screen the whole time. The guest sees what they have spent while they can still do something about it, instead of meeting one long bill at check-out.</p>
+        </li>
+      </ul>
+
+      <div class="tech-callout">
+        <div class="tech-label" id="tech-l">A note for the hotel</div>
+        <p class="tech-body" id="tech-b">This list is built from the same records the departments already work on — nothing extra to fill in. Every card is one order with a status, a promised time and an amount, whichever department it belongs to. When an order runs past its promised time, the guest sees it in the same moment management does. Tapping any card opens the tracking screen for that one order.</p>
+      </div>
+    </aside>
+
+  </div>
+
+  <footer class="footnote" id="footnote">
+    <span id="ft-1">© Escalé · Screen 28 of 28 · New — My Orders</span>
+    <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
+  </footer>
+
+</div>
+
+<script>
+const t = {
+  en: {
+    stampLbl: "Screen 28",
+    stampVal: "My Orders",
+    ehLabel: "Screen 28 / My Orders",
+    eh1: "Everything you asked for,", eh2: "in one place.",
+    cl1: "One list —", cl1b: "every order this stay",
+    cl2: "Brings back", cl2b: "the old My Orders tab",
+    cl3: "Covers gaps G10 and G11",
+    clDate: "New screen · 9 Aug 2026",
+
+    moTitle: "My Orders",
+    moStay: "Beit Zamalek · Room 312",
+
+    f0: "All", f1: "Active", f2: "Scheduled", f3: "Past",
+
+    sum1l: "Active now", sum1v: "2 orders",
+    sum2l: "Charged to room",
+
+    listH: "This stay · newest first",
+
+    o1outlet: "Bab Al Nile",
+    o1cat: "Restaurant · room service",
+    o1items: "Mezze plate + 1 more",
+    o1status: "Preparing",
+    o1when: "20:14",
+    o1live: "Ready in about 12 min",
+
+    o2outlet: "Housekeeping",
+    o2cat: "Amenity request",
+    o2items: "Extra towels and two pillows",
+    o2amount: "No charge",
+    o2status: "On the way",
+    o2when: "20:02",
+    o2staff: "Mona is bringing it up",
+    o2late: "Running late — the manager has been notified",
+
+    o3outlet: "Zeina Spa",
+    o3cat: "Spa & wellness · appointment",
+    o3items: "Desert stone massage · 90 min",
+    o3status: "Scheduled",
+    o3when: "Booked 18:40",
+    o3slot: "Tomorrow · 10 Aug, 16:00",
+    o3pay: "Goes on your room after the treatment",
+
+    o4outlet: "Maintenance desk",
+    o4cat: "Maintenance · in-room",
+    o4items: "Air conditioning — not cooling",
+    o4amount: "No charge",
+    o4status: "Completed",
+    o4when: "Finished 15:26",
+    o4rate: "How did it go?",
+    o4rateBtn: "Rate it",
+
+    o5outlet: "Earlier this stay",
+    o5cat: "5 orders · 7–8 Aug",
+    o5items: "All completed and closed",
+
+    footL: "Charged to your room so far",
+    footBtnT: "View folio",
+
+    ph1: "Everything you asked for,", ph1em: "in one place.",
+    phLede: "In three nights a guest orders dinner, asks for towels, books a massage and reports a broken air conditioner. Four different things — but to the guest they are all “what I asked the hotel for”. This is the one screen that holds them.",
+    p1t: "One place for everything you asked for",
+    p1d: "Today the guest has to remember what they ordered and who they ordered it from. Lose the notification and the order disappears. One list means nothing gets lost — and it is the first place to look when something is late.",
+    p2t: "Four kinds of order, one list",
+    p2d: "A meal, a towel request, a massage appointment and a repair look different, but underneath they are the same thing: the guest asked, the hotel answers, and there is a time it should be done by. So they sit together, with the same words on every card.",
+    p3t: "Words the guest already understands",
+    p3d: "Preparing means the kitchen has it. On the way means someone is walking to the room. Scheduled means it has a time in the future. Completed means it is done. No codes, no internal language — the same four words on every kind of order.",
+    p4t: "A late order says so out loud",
+    p4d: "When an order passes the time it was promised, the card says it plainly and tells the guest the manager already knows. Hiding a delay only makes the guest ask twice. Admitting it turns a complaint into a hotel that is clearly paying attention.",
+    p5t: "The room bill, always visible",
+    p5d: "Every charge lands on the room, and the running total sits at the bottom of the screen the whole time. The guest sees what they have spent while they can still do something about it, instead of meeting one long bill at check-out.",
+    techL: "A note for the hotel",
+    techB: "This list is built from the same records the departments already work on — nothing extra to fill in. Every card is one order with a status, a promised time and an amount, whichever department it belongs to. When an order runs past its promised time, the guest sees it in the same moment management does. Tapping any card opens the tracking screen for that one order.",
+    ft1: "© Escalé · Screen 28 of 28 · New — My Orders"
+  },
+  ar: {
+    stampLbl: "الشاشة 28",
+    stampVal: "طلباتي",
+    ehLabel: "الشاشة 28 / طلباتي",
+    eh1: "كل اللي طلبته،", eh2: "في مكان واحد.",
+    cl1: "قايمة واحدة —", cl1b: "كل طلبات الإقامة",
+    cl2: "بترجّع", cl2b: "تبويب «طلباتي» القديم",
+    cl3: "بتغطي الفجوتين G10 وG11",
+    clDate: "شاشة جديدة · 9 أغسطس 2026",
+
+    moTitle: "طلباتي",
+    moStay: "بيت الزمالك · غرفة 312",
+
+    f0: "الكل", f1: "الجارية", f2: "محجوزة", f3: "سابقة",
+
+    sum1l: "شغّالة دلوقتي", sum1v: "طلبين",
+    sum2l: "على حساب الغرفة",
+
+    listH: "الإقامة دي · الأحدث الأول",
+
+    o1outlet: "باب النيل",
+    o1cat: "مطعم · خدمة الغرف",
+    o1items: "طبق مقبلات + صنف كمان",
+    o1status: "تحت التحضير",
+    o1when: "20:14",
+    o1live: "جاهز خلال 12 دقيقة تقريباً",
+
+    o2outlet: "التدبير الفندقي",
+    o2cat: "طلب مستلزمات",
+    o2items: "فوط زيادة ومخدّتين",
+    o2amount: "بدون رسوم",
+    o2status: "في الطريق",
+    o2when: "20:02",
+    o2staff: "منى في طريقها لفوق",
+    o2late: "الطلب اتأخر عن ميعاده — والمدير اتبلّغ",
+
+    o3outlet: "سبا زينة",
+    o3cat: "سبا وعافية · موعد",
+    o3items: "مساج حجر الصحراء · 90 دقيقة",
+    o3status: "محجوز",
+    o3when: "اتحجز 18:40",
+    o3slot: "بكرة · 10 أغسطس، 16:00",
+    o3pay: "بينزل على حساب غرفتك بعد الجلسة",
+
+    o4outlet: "مكتب الصيانة",
+    o4cat: "صيانة · داخل الغرفة",
+    o4items: "المكيّف — مش بيبرّد",
+    o4amount: "بدون رسوم",
+    o4status: "تم الإنجاز",
+    o4when: "خلص 15:26",
+    o4rate: "الخدمة كانت عاملة إيه؟",
+    o4rateBtn: "قيّمها",
+
+    o5outlet: "طلبات قبل كده في الإقامة",
+    o5cat: "5 طلبات · 7–8 أغسطس",
+    o5items: "كلها خلصت واتقفلت",
+
+    footL: "المتحمّل على غرفتك لحد دلوقتي",
+    footBtnT: "شوف الفاتورة",
+
+    ph1: "كل اللي طلبته،", ph1em: "في مكان واحد.",
+    phLede: "في تلات ليالي الضيف بيطلب عشا، ويطلب فوط، ويحجز مساج، ويبلّغ عن مكيّف مش شغّال. أربع حاجات مختلفة — بس بالنسباله كلها «حاجات طلبتها من الفندق». الشاشة دي هي المكان الواحد اللي بيجمّعهم.",
+    p1t: "مكان واحد لكل اللي طلبته",
+    p1d: "دلوقتي الضيف لازم يفتكر هو طلب إيه ومن مين. لو الإشعار ضاع، الطلب بيضيع معاه. القايمة الواحدة معناها إن مفيش حاجة بتضيع — وهي أول مكان يبصّ فيه لما حاجة تتأخر.",
+    p2t: "أربع أنواع طلبات، قايمة واحدة",
+    p2d: "وجبة، وطلب فوط، وموعد مساج، وتصليح — شكلهم مختلف، بس تحت السطح كلهم نفس الحاجة: الضيف طلب، والفندق بيرد، وفيه وقت المفروض تخلص فيه. عشان كده بيقعدوا سوا، وبنفس الكلمات على كل بطاقة.",
+    p3t: "كلمات الضيف فاهمها أصلاً",
+    p3d: "«تحت التحضير» يعني المطبخ ماسك الطلب. «في الطريق» يعني في حد جاي للغرفة. «محجوز» يعني ليه معاد قدّام. «تم الإنجاز» يعني خلص. من غير أكواد ولا كلام داخلي — نفس الأربع كلمات على كل نوع طلب.",
+    p4t: "الطلب المتأخر بيقول كده بصوت عالي",
+    p4d: "لما الطلب يعدّي الوقت اللي اتوعد بيه، البطاقة بتقولها بصراحة وبتطمّن الضيف إن المدير عارف. إخفاء التأخير بيخلّي الضيف يسأل مرتين. الاعتراف بيه بيحوّل الشكوى لفندق واضح إنه واخد باله.",
+    p5t: "حساب الغرفة ظاهر على طول",
+    p5d: "كل مبلغ بينزل على الغرفة، والإجمالي الجاري قاعد تحت في الشاشة طول الوقت. الضيف بيشوف صرف كام وهو لسه يقدر يتصرّف، بدل ما يقابل فاتورة طويلة يوم الخروج.",
+    techL: "ملاحظة للفندق",
+    techB: "القايمة دي متبنية من نفس السجلات اللي الأقسام شغّالة عليها أصلاً — مفيش حاجة زيادة تتكتب. كل بطاقة هي طلب واحد بحالة، ووقت متوعد بيه، ومبلغ، مهما كان القسم اللي بيتبعه. ولما الطلب يعدّي وقته، الضيف بيشوفها في نفس اللحظة اللي الإدارة بتشوفها فيها. والضغط على أي بطاقة بيفتح شاشة متابعة الطلب ده.",
+    ft1: "© إسكالي · الشاشة 28 من 28 · جديدة — طلباتي"
+  }
+};
+
+function setLocale(loc) {
+  const tt = t[loc];
+  const isRtl = loc === 'ar';
+
+  document.getElementById('btnEn').classList.toggle('active', loc === 'en');
+  document.getElementById('btnAr').classList.toggle('active', loc === 'ar');
+  ['editorialHead', 'composition', 'sidePanel', 'footnote'].forEach(function (id) {
+    const el = document.getElementById(id);
+    el.setAttribute('lang', loc);
+    el.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+  });
+
+  const set = function (id, val) { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+  set('stamp-lbl', tt.stampLbl);
+  set('stamp-val', tt.stampVal);
+
+  set('eh-label', tt.ehLabel);
+  set('eh-1', tt.eh1); set('eh-2', tt.eh2);
+  set('cl-1', tt.cl1); set('cl-1b', tt.cl1b);
+  set('cl-2', tt.cl2); set('cl-2b', tt.cl2b);
+  set('cl-3', tt.cl3); set('cl-date', tt.clDate);
+
+  set('mo-title', tt.moTitle);
+  set('mo-stay', tt.moStay);
+
+  set('f-0', tt.f0); set('f-1', tt.f1); set('f-2', tt.f2); set('f-3', tt.f3);
+
+  set('sum-1-l', tt.sum1l); set('sum-1-v', tt.sum1v);
+  set('sum-2-l', tt.sum2l);
+
+  set('list-h', tt.listH);
+
+  set('o1-outlet', tt.o1outlet); set('o1-cat', tt.o1cat); set('o1-items', tt.o1items);
+  set('o1-status', tt.o1status); set('o1-when', tt.o1when); set('o1-live', tt.o1live);
+
+  set('o2-outlet', tt.o2outlet); set('o2-cat', tt.o2cat); set('o2-items', tt.o2items);
+  set('o2-amount', tt.o2amount); set('o2-status', tt.o2status); set('o2-when', tt.o2when);
+  set('o2-staff', tt.o2staff); set('o2-late', tt.o2late);
+
+  set('o3-outlet', tt.o3outlet); set('o3-cat', tt.o3cat); set('o3-items', tt.o3items);
+  set('o3-status', tt.o3status); set('o3-when', tt.o3when); set('o3-slot', tt.o3slot);
+  set('o3-pay', tt.o3pay);
+
+  set('o4-outlet', tt.o4outlet); set('o4-cat', tt.o4cat); set('o4-items', tt.o4items);
+  set('o4-amount', tt.o4amount); set('o4-status', tt.o4status); set('o4-when', tt.o4when);
+  set('o4-rate', tt.o4rate); set('o4-rate-btn', tt.o4rateBtn);
+
+  set('o5-outlet', tt.o5outlet); set('o5-cat', tt.o5cat); set('o5-items', tt.o5items);
+
+  set('foot-l', tt.footL); set('foot-btn-t', tt.footBtnT);
+
+  set('ph-1', tt.ph1); set('ph-1em', tt.ph1em); set('ph-lede', tt.phLede);
+  for (let i = 1; i <= 5; i++) { set('p' + i + '-t', tt['p' + i + 't']); set('p' + i + '-d', tt['p' + i + 'd']); }
+  set('tech-l', tt.techL); set('tech-b', tt.techB);
+  set('ft-1', tt.ft1);
+}
+</script>
+
+</body>
+</html>

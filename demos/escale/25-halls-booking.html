@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Escalé · Halls &amp; Bookable Assets · Design Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..900&family=Geist+Mono:wght@400..600&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --aubergine-900: #3A1234;
+  --aubergine-700: #4A1942;
+  --aubergine-500: #5B2C5F;
+  --aubergine-300: #8E5A8E;
+  --aubergine-100: #EFE3EF;
+  --magenta-500: #B8228C;
+  --magenta-300: #D86CB0;
+  --terracotta-700: #A05A3A;
+  --terracotta-500: #C9956B;
+  --terracotta-300: #E2BC9C;
+  --terracotta-100: #F5E8DC;
+  --ink-900: #1C1410;
+  --ink-700: #3D332D;
+  --ink-500: #6B5D54;
+  --ink-300: #A89A8E;
+  --sand-100: #F0E9DF;
+  --sand-50: #F7F2E9;
+  --cream: #FAF7F2;
+  --paper: #FDFBF7;
+  --success: #5A8C5F;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Geist', -apple-system, sans-serif;
+  --font-arabic: 'Tajawal', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
+  --shadow-sm: 0 1px 2px rgba(58, 18, 52, 0.04);
+  --shadow-md: 0 4px 12px rgba(58, 18, 52, 0.06), 0 1px 3px rgba(58, 18, 52, 0.04);
+  --shadow-phone: 0 50px 100px -20px rgba(58, 18, 52, 0.25), 0 30px 60px -30px rgba(58, 18, 52, 0.3);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink-900);
+  line-height: 1.5;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 88% 0%, rgba(184, 34, 140, 0.06), transparent 40%),
+    radial-gradient(circle at 4% 12%, rgba(91, 44, 95, 0.05), transparent 36%);
+}
+[lang="ar"], [lang="ar"] * { font-family: var(--font-arabic); }
+[lang="ar"] { line-height: 1.6; }
+
+.page { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 48px 32px 96px; }
+
+/* HEADER */
+.brand-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 24px; }
+.brand-identity { display: flex; align-items: center; gap: 20px; }
+.brand-logo { width: 48px; height: 48px; }
+.brand-name-wrap { display: flex; flex-direction: column; gap: 2px; }
+.brand-name { font-family: var(--font-display); font-weight: 500; font-size: 24px; letter-spacing: -0.02em; color: var(--aubergine-900); line-height: 1; }
+.brand-tagline { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-500); font-weight: 500; }
+.brand-meta { display: flex; align-items: center; gap: 24px; }
+.screen-stamp { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.screen-stamp .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-300); font-weight: 500; }
+.screen-stamp .val { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--terracotta-700); }
+.locale-switch { display: flex; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 9999px; padding: 4px; box-shadow: var(--shadow-sm); }
+.locale-switch button { border: 0; background: transparent; padding: 8px 18px; border-radius: 9999px; font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-500); cursor: pointer; }
+.locale-switch button.active { background: var(--aubergine-700); color: var(--paper); }
+
+/* EDITORIAL HEAD */
+.editorial-head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 48px; margin-bottom: 44px; padding-bottom: 32px; border-bottom: 1px solid var(--sand-100); }
+.editorial-head .label { font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--terracotta-700); margin-bottom: 12px; }
+.editorial-head h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(38px, 5vw, 64px); line-height: 0.98; letter-spacing: -0.035em; color: var(--aubergine-900); max-width: 16ch; }
+.editorial-head h1 em { font-style: italic; color: var(--magenta-500); }
+[lang="ar"] .editorial-head h1 { font-weight: 700; letter-spacing: 0; line-height: 1.15; }
+.editorial-head .colophon { font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); letter-spacing: 0.02em; text-align: end; line-height: 1.7; }
+.editorial-head .colophon strong { color: var(--aubergine-700); }
+[lang="ar"] .editorial-head .colophon { font-family: var(--font-arabic); }
+
+/* COMPOSITION */
+.composition { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+@media (max-width: 980px) { .composition { grid-template-columns: 1fr; gap: 48px; } .phone { transform: scale(0.9); transform-origin: top center; } }
+
+.phone-stage { display: flex; justify-content: center; position: relative; padding: 24px 0; }
+.phone-stage::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 58% 48% at 50% 26%, rgba(91, 44, 95, 0.08), transparent 62%); z-index: 0; }
+.phone { position: relative; width: 396px; height: 836px; background: var(--ink-900); border-radius: 54px; padding: 12px; box-shadow: var(--shadow-phone); z-index: 1; }
+.phone::before { content: ''; position: absolute; top: 12px; inset-inline: 0; margin-inline: auto; width: 108px; height: 29px; background: var(--ink-900); border-radius: 0 0 18px 18px; z-index: 100; }
+.phone-screen { width: 100%; height: 100%; background: var(--cream); border-radius: 43px; overflow-y: auto; overflow-x: hidden; position: relative; }
+.phone-screen::-webkit-scrollbar { display: none; }
+
+.status-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 30px 6px; font-size: 14px; font-weight: 600; color: var(--paper); position: absolute; top: 0; inset-inline: 0; z-index: 6; }
+.status-bar .icons { display: flex; gap: 6px; align-items: center; }
+.status-bar svg { width: 17px; height: 17px; }
+
+/* HERO */
+.hb-hero {
+  position: relative; height: 212px; overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(58, 18, 52, 0.20) 0%, rgba(58, 18, 52, 0.24) 40%, rgba(58, 18, 52, 0.84) 100%),
+    linear-gradient(142deg, var(--aubergine-500), var(--aubergine-700) 48%, var(--magenta-500));
+}
+.hb-hero::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 86 L20 58 L32 86 Z M32 86 L44 58 L56 86 Z M56 86 L68 58 L80 86 Z' fill='rgba(255,255,255,0.06)'/%3E%3C/svg%3E");
+  background-size: 300px; background-position: bottom center; background-repeat: no-repeat;
+}
+.hb-hero-btn {
+  position: absolute; top: 50px; width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(253, 251, 247, 0.94); display: flex; align-items: center; justify-content: center;
+  border: 0; z-index: 3; box-shadow: var(--shadow-sm); cursor: pointer;
+}
+.hb-hero-btn svg { width: 17px; height: 17px; color: var(--aubergine-900); }
+.hb-hero-btn.back { inset-inline-start: 18px; }
+[dir="rtl"] .hb-hero-btn.back svg { transform: scaleX(-1); }
+.hb-hero-foot { position: absolute; inset-inline: 20px; bottom: 18px; z-index: 2; }
+.hb-cat {
+  display: inline-block; background: rgba(253, 251, 247, 0.22); backdrop-filter: blur(6px);
+  color: var(--paper); font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+  padding: 4px 11px; border-radius: 9999px; margin-bottom: 9px;
+}
+[lang="ar"] .hb-cat { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.hb-title { font-family: var(--font-display); font-weight: 500; font-size: 29px; line-height: 1.06; letter-spacing: -0.02em; color: var(--paper); }
+[lang="ar"] .hb-title { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.hb-sub { font-family: var(--font-display); font-style: italic; font-size: 13px; color: rgba(253, 251, 247, 0.85); margin-top: 6px; }
+[lang="ar"] .hb-sub { font-family: var(--font-arabic); font-style: normal; }
+
+/* BODY */
+.hb-body { padding: 16px 20px 16px; }
+
+/* PICKER */
+.hb-picker { background: var(--paper); border: 1px solid var(--sand-100); border-radius: 18px; padding: 14px; box-shadow: var(--shadow-md); margin-bottom: 18px; }
+.pk-title { font-family: var(--font-display); font-weight: 500; font-size: 16px; letter-spacing: -0.015em; color: var(--aubergine-900); margin-bottom: 11px; }
+[lang="ar"] .pk-title { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.pk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pk-field { grid-column: span 1; display: flex; align-items: center; gap: 9px; background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 12px; padding: 9px 11px; text-align: start; }
+.pk-field.full { grid-column: span 2; }
+.pk-ic { width: 28px; height: 28px; border-radius: 8px; background: var(--aubergine-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.pk-ic svg { width: 14px; height: 14px; color: var(--aubergine-700); }
+.pk-text { min-width: 0; flex: 1; display: flex; flex-direction: column; }
+.pk-l { font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-500); font-weight: 600; }
+[lang="ar"] .pk-l { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.pk-v { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--aubergine-900); margin-top: 1px; }
+.pk-stepper { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.pk-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--sand-100); background: var(--paper); color: var(--aubergine-700); font-size: 16px; font-weight: 600; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.pk-btn.on { background: var(--aubergine-700); border-color: var(--aubergine-700); color: var(--paper); }
+.pk-count { font-family: var(--font-mono); font-size: 15px; font-weight: 600; color: var(--aubergine-900); min-width: 34px; text-align: center; }
+.pk-hint { font-size: 10.5px; color: var(--ink-500); margin-top: 10px; line-height: 1.5; }
+[lang="ar"] .pk-hint { font-size: 11.5px; }
+
+/* RESULT LINE */
+.hb-result { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 11px; }
+.hb-result-count { font-family: var(--font-display); font-weight: 500; font-size: 15px; letter-spacing: -0.01em; color: var(--aubergine-900); }
+[lang="ar"] .hb-result-count { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.hb-result-meta { font-family: var(--font-mono); font-size: 10px; color: var(--ink-500); text-align: end; }
+[lang="ar"] .hb-result-meta { font-family: var(--font-arabic); font-size: 11px; }
+
+/* HALL CARDS */
+.hb-card { position: relative; display: flex; gap: 12px; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 16px; padding: 11px; margin-bottom: 9px; }
+.hb-card.selected { border-color: var(--aubergine-700); background: var(--aubergine-100); }
+.hb-thumb { position: relative; width: 86px; height: 108px; border-radius: 12px; flex-shrink: 0; overflow: hidden; }
+.hb-thumb::after {
+  content: ''; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 86 L20 58 L32 86 Z M32 86 L44 58 L56 86 Z M56 86 L68 58 L80 86 Z' fill='rgba(255,255,255,0.16)'/%3E%3C/svg%3E");
+  background-size: 88px; background-position: bottom center; background-repeat: no-repeat;
+}
+.hb-thumb.t1 { background: linear-gradient(150deg, var(--terracotta-500), var(--terracotta-700) 55%, var(--aubergine-700)); }
+.hb-thumb.t2 { background: linear-gradient(150deg, var(--aubergine-300), var(--aubergine-500) 52%, var(--aubergine-900)); }
+.hb-thumb.t3 { background: linear-gradient(150deg, var(--terracotta-300), var(--terracotta-500) 50%, var(--terracotta-700)); }
+.hb-badge {
+  position: absolute; top: 7px; inset-inline-start: 7px; z-index: 2;
+  background: var(--magenta-500); color: var(--paper); font-size: 9px; font-weight: 700;
+  padding: 3px 7px; border-radius: 9999px; letter-spacing: 0.01em;
+}
+[lang="ar"] .hb-badge { font-size: 10px; }
+.hb-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.hb-name { font-family: var(--font-display); font-weight: 500; font-size: 15px; letter-spacing: -0.015em; color: var(--aubergine-900); line-height: 1.2; }
+[lang="ar"] .hb-name { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.hb-cap { display: flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--ink-700); font-weight: 500; margin-top: 5px; }
+.hb-cap svg { width: 13px; height: 13px; color: var(--terracotta-700); flex-shrink: 0; }
+.hb-suits { font-size: 11px; color: var(--ink-500); margin-top: 3px; line-height: 1.4; }
+.hb-price { font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; color: var(--aubergine-900); margin-top: 7px; }
+[lang="ar"] .hb-price { font-family: var(--font-arabic); font-size: 12px; }
+.hb-price-row { display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap; margin-top: 7px; }
+.hb-price-row .hb-price { margin-top: 0; }
+.hb-was { font-family: var(--font-mono); font-size: 10.5px; font-weight: 500; color: var(--ink-300); text-decoration: line-through; }
+[lang="ar"] .hb-was { font-family: var(--font-arabic); font-size: 11px; }
+.hb-meta { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.hb-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 9999px; }
+[lang="ar"] .hb-pill { font-size: 11px; }
+.hb-pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.hb-pill.ok { background: rgba(90, 140, 95, 0.14); color: var(--success); }
+.hb-pill.held { background: rgba(201, 149, 107, 0.20); color: var(--terracotta-700); }
+.hb-rating { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--ink-700); display: inline-flex; align-items: center; gap: 3px; }
+.hb-rating .star { color: var(--terracotta-500); font-size: 11px; }
+
+/* CONFIRM NOTE */
+.hb-note { display: flex; gap: 11px; background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 16px; padding: 13px 14px; margin-top: 16px; }
+.hb-note-ic { width: 30px; height: 30px; border-radius: 9px; background: rgba(184, 34, 140, 0.10); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.hb-note-ic svg { width: 15px; height: 15px; color: var(--magenta-500); }
+.hb-note-t { font-size: 12.5px; font-weight: 600; color: var(--aubergine-900); }
+.hb-note-b { font-size: 11.5px; color: var(--ink-700); line-height: 1.55; margin-top: 3px; }
+
+/* STICKY CTA */
+.hb-cta { position: sticky; bottom: 0; background: var(--paper); border-top: 1px solid var(--sand-100); padding: 13px 18px 22px; display: flex; align-items: center; gap: 13px; box-shadow: 0 -8px 24px rgba(58, 18, 52, 0.06); }
+.hb-cta-sel { flex: 1; min-width: 0; }
+.hb-cta-l { font-size: 10px; color: var(--ink-500); }
+[lang="ar"] .hb-cta-l { font-size: 11px; }
+.hb-cta-v { font-family: var(--font-display); font-weight: 500; font-size: 16px; color: var(--aubergine-900); letter-spacing: -0.02em; line-height: 1.2; margin-top: 1px; }
+[lang="ar"] .hb-cta-v { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.hb-cta-btn { flex-shrink: 0; background: var(--magenta-500); color: var(--paper); border: 0; border-radius: 12px; padding: 13px 16px; font-family: var(--font-body); font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 7px; cursor: pointer; }
+[lang="ar"] .hb-cta-btn { font-family: var(--font-arabic); }
+.hb-cta-btn svg { width: 15px; height: 15px; }
+[dir="rtl"] .hb-cta-btn svg { transform: scaleX(-1); }
+
+/* SIDE PANEL */
+.side-panel { position: sticky; top: 32px; padding-top: 24px; }
+.panel-h { font-family: var(--font-display); font-weight: 500; font-size: 32px; letter-spacing: -0.025em; color: var(--aubergine-900); margin-bottom: 8px; line-height: 1.05; }
+[lang="ar"] .panel-h { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; line-height: 1.25; }
+.panel-h em { font-style: italic; color: var(--magenta-500); }
+.panel-lede { font-size: 15px; line-height: 1.65; color: var(--ink-500); max-width: 52ch; margin-bottom: 28px; }
+.principle-list { list-style: none; display: flex; flex-direction: column; gap: 18px; margin-bottom: 28px; }
+.principle-list li { padding-inline-start: 32px; position: relative; }
+.principle-list li::before { content: ''; position: absolute; inset-inline-start: 0; top: 4px; width: 16px; height: 16px; background: linear-gradient(135deg, var(--terracotta-500), var(--magenta-500)); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.principle-list li strong { display: block; font-family: var(--font-display); font-weight: 500; font-size: 16px; letter-spacing: -0.01em; color: var(--aubergine-900); margin-bottom: 4px; }
+[lang="ar"] .principle-list li strong { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.principle-list li p { font-size: 13px; line-height: 1.55; color: var(--ink-700); }
+.tech-callout { background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 14px; padding: 18px; }
+.tech-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta-700); font-weight: 600; margin-bottom: 8px; }
+[lang="ar"] .tech-label { letter-spacing: 0; text-transform: none; font-size: 12px; }
+.tech-body { font-size: 13px; line-height: 1.6; color: var(--ink-700); }
+
+.footnote { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--sand-100); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); }
+[lang="ar"] .footnote { font-family: var(--font-arabic); }
+.footnote .accent { color: var(--magenta-500); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="brand-bar">
+    <div class="brand-identity">
+      <svg class="brand-logo" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#5B2C5F"/>
+            <stop offset="100%" stop-color="#B8228C"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="44" r="36" fill="url(#brandGrad)"/>
+        <circle cx="50" cy="44" r="22" fill="#FDFBF7"/>
+        <path d="M28 74 L36 60 L44 74 Z M44 74 L52 60 L60 74 Z M60 74 L68 60 L76 74 Z" fill="#FDFBF7"/>
+      </svg>
+      <div class="brand-name-wrap">
+        <div class="brand-name">Escalé</div>
+        <div class="brand-tagline">Design System · v0.1</div>
+      </div>
+    </div>
+    <div class="brand-meta">
+      <div class="screen-stamp">
+        <div class="lbl">Screen 25</div>
+        <div class="val">Halls &amp; Bookable Assets</div>
+      </div>
+      <div class="locale-switch">
+        <button id="btnEn" class="active" onclick="setLocale('en')">EN</button>
+        <button id="btnAr" onclick="setLocale('ar')">ع</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="editorial-head" id="editorialHead">
+    <div>
+      <div class="label" id="eh-label">Screen 25 / Halls &amp; Bookable Assets</div>
+      <h1><span id="eh-1">One hall,</span> <em id="eh-2">one booking.</em></h1>
+    </div>
+    <div class="colophon">
+      <div><strong id="cl-1">Halls —</strong> <span id="cl-1b">not menu items</span></div>
+      <div><strong id="cl-2">Date first,</strong> <span id="cl-2b">then the list</span></div>
+      <div><strong id="cl-3">Covers gaps G6 and G8</strong></div>
+      <div style="margin-top:8px; opacity:0.6;" id="cl-date">New screen · 9 Aug 2026</div>
+    </div>
+  </section>
+
+  <div class="composition" id="composition">
+
+    <!-- ============ PHONE ============ -->
+    <div class="phone-stage">
+      <div class="phone">
+        <div class="phone-screen">
+
+          <div class="status-bar">
+            <span>9:41</span>
+            <span class="icons">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 17h2v4H2zm5-4h2v8H7zm5-4h2v12h-2zm5-4h2v16h-2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.7 6 0 9l12 15L24 9c-2.7-3-7-5-12-5z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="18" height="10" rx="2.5"/><rect x="4" y="9" width="12" height="6" rx="1" fill="currentColor"/><path d="M22 10v4" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+
+          <!-- HERO -->
+          <div class="hb-hero">
+            <button class="hb-hero-btn back" aria-label="Back">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div class="hb-hero-foot">
+              <span class="hb-cat" id="hb-cat">Meetings &amp; events</span>
+              <div class="hb-title" id="hb-title">Event Halls</div>
+              <div class="hb-sub" id="hb-sub">Beit Zamalek · Cairo</div>
+            </div>
+          </div>
+
+          <div class="hb-body">
+
+            <!-- DATE + TIME + GUESTS -->
+            <div class="hb-picker">
+              <div class="pk-title" id="pk-title">When is your event?</div>
+              <div class="pk-grid">
+
+                <div class="pk-field full">
+                  <span class="pk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke-linecap="round"/></svg></span>
+                  <span class="pk-text">
+                    <span class="pk-l" id="pk-date-l">Event date</span>
+                    <span class="pk-v" id="pk-date-v">Wed, 16 Sep 2026</span>
+                  </span>
+                </div>
+
+                <div class="pk-field">
+                  <span class="pk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg></span>
+                  <span class="pk-text">
+                    <span class="pk-l" id="pk-start-l">Starts</span>
+                    <span class="pk-v" id="pk-start-v">19:00</span>
+                  </span>
+                </div>
+
+                <div class="pk-field">
+                  <span class="pk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg></span>
+                  <span class="pk-text">
+                    <span class="pk-l" id="pk-end-l">Ends</span>
+                    <span class="pk-v" id="pk-end-v">23:00</span>
+                  </span>
+                </div>
+
+                <div class="pk-field full">
+                  <span class="pk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke-linecap="round"/><circle cx="9.5" cy="7" r="3.5"/><path d="M22 20v-2a4 4 0 0 0-3-3.87M16 3.5a4 4 0 0 1 0 7" stroke-linecap="round"/></svg></span>
+                  <span class="pk-text">
+                    <span class="pk-l" id="pk-guests-l">Guests</span>
+                    <span class="pk-v" id="pk-guests-v">120 people</span>
+                  </span>
+                  <span class="pk-stepper">
+                    <button class="pk-btn" aria-label="Fewer guests">−</button>
+                    <span class="pk-count">120</span>
+                    <button class="pk-btn on" aria-label="More guests">+</button>
+                  </span>
+                </div>
+
+              </div>
+              <div class="pk-hint" id="pk-hint">The list below only shows halls that are free in this window and big enough for your group.</div>
+            </div>
+
+            <!-- RESULTS -->
+            <div class="hb-result">
+              <span class="hb-result-count" id="res-count">3 halls available</span>
+              <span class="hb-result-meta" id="res-meta">16 Sep · 19:00–23:00</span>
+            </div>
+
+            <!-- HALL 1 -->
+            <div class="hb-card selected">
+              <div class="hb-thumb t1"></div>
+              <div class="hb-info">
+                <div class="hb-name" id="h1-name">Al Jawhara Ballroom</div>
+                <div class="hb-cap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke-linecap="round"/><circle cx="9.5" cy="7" r="3.5"/><path d="M22 20v-2a4 4 0 0 0-3-3.87" stroke-linecap="round"/></svg>
+                  <span id="h1-cap">Up to 220 guests</span>
+                </div>
+                <div class="hb-suits" id="h1-suits">Weddings and gala dinners</div>
+                <div class="hb-price" id="h1-price">From EGP 160,000 per event</div>
+                <div class="hb-meta">
+                  <span class="hb-pill ok" id="h1-pill">Available</span>
+                  <span class="hb-rating"><span class="star">★</span> 4.8</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- HALL 2 -->
+            <div class="hb-card">
+              <div class="hb-thumb t2"><span class="hb-badge" id="h2-badge">−20% weekdays</span></div>
+              <div class="hb-info">
+                <div class="hb-name" id="h2-name">Andalus Hall</div>
+                <div class="hb-cap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke-linecap="round"/><circle cx="9.5" cy="7" r="3.5"/><path d="M22 20v-2a4 4 0 0 0-3-3.87" stroke-linecap="round"/></svg>
+                  <span id="h2-cap">Up to 180 guests</span>
+                </div>
+                <div class="hb-suits" id="h2-suits">Conferences and company days</div>
+                <div class="hb-price-row">
+                  <span class="hb-price" id="h2-price">From EGP 120,000 per event</span>
+                  <span class="hb-was" id="h2-was">EGP 150,000</span>
+                </div>
+                <div class="hb-meta">
+                  <span class="hb-pill held" id="h2-pill">Held until 11:15 today</span>
+                  <span class="hb-rating"><span class="star">★</span> 4.6</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- HALL 3 -->
+            <div class="hb-card">
+              <div class="hb-thumb t3"></div>
+              <div class="hb-info">
+                <div class="hb-name" id="h3-name">The Orangery</div>
+                <div class="hb-cap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke-linecap="round"/><circle cx="9.5" cy="7" r="3.5"/><path d="M22 20v-2a4 4 0 0 0-3-3.87" stroke-linecap="round"/></svg>
+                  <span id="h3-cap">Up to 130 guests</span>
+                </div>
+                <div class="hb-suits" id="h3-suits">Small weddings and private dinners</div>
+                <div class="hb-price" id="h3-price">From EGP 78,000 per event</div>
+                <div class="hb-meta">
+                  <span class="hb-pill ok" id="h3-pill">Available</span>
+                  <span class="hb-rating"><span class="star">★</span> 4.9</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CONFIRM NOTE -->
+            <div class="hb-note">
+              <span class="hb-note-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v5c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V6l8-3z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="pk-text">
+                <span class="hb-note-t" id="note-t">The hotel confirms the hall</span>
+                <span class="hb-note-b" id="note-b">This is a request, not an instant booking. The hotel checks the date and replies, usually within a few hours. Nothing is charged before that.</span>
+              </span>
+            </div>
+
+          </div>
+
+          <!-- STICKY CTA -->
+          <div class="hb-cta">
+            <div class="hb-cta-sel">
+              <div class="hb-cta-l" id="cta-l">Selected hall</div>
+              <div class="hb-cta-v" id="cta-v">Al Jawhara Ballroom</div>
+            </div>
+            <button class="hb-cta-btn" id="cta-btn">
+              <span id="cta-btn-t">Request this hall</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SIDE PANEL ============ -->
+    <aside class="side-panel" id="sidePanel">
+      <h2 class="panel-h"><span id="ph-1">One hall,</span> <em id="ph-1em">one booking.</em></h2>
+      <p class="panel-lede" id="ph-lede">A spa treatment can be ordered ten times in one evening. A hall cannot. Once Saturday night is taken, it is taken. So this screen is built around a single question: is the hall free when I need it?</p>
+
+      <ul class="principle-list">
+        <li>
+          <strong id="p1-t">A hall is a place, not an item on a list</strong>
+          <p id="p1-d">You can order ten breakfasts at the same time. You cannot book one ballroom twice. Each hall is one real room, and one booking holds it for the whole evening.</p>
+        </li>
+        <li>
+          <strong id="p2-t">The date comes before the halls</strong>
+          <p id="p2-d">The guest picks the day, the hours and the number of people first. Only then do the halls appear — and only the ones that are free and big enough. Showing a hall the guest cannot have wastes everyone's time.</p>
+        </li>
+        <li>
+          <strong id="p3-t">"Held" means someone else is deciding</strong>
+          <p id="p3-d">When a guest sends a request, the hall is held for a short time so no one else takes it while the hotel replies. The guest sees when the hold ends, so they know whether to wait or choose another hall.</p>
+        </li>
+        <li>
+          <strong id="p4-t">The hotel says yes, not the app</strong>
+          <p id="p4-d">A hall needs setup, food and staff. So the guest sends a request and the hotel confirms it. Money is only taken after that. Saying this on the screen prevents the worst kind of disappointment.</p>
+        </li>
+        <li>
+          <strong id="p5-t">The same screen works for cabanas, boats and equipment</strong>
+          <p id="p5-d">Anything the hotel owns a limited number of — a pool cabana, a meeting room, a projector, a car — works exactly like this. Only the name, the capacity and the price unit change.</p>
+        </li>
+      </ul>
+
+      <div class="tech-callout">
+        <div class="tech-label" id="tech-l">A note for the hotel</div>
+        <p class="tech-body" id="tech-b">The hotel adds each hall once — capacity, what it suits, photos, and a price per event, per hour or per person. It also sets how long a hold lasts and who approves requests. Escalé keeps one calendar per hall, so two guests can never hold the same hall for the same hours.</p>
+      </div>
+    </aside>
+
+  </div>
+
+  <footer class="footnote" id="footnote">
+    <span id="ft-1">© Escalé · Screen 25 of 28 · New — Halls &amp; Bookable Assets</span>
+    <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
+  </footer>
+
+</div>
+
+<script>
+const t = {
+  en: {
+    ehLabel: "Screen 25 / Halls & Bookable Assets",
+    eh1: "One hall,", eh2: "one booking.",
+    cl1: "Halls —", cl1b: "not menu items",
+    cl2: "Date first,", cl2b: "then the list",
+    cl3: "Covers gaps G6 and G8",
+    clDate: "New screen · 9 Aug 2026",
+
+    hbCat: "Meetings & events",
+    hbTitle: "Event Halls",
+    hbSub: "Beit Zamalek · Cairo",
+
+    pkTitle: "When is your event?",
+    pkDateL: "Event date", pkDateV: "Wed, 16 Sep 2026",
+    pkStartL: "Starts", pkStartV: "19:00",
+    pkEndL: "Ends", pkEndV: "23:00",
+    pkGuestsL: "Guests", pkGuestsV: "120 people",
+    pkHint: "The list below only shows halls that are free in this window and big enough for your group.",
+
+    resCount: "3 halls available",
+    resMeta: "16 Sep · 19:00–23:00",
+
+    h1name: "Al Jawhara Ballroom",
+    h1cap: "Up to 220 guests",
+    h1suits: "Weddings and gala dinners",
+    h1price: "From EGP 160,000 per event",
+    h1pill: "Available",
+
+    h2name: "Andalus Hall",
+    h2cap: "Up to 180 guests",
+    h2suits: "Conferences and company days",
+    h2price: "From EGP 120,000 per event",
+    h2was: "EGP 150,000",
+    h2pill: "Held until 11:15 today",
+    h2badge: "−20% weekdays",
+
+    h3name: "The Orangery",
+    h3cap: "Up to 130 guests",
+    h3suits: "Small weddings and private dinners",
+    h3price: "From EGP 78,000 per event",
+    h3pill: "Available",
+
+    noteT: "The hotel confirms the hall",
+    noteB: "This is a request, not an instant booking. The hotel checks the date and replies, usually within a few hours. Nothing is charged before that.",
+
+    ctaL: "Selected hall",
+    ctaV: "Al Jawhara Ballroom",
+    ctaBtnT: "Request this hall",
+
+    ph1: "One hall,", ph1em: "one booking.",
+    phLede: "A spa treatment can be ordered ten times in one evening. A hall cannot. Once Saturday night is taken, it is taken. So this screen is built around a single question: is the hall free when I need it?",
+    p1t: "A hall is a place, not an item on a list",
+    p1d: "You can order ten breakfasts at the same time. You cannot book one ballroom twice. Each hall is one real room, and one booking holds it for the whole evening.",
+    p2t: "The date comes before the halls",
+    p2d: "The guest picks the day, the hours and the number of people first. Only then do the halls appear — and only the ones that are free and big enough. Showing a hall the guest cannot have wastes everyone's time.",
+    p3t: "“Held” means someone else is deciding",
+    p3d: "When a guest sends a request, the hall is held for a short time so no one else takes it while the hotel replies. The guest sees when the hold ends, so they know whether to wait or choose another hall.",
+    p4t: "The hotel says yes, not the app",
+    p4d: "A hall needs setup, food and staff. So the guest sends a request and the hotel confirms it. Money is only taken after that. Saying this on the screen prevents the worst kind of disappointment.",
+    p5t: "The same screen works for cabanas, boats and equipment",
+    p5d: "Anything the hotel owns a limited number of — a pool cabana, a meeting room, a projector, a car — works exactly like this. Only the name, the capacity and the price unit change.",
+    techL: "A note for the hotel",
+    techB: "The hotel adds each hall once — capacity, what it suits, photos, and a price per event, per hour or per person. It also sets how long a hold lasts and who approves requests. Escalé keeps one calendar per hall, so two guests can never hold the same hall for the same hours.",
+    ft1: "© Escalé · Screen 25 of 28 · New — Halls & Bookable Assets"
+  },
+  ar: {
+    ehLabel: "الشاشة 25 / القاعات والوحدات اللي بتتحجز",
+    eh1: "قاعة واحدة،", eh2: "حجز واحد.",
+    cl1: "القاعات —", cl1b: "مش أصناف في قايمة",
+    cl2: "التاريخ الأول،", cl2b: "وبعدين القايمة",
+    cl3: "بتغطّي الفجوتين G6 و G8",
+    clDate: "شاشة جديدة · 9 أغسطس 2026",
+
+    hbCat: "اجتماعات ومناسبات",
+    hbTitle: "قاعات المناسبات",
+    hbSub: "بيت الزمالك · القاهرة",
+
+    pkTitle: "مناسبتك إمتى؟",
+    pkDateL: "تاريخ المناسبة", pkDateV: "الأربعاء، 16 سبتمبر 2026",
+    pkStartL: "بتبدأ", pkStartV: "19:00",
+    pkEndL: "بتخلص", pkEndV: "23:00",
+    pkGuestsL: "عدد الضيوف", pkGuestsV: "120 شخص",
+    pkHint: "القايمة اللي تحت بتوري القاعات الفاضية في الوقت ده بس، واللي تكفي عددكم.",
+
+    resCount: "3 قاعات متاحة",
+    resMeta: "16 سبتمبر · 19:00–23:00",
+
+    h1name: "قاعة الجوهرة",
+    h1cap: "تكفي لحد 220 ضيف",
+    h1suits: "الأفراح والعشاء الكبير",
+    h1price: "تبدأ من EGP 160,000 للمناسبة",
+    h1pill: "متاحة",
+
+    h2name: "قاعة الأندلس",
+    h2cap: "تكفي لحد 180 ضيف",
+    h2suits: "المؤتمرات وأيام الشركات",
+    h2price: "تبدأ من EGP 120,000 للمناسبة",
+    h2was: "EGP 150,000",
+    h2pill: "محجوزة مؤقتاً لحد 11:15 النهارده",
+    h2badge: "خصم 20% أيام الأسبوع",
+
+    h3name: "قاعة البستان",
+    h3cap: "تكفي لحد 130 ضيف",
+    h3suits: "أفراح صغيرة وعشاء خاص",
+    h3price: "تبدأ من EGP 78,000 للمناسبة",
+    h3pill: "متاحة",
+
+    noteT: "الفندق هو اللي بيأكّد القاعة",
+    noteB: "ده طلب، مش حجز فوري. الفندق بيراجع التاريخ ويردّ عليك، عادةً خلال ساعات قليلة. ومحدش بياخد منك فلوس قبل كده.",
+
+    ctaL: "القاعة المختارة",
+    ctaV: "قاعة الجوهرة",
+    ctaBtnT: "اطلب القاعة دي",
+
+    ph1: "قاعة واحدة،", ph1em: "حجز واحد.",
+    phLede: "جلسة السبا ممكن تتطلب عشر مرات في ليلة واحدة. القاعة لأ. لو ليلة السبت اتحجزت، خلاص اتحجزت. عشان كده الشاشة دي مبنية حوالين سؤال واحد: القاعة فاضية في الوقت اللي أنا عايزه ولا لأ؟",
+    p1t: "القاعة مكان، مش صنف في قايمة",
+    p1d: "تقدر تطلب عشر فطارات في نفس الوقت، لكن مش هتقدر تحجز نفس القاعة مرتين. كل قاعة هنا مكان حقيقي واحد، وحجز واحد بياخدها المساء كله.",
+    p2t: "التاريخ بييجي قبل القاعات",
+    p2d: "الضيف بيختار اليوم والساعات وعدد الناس الأول، وبعد كده بس القاعات بتظهر — والفاضية اللي تكفيه هي اللي بتبان. إنك توري الضيف قاعة مش هياخدها ده ضياع وقت للكل.",
+    p3t: "«محجوزة مؤقتاً» يعني في حد بيقرّر دلوقتي",
+    p3d: "لما ضيف يبعت طلب، القاعة بتتحجز مؤقتاً لفترة قصيرة عشان محدش تاني ياخدها لحد ما الفندق يردّ. والضيف بيشوف الحجز المؤقت بيخلص إمتى، فيعرف يستنى ولا يختار قاعة تانية.",
+    p4t: "الفندق هو اللي بيوافق، مش التطبيق",
+    p4d: "القاعة محتاجة تجهيز وأكل وفريق شغل. عشان كده الضيف بيبعت طلب والفندق بيأكّده، والفلوس مبتتاخدش غير بعد كده. وإننا نقول ده على الشاشة بيمنع أوحش نوع من خيبة الأمل.",
+    p5t: "نفس الشاشة بتنفع للكبائن والمراكب والمعدات",
+    p5d: "أي حاجة الفندق عنده منها عدد محدود — كابينة عند حمام السباحة، غرفة اجتماعات، جهاز عرض، عربية — بتشتغل بالظبط بنفس الطريقة. اللي بيتغير بس هو الاسم والسعة ووحدة السعر.",
+    techL: "ملاحظة للفندق",
+    techB: "الفندق بيضيف كل قاعة مرة واحدة — السعة، وبتنفع لإيه، والصور، والسعر للمناسبة أو للساعة أو للشخص. وبيحدد كمان الحجز المؤقت بيفضل قد إيه ومين اللي بيوافق على الطلبات. وإسكالي بيمسك تقويم لكل قاعة لوحدها، فمستحيل ضيفين يحجزوا نفس القاعة في نفس الساعات.",
+    ft1: "© إسكالي · الشاشة 25 من 28 · جديدة — القاعات والوحدات اللي بتتحجز"
+  }
+};
+
+function setLocale(loc) {
+  const tt = t[loc];
+  const isRtl = loc === 'ar';
+
+  document.getElementById('btnEn').classList.toggle('active', loc === 'en');
+  document.getElementById('btnAr').classList.toggle('active', loc === 'ar');
+  ['editorialHead', 'composition', 'sidePanel', 'footnote'].forEach(function (id) {
+    const el = document.getElementById(id);
+    el.setAttribute('lang', loc);
+    el.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+  });
+
+  const set = function (id, val) { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+  set('eh-label', tt.ehLabel);
+  set('eh-1', tt.eh1); set('eh-2', tt.eh2);
+  set('cl-1', tt.cl1); set('cl-1b', tt.cl1b);
+  set('cl-2', tt.cl2); set('cl-2b', tt.cl2b);
+  set('cl-3', tt.cl3); set('cl-date', tt.clDate);
+
+  set('hb-cat', tt.hbCat);
+  set('hb-title', tt.hbTitle);
+  set('hb-sub', tt.hbSub);
+
+  set('pk-title', tt.pkTitle);
+  set('pk-date-l', tt.pkDateL); set('pk-date-v', tt.pkDateV);
+  set('pk-start-l', tt.pkStartL); set('pk-start-v', tt.pkStartV);
+  set('pk-end-l', tt.pkEndL); set('pk-end-v', tt.pkEndV);
+  set('pk-guests-l', tt.pkGuestsL); set('pk-guests-v', tt.pkGuestsV);
+  set('pk-hint', tt.pkHint);
+
+  set('res-count', tt.resCount);
+  set('res-meta', tt.resMeta);
+
+  for (let i = 1; i <= 3; i++) {
+    set('h' + i + '-name', tt['h' + i + 'name']);
+    set('h' + i + '-cap', tt['h' + i + 'cap']);
+    set('h' + i + '-suits', tt['h' + i + 'suits']);
+    set('h' + i + '-price', tt['h' + i + 'price']);
+    set('h' + i + '-pill', tt['h' + i + 'pill']);
+  }
+  set('h2-badge', tt.h2badge);
+  set('h2-was', tt.h2was);
+
+  set('note-t', tt.noteT);
+  set('note-b', tt.noteB);
+
+  set('cta-l', tt.ctaL);
+  set('cta-v', tt.ctaV);
+  set('cta-btn-t', tt.ctaBtnT);
+
+  set('ph-1', tt.ph1); set('ph-1em', tt.ph1em); set('ph-lede', tt.phLede);
+  for (let i = 1; i <= 5; i++) { set('p' + i + '-t', tt['p' + i + 't']); set('p' + i + '-d', tt['p' + i + 'd']); }
+  set('tech-l', tt.techL); set('tech-b', tt.techB);
+  set('ft-1', tt.ft1);
+}
+</script>
+
+</body>
+</html>

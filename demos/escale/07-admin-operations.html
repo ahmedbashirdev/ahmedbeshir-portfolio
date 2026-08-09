@@ -783,6 +783,140 @@ body::before {
 .ops-stat.overdue .ops-num { color: var(--danger); }
 .ops-view { font-size: 9px; font-weight: 600; color: var(--terracotta-700); cursor: pointer; white-space: nowrap; }
 .ops-lbl { font-size: 9.5px; color: var(--ink-500); font-weight: 500; margin-top: 3px; }
+
+/* ============================================
+   PER-DEPARTMENT SERVICE ORDERS (D14 · gap G14)
+   Six legacy metrics per department: orders · in prep ·
+   on the way · overdue · delivered · order value.
+   ============================================ */
+.dept-card { margin-top: 24px; }
+.dept-total { text-align: end; }
+.dept-total-lbl {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+[lang="ar"] .dept-total-lbl { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.dept-total-val {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 21px;
+  letter-spacing: -0.02em;
+  color: var(--aubergine-900);
+}
+.dept-total-val .ccy { font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); margin-inline-end: 4px; }
+
+.dept-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+@media (max-width: 1280px) { .dept-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.dept-cell {
+  background: var(--sand-50);
+  border: 1px solid var(--sand-100);
+  border-radius: 12px;
+  padding: 12px;
+}
+.dept-cell.flag { background: rgba(181, 63, 63, 0.06); border-color: rgba(181, 63, 63, 0.22); }
+.dept-cell-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.dept-ic {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--paper);
+  flex-shrink: 0;
+}
+.dept-ic svg { width: 14px; height: 14px; }
+.dept-ic.d1 { background: linear-gradient(135deg, var(--terracotta-500), var(--terracotta-700)); }
+.dept-ic.d2 { background: linear-gradient(135deg, var(--magenta-300), var(--magenta-500)); }
+.dept-ic.d3 { background: linear-gradient(135deg, var(--aubergine-300), var(--aubergine-700)); }
+.dept-ic.d4 { background: linear-gradient(135deg, var(--terracotta-300), var(--terracotta-500)); }
+.dept-ic.d5 { background: linear-gradient(135deg, var(--aubergine-500), var(--magenta-500)); }
+.dept-ic.d6 { background: linear-gradient(135deg, var(--magenta-500), var(--aubergine-900)); }
+.dept-ic.d7 { background: linear-gradient(135deg, var(--terracotta-700), var(--aubergine-700)); }
+.dept-ic.d8 { background: linear-gradient(135deg, var(--aubergine-700), var(--terracotta-500)); }
+.dept-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  color: var(--aubergine-900);
+  line-height: 1.15;
+}
+[lang="ar"] .dept-name { font-weight: 700; letter-spacing: 0; }
+
+.dept-figs { display: grid; grid-template-columns: 1fr 1fr; align-items: flex-end; gap: 8px; }
+.dept-fig { min-width: 0; }
+.dept-fig-num {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  color: var(--aubergine-900);
+  line-height: 1;
+}
+.dept-fig.late .dept-fig-num { color: var(--danger); }
+.dept-fig.zero .dept-fig-num { color: var(--ink-300); }
+.dept-fig-lbl { display: block; font-size: 9.5px; color: var(--ink-500); font-weight: 500; margin-top: 3px; }
+[lang="ar"] .dept-fig-lbl { font-size: 10.5px; }
+
+/* Sub-stages of IN_PROGRESS (FulfilmentStage) — only meaningful
+   where the department actually has a delivery leg. */
+.dept-stages {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 9px;
+  border-block-start: 1px solid var(--sand-100);
+}
+.dept-stage { min-width: 0; }
+.dept-stage-num {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-700);
+  line-height: 1;
+}
+.dept-stage.na .dept-stage-num { color: var(--ink-300); font-weight: 500; }
+.dept-stage.na .dept-stage-lbl { color: var(--ink-300); }
+.dept-stage-lbl {
+  display: block;
+  font-size: 9px;
+  color: var(--ink-500);
+  font-weight: 500;
+  margin-top: 3px;
+  line-height: 1.25;
+}
+[lang="ar"] .dept-stage-lbl { font-size: 10px; }
+
+.dept-na-note {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-block-start: 1px solid var(--sand-100);
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: var(--ink-500);
+}
+[lang="ar"] .dept-na-note { font-size: 11.5px; }
+
+.dept-value {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-top: 10px;
+  padding-top: 9px;
+  border-block-start: 1px solid var(--sand-100);
+}
+.dept-value .dv-ccy { font-family: var(--font-mono); font-size: 10px; color: var(--ink-500); }
+.dept-value .dv-num { font-family: var(--font-mono); font-size: 14px; font-weight: 600; color: var(--aubergine-900); }
 [lang="ar"] .ops-lbl { font-size: 11px; }
 .send-instructions {
   width: 100%; margin-top: 14px;
@@ -1540,6 +1674,178 @@ body::before {
 
           </div>
 
+          <!-- PER-DEPARTMENT SERVICE ORDERS (D14 · G14) -->
+          <div class="card dept-card">
+            <div class="card-head">
+              <div class="card-title-wrap">
+                <div class="eyebrow" id="dp-eb">Service orders · today</div>
+                <h3 id="dp-title">By department</h3>
+              </div>
+              <div class="dept-total">
+                <span class="dept-total-lbl" id="dp-total-l">Total order value today</span>
+                <span class="dept-total-val"><span class="ccy">EGP</span>175,600</span>
+              </div>
+            </div>
+
+            <div class="dept-grid">
+
+              <div class="dept-cell flag">
+                <div class="dept-cell-head">
+                  <span class="dept-ic d1">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V8a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v10"/><path d="M3 13h18M6 18v2M18 18v2"/></svg>
+                  </span>
+                  <span class="dept-name" id="dp-1-n">Housekeeping</span>
+                </div>
+                <div class="dept-figs">
+                  <span class="dept-fig"><span class="dept-fig-num">8</span><span class="dept-fig-lbl" id="dp-1-o">orders</span></span>
+                  <span class="dept-fig late"><span class="dept-fig-num">1</span><span class="dept-fig-lbl" id="dp-1-x">overdue</span></span>
+                </div>
+                <div class="dept-stages">
+                  <span class="dept-stage"><span class="dept-stage-num">1</span><span class="dept-stage-lbl" id="dp-1-p">in prep</span></span>
+                  <span class="dept-stage"><span class="dept-stage-num">1</span><span class="dept-stage-lbl" id="dp-1-w">on the way</span></span>
+                  <span class="dept-stage"><span class="dept-stage-num">6</span><span class="dept-stage-lbl" id="dp-1-d">delivered</span></span>
+                </div>
+                <div class="dept-value"><span class="dv-ccy">EGP</span><span class="dv-num">3,100</span></div>
+              </div>
+
+              <div class="dept-cell flag">
+                <div class="dept-cell-head">
+                  <span class="dept-ic d2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7a2 2 0 0 0 4 0V2M5 11v11M12 2v20M12 8c0-3.3 1.6-6 3.5-6S19 4.7 19 8s-1.6 5-3.5 5"/></svg>
+                  </span>
+                  <span class="dept-name" id="dp-2-n">Dining</span>
+                </div>
+                <div class="dept-figs">
+                  <span class="dept-fig"><span class="dept-fig-num">7</span><span class="dept-fig-lbl" id="dp-2-o">orders</span></span>
+                  <span class="dept-fig late"><span class="dept-fig-num">1</span><span class="dept-fig-lbl" id="dp-2-x">overdue</span></span>
+                </div>
+                <div class="dept-stages">
+                  <span class="dept-stage"><span class="dept-stage-num">2</span><span class="dept-stage-lbl" id="dp-2-p">in prep</span></span>
+                  <span class="dept-stage"><span class="dept-stage-num">1</span><span class="dept-stage-lbl" id="dp-2-w">on the way</span></span>
+                  <span class="dept-stage"><span class="dept-stage-num">4</span><span class="dept-stage-lbl" id="dp-2-d">delivered</span></span>
+                </div>
+                <div class="dept-value"><span class="dv-ccy">EGP</span><span class="dv-num">14,600</span></div>
+              </div>
+
+              <div class="dept-cell">
+                <div class="dept-cell-head">
+                  <span class="dept-ic d3">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c0-6 3-9 3-13a3 3 0 0 0-6 0c0 4 3 7 3 13z"/><path d="M5 19c-1-2-2-5-1.5-8M19 19c1-2 2-5 1.5-8"/></svg>
+                  </span>
+                  <span class="dept-name" id="dp-3-n">Spa</span>
+                </div>
+                <div class="dept-figs">
+                  <span class="dept-fig"><span class="dept-fig-num">3</span><span class="dept-fig-lbl" id="dp-3-o">orders</span></span>
+                  <span class="dept-fig zero"><span class="dept-fig-num">0</span><span class="dept-fig-lbl" id="dp-3-x">overdue</span></span>
+                </div>
+                <div class="dept-stages">
+                  <span class="dept-stage na"><span class="dept-stage-num">—</span><span class="dept-stage-lbl" id="dp-3-p">in prep</span></span>
+                  <span class="dept-stage na"><span class="dept-stage-num">—</span><span class="dept-stage-lbl" id="dp-3-w">on the way</span></span>
+                  <span class="dept-stage"><span class="dept-stage-num">3</span><span class="dept-stage-lbl" id="dp-3-d">delivered</span></span>
+                </div>
+                <div class="dept-value"><span class="dv-ccy">EGP</span><span class="dv-num">11,400</span></div>
+              </div>
+
+              <div class="dept-cell">
+                <div class="dept-cell-head">
+                  <span class="dept-ic d4">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                  </span>
+                  <span class="dept-name" id="dp-4-n">Maintenance</span>
+                </div>
+                <div class="dept-figs">
+                  <span class="dept-fig"><span class="dept-fig-num">3</span><span class="dept-fig-lbl" id="dp-4-o">orders</span></span>
+                  <span class="dept-fig zero"><span class="dept-fig-num">0</span><span class="dept-fig-lbl" id="dp-4-x">overdue</span></span>
+                </div>
+                <div class="dept-stages">
+                  <span class="dept-stage"><span class="dept-stage-num">0</span><span class="dept-stage-lbl" id="dp-4-p">in prep</span></span>
+                  <span class="dept-stage"><span class="dept-stage-num">1</span><span class="dept-stage-lbl" id="dp-4-w">on the way</span></span>
+                  <span class="dept-stage"><span class="dept-stage-num">2</span><span class="dept-stage-lbl" id="dp-4-d">delivered</span></span>
+                </div>
+                <div class="dept-value"><span class="dv-ccy">EGP</span><span class="dv-num">900</span></div>
+              </div>
+
+              <div class="dept-cell">
+                <div class="dept-cell-head">
+                  <span class="dept-ic d5">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3v-5l2-5h13l3 5v5h-2"/><circle cx="7.5" cy="17" r="2"/><circle cx="16.5" cy="17" r="2"/><path d="M9.5 17h5"/></svg>
+                  </span>
+                  <span class="dept-name" id="dp-5-n">Transport</span>
+                </div>
+                <div class="dept-figs">
+                  <span class="dept-fig"><span class="dept-fig-num">3</span><span class="dept-fig-lbl" id="dp-5-o">orders</span></span>
+                  <span class="dept-fig zero"><span class="dept-fig-num">0</span><span class="dept-fig-lbl" id="dp-5-x">overdue</span></span>
+                </div>
+                <div class="dept-stages">
+                  <span class="dept-stage"><span class="dept-stage-num">1</span><span class="dept-stage-lbl" id="dp-5-p">in prep</span></span>
+                  <span class="dept-stage"><span class="dept-stage-num">0</span><span class="dept-stage-lbl" id="dp-5-w">on the way</span></span>
+                  <span class="dept-stage"><span class="dept-stage-num">2</span><span class="dept-stage-lbl" id="dp-5-d">delivered</span></span>
+                </div>
+                <div class="dept-value"><span class="dv-ccy">EGP</span><span class="dv-num">8,200</span></div>
+              </div>
+
+              <div class="dept-cell">
+                <div class="dept-cell-head">
+                  <span class="dept-ic d6">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg>
+                  </span>
+                  <span class="dept-name" id="dp-6-n">Halls</span>
+                </div>
+                <div class="dept-figs">
+                  <span class="dept-fig"><span class="dept-fig-num">1</span><span class="dept-fig-lbl" id="dp-6-o">orders</span></span>
+                  <span class="dept-fig zero"><span class="dept-fig-num">0</span><span class="dept-fig-lbl" id="dp-6-x">overdue</span></span>
+                </div>
+                <div class="dept-stages">
+                  <span class="dept-stage na"><span class="dept-stage-num">—</span><span class="dept-stage-lbl" id="dp-6-p">in prep</span></span>
+                  <span class="dept-stage na"><span class="dept-stage-num">—</span><span class="dept-stage-lbl" id="dp-6-w">on the way</span></span>
+                  <span class="dept-stage"><span class="dept-stage-num">1</span><span class="dept-stage-lbl" id="dp-6-d">delivered</span></span>
+                </div>
+                <div class="dept-value"><span class="dv-ccy">EGP</span><span class="dv-num">135,000</span></div>
+              </div>
+
+              <div class="dept-cell">
+                <div class="dept-cell-head">
+                  <span class="dept-ic d7">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg>
+                  </span>
+                  <span class="dept-name" id="dp-7-n">Porter</span>
+                </div>
+                <div class="dept-figs">
+                  <span class="dept-fig"><span class="dept-fig-num">4</span><span class="dept-fig-lbl" id="dp-7-o">orders</span></span>
+                  <span class="dept-fig zero"><span class="dept-fig-num">0</span><span class="dept-fig-lbl" id="dp-7-x">overdue</span></span>
+                </div>
+                <div class="dept-stages">
+                  <span class="dept-stage"><span class="dept-stage-num">0</span><span class="dept-stage-lbl" id="dp-7-p">in prep</span></span>
+                  <span class="dept-stage"><span class="dept-stage-num">1</span><span class="dept-stage-lbl" id="dp-7-w">on the way</span></span>
+                  <span class="dept-stage"><span class="dept-stage-num">3</span><span class="dept-stage-lbl" id="dp-7-d">delivered</span></span>
+                </div>
+                <div class="dept-value"><span class="dv-ccy">EGP</span><span class="dv-num">0</span></div>
+              </div>
+
+              <div class="dept-cell">
+                <div class="dept-cell-head">
+                  <span class="dept-ic d8">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v17M2 21h20"/><circle cx="15" cy="12" r="1"/></svg>
+                  </span>
+                  <span class="dept-name" id="dp-8-n">Rooms desk</span>
+                </div>
+                <div class="dept-figs">
+                  <span class="dept-fig"><span class="dept-fig-num">2</span><span class="dept-fig-lbl" id="dp-8-o">orders</span></span>
+                  <span class="dept-fig zero"><span class="dept-fig-num">0</span><span class="dept-fig-lbl" id="dp-8-x">overdue</span></span>
+                </div>
+                <div class="dept-stages">
+                  <span class="dept-stage na"><span class="dept-stage-num">—</span><span class="dept-stage-lbl" id="dp-8-p">in prep</span></span>
+                  <span class="dept-stage na"><span class="dept-stage-num">—</span><span class="dept-stage-lbl" id="dp-8-w">on the way</span></span>
+                  <span class="dept-stage"><span class="dept-stage-num">2</span><span class="dept-stage-lbl" id="dp-8-d">delivered</span></span>
+                </div>
+                <div class="dept-value"><span class="dv-ccy">EGP</span><span class="dv-num">2,400</span></div>
+              </div>
+
+            </div>
+
+            <p class="dept-na-note" id="dp-na-note">A dash means that stage does not apply to this department — the spa, the halls and the rooms desk have no delivery leg, so nothing is ever "in prep" or "on the way" there. 31 orders today: 23 delivered, 8 still in service, 2 of them overdue.</p>
+          </div>
+
         </main>
       </div>
     </div>
@@ -1588,11 +1894,16 @@ body::before {
         <h3 id="n7-h">The room tells the desk it is in use</h3>
         <p id="n7-p">When a guest opens the door with the QR key, the dashboard knows at once that the room is occupied.</p>
       </div>
+      <div class="note-item">
+        <div class="num">08</div>
+        <h3 id="n8-h">Every department shows its money</h3>
+        <p id="n8-p">All eight departments — housekeeping, dining, spa, maintenance, transport, halls, the porters and the rooms desk — each show orders, what is in prep, what is on the way, late orders, what was delivered, and how much they earned today, so the manager sees which department is actually making money.</p>
+      </div>
     </div>
   </section>
 
   <footer class="footnote">
-    <span>© Escalé · Screen 07 of 18</span>
+    <span>© Escalé · Screen 07 of 28</span>
     <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
   </footer>
 
@@ -1631,6 +1942,13 @@ const t = {
     rqEb: "Live queue", rqTitle: "Open requests",
     ops1l: "Completed today", ops2l: "In service", ops3l: "Overdue", ops4l: "Active staff",
     opsView: "View", sendInstr: "Send instructions to staff",
+    dpEb: "Service orders · today", dpTitle: "By department",
+    dpTotalL: "Total order value today",
+    dpOrders: "orders", dpOverdue: "overdue",
+    dpPrep: "in prep", dpOtw: "on the way", dpDone: "delivered",
+    dp1n: "Housekeeping", dp2n: "Dining", dp3n: "Spa", dp4n: "Maintenance", dp5n: "Transport",
+    dp6n: "Halls", dp7n: "Porter", dp8n: "Rooms desk",
+    dpNaNote: "A dash means that stage does not apply to this department — the spa, the halls and the rooms desk have no delivery leg, so nothing is ever \"in prep\" or \"on the way\" there. 31 orders today: 23 delivered, 8 still in service, 2 of them overdue.",
     rq1t: "AC not cooling in room", rq1m1: "Room 308", rq1m2: "Sara Lin", rq1a: "Maintenance",
     rq2t: "Late check-out request", rq2m1: "Room 412", rq2m2: "P. Andrews", rq2a: "Front Office",
     rq3t: "Extra pillows · feather-free", rq3m1: "Room 204", rq3m2: "M. Sayed", rq3a: "Housekeeping",
@@ -1655,48 +1973,57 @@ const t = {
     n6h: "Guest reviews shown clearly",
     n6p: "The latest guest review appears the same way the guest wrote it, easy to read.",
     n7h: "The room tells the desk it is in use",
-    n7p: "When a guest opens the door with the QR key, the dashboard knows at once that the room is occupied."
+    n7p: "When a guest opens the door with the QR key, the dashboard knows at once that the room is occupied.",
+    n8h: "Every department shows its money",
+    n8p: "All eight departments — housekeeping, dining, spa, maintenance, transport, halls, the porters and the rooms desk — each show orders, what is in prep, what is on the way, late orders, what was delivered, and how much they earned today, so the manager sees which department is actually making money."
   },
   ar: {
-    ehLabel: "الشاشة ٧ / المسؤول · العمليات",
+    ehLabel: "الشاشة 7 / المسؤول · العمليات",
     eh1: "غرفة التحكّم،", eh2: "بنظرة واحدة.",
     sbLblMain: "اليوم", sbLblRev: "الحجوزات", sbLblOps: "الفندق",
     sb1: "العمليات", sb2: "التحليلات", sb3: "الحجوزات", sb4: "مزادات B2B",
     sb5: "الغرف", sb6: "خطط الأسعار", sb7: "المهام", sb8: "الرسائل", sb9: "التقييمات",
     userName: "ندى خليل", userRole: "مديرة المكتب الأمامي",
-    mhEb: "الأحد · ٢٢ مارس ٢٠٢٦", mhTitle: "العمليات",
+    mhEb: "الأحد · 22 مارس 2026", mhTitle: "العمليات",
     searchPlaceholder: "ابحث عن ضيف، غرفة، أو حجز…",
     ctaWalkin: "ضيف مباشر",
-    kpi1l: "نسبة الإشغال", kpi2l: "إيرادات اليوم", kpi3l: "الواصلون", kpi3d: "١٠ متوقّعون",
-    kpi4l: "المغادرون", kpi4d: "٢ خروج متأخر", kpi5l: "متوسط السعر اليومي",
-    kpi6l: "طلبات مفتوحة", kpi6d: "٢ أولوية عالية",
+    kpi1l: "نسبة الإشغال", kpi2l: "إيرادات اليوم", kpi3l: "الواصلون", kpi3d: "10 متوقّعون",
+    kpi4l: "المغادرون", kpi4d: "2 خروج متأخر", kpi5l: "متوسط السعر اليومي",
+    kpi6l: "طلبات مفتوحة", kpi6d: "2 أولوية عالية",
     arEb: "جدول اليوم", arTitle: "الواصلون",
     doorLabel: "مباشر · المفتاح الرقمي",
-    doorText: "غرفة ٢٠٤ — مريم سيد فتحت الباب الآن بمفتاح الـ QR. الغرفة أصبحت مشغولة.",
+    doorText: "غرفة 204 — مريم سيد فتحت الباب الآن بمفتاح الـ QR. الغرفة أصبحت مشغولة.",
     doorTime: "الآن",
-    tabArr: "الواصلون (٢٤)", tabDep: "المغادرون (١٩)",
-    dayNow: "الآن", day30m: "بعد ٣٠ د", day30m2: "بعد ٣٠ د", day2h: "بعد ساعتين", dayDone: "وصل", dayEarly: "وصل",
-    g1Name: "مريم سيد · +١", g1Meta: "٣ ليالٍ · جناح الحديقة · فطار", g1Status: "QR",
-    g2Name: "جيمس دونالدسون", g2Meta: "٥ ليالٍ · إطلالة على النيل · نصف", g2Status: "في الانتظار",
-    g3Name: "أحمد خليفة · +٣", g3Meta: "٢ ليالٍ · جناح عائلي · شامل", g3Status: "في الانتظار",
-    g4Name: "إيلينا ماركوفيتش", g4Meta: "٧ ليالٍ · إطلالة بحر · فطار · B2B", g4Status: "في الانتظار",
-    g5Name: "صوفي هارتمان · +١", g5Meta: "٤ ليالٍ · جناح الحديقة · نصف", g5Status: "وصل",
-    g6Name: "يوكي تاناكا", g6Meta: "٣ ليالٍ · إطلالة على النيل · فطار", g6Status: "وصل",
-    rgEb: "مباشر · ٤٨ غرفة", rgTitle: "حالة الغرف",
-    tabAll: "كل الأدوار", tabF2: "الدور ٢", tabF3: "الدور ٣", tabF4: "الدور ٤",
-    leg1: "نظيفة شاغرة (١٢)", leg2: "تحتاج تنظيف (٥)", leg3: "مشغولة (٢٩)", leg4: "خارج الخدمة (٢)",
+    tabArr: "الواصلون (24)", tabDep: "المغادرون (19)",
+    dayNow: "الآن", day30m: "بعد 30 د", day30m2: "بعد 30 د", day2h: "بعد ساعتين", dayDone: "وصل", dayEarly: "وصل",
+    g1Name: "مريم سيد · +1", g1Meta: "3 ليالٍ · جناح الحديقة · فطار", g1Status: "تشيك-إن بالـ QR",
+    g2Name: "جيمس دونالدسون", g2Meta: "5 ليالٍ · إطلالة على النيل · نصف", g2Status: "في الانتظار",
+    g3Name: "أحمد خليفة · +3", g3Meta: "2 ليالٍ · جناح عائلي · شامل", g3Status: "في الانتظار",
+    g4Name: "إيلينا ماركوفيتش", g4Meta: "7 ليالٍ · إطلالة بحر · فطار · B2B", g4Status: "في الانتظار",
+    g5Name: "صوفي هارتمان · +1", g5Meta: "4 ليالٍ · جناح الحديقة · نصف", g5Status: "وصل",
+    g6Name: "يوكي تاناكا", g6Meta: "3 ليالٍ · إطلالة على النيل · فطار", g6Status: "وصل",
+    rgEb: "مباشر · 48 غرفة", rgTitle: "حالة الغرف",
+    tabAll: "كل الأدوار", tabF2: "الدور 2", tabF3: "الدور 3", tabF4: "الدور 4",
+    leg1: "نظيفة شاغرة (12)", leg2: "تحتاج تنظيف (5)", leg3: "مشغولة (29)", leg4: "خارج الخدمة (2)",
     rqEb: "قائمة مباشرة", rqTitle: "طلبات مفتوحة",
     ops1l: "منجزة اليوم", ops2l: "في الخدمة", ops3l: "متأخّرة", ops4l: "موظفون نشطون",
     opsView: "عرض", sendInstr: "إرسال تعليمات للموظفين",
-    rq1t: "التكييف لا يبرّد في الغرفة", rq1m1: "غرفة ٣٠٨", rq1m2: "سارة لين", rq1a: "صيانة",
-    rq2t: "طلب خروج متأخّر", rq2m1: "غرفة ٤١٢", rq2m2: "ب. أندروز", rq2a: "المكتب الأمامي",
-    rq3t: "وسائد إضافية · بدون ريش", rq3m1: "غرفة ٢٠٤", rq3m2: "م. سيد", rq3a: "تنظيف",
-    rq4t: "حجز سبا · مساج للزوجين", rq4m1: "غرفة ٢٠٨", rq4m2: "س. هارتمان", rq4a: "كونسيرج",
-    rq5t: "حجز مطعم · ٨ مساءً", rq5m1: "غرفة ٣١٥", rq5m2: "ي. تاناكا", rq5a: "أطعمة ومشروبات",
-    rvEb: "آخر ٧ أيام", rvTitle: "رأي الضيوف", rvAction: "عرض الكل ←",
-    rvCount: "٣١ تقييم", rvTrend: "ارتفاع ٠.٢ عن الأسبوع الماضي",
-    recentRv: '"مفتاح الـ QR وحده يستحق العودة — مشينا مباشرة لغرفة ٢٠٤ من سيارة المطار. لا طابور، لا أوراق."',
-    recentRvSrc: "— مريم س. · ٢١ مارس · ٥★",
+    dpEb: "طلبات الخدمة · النهارده", dpTitle: "حسب القسم",
+    dpTotalL: "إجمالي قيمة الطلبات النهارده",
+    dpOrders: "طلب", dpOverdue: "متأخّر",
+    dpPrep: "تحت التجهيز", dpOtw: "قيد التسليم", dpDone: "تم تسليمها",
+    dp1n: "التنظيف", dp2n: "المطاعم", dp3n: "السبا", dp4n: "الصيانة", dp5n: "النقل",
+    dp6n: "القاعات", dp7n: "خدمة الحقائب", dp8n: "مكتب الغرف",
+    dpNaNote: "الشرطة معناها إن المرحلة دي مش بتنطبق على القسم ده — السبا والقاعات ومكتب الغرف مفيش فيهم مرحلة تسليم، فمفيش عندهم حاجة \"تحت التجهيز\" ولا \"قيد التسليم\". 31 طلب النهارده: 23 اتسلّم، و8 لسه في الخدمة، منهم 2 متأخّر.",
+    rq1t: "التكييف لا يبرّد في الغرفة", rq1m1: "غرفة 308", rq1m2: "سارة لين", rq1a: "صيانة",
+    rq2t: "طلب خروج متأخّر", rq2m1: "غرفة 412", rq2m2: "ب. أندروز", rq2a: "المكتب الأمامي",
+    rq3t: "وسائد إضافية · بدون ريش", rq3m1: "غرفة 204", rq3m2: "م. سيد", rq3a: "تنظيف",
+    rq4t: "حجز سبا · مساج للزوجين", rq4m1: "غرفة 208", rq4m2: "س. هارتمان", rq4a: "كونسيرج",
+    rq5t: "حجز مطعم · 8 مساءً", rq5m1: "غرفة 315", rq5m2: "ي. تاناكا", rq5a: "أطعمة ومشروبات",
+    rvEb: "آخر 7 أيام", rvTitle: "رأي الضيوف", rvAction: "عرض الكل ←",
+    rvCount: "31 تقييم", rvTrend: "ارتفاع 0.2 عن الأسبوع الماضي",
+    recentRv: '"مفتاح الـ QR وحده يستحق العودة — مشينا مباشرة لغرفة 204 من سيارة المطار. لا طابور، لا أوراق."',
+    recentRvSrc: "— مريم س. · 21 مارس · 5★",
     nh1: "ليه الشاشة دي", nh1em: "مختلفة.",
     nhP: "معظم لوحات الفنادق شكلها واحد وبارد. دي واضحة ودافئة، وسهل تقراها بنظرة.",
     n1h: "أرقام كبيرة وواضحة",
@@ -1712,7 +2039,9 @@ const t = {
     n6h: "تقييمات النزلاء واضحة",
     n6p: "أحدث تقييم للنزيل بيظهر زي ما النزيل كتبه، سهل القراءة.",
     n7h: "الغرفة بتقول للاستقبال إنها مشغولة",
-    n7p: "لما الضيف يفتح الباب بمفتاح الـ QR، اللوحة بتعرف على طول إن الغرفة بقت مشغولة."
+    n7p: "لما الضيف يفتح الباب بمفتاح الـ QR، اللوحة بتعرف على طول إن الغرفة بقت مشغولة.",
+    n8h: "كل قسم بيوضّح فلوسه",
+    n8p: "الأقسام الثمانية كلها — التنظيف والمطاعم والسبا والصيانة والنقل والقاعات وخدمة الحقائب ومكتب الغرف — كل قسم بيوضّح عدد الطلبات، واللي تحت التجهيز، واللي قيد التسليم، والمتأخّر منها، واللي اتسلّم، وكسب كام النهارده. فالمدير يشوف أنهي قسم بيجيب فلوس فعلاً."
   }
 };
 
@@ -1815,6 +2144,20 @@ function setLocale(loc) {
     document.getElementById(`rq${i}-a`).textContent = tt[`rq${i}a`];
   }
 
+  // Per-department service orders (D14 · G14)
+  document.getElementById('dp-eb').textContent = tt.dpEb;
+  document.getElementById('dp-title').textContent = tt.dpTitle;
+  document.getElementById('dp-total-l').textContent = tt.dpTotalL;
+  for (let i = 1; i <= 8; i++) {
+    document.getElementById(`dp-${i}-n`).textContent = tt[`dp${i}n`];
+    document.getElementById(`dp-${i}-o`).textContent = tt.dpOrders;
+    document.getElementById(`dp-${i}-x`).textContent = tt.dpOverdue;
+    document.getElementById(`dp-${i}-p`).textContent = tt.dpPrep;
+    document.getElementById(`dp-${i}-w`).textContent = tt.dpOtw;
+    document.getElementById(`dp-${i}-d`).textContent = tt.dpDone;
+  }
+  document.getElementById('dp-na-note').textContent = tt.dpNaNote;
+
   // Reviews
   document.getElementById('rv-eb').textContent = tt.rvEb;
   document.getElementById('rv-title').textContent = tt.rvTitle;
@@ -1841,6 +2184,8 @@ function setLocale(loc) {
   document.getElementById('n6-p').textContent = tt.n6p;
   document.getElementById('n7-h').textContent = tt.n7h;
   document.getElementById('n7-p').textContent = tt.n7p;
+  document.getElementById('n8-h').textContent = tt.n8h;
+  document.getElementById('n8-p').textContent = tt.n8p;
 }
 </script>
 

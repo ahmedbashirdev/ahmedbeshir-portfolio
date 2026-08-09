@@ -112,6 +112,13 @@ body {
 .of-filter-btn { width: 38px; height: 38px; flex-shrink: 0; border-radius: 12px; background: var(--paper); border: 1px solid var(--sand-100); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); }
 .of-filter-btn svg { width: 17px; height: 17px; color: var(--aubergine-700); }
 
+/* SEARCH */
+.of-searchwrap { display: flex; align-items: center; gap: 9px; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 12px; padding: 9px 13px; margin-bottom: 16px; box-shadow: var(--shadow-sm); }
+.of-searchwrap > svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--ink-300); }
+.of-search { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font-family: var(--font-body); font-size: 12.5px; color: var(--ink-900); }
+.of-search::placeholder { color: var(--ink-300); }
+[lang="ar"] .of-search { font-family: var(--font-arabic); font-size: 13px; }
+
 .of-eyebrow { font-family: var(--font-display); font-style: italic; font-size: 13px; color: var(--terracotta-700); margin-bottom: 4px; }
 [lang="ar"] .of-eyebrow { font-family: var(--font-arabic); }
 .of-h { font-family: var(--font-display); font-weight: 500; font-size: 25px; line-height: 1.14; letter-spacing: -0.02em; color: var(--aubergine-900); }
@@ -172,6 +179,7 @@ body {
 .offer-thumb.tg-spa { background: linear-gradient(140deg, var(--aubergine-500), var(--magenta-500)); }
 .offer-thumb.tg-pool { background: linear-gradient(140deg, var(--teal), var(--aubergine-700)); }
 .offer-thumb.tg-exp { background: linear-gradient(140deg, var(--magenta-500), var(--aubergine-700)); }
+.offer-thumb.tg-hall { background: linear-gradient(140deg, var(--aubergine-700), var(--terracotta-700)); }
 .offer-thumb::after {
   content: ''; position: absolute; inset: 0; pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 90 L26 66 L38 90 Z M38 90 L50 66 L62 90 Z M62 90 L74 66 L86 90 Z' fill='rgba(255,255,255,0.08)'/%3E%3C/svg%3E");
@@ -189,6 +197,13 @@ body {
 .offer-title { font-family: var(--font-display); font-weight: 500; font-size: 15px; line-height: 1.22; letter-spacing: -0.01em; color: var(--aubergine-900); }
 [lang="ar"] .offer-title { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
 .offer-where { font-size: 11.5px; color: var(--ink-500); line-height: 1.4; }
+/* Outlet opening hours (D14 · gap G8) */
+.offer-hours { display: flex; align-items: center; gap: 5px; font-size: 10.5px; color: var(--ink-500); }
+.offer-hours .dot-open { width: 6px; height: 6px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
+.offer-hours .dot-open.soon { background: var(--terracotta-500); }
+[lang="ar"] .offer-hours { font-size: 11px; }
+.feat-hours { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 11.5px; color: rgba(253, 251, 247, 0.78); position: relative; z-index: 1; }
+.feat-hours .dot-open { width: 6px; height: 6px; border-radius: 50%; background: #8CCB92; flex-shrink: 0; }
 .offer-row2 { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 3px; }
 .offer-rating { font-family: var(--font-mono); font-size: 11px; color: var(--ink-700); white-space: nowrap; }
 .offer-rating .st { color: var(--terracotta-500); }
@@ -196,6 +211,9 @@ body {
 .op-old { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-300); text-decoration: line-through; }
 .op-new { font-family: var(--font-mono); font-size: 14px; font-weight: 600; color: var(--aubergine-900); }
 .op-unit { font-size: 10px; color: var(--ink-500); white-space: nowrap; }
+/* Card CTA — every offer is bookable, not just the featured banner */
+.offer-cta { align-self: flex-end; margin-top: 7px; flex-shrink: 0; background: var(--aubergine-700); color: var(--paper); border: 0; border-radius: 9999px; padding: 8px 17px; font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: -0.01em; cursor: pointer; }
+[lang="ar"] .offer-cta { font-family: var(--font-arabic); letter-spacing: 0; font-size: 12.5px; }
 
 /* CLOSING NOTE */
 .of-note { display: flex; align-items: center; gap: 12px; margin: 6px 0 4px; background: linear-gradient(135deg, var(--aubergine-900), var(--aubergine-700)); border-radius: 16px; padding: 14px 15px; }
@@ -305,9 +323,15 @@ body {
                 <span id="of-loc">Zamalek, Cairo</span>
                 <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
               </span>
-              <button class="of-filter-btn" aria-label="Filter">
+              <button class="of-filter-btn" id="of-filter-btn" aria-label="Filter offers">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
               </button>
+            </div>
+
+            <!-- SEARCH -->
+            <div class="of-searchwrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input class="of-search" id="of-search" type="text" placeholder="Search offers, hotels or venues" aria-label="Search offers">
             </div>
 
             <div class="of-eyebrow" id="of-eyebrow">Offers near you</div>
@@ -318,7 +342,7 @@ body {
             <div class="of-feat">
               <div class="feat-top">
                 <span class="feat-eyebrow" id="feat-eyebrow">Featured · Friday dining</span>
-                <span class="feat-save" id="feat-save">Save 28%</span>
+                <span class="feat-save" id="feat-save">Save 30%</span>
               </div>
               <div class="feat-title" id="feat-title">Rooftop Garden Brunch</div>
               <div class="feat-hotel" id="feat-hotel">Nile View Lounge · Zamalek</div>
@@ -328,6 +352,10 @@ body {
                 <span>·</span>
                 <span id="feat-dist">2.1 km away</span>
               </div>
+              <div class="feat-hours">
+                <span class="dot-open"></span>
+                <span id="feat-hours">Open now · 12:00 – 17:00, Fri only</span>
+              </div>
               <div class="feat-access">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 <span id="feat-access">Guests &amp; visitors welcome</span>
@@ -335,20 +363,26 @@ body {
               <div class="feat-foot">
                 <div class="feat-price">
                   <span class="feat-old">EGP2,900</span>
-                  <span class="feat-new">EGP2,100</span>
+                  <span class="feat-new">EGP2,030</span>
                   <span class="feat-unit" id="feat-unit">per person</span>
                 </div>
                 <button class="feat-btn" id="feat-btn">View offer</button>
               </div>
             </div>
 
-            <!-- CATEGORY PILLS -->
+            <!-- CATEGORY PILLS
+                 Decision: the legacy "Hotels" (الفنادق) pill is intentionally NOT here.
+                 Screen 19 sells non-room inventory only — outlets, halls, spa, pools (D14).
+                 Rooms are searched on Discover / booking-web, so a "Hotels" pill would
+                 return an empty result set. Every pill below maps to a real offer category. -->
+
             <div class="of-cats">
               <span class="cat-pill active" id="cat-1">All</span>
               <span class="cat-pill" id="cat-2">Dining</span>
-              <span class="cat-pill" id="cat-3">Spa &amp; wellness</span>
-              <span class="cat-pill" id="cat-4">Pools &amp; day pass</span>
-              <span class="cat-pill" id="cat-5">Experiences</span>
+              <span class="cat-pill" id="cat-3">Halls</span>
+              <span class="cat-pill" id="cat-4">Spa &amp; beauty</span>
+              <span class="cat-pill" id="cat-5">Pools &amp; day pass</span>
+              <span class="cat-pill" id="cat-6">Other</span>
             </div>
 
             <!-- NEAR YOU -->
@@ -360,7 +394,7 @@ body {
             <!-- OFFER 1 — DINING -->
             <div class="offer-card">
               <div class="offer-thumb tg-dine">
-                <span class="offer-flag">−21%</span>
+                <span class="offer-flag">−20%</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h0c1.1 0 2-.9 2-2V2M5 11v11M11 2v20M11 8c0-3.3 1.8-6 4-6s4 2.7 4 6-1.8 5-4 5"/><path d="M15 13v9"/></svg>
               </div>
               <div class="offer-main">
@@ -370,14 +404,16 @@ body {
                 </div>
                 <div class="offer-title" id="o1-title">Sunset Set Menu for Two</div>
                 <div class="offer-where" id="o1-where">The Sky Terrace · Maadi · 3.6 km</div>
+                <div class="offer-hours"><span class="dot-open"></span><span id="o1-hours">Open now · daily 18:00 – 23:30</span></div>
                 <div class="offer-row2">
                   <span class="offer-rating"><span class="st">★</span> 4.7 · 98</span>
                   <span class="offer-price">
                     <span class="op-old">EGP4,300</span>
-                    <span class="op-new">EGP3,400</span>
+                    <span class="op-new">EGP3,440</span>
                     <span class="op-unit" id="o1-unit">for two</span>
                   </span>
                 </div>
+                <button class="offer-cta" id="o1-cta">Book</button>
               </div>
             </div>
 
@@ -389,19 +425,21 @@ body {
               </div>
               <div class="offer-main">
                 <div class="offer-row1">
-                  <span class="offer-cat" id="o2-cat">Spa &amp; wellness</span>
+                  <span class="offer-cat" id="o2-cat">Spa &amp; beauty</span>
                   <span class="offer-access" id="o2-access">Guests &amp; visitors</span>
                 </div>
                 <div class="offer-title" id="o2-title">Hammam &amp; Massage Ritual · 90 min</div>
                 <div class="offer-where" id="o2-where">Nile Spa · Garden City · 1.4 km</div>
+                <div class="offer-hours"><span class="dot-open"></span><span id="o2-hours">Open now · daily 10:00 – 22:00</span></div>
                 <div class="offer-row2">
                   <span class="offer-rating"><span class="st">★</span> 4.9 · 340</span>
                   <span class="offer-price">
                     <span class="op-old">EGP2,000</span>
-                    <span class="op-new">EGP1,550</span>
+                    <span class="op-new">EGP1,540</span>
                     <span class="op-unit" id="o2-unit">per person</span>
                   </span>
                 </div>
+                <button class="offer-cta" id="o2-cta">Book</button>
               </div>
             </div>
 
@@ -418,38 +456,68 @@ body {
                 </div>
                 <div class="offer-title" id="o3-title">Rooftop Pool Day Pass</div>
                 <div class="offer-where" id="o3-where">Zamalek Tower Hotel · Zamalek · 2.8 km</div>
+                <div class="offer-hours"><span class="dot-open"></span><span id="o3-hours">Open now · daily 09:00 – 19:00</span></div>
                 <div class="offer-row2">
                   <span class="offer-rating"><span class="st">★</span> 4.6 · 76</span>
                   <span class="offer-price">
                     <span class="op-old">EGP900</span>
-                    <span class="op-new">EGP650</span>
+                    <span class="op-new">EGP630</span>
                     <span class="op-unit" id="o3-unit">incl. one drink</span>
                   </span>
                 </div>
+                <button class="offer-cta" id="o3-cta">Book</button>
               </div>
             </div>
 
             <!-- OFFER 4 — EXPERIENCES -->
             <div class="offer-card">
               <div class="offer-thumb tg-exp">
-                <span class="offer-flag">−25%</span>
+                <span class="offer-flag">−24%</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
               </div>
               <div class="offer-main">
                 <div class="offer-row1">
-                  <span class="offer-cat" id="o4-cat">Experiences</span>
+                  <span class="offer-cat" id="o4-cat">Other</span>
                   <span class="offer-access" id="o4-access">Guests &amp; visitors</span>
                 </div>
                 <div class="offer-title" id="o4-title">Live Oud Night &amp; Mezze</div>
                 <div class="offer-where" id="o4-where">Khan el-Khalili · Cairo · 5.0 km</div>
+                <div class="offer-hours"><span class="dot-open soon"></span><span id="o4-hours">Opens 20:00 · Thu to Sat</span></div>
                 <div class="offer-row2">
                   <span class="offer-rating"><span class="st">★</span> 4.8 · 154</span>
                   <span class="offer-price">
                     <span class="op-old">EGP1,450</span>
-                    <span class="op-new">EGP1,100</span>
+                    <span class="op-new">EGP1,102</span>
                     <span class="op-unit" id="o4-unit">per person</span>
                   </span>
                 </div>
+                <button class="offer-cta" id="o4-cta">Book</button>
+              </div>
+            </div>
+
+            <!-- OFFER 5 — HALLS -->
+            <div class="offer-card">
+              <div class="offer-thumb tg-hall">
+                <span class="offer-flag">−25%</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/><path d="M9 11h.01M15 11h.01"/></svg>
+              </div>
+              <div class="offer-main">
+                <div class="offer-row1">
+                  <span class="offer-cat" id="o5-cat">Halls</span>
+                  <span class="offer-access" id="o5-access">Guests &amp; visitors</span>
+                </div>
+                <div class="offer-title" id="o5-title">Queen Hall · Wedding Package</div>
+                <div class="offer-where" id="o5-where">Semiramis Ballrooms · Downtown · 4.2 km</div>
+                <div class="offer-hours"><span class="dot-open"></span><span id="o5-hours">Viewings daily 10:00 – 18:00</span></div>
+                <div class="offer-row2">
+                  <span class="offer-rating"><span class="st">★</span> 4.9 · 41</span>
+                  <span class="offer-price">
+                    <span class="op-old">EGP180,000</span>
+                    <span class="op-new">EGP135,000</span>
+                    <span class="op-unit" id="o5-unit">for 200 guests</span>
+                  </span>
+                </div>
+                <button class="offer-cta" id="o5-cta">Enquire</button>
               </div>
             </div>
 
@@ -468,13 +536,13 @@ body {
 
           <!-- BOTTOM NAV -->
           <nav class="bottom-nav">
-            <div class="nav-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <span id="nav-1">Discover</span>
-            </div>
             <div class="nav-item active">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H6a2 2 0 0 0-2 2v3l9 9 7-7-9-9z"/><line x1="8" y1="9" x2="8" y2="9.01"/></svg>
-              <span id="nav-2">Offers</span>
+              <span id="nav-1">Offers</span>
+            </div>
+            <div class="nav-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><rect x="9" y="2.5" width="6" height="3.5" rx="1"/><path d="M9 11.5h6M9 15.5h4"/></svg>
+              <span id="nav-2">My Orders</span>
             </div>
             <div class="nav-item">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -520,6 +588,10 @@ body {
           <strong id="p5-t">The same calm look</strong>
           <p id="p5-d">It feels like the rest of Escalé — warm, simple, and easy to scan.</p>
         </li>
+        <li>
+          <strong id="p6-t">Everything you need before you tap</strong>
+          <p id="p6-d">The discount, the old price, the rating, and the opening hours are all on the card — so nobody arrives at a closed door.</p>
+        </li>
       </ul>
 
       <div class="tech-callout">
@@ -531,7 +603,7 @@ body {
   </div>
 
   <footer class="footnote" id="footnote">
-    <span id="ft-1">© Escalé · Screen 19 of 19 · New — hotel offers &amp; services</span>
+    <span id="ft-1">© Escalé · Screen 19 of 28 · New — hotel offers &amp; services</span>
     <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
   </footer>
 
@@ -547,30 +619,41 @@ const t = {
     cl3: "The side every app forgets",
     clDate: "New screen · 24 May 2026",
     ofLoc: "Zamalek, Cairo",
+    ofSearch: "Search offers, hotels or venues",
+    ofSearchAria: "Search offers",
+    ofFilterAria: "Filter offers",
     ofEyebrow: "Offers near you",
     ofH1: "Hotel treats,", ofHem: "guest or not.",
     ofSub: "Dining, spa days and pool passes at hotels around you — book whether you are staying the night or just visiting.",
     featEyebrow: "Featured · Friday dining",
-    featSave: "Save 28%",
+    featSave: "Save 30%",
     featTitle: "Rooftop Garden Brunch",
     featHotel: "Nile View Lounge · Zamalek",
     featDist: "2.1 km away",
     featAccess: "Guests & visitors welcome",
+    featHours: "Open now · 12:00 – 17:00, Fri only",
     featUnit: "per person",
     featBtn: "View offer",
-    cat1: "All", cat2: "Dining", cat3: "Spa & wellness", cat4: "Pools & day pass", cat5: "Experiences",
+    cat1: "All", cat2: "Dining", cat3: "Halls", cat4: "Spa & beauty", cat5: "Pools & day pass", cat6: "Other",
     secNear: "Near you", secNearAction: "See all →",
     o1Cat: "Dining", o1Title: "Sunset Set Menu for Two",
     o1Where: "The Sky Terrace · Maadi · 3.6 km", o1Access: "Guests & visitors", o1Unit: "for two",
-    o2Cat: "Spa & wellness", o2Title: "Hammam & Massage Ritual · 90 min",
+    o1Hours: "Open now · daily 18:00 – 23:30", o1Cta: "Book",
+    o2Cat: "Spa & beauty", o2Title: "Hammam & Massage Ritual · 90 min",
     o2Where: "Nile Spa · Garden City · 1.4 km", o2Access: "Guests & visitors", o2Unit: "per person",
+    o2Hours: "Open now · daily 10:00 – 22:00", o2Cta: "Book",
     o3Cat: "Pools & day pass", o3Title: "Rooftop Pool Day Pass",
     o3Where: "Zamalek Tower Hotel · Zamalek · 2.8 km", o3Access: "Guests & visitors", o3Unit: "incl. one drink",
-    o4Cat: "Experiences", o4Title: "Live Oud Night & Mezze",
+    o3Hours: "Open now · daily 09:00 – 19:00", o3Cta: "Book",
+    o4Cat: "Other", o4Title: "Live Oud Night & Mezze",
     o4Where: "Khan el-Khalili · Cairo · 5.0 km", o4Access: "Guests & visitors", o4Unit: "per person",
+    o4Hours: "Opens 20:00 · Thu to Sat", o4Cta: "Book",
+    o5Cat: "Halls", o5Title: "Queen Hall · Wedding Package",
+    o5Where: "Semiramis Ballrooms · Downtown · 4.2 km", o5Access: "Guests & visitors", o5Unit: "for 200 guests",
+    o5Hours: "Viewings daily 10:00 – 18:00", o5Cta: "Enquire",
     noteT: "Booked? Just show your code.",
     noteS: "Pay in the app and show the QR at the venue — no front desk, no printing.",
-    nav1: "Discover", nav2: "Offers", nav3: "My Stay", nav4: "Inbox", nav5: "Account",
+    nav1: "Offers", nav2: "My Orders", nav3: "My Stay", nav4: "Inbox", nav5: "Account",
     ph1: "The part", ph1em: "other apps forget.",
     phLede: "Booking apps sell one thing: the room. But a hotel also has a restaurant, a spa, a pool — and they sit half-empty. This screen sells them, to guests and to people who live or work nearby.",
     p1t: "Not just rooms",
@@ -583,42 +666,55 @@ const t = {
     p4d: "Pick an offer, pay in the app, and show the code at the venue.",
     p5t: "The same calm look",
     p5d: "It feels like the rest of Escalé — warm, simple, and easy to scan.",
+    p6t: "Everything you need before you tap",
+    p6d: "The discount, the old price, the rating, and the opening hours are all on the card — so nobody arrives at a closed door.",
     techL: "A note for the hotel",
     techB: "The hotel adds its offers from the dashboard — a dish, a spa package, a pool pass — and sets the price and the days. Escalé shows each offer to guests inside the hotel and to people nearby.",
-    ft1: "© Escalé · Screen 19 of 19 · New — hotel offers & services"
+    ft1: "© Escalé · Screen 19 of 28 · New — hotel offers & services"
   },
   ar: {
-    ehLabel: "الشاشة ١٩ / العروض",
+    ehLabel: "الشاشة 19 / العروض",
     eh1: "بيع الفندق،", eh2: "مش الغرفة بس.",
     cl1: "مطاعم، سبا، حمامات سباحة —", cl1b: "للجميع",
     cl2: "دخل من الزوّار،", cl2b: "مش النزلاء بس",
     cl3: "الجانب اللي كل تطبيق بينساه",
-    clDate: "شاشة جديدة · ٢٤ مايو ٢٠٢٦",
+    clDate: "شاشة جديدة · 24 مايو 2026",
     ofLoc: "الزمالك، القاهرة",
+    ofSearch: "دوّر على عرض أو فندق أو مكان",
+    ofSearchAria: "البحث في العروض",
+    ofFilterAria: "تصفية العروض",
     ofEyebrow: "عروض قريبة منك",
     ofH1: "متعة الفندق،", ofHem: "نزيل أو لأ.",
     ofSub: "أكل، أيام سبا، وتذاكر حمامات سباحة في فنادق حواليك — احجز سواء كنت نزيلاً أو زائراً من خارج الفندق.",
     featEyebrow: "مميّز · غداء الجمعة",
-    featSave: "وفّر 28%",
-    featTitle: "بوفيه الحديقة على السطح",
+    featSave: "وفّر 30%",
+    featTitle: "برانش الحديقة على السطح",
     featHotel: "صالة إطلالة النيل · الزمالك",
     featDist: "على بُعد 2.1 كم",
     featAccess: "للنزلاء والزوّار",
+    featHours: "مفتوح دلوقتي · 12:00 – 17:00، الجمعة بس",
     featUnit: "للفرد",
     featBtn: "شوف العرض",
-    cat1: "الكل", cat2: "مطاعم", cat3: "سبا وعافية", cat4: "حمامات سباحة", cat5: "تجارب",
+    cat1: "الكل", cat2: "مطاعم", cat3: "قاعات", cat4: "تجميل وسبا", cat5: "حمامات سباحة وتذاكر يوم", cat6: "أخرى",
     secNear: "قريب منك", secNearAction: "← شوف الكل",
-    o1Cat: "مطاعم", o1Title: "عشاء الغروب لشخصين",
+    o1Cat: "مطاعم", o1Title: "منيو عشاء الغروب لشخصين",
     o1Where: "شرفة السماء · المعادي · 3.6 كم", o1Access: "نزلاء وزوّار", o1Unit: "لشخصين",
-    o2Cat: "سبا وعافية", o2Title: "طقس الحمّام والمساج · 90 دقيقة",
+    o1Hours: "مفتوح دلوقتي · يومياً 18:00 – 23:30", o1Cta: "احجز",
+    o2Cat: "تجميل وسبا", o2Title: "طقس الحمّام والمساج · 90 دقيقة",
     o2Where: "سبا النيل · جاردن سيتي · 1.4 كم", o2Access: "نزلاء وزوّار", o2Unit: "للفرد",
-    o3Cat: "حمامات سباحة", o3Title: "تذكرة يوم في حمام السباحة",
+    o2Hours: "مفتوح دلوقتي · يومياً 10:00 – 22:00", o2Cta: "احجز",
+    o3Cat: "حمامات سباحة وتذاكر يوم", o3Title: "تذكرة يوم في حمام السباحة على السطح",
     o3Where: "فندق برج الزمالك · الزمالك · 2.8 كم", o3Access: "نزلاء وزوّار", o3Unit: "يشمل مشروب",
-    o4Cat: "تجارب", o4Title: "ليلة عود ومزّة",
+    o3Hours: "مفتوح دلوقتي · يومياً 09:00 – 19:00", o3Cta: "احجز",
+    o4Cat: "أخرى", o4Title: "ليلة عود ومزّة",
     o4Where: "خان الخليلي · القاهرة · 5.0 كم", o4Access: "نزلاء وزوّار", o4Unit: "للفرد",
+    o4Hours: "بيفتح 20:00 · من الخميس للسبت", o4Cta: "احجز",
+    o5Cat: "قاعات", o5Title: "قاعة الملكة · باقة أفراح",
+    o5Where: "قاعات سميراميس · وسط البلد · 4.2 كم", o5Access: "نزلاء وزوّار", o5Unit: "لـ 200 ضيف",
+    o5Hours: "معاينة يومياً 10:00 – 18:00", o5Cta: "استفسر",
     noteT: "حجزت؟ اعرض الكود وبس.",
     noteS: "ادفع في التطبيق واعرض الـ QR في المكان — من غير استقبال ولا طباعة.",
-    nav1: "اكتشف", nav2: "العروض", nav3: "إقامتي", nav4: "الرسائل", nav5: "حسابي",
+    nav1: "العروض", nav2: "طلباتي", nav3: "إقامتي", nav4: "الرسائل", nav5: "حسابي",
     ph1: "الجزء اللي", ph1em: "باقي التطبيقات بتنساه.",
     phLede: "تطبيقات الحجز بتبيع حاجة واحدة: الغرفة. لكن الفندق كمان عنده مطعم، وسبا، وحمام سباحة — وبيفضلوا نص فاضيين. الشاشة دي بتبيعهم، للنزلاء وللناس اللي ساكنة أو شغّالة جنب الفندق.",
     p1t: "مش غرف بس",
@@ -631,9 +727,11 @@ const t = {
     p4d: "اختار عرض، ادفع في التطبيق، واعرض الكود في المكان.",
     p5t: "نفس الإحساس الهادي",
     p5d: "إحساسها زي باقي إسكالي — دافية، بسيطة، وسهلة القراءة بنظرة.",
+    p6t: "كل اللي محتاجه قبل ما تضغط",
+    p6d: "الخصم، والسعر القديم، والتقييم، ومواعيد العمل كلهم على الكارت — عشان محدش يروح ويلاقي المكان قافل.",
     techL: "ملاحظة للفندق",
     techB: "الفندق بيضيف عروضه من لوحة التحكم — طبق، باقة سبا، تذكرة حمام سباحة — ويحدّد السعر والأيام. وإسكالي بيعرض كل عرض للنزلاء جوّه الفندق وللناس القريبة.",
-    ft1: "© إسكالي · الشاشة ١٩ من ١٩ · جديدة — عروض وخدمات الفندق"
+    ft1: "© إسكالي · الشاشة 19 من 28 · جديدة — عروض وخدمات الفندق"
   }
 };
 
@@ -650,6 +748,7 @@ function setLocale(loc) {
   });
 
   const set = function (id, val) { const el = document.getElementById(id); if (el) el.textContent = val; };
+  const setAttr = function (id, attr, val) { const el = document.getElementById(id); if (el) el.setAttribute(attr, val); };
 
   set('eh-label', tt.ehLabel);
   set('eh-1', tt.eh1); set('eh-2', tt.eh2);
@@ -658,6 +757,9 @@ function setLocale(loc) {
   set('cl-3', tt.cl3); set('cl-date', tt.clDate);
 
   set('of-loc', tt.ofLoc);
+  setAttr('of-search', 'placeholder', tt.ofSearch);
+  setAttr('of-search', 'aria-label', tt.ofSearchAria);
+  setAttr('of-filter-btn', 'aria-label', tt.ofFilterAria);
   set('of-eyebrow', tt.ofEyebrow);
   set('of-h-1', tt.ofH1); set('of-h-em', tt.ofHem);
   set('of-sub', tt.ofSub);
@@ -668,25 +770,28 @@ function setLocale(loc) {
   set('feat-hotel', tt.featHotel);
   set('feat-dist', tt.featDist);
   set('feat-access', tt.featAccess);
+  set('feat-hours', tt.featHours);
   set('feat-unit', tt.featUnit);
   set('feat-btn', tt.featBtn);
 
-  for (let i = 1; i <= 5; i++) set('cat-' + i, tt['cat' + i]);
+  for (let i = 1; i <= 6; i++) set('cat-' + i, tt['cat' + i]);
   set('sec-near', tt.secNear); set('sec-near-action', tt.secNearAction);
 
-  for (let i = 1; i <= 4; i++) {
+  for (let i = 1; i <= 5; i++) {
     set('o' + i + '-cat', tt['o' + i + 'Cat']);
     set('o' + i + '-title', tt['o' + i + 'Title']);
     set('o' + i + '-where', tt['o' + i + 'Where']);
     set('o' + i + '-access', tt['o' + i + 'Access']);
     set('o' + i + '-unit', tt['o' + i + 'Unit']);
+    set('o' + i + '-hours', tt['o' + i + 'Hours']);
+    set('o' + i + '-cta', tt['o' + i + 'Cta']);
   }
 
   set('note-t', tt.noteT); set('note-s', tt.noteS);
   for (let i = 1; i <= 5; i++) set('nav-' + i, tt['nav' + i]);
 
   set('ph-1', tt.ph1); set('ph-1em', tt.ph1em); set('ph-lede', tt.phLede);
-  for (let i = 1; i <= 5; i++) { set('p' + i + '-t', tt['p' + i + 't']); set('p' + i + '-d', tt['p' + i + 'd']); }
+  for (let i = 1; i <= 6; i++) { set('p' + i + '-t', tt['p' + i + 't']); set('p' + i + '-d', tt['p' + i + 'd']); }
   set('tech-l', tt.techL); set('tech-b', tt.techB);
   set('ft-1', tt.ft1);
 }

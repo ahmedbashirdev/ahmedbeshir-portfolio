@@ -6,16 +6,16 @@
 
 ## 1. Project Overview
 
-**Escalé** is a multi-tenant hospitality SaaS platform for the Egyptian market, combining:
+**Escalé** is a multi-tenant hospitality SaaS platform — **targeting Egypt and the Gulf (GCC) together**, built multi-market (the wider region can follow). It combines:
 
 - Hotel booking (B2C)
 - In-stay guest services (concierge, QR room key, service requests)
 - Hotel operations (front-office dashboard, housekeeping, F&B)
-- **B2B auction marketplace** for travel agencies (the competitive moat — no Egyptian competitor offers this)
+- **B2B auction marketplace** for travel agencies (the competitive moat — no regional competitor offers this)
 
-**Audience:** Independent hotels and small/mid hotel groups in Egypt that want a premium operations stack with bilingual Arabic/English from day one. Not a Booking.com clone — closer to a "Mews + agency marketplace" for the regional market.
+**Audience:** Independent hotels and small/mid hotel groups across **Egypt and the Gulf (GCC)** that want a premium operations stack with bilingual Arabic/English from day one. The platform is multi-tenant and multi-market — the wider region can follow. Not a Booking.com clone — closer to a "Mews + agency marketplace" for the regional market.
 
-**Brand voice:** "Editorial Hospitality with North African Soul." Sophisticated, restrained, warm. The opposite of generic SaaS purple gradients and Material design.
+**Brand voice:** "Editorial Hospitality with an Arabian Soul." Sophisticated, restrained, warm — earth tones and the three-triangle desert/tent motif. The opposite of generic SaaS purple gradients and Material design. `design-system.md` carries the same framing with pan-regional Arab references spanning Egypt and the Gulf.
 
 **Project name origin:** "إسكالي escalé" — French for "port of call" / stopover. Logo is an aubergine→magenta gradient circle with three white triangles (mountain/tent motif).
 
@@ -40,7 +40,7 @@ Locked in. Don't propose alternatives unless explicitly asked.
 | **Forms & validation** | React Hook Form + Zod (schemas shared between FE/BE) |
 | **State management** | TanStack Query (server) + Zustand (client) |
 | **Auth** | Better Auth + JWT, RBAC |
-| **Payments** | **Paymob + Fawry** (Egypt, surfaced first) + Stripe (international) |
+| **Payments** | Pluggable per market. Egypt: Paymob / Fawry (cards, Meeza, mobile wallets). Gulf: mada, Apple Pay, STC Pay, Tabby/Tamara (BNPL). Stripe (international). |
 | **File storage** | Cloudflare R2 |
 | **AI features** | Claude API via shared `packages/ai` abstraction |
 | **Monorepo** | Turborepo + pnpm workspaces |
@@ -216,6 +216,8 @@ Mobile UI only ever shows the next valid transition as the primary action. User 
 - Door lock validates offline against rotated public key set
 - Activates at check-in time, deactivates at check-out
 
+> **Revisit (see `DOCUMENTATION.md` D9):** the digital key is a **smart-lock vendor integration** — the real unlock mechanism (BLE / NFC / PIN-code / QR-reader) depends on the hotel's door hardware, not built in-house. The offline-QR model above assumes QR-reader locks, a narrow choice. Lock hardware + vendor subscription are the client's cost.
+
 ### B2B Auction flow
 
 - Travel agency posts demand (rooms, dates, meal plan, target rate)
@@ -225,11 +227,28 @@ Mobile UI only ever shows the next valid transition as the primary action. User 
 - Status: `OPEN → BIDDING → AWARDED → CONFIRMED → COMPLETED`
 - Trust signals: tier-based (Tier 1/2/New), historical booking count, verified badge
 
+### Online check-in & digital key (new — D11)
+
+- The guest completes check-in **before arrival** — identity verification, guest details, room assignment — and receives the QR digital key in advance.
+- On arrival they skip the front desk and go straight to the room — a deliberate competitive advantage.
+- The first door-open event drives the `CONFIRMED → CHECKED_IN` transition and notifies the operations dashboard that the room is now occupied.
+
+### Live chat (new — D12)
+
+- Real-time in-app messaging across three channels: guest ↔ staff, guest ↔ management, management ↔ staff.
+- Purpose: faster service response, a direct complaint line to management (heading off negative public reviews), and effective staff oversight.
+
+### Service-request live tracking (new — D13)
+
+- A guest requests a service directly from the relevant specialist; the request and the staff member are time-tracked against an SLA.
+- The guest can comment on a request while it is in progress; comments are visible to management — so accountability is built in.
+- New screen: **23 — Request Tracking** — the request tracked live (status timeline, assigned specialist, comment thread).
+
 ---
 
 ## 7. Screens Built (Design Preview)
 
-All 14 screens are polished bilingual HTML/CSS prototypes in `screens/`. Each has phone/desktop frame, working AR⇄EN toggle, side panel with design rationale + technical notes.
+The screen prototypes are polished bilingual HTML/CSS files (in the project root). Each has a phone/desktop frame, a working AR⇄EN toggle, and a side panel with design rationale. **The live, authoritative screen inventory is in `DOCUMENTATION.md` §2 — now 23 screens**, including the new Online Check-in, Live Chat and Request Tracking screens (21–23). The table below is the original 14-screen set, kept for reference.
 
 | # | File | Title | Category | Description |
 |---|---|---|---|---|
@@ -357,4 +376,4 @@ When working with Ahmed:
 
 ---
 
-*Last updated: 22 May 2026*
+*Last updated: 25 May 2026 — target market is Egypt and the Gulf (GCC) together, multi-market by design; new features added — full pre-arrival online check-in, 3-channel live chat, and service-request live tracking.*

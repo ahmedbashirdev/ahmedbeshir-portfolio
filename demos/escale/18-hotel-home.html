@@ -424,12 +424,16 @@ body {
               <span id="nav-2">My Stay</span>
             </div>
             <div class="nav-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><rect x="9" y="2.5" width="6" height="3.5" rx="1"/><path d="M9 11.5h6M9 15.5h4"/></svg>
+              <span id="nav-3">My Orders</span>
+            </div>
+            <div class="nav-item">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              <span id="nav-3">Inbox</span>
+              <span id="nav-4">Inbox</span>
             </div>
             <div class="nav-item">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
-              <span id="nav-4">Account</span>
+              <span id="nav-5">Account</span>
             </div>
           </nav>
 
@@ -474,7 +478,7 @@ body {
   </div>
 
   <footer class="footnote" id="footnote">
-    <span id="ft-1">© Escalé · Screen 18 of 18 · New — in-stay hotel home</span>
+    <span id="ft-1">© Escalé · Screen 18 of 28 · New — in-stay hotel home</span>
     <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
   </footer>
 
@@ -508,7 +512,7 @@ const t = {
     gtk2l: "Salt pool", gtk2v: "08:00–sunset",
     gtk3l: "Quiet hours", gtk3v: "After 23:00",
     concT: "Mariam · Concierge", concS: "Here to help, anytime", concBtn: "Message",
-    nav1: "Discover", nav2: "My Stay", nav3: "Inbox", nav4: "Account",
+    nav1: "Discover", nav2: "My Stay", nav3: "My Orders", nav4: "Inbox", nav5: "Account",
     ph1: "The hotel", ph1em: "in your pocket.",
     phLede: "Every hotel still hands the guest a paper folder. This screen takes its place — Wi-Fi, dining, services, and hours, always up to date.",
     p1t: "One place for everything",
@@ -523,15 +527,15 @@ const t = {
     p5d: "It feels like the rest of the app — calm, and easy to read at a glance.",
     techL: "A note for the hotel",
     techB: "The hotel fills this page once from its dashboard — name, photos, dining venues, services, and hours. Every guest then sees the same up-to-date page, in their own language.",
-    ft1: "© Escalé · Screen 18 of 18 · New — in-stay hotel home"
+    ft1: "© Escalé · Screen 18 of 28 · New — in-stay hotel home"
   },
   ar: {
-    ehLabel: "الشاشة ١٨ / الصفحة الرئيسية للفندق",
+    ehLabel: "الشاشة 18 / الصفحة الرئيسية للفندق",
     eh1: "كل حاجة عن", eh2: "فندقك.",
     cl1: "ملف الغرفة الورق،", cl1b: "بقى رقمي",
     cl2: "معلومات، مطاعم، خدمات", cl2b: "— شاشة واحدة",
     cl3: "لكل نزيل في الفندق",
-    clDate: "شاشة جديدة · ٢٣ مايو ٢٠٢٦",
+    clDate: "شاشة جديدة · 23 مايو 2026",
     hhEyebrow: "فندقك",
     hhName: "بيت النوبة",
     hhLoc: "أسوان، مصر",
@@ -551,7 +555,7 @@ const t = {
     gtk2l: "بركة الملح", gtk2v: "08:00–الغروب",
     gtk3l: "ساعات الهدوء", gtk3v: "بعد 23:00",
     concT: "مريم · الكونسيرج", concS: "موجودة لمساعدتك في أي وقت", concBtn: "محادثة",
-    nav1: "اكتشف", nav2: "إقامتي", nav3: "الرسائل", nav4: "حسابي",
+    nav1: "اكتشف", nav2: "إقامتي", nav3: "طلباتي", nav4: "الرسائل", nav5: "حسابي",
     ph1: "الفندق", ph1em: "في جيبك.",
     phLede: "كل فندق لسه بيدّي النزيل ملف ورق. الشاشة دي بتاخد مكانه — الواي فاي، المطاعم، الخدمات، والمواعيد، محدّثة دايماً.",
     p1t: "كل حاجة في مكان واحد",
@@ -566,7 +570,7 @@ const t = {
     p5d: "إحساسها زي باقي التطبيق — هادية وسهلة القراءة بنظرة.",
     techL: "ملاحظة للفندق",
     techB: "الفندق بيملأ الصفحة دي مرة واحدة من لوحة التحكم — الاسم، الصور، المطاعم، الخدمات، والمواعيد. وبعدها كل نزيل بيشوف نفس الصفحة المحدّثة، بلغته هو.",
-    ft1: "© إسكالي · الشاشة ١٨ من ١٨ · جديدة — الصفحة الرئيسية للفندق"
+    ft1: "© إسكالي · الشاشة 18 من 28 · جديدة — الصفحة الرئيسية للفندق"
   }
 };
 
@@ -611,7 +615,7 @@ function setLocale(loc) {
   set('gtk-2-l', tt.gtk2l); set('gtk-2-v', tt.gtk2v);
   set('gtk-3-l', tt.gtk3l); set('gtk-3-v', tt.gtk3v);
   set('conc-t', tt.concT); set('conc-s', tt.concS); set('conc-btn', tt.concBtn);
-  for (let i = 1; i <= 4; i++) set('nav-' + i, tt['nav' + i]);
+  for (let i = 1; i <= 5; i++) set('nav-' + i, tt['nav' + i]);
 
   set('ph-1', tt.ph1); set('ph-1em', tt.ph1em); set('ph-lede', tt.phLede);
   for (let i = 1; i <= 5; i++) { set('p' + i + '-t', tt['p' + i + 't']); set('p' + i + '-d', tt['p' + i + 'd']); }

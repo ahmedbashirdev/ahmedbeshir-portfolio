@@ -98,6 +98,9 @@ model Hotel {
   images           HotelImage[]
   amenities        HotelAmenity[]
   loyaltyAccounts  LoyaltyAccount[]
+  serviceOutlets   ServiceOutlet[]
+  bookableAssets   BookableAsset[]
+  serviceOffers    ServiceOffer[]
 
   @@index([city, countryCode])
   @@index([status, publishedAt])
@@ -255,6 +258,8 @@ model User {
   serviceRequests ServiceRequest[]
   notifications   Notification[]
   sessions        Session[]
+  favorites       Favorite[]
+  serviceReviews  ServiceReview[]
 
   @@index([email])
   @@index([phone])
@@ -666,7 +671,8 @@ model Payment {
   createdAt     DateTime        @default(now()) @map("created_at")
   updatedAt     DateTime        @updatedAt @map("updated_at")
 
-  booking Booking? @relation(fields: [bookingId], references: [id])
+  booking        Booking?        @relation(fields: [bookingId], references: [id])
+  serviceRequest ServiceRequest?
 
   @@index([bookingId])
   @@index([providerRef])
@@ -704,14 +710,24 @@ enum PaymentStatus {
 // =============================================================================
 
 model ServiceCategory {
-  id      String  @id @default(cuid())
-  code    String  @unique // "room_service", "housekeeping", "maintenance"
-  iconUrl String? @map("icon_url")
-  order   Int     @default(0)
+  id       String  @id @default(cuid())
+  code     String  @unique // "housekeeping", "dining", "maintenance", "transport", "halls"
+  iconUrl  String? @map("icon_url")
+  imageUrl String? @map("image_url")
+  order    Int     @default(0)
+  isActive Boolean @default(true) @map("is_active")
 
+  // Two-level tree (D14 / G4): "housekeeping" → "laundry", "room_cleaning", "amenities", "linens".
+  // Only two levels are supported — a child must not have children of its own (enforced in the service layer).
+  parentId String? @map("parent_id")
+
+  parent       ServiceCategory?            @relation("CategoryTree", fields: [parentId], references: [id])
+  children     ServiceCategory[]           @relation("CategoryTree")
   translations ServiceCategoryTranslation[]
   services     HotelService[]
+  outlets      ServiceOutlet[]
 
+  @@index([parentId, order])
   @@map("service_categories")
 }
 
@@ -734,12 +750,32 @@ model HotelService {
   hotelId           String     @map("hotel_id")
   categoryId        String     @map("category_id")
 
+  // The in-hotel outlet that provides this item (D14 / G1). Nullable only for
+  // hotel-wide services that belong to no specific outlet (e.g. "extra towels").
+  outletId          String?    @map("outlet_id")
+  // Menu/catalog grouping inside the outlet — the tabs in a restaurant menu (G3).
+  sectionId         String?    @map("section_id")
+
   price             Decimal?   @db.Decimal(12, 2)
   currency          String?    @default("EGP")
   isFree            Boolean    @default(false) @map("is_free")
 
+  // Presentation
+  imageUrl          String?    @map("image_url")
+  sortOrder         Int        @default(0) @map("sort_order")
+
+  // Timing (G3, G5) — prepMinutes is the kitchen/fulfilment estimate shown on the card
+  // ("40–45 min"); durationMinutes is how long a booked session occupies a slot.
+  prepMinutes       Int?       @map("prep_minutes")
+  durationMinutes   Int?       @map("duration_minutes")
+
+  // Ordering rules
+  maxPerOrder       Int?       @map("max_per_order")
+  requiresAppointment Boolean  @default(false) @map("requires_appointment")
+
   // Availability window
   isAvailable       Boolean    @default(true) @map("is_available")
+  isActive          Boolean    @default(true) @map("is_active")
   availableFrom     String?    @map("available_from") // "08:00"
   availableTo       String?    @map("available_to")   // "22:00"
 
@@ -748,13 +784,20 @@ model HotelService {
 
   createdAt         DateTime   @default(now()) @map("created_at")
   updatedAt         DateTime   @updatedAt @map("updated_at")
+  deletedAt         DateTime?  @map("deleted_at")
 
   hotel        Hotel                       @relation(fields: [hotelId], references: [id])
   category     ServiceCategory             @relation(fields: [categoryId], references: [id])
+  outlet       ServiceOutlet?              @relation(fields: [outletId], references: [id])
+  section      OutletSection?              @relation(fields: [sectionId], references: [id])
   translations HotelServiceTranslation[]
   requests     ServiceRequest[]
+  lines        ServiceRequestLine[]
+  offers       ServiceOffer[]
+  favorites    Favorite[]
 
   @@index([hotelId, isAvailable])
+  @@index([outletId, sectionId, sortOrder])
   @@map("hotel_services")
 }
 
@@ -773,16 +816,35 @@ model HotelServiceTranslation {
   @@map("hotel_service_translations")
 }
 
+/// A guest's order for one or more in-hotel service items.
+///
+/// This single model covers every shape the legacy app had (D14): an instant request
+/// ("extra towels"), a priced multi-item order (a restaurant order), a booked appointment
+/// (spa, salon, maintenance visit), an asset booking (a hall), and a transfer (a car).
+/// `type` selects which field groups apply. Items live in `ServiceRequestLine`.
 model ServiceRequest {
   id             String               @id @default(cuid())
   hotelId        String               @map("hotel_id")
   bookingId      String?              @map("booking_id")
-  userId         String               @map("user_id")
-  serviceId      String?              @map("service_id")
+
+  // Nullable so a service customer with no Escalé account can still order — an OTA/walk-in
+  // guest who claimed a stay (D1) or an external visitor buying an offer (D7).
+  // Exactly one of (userId) or (guestName + guestPhone) must be present — enforced in the service layer.
+  userId         String?              @map("user_id")
+  guestName      String?              @map("guest_name")
+  guestPhone     String?              @map("guest_phone")
+
+  outletId       String?              @map("outlet_id")
+  serviceId      String?              @map("service_id") // headline item; full list is in `lines`
+
+  // Public short code shown to the guest and staff — e.g. "SR-X7Y2A9". Generated server-side.
+  reference      String               @unique
+
+  type           ServiceRequestType   @default(INSTANT)
 
   // Single-language: stored in the language the guest submitted in.
   title          String?
-  description    String
+  description    String?
   language       String?              // BCP 47, optional, for analytics / future auto-translate
 
   priority       Priority             @default(NORMAL)
@@ -790,8 +852,33 @@ model ServiceRequest {
   // Where
   roomNumber     String?              @map("room_number")
 
+  // --- Scheduling (APPOINTMENT / ASSET_BOOKING / TRANSFER) ---
+  scheduledFor   DateTime?            @map("scheduled_for")
+  scheduledEndAt DateTime?            @map("scheduled_end_at")
+
+  // --- Transfer-specific (G7) ---
+  tripType       TripType?            @map("trip_type")
+  destination    String?
+  passengers     Int?
+
+  // --- Money (G2). Always Decimal, never Float. Zero for a free request. ---
+  subtotal       Decimal              @default(0) @db.Decimal(12, 2)
+  discountTotal  Decimal              @default(0) @db.Decimal(12, 2) @map("discount_total")
+  taxTotal       Decimal              @default(0) @db.Decimal(12, 2) @map("tax_total")
+  total          Decimal              @default(0) @db.Decimal(12, 2)
+  currency       String               @default("EGP")
+  settlement     SettlementMethod     @default(ROOM_CHARGE)
+  paymentId      String?              @unique @map("payment_id")
+
   // State
   status         ServiceRequestStatus @default(SUBMITTED)
+  // Optional sub-stage inside IN_PROGRESS, used only by departments that need a delivery
+  // leg (room service). The main state machine is unchanged — see CLAUDE.md §4.4.
+  stage          FulfilmentStage?
+
+  // --- SLA (D13) ---
+  slaMinutes     Int?                 @map("sla_minutes")
+  dueAt          DateTime?            @map("due_at")
 
   // Assignment
   assignedToId   String?              @map("assigned_to_id")
@@ -799,7 +886,9 @@ model ServiceRequest {
 
   // Resolution
   startedAt      DateTime?            @map("started_at")
-  completedAt   DateTime?            @map("completed_at")
+  completedAt    DateTime?            @map("completed_at")
+  cancelledAt    DateTime?            @map("cancelled_at")
+  cancelReason   String?              @map("cancel_reason")
   resolutionNote String?              @map("resolution_note")
 
   // Rating
@@ -809,15 +898,110 @@ model ServiceRequest {
   createdAt      DateTime             @default(now()) @map("created_at")
   updatedAt      DateTime             @updatedAt @map("updated_at")
 
-  hotel   Hotel         @relation(fields: [hotelId], references: [id])
-  booking Booking?      @relation(fields: [bookingId], references: [id])
-  user    User          @relation(fields: [userId], references: [id])
-  service HotelService? @relation(fields: [serviceId], references: [id])
-  tasks   StaffTask[]
+  hotel        Hotel                  @relation(fields: [hotelId], references: [id])
+  booking      Booking?               @relation(fields: [bookingId], references: [id])
+  user         User?                  @relation(fields: [userId], references: [id])
+  service      HotelService?          @relation(fields: [serviceId], references: [id])
+  outlet       ServiceOutlet?         @relation(fields: [outletId], references: [id])
+  payment      Payment?               @relation(fields: [paymentId], references: [id])
+  lines        ServiceRequestLine[]
+  comments     ServiceRequestComment[]
+  reservations AssetReservation[]
+  review       ServiceReview?
+  tasks        StaffTask[]
 
   @@index([hotelId, status])
+  @@index([hotelId, outletId, createdAt])
   @@index([assignedToId])
+  @@index([userId, createdAt])
+  @@index([dueAt])
   @@map("service_requests")
+}
+
+/// One line of a service order. Name and price are SNAPSHOTTED at order time —
+/// the catalog may change afterwards and a past order must not change with it.
+model ServiceRequestLine {
+  id           String   @id @default(cuid())
+  requestId    String   @map("request_id")
+
+  serviceId    String?  @map("service_id")
+  assetId      String?  @map("asset_id")
+
+  nameSnapshot String   @map("name_snapshot")
+  localeSnapshot String @default("en") @map("locale_snapshot")
+
+  quantity     Int      @default(1)
+  unitPrice    Decimal  @default(0) @db.Decimal(12, 2) @map("unit_price")
+  discount     Decimal  @default(0) @db.Decimal(12, 2)
+  lineTotal    Decimal  @default(0) @db.Decimal(12, 2) @map("line_total")
+  currency     String   @default("EGP")
+
+  notes        String?  // guest note on this item ("no onions")
+
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  request ServiceRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  service HotelService?  @relation(fields: [serviceId], references: [id])
+  asset   BookableAsset? @relation(fields: [assetId], references: [id])
+
+  @@index([requestId])
+  @@map("service_request_lines")
+}
+
+/// Comment thread on a live request (D13). Visible to the guest, the assigned staff
+/// member, and hotel management — that shared visibility is the accountability mechanism.
+model ServiceRequestComment {
+  id         String            @id @default(cuid())
+  requestId  String            @map("request_id")
+  authorId   String?           @map("author_id") // null = system-generated entry
+  authorRole CommentAuthorRole @map("author_role")
+
+  body       String
+  language   String?           // user-generated content — stored as written
+
+  createdAt  DateTime          @default(now()) @map("created_at")
+  deletedAt  DateTime?         @map("deleted_at")
+
+  request ServiceRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+
+  @@index([requestId, createdAt])
+  @@map("service_request_comments")
+}
+
+enum ServiceRequestType {
+  INSTANT       // "extra towels" — fulfil as soon as possible
+  ORDER         // priced multi-item order (restaurant, minibar)
+  APPOINTMENT   // spa, salon, maintenance visit — scheduled slot
+  ASSET_BOOKING // a hall, a cabana — a unit reserved for a window
+  TRANSFER      // a vehicle trip
+}
+
+enum TripType {
+  ONE_WAY       // ذهاب
+  RETURN        // إياب
+  ROUND_TRIP    // ذهاب وإياب
+}
+
+enum SettlementMethod {
+  ROOM_CHARGE   // posted to the folio
+  PAY_IN_APP    // charged through the gateway
+  PAY_AT_OUTLET // settled directly with the outlet
+  FREE          // complimentary — total is 0
+}
+
+/// Optional sub-stage while status = IN_PROGRESS. Does not replace ServiceRequestStatus.
+enum FulfilmentStage {
+  PREPARING       // تحت التجهيز
+  READY           // جاهز
+  OUT_FOR_DELIVERY // قيد التسليم
+  DELIVERED       // تم التسليم
+}
+
+enum CommentAuthorRole {
+  GUEST
+  STAFF
+  MANAGEMENT
+  SYSTEM
 }
 
 enum Priority {
@@ -1047,4 +1231,387 @@ enum NotificationChannel {
   EMAIL
   SMS
   IN_APP
+}
+
+// =============================================================================
+// SERVICE OUTLETS, BOOKABLE ASSETS, OFFERS   (decision D14)
+// =============================================================================
+//
+// An in-hotel OUTLET is where a service actually lives: a restaurant, a spa, a salon,
+// a halls complex, a transport desk. It is always inside one hotel, but it is not always
+// run by the hotel — an independent business can lease space inside the property (a named
+// salon inside a city hotel, for example). `operatorType` captures that difference; the
+// guest sees both kinds in the same catalog.
+//
+// See `services-gap-analysis.md` for how each model maps back to the legacy app.
+
+model ServiceOutlet {
+  id                      String             @id @default(cuid())
+  hotelId                 String             @map("hotel_id")
+  categoryId              String             @map("category_id")
+
+  slug                    String
+
+  // Who runs it
+  operatorType            OutletOperatorType @default(HOTEL_OPERATED) @map("operator_type")
+  operatorName            String?            @map("operator_name")     // the concession's own trading name
+  operatorContact         String?            @map("operator_contact")
+  commissionRate          Decimal?           @db.Decimal(5, 4) @map("commission_rate") // Escalé/hotel share on a concession order
+
+  // Presentation
+  logoUrl                 String?            @map("logo_url")
+  heroImageUrl            String?            @map("hero_image_url")
+
+  // Where inside the property
+  mapUrl                  String?            @map("map_url")
+  phone                   String?
+
+  // Behaviour
+  defaultDepartment       Department         @map("default_department")
+  requiresAppointment     Boolean            @default(false) @map("requires_appointment")
+  acceptsRoomCharge       Boolean            @default(true) @map("accepts_room_charge")
+  acceptsPayInApp         Boolean            @default(true) @map("accepts_pay_in_app")
+  // D7 — an outlet may also serve visitors who never booked a room.
+  acceptsExternalVisitors Boolean            @default(false) @map("accepts_external_visitors")
+  defaultSlaMinutes       Int?               @map("default_sla_minutes")
+
+  // Denormalised rating, recomputed on ServiceReview write
+  ratingAvg               Decimal?           @db.Decimal(3, 2) @map("rating_avg")
+  ratingCount             Int                @default(0) @map("rating_count")
+
+  isActive                Boolean            @default(true) @map("is_active")
+
+  createdAt               DateTime           @default(now()) @map("created_at")
+  updatedAt               DateTime           @updatedAt @map("updated_at")
+  deletedAt               DateTime?          @map("deleted_at")
+  createdById             String?            @map("created_by_id")
+
+  hotel        Hotel                       @relation(fields: [hotelId], references: [id])
+  category     ServiceCategory             @relation(fields: [categoryId], references: [id])
+  translations ServiceOutletTranslation[]
+  hours        OutletOpeningHour[]
+  sections     OutletSection[]
+  images       OutletImage[]
+  services     HotelService[]
+  assets       BookableAsset[]
+  offers       ServiceOffer[]
+  requests     ServiceRequest[]
+  reviews      ServiceReview[]
+  favorites    Favorite[]
+
+  @@unique([hotelId, slug])
+  @@index([hotelId, isActive])
+  @@index([hotelId, categoryId])
+  @@map("service_outlets")
+}
+
+enum OutletOperatorType {
+  HOTEL_OPERATED // run by the hotel's own department
+  CONCESSION     // an independent business operating inside the hotel
+}
+
+model ServiceOutletTranslation {
+  id           String  @id @default(cuid())
+  outletId     String  @map("outlet_id")
+  locale       String
+
+  name         String
+  tagline      String?
+  description  String?
+  locationHint String? @map("location_hint") // "Garden level, next to the pool"
+
+  outlet ServiceOutlet @relation(fields: [outletId], references: [id], onDelete: Cascade)
+
+  @@unique([outletId, locale])
+  @@index([locale])
+  @@map("service_outlet_translations")
+}
+
+/// Opening hours per weekday. Multiple rows per day are allowed for split shifts.
+model OutletOpeningHour {
+  id        String  @id @default(cuid())
+  outletId  String  @map("outlet_id")
+  dayOfWeek Int     @map("day_of_week") @db.SmallInt // 0 = Sunday … 6 = Saturday
+  opensAt   String? @map("opens_at")  // "08:30" — hotel-local time
+  closesAt  String? @map("closes_at") // "21:00"; may be past midnight, e.g. "01:00"
+  isClosed  Boolean @default(false) @map("is_closed")
+
+  outlet ServiceOutlet @relation(fields: [outletId], references: [id], onDelete: Cascade)
+
+  @@index([outletId, dayOfWeek])
+  @@map("outlet_opening_hours")
+}
+
+/// A grouping of catalog items inside an outlet — the tabs across a restaurant menu.
+model OutletSection {
+  id        String  @id @default(cuid())
+  outletId  String  @map("outlet_id")
+  code      String  // "pizza", "grills", "pastries", "specials"
+  sortOrder Int     @default(0) @map("sort_order")
+  isActive  Boolean @default(true) @map("is_active")
+
+  outlet       ServiceOutlet             @relation(fields: [outletId], references: [id], onDelete: Cascade)
+  translations OutletSectionTranslation[]
+  services     HotelService[]
+
+  @@unique([outletId, code])
+  @@map("outlet_sections")
+}
+
+model OutletSectionTranslation {
+  id        String @id @default(cuid())
+  sectionId String @map("section_id")
+  locale    String
+  name      String
+
+  section OutletSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@unique([sectionId, locale])
+  @@map("outlet_section_translations")
+}
+
+/// Outlet gallery / portfolio (the salon's "our work" tab).
+model OutletImage {
+  id        String  @id @default(cuid())
+  outletId  String  @map("outlet_id")
+  url       String
+  sortOrder Int     @default(0) @map("sort_order")
+  caption   String? // single language, as entered
+  language  String?
+
+  outlet ServiceOutlet @relation(fields: [outletId], references: [id], onDelete: Cascade)
+
+  @@index([outletId, sortOrder])
+  @@map("outlet_images")
+}
+
+// -----------------------------------------------------------------------------
+// Bookable assets — halls, vehicles, cabanas
+// -----------------------------------------------------------------------------
+//
+// Unlike a catalog item, an asset is a physical unit that can only be held by one
+// booking at a time. Overlap is prevented in AssetReservation.
+
+model BookableAsset {
+  id          String    @id @default(cuid())
+  hotelId     String    @map("hotel_id")
+  outletId    String?   @map("outlet_id")
+
+  kind        AssetKind
+  code        String    // "hall-queen", "veh-mercedes-01"
+
+  capacity    Int?      // seats in a vehicle, guests in a hall
+  basePrice   Decimal?  @db.Decimal(12, 2) @map("base_price")
+  currency    String?   @default("EGP")
+  priceUnit   PriceUnit @default(PER_BOOKING) @map("price_unit")
+
+  imageUrl    String?   @map("image_url")
+  ratingAvg   Decimal?  @db.Decimal(3, 2) @map("rating_avg")
+  ratingCount Int       @default(0) @map("rating_count")
+
+  // A hall is usually a request the hotel must approve; a vehicle may be instant.
+  requiresApproval Boolean @default(true) @map("requires_approval")
+  isActive    Boolean   @default(true) @map("is_active")
+
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  hotel        Hotel                       @relation(fields: [hotelId], references: [id])
+  outlet       ServiceOutlet?              @relation(fields: [outletId], references: [id])
+  translations BookableAssetTranslation[]
+  reservations AssetReservation[]
+  lines        ServiceRequestLine[]
+  offers       ServiceOffer[]
+  favorites    Favorite[]
+
+  @@unique([hotelId, code])
+  @@index([hotelId, kind, isActive])
+  @@map("bookable_assets")
+}
+
+enum AssetKind {
+  HALL
+  VEHICLE
+  CABANA
+  EQUIPMENT
+}
+
+enum PriceUnit {
+  PER_BOOKING
+  PER_HOUR
+  PER_DAY
+  PER_PERSON
+  PER_TRIP
+}
+
+model BookableAssetTranslation {
+  id          String  @id @default(cuid())
+  assetId     String  @map("asset_id")
+  locale      String
+
+  name        String
+  description String?
+
+  asset BookableAsset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@unique([assetId, locale])
+  @@index([locale])
+  @@map("bookable_asset_translations")
+}
+
+/// The held time window for an asset. One row per confirmed or pending hold.
+/// Overlapping active reservations for the same asset must be rejected — enforced by an
+/// exclusion constraint added in a raw migration (btree_gist on assetId + tstzrange),
+/// because Prisma cannot express it. See packages/db/migrations/asset_overlap.sql.
+model AssetReservation {
+  id        String            @id @default(cuid())
+  hotelId   String            @map("hotel_id")
+  assetId   String            @map("asset_id")
+  requestId String?           @map("request_id")
+
+  startAt   DateTime          @map("start_at")
+  endAt     DateTime          @map("end_at")
+
+  status    ReservationStatus @default(HELD)
+
+  createdAt DateTime          @default(now()) @map("created_at")
+  updatedAt DateTime          @updatedAt @map("updated_at")
+
+  asset   BookableAsset   @relation(fields: [assetId], references: [id])
+  request ServiceRequest? @relation(fields: [requestId], references: [id])
+
+  @@index([assetId, startAt, endAt])
+  @@index([hotelId, status])
+  @@map("asset_reservations")
+}
+
+enum ReservationStatus {
+  HELD      // temporary hold while the request is being confirmed
+  CONFIRMED
+  RELEASED
+  CANCELLED
+}
+
+// -----------------------------------------------------------------------------
+// Offers, favourites, outlet reviews
+// -----------------------------------------------------------------------------
+
+/// A discount on an outlet, a catalog item, or an asset. Backs screen 19 (Offers).
+model ServiceOffer {
+  id            String        @id @default(cuid())
+  hotelId       String        @map("hotel_id")
+
+  // Exactly one target must be set — validated in the service layer.
+  outletId      String?       @map("outlet_id")
+  serviceId     String?       @map("service_id")
+  assetId       String?       @map("asset_id")
+
+  discountType  DiscountType  @map("discount_type")
+  discountValue Decimal       @db.Decimal(12, 2) @map("discount_value") // 25 = 25% or 25.00 fixed
+  currency      String?       // required when discountType = FIXED
+
+  code          String?       // optional promo code
+  audience      OfferAudience @default(BOTH)
+
+  startsAt      DateTime      @map("starts_at")
+  endsAt        DateTime      @map("ends_at")
+  maxRedemptions Int?         @map("max_redemptions")
+  redemptions   Int           @default(0)
+
+  imageUrl      String?       @map("image_url")
+  isActive      Boolean       @default(true) @map("is_active")
+
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+
+  hotel        Hotel                     @relation(fields: [hotelId], references: [id])
+  outlet       ServiceOutlet?            @relation(fields: [outletId], references: [id])
+  service      HotelService?             @relation(fields: [serviceId], references: [id])
+  asset        BookableAsset?            @relation(fields: [assetId], references: [id])
+  translations ServiceOfferTranslation[]
+
+  @@index([hotelId, isActive, startsAt, endsAt])
+  @@map("service_offers")
+}
+
+enum DiscountType {
+  PERCENT
+  FIXED
+}
+
+enum OfferAudience {
+  GUESTS   // in-house guests only
+  VISITORS // people with no booking (D7)
+  BOTH
+}
+
+model ServiceOfferTranslation {
+  id          String  @id @default(cuid())
+  offerId     String  @map("offer_id")
+  locale      String
+
+  title       String
+  description String?
+  terms       String?
+
+  offer ServiceOffer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@unique([offerId, locale])
+  @@index([locale])
+  @@map("service_offer_translations")
+}
+
+/// Guest favourites — the heart on a menu item, a vehicle, or an outlet.
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+
+  outletId  String?  @map("outlet_id")
+  serviceId String?  @map("service_id")
+  assetId   String?  @map("asset_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user    User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  outlet  ServiceOutlet? @relation(fields: [outletId], references: [id], onDelete: Cascade)
+  service HotelService?  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  asset   BookableAsset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, outletId])
+  @@unique([userId, serviceId])
+  @@unique([userId, assetId])
+  @@index([userId, createdAt])
+  @@map("favorites")
+}
+
+/// A review of an outlet, left after a completed order. Distinct from `Review`,
+/// which reviews the hotel stay itself.
+model ServiceReview {
+  id                String       @id @default(cuid())
+  hotelId           String       @map("hotel_id")
+  outletId          String       @map("outlet_id")
+  userId            String?      @map("user_id")
+  requestId         String?      @unique @map("request_id")
+
+  rating            Int          // 1-5
+  comment           String?
+  language          String?      // user-generated — stored as written
+
+  status            ReviewStatus @default(PENDING)
+  moderatedAt       DateTime?    @map("moderated_at")
+
+  outletResponse    String?      @map("outlet_response")
+  outletResponseLang String?     @map("outlet_response_lang")
+  outletRespondedAt DateTime?    @map("outlet_responded_at")
+
+  createdAt         DateTime     @default(now()) @map("created_at")
+  updatedAt         DateTime     @updatedAt @map("updated_at")
+
+  outlet  ServiceOutlet   @relation(fields: [outletId], references: [id])
+  user    User?           @relation(fields: [userId], references: [id])
+  request ServiceRequest? @relation(fields: [requestId], references: [id])
+
+  @@index([outletId, status])
+  @@map("service_reviews")
 }

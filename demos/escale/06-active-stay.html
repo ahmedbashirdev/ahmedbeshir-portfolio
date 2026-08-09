@@ -1190,6 +1190,12 @@ body::before {
             </div>
             <div class="nav-item">
               <div class="nav-icon-bg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><rect x="9" y="2.5" width="6" height="3.5" rx="1"/><path d="M9 11.5h6M9 15.5h4"/></svg>
+              </div>
+              <span id="nav-orders">My Orders</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon-bg">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
               </div>
               <span id="nav-inbox">Inbox</span>
@@ -1249,7 +1255,7 @@ body::before {
   </div>
 
   <footer class="footnote">
-    <span>© Escalé · Screen 06 of 18</span>
+    <span>© Escalé · Screen 06 of 28</span>
     <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
   </footer>
 
@@ -1277,7 +1283,7 @@ const t = {
     concT: "Mariam · Concierge",
     concS: '"Anything for tonight? I\'m right here."',
     concCta: "Chat",
-    navDiscover: "Discover", navStay: "My Stay", navInbox: "Inbox", navAccount: "Account",
+    navDiscover: "Discover", navStay: "My Stay", navOrders: "My Orders", navInbox: "Inbox", navAccount: "Account",
     ph1: "The key", ph1em: "is the product.",
     phLede: "Most hotel apps hide the QR key deep inside. We made it the main thing on the screen. That one choice is what makes Escalé feel different straight away.",
     pullQ: '"I tap, and the door opens. I tap, and breakfast appears. The hotel reorganised itself around <span class="em">my pocket.</span>"',
@@ -1295,26 +1301,26 @@ const t = {
     techB: "The QR key is a secure code that only this guest's phone can show. The door reader checks it without needing internet. The code changes every 30 seconds, so a screenshot of it cannot be reused."
   },
   ar: {
-    ehLabel: "الشاشة ٦ / الإقامة النشطة",
+    ehLabel: "الشاشة 6 / الإقامة النشطة",
     eh1: "الهاتف", eh2: "يصبح المفتاح.",
     greet1: "مساء الخير", greet2: "أحمد",
-    stayEb: "مسجَّل دخول · اليوم الثاني من ٣",
+    stayEb: "مسجَّل دخول · اليوم الثاني من 3",
     stayH1: "مرحباً بعودتك إلى", stayH2: "إقامتك.",
     keyLbl: "مفتاحك الرقمي", keyHotel: "دار العُلا · العُلا",
     qrPulse: "اقترب من قارئ الغرفة",
-    roomLbl: "غرفتك", expiresLbl: "ينتهي", expiresVal: "١٨ مارس · ١٢:٠٠",
+    roomLbl: "غرفتك", expiresLbl: "ينتهي", expiresVal: "18 مارس · 12:00",
     strip1: "ليلة متبقية", strip2: "الفطار", strip3: "خارجاً",
     sectServices: "في خدمتك", actionServices: "الكل ←",
     svc1: "خدمة الغرف", svc2: "تنظيف", svc3: "المطعم",
     svc4: "الاستيقاظ", svc5: "السبا", svc6: "رحلات",
     sectActivity: "اليوم", actionActivity: "عرض الكل ←",
     act1t: "تم تجهيز الغرفة", act1s: "تم تجديد المناشف والمياه", act1time: "منذ ساعة",
-    act2t: "حجز العشاء", act2s: "٨:٣٠ مساءً في شرفة الواحة", act2time: "بعد ساعتين",
-    act3t: "نزهة الغروب · ٦:١٨ مساءً", act3s: "الكثبان الجبلية، على بُعد ٢٠ دقيقة", act3time: "اقتراح",
+    act2t: "حجز العشاء", act2s: "8:30 مساءً في شرفة الواحة", act2time: "بعد ساعتين",
+    act3t: "نزهة الغروب · 6:18 مساءً", act3s: "الكثبان الجبلية، على بُعد 20 دقيقة", act3time: "اقتراح",
     concT: "مريم · الكونسيرج",
     concS: '"أي خدمة لهذه الليلة؟ أنا هنا."',
     concCta: "محادثة",
-    navDiscover: "اكتشف", navStay: "إقامتي", navInbox: "الرسائل", navAccount: "حسابي",
+    navDiscover: "اكتشف", navStay: "إقامتي", navOrders: "طلباتي", navInbox: "الرسائل", navAccount: "حسابي",
     ph1: "المفتاح", ph1em: "هو المنتج.",
     phLede: "معظم تطبيقات الفنادق بتخبّي مفتاح الـ QR جوّه. إحنا خليناه الحاجة الرئيسية في الشاشة. القرار ده لوحده بيخلي إسكالي حسّه مختلف من أول لحظة.",
     pullQ: '"أضغط، فيُفتح الباب. أضغط، فيظهر الفطار. الفندق أعاد تنظيم نفسه حول <span class="em">جيبي.</span>"',
@@ -1329,7 +1335,7 @@ const t = {
     p5t: "النشاط إحساسه اهتمام",
     p5d: '"تجديد المناشف من ساعة" بيوضّح للضيف إن الفندق بيهتم بيه، حتى لو مشافش الموظفين.',
     techL: "إزاي المفتاح الرقمي يفضل آمن",
-    techB: "مفتاح الـ QR كود آمن، موبايل الضيف ده بس اللي يقدر يعرضه. قارئ الباب بيتأكد منه من غير إنترنت. الكود بيتغيّر كل ٣٠ ثانية، فلقطة شاشة منه ماينفعش تتعاد."
+    techB: "مفتاح الـ QR كود آمن، موبايل الضيف ده بس اللي يقدر يعرضه. قارئ الباب بيتأكد منه من غير إنترنت. الكود بيتغيّر كل 30 ثانية، فلقطة شاشة منه ماينفعش تتعاد."
   }
 };
 
@@ -1393,6 +1399,7 @@ function setLocale(loc) {
 
   document.getElementById('nav-discover').textContent = tt.navDiscover;
   document.getElementById('nav-stay').textContent = tt.navStay;
+  document.getElementById('nav-orders').textContent = tt.navOrders;
   document.getElementById('nav-inbox').textContent = tt.navInbox;
   document.getElementById('nav-account').textContent = tt.navAccount;
 

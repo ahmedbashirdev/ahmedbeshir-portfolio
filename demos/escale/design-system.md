@@ -10,14 +10,14 @@
 ### Aesthetic Direction
 **Editorial Hospitality with an Arabian Soul.**
 
-Picture the courtyard of a thoughtfully restored Najdi mud-brick house in Diriyah, or a quiet AlUla retreat among the sandstone cliffs at golden hour. Calm, warm, considered. Editorial but never cold. Sophisticated but never intimidating. The design language must scale from a 3-star city hotel in Riyadh to a luxury Red Sea resort without losing identity.
+Picture the courtyard of a thoughtfully restored townhouse in old Cairo, or a quiet desert retreat among the sandstone of AlUla at golden hour. Calm, warm, considered. Editorial but never cold. Sophisticated but never intimidating. The design language spans Egypt and the Gulf — it must scale from a 3-star city hotel in Cairo or Riyadh to a luxury Red Sea resort without losing identity.
 
 ### Brand Pillars
 - **Calm sophistication** — restraint over ornament
 - **Warm hospitality** — earth tones, generous space
 - **Bilingual by design** — AR and EN feel equally native, never bolted on
 - **Editorial layouts** — magazine-grade typography and composition
-- **Subtle Najdi/Arabian motifs** — the three triangles from the logo as a recurring geometric signature
+- **Subtle regional Arab motifs** — the three triangles from the logo as a recurring geometric signature
 
 ### What to AVOID
 - Generic SaaS purple gradients
@@ -281,7 +281,7 @@ Subtle, purposeful. Never decorative.
 - Tailwind: use `ps-*`, `pe-*`, `start-*`, `end-*` — never `pl-`, `pr-`, `left-`, `right-`.
 - Set `dir="rtl"` on `<html>` for Arabic, `dir="ltr"` for Latin scripts.
 - Numbers stay in Western Arabic numerals (1, 2, 3) for prices and dates — even in Arabic UI. Industry standard for tourism.
-- Currency symbol position respects locale: `SAR 1,250` (EN) vs `١٬٢٥٠ ر.س` (formal AR) — but use Western numerals so it's `SAR 1,250` and `ر.س ١٬٢٥٠` only in formal contexts. For UI default to `SAR 1,250` everywhere.
+- Currency depends on the hotel's market — `EGP` in Egypt, `SAR` in Saudi, `AED` in the UAE, and so on. Currency symbol position respects locale: `EGP 1,250` (EN) vs `١٬٢٥٠ ج.م` (formal AR) — but use Western numerals so the `ج.م ١٬٢٥٠` form stays for formal contexts only. For UI default to the `EGP 1,250` / `SAR 1,250` form everywhere.
 - Date format: `Mar 15, 2026` (EN), `١٥ مارس ٢٠٢٦` (AR formal) or `15 مارس 2026` (AR practical).
 - Icons that imply direction (arrows, chevrons) MUST flip in RTL. Use `rtl:rotate-180` or flipped SVG variants.
 - Logos and brand wordmarks do NOT flip.

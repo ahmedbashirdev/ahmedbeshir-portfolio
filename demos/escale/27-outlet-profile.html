@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Escalé · Outlet Profile · Design Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..900&family=Geist+Mono:wght@400..600&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --aubergine-900: #3A1234;
+  --aubergine-700: #4A1942;
+  --aubergine-500: #5B2C5F;
+  --aubergine-300: #8E5A8E;
+  --aubergine-100: #EFE3EF;
+  --magenta-500: #B8228C;
+  --magenta-300: #D86CB0;
+  --terracotta-700: #A05A3A;
+  --terracotta-500: #C9956B;
+  --terracotta-300: #E2BC9C;
+  --terracotta-100: #F5E8DC;
+  --ink-900: #1C1410;
+  --ink-700: #3D332D;
+  --ink-500: #6B5D54;
+  --ink-300: #A89A8E;
+  --sand-100: #F0E9DF;
+  --sand-50: #F7F2E9;
+  --cream: #FAF7F2;
+  --paper: #FDFBF7;
+  --success: #5A8C5F;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Geist', -apple-system, sans-serif;
+  --font-arabic: 'Tajawal', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
+  --shadow-sm: 0 1px 2px rgba(58, 18, 52, 0.04);
+  --shadow-md: 0 4px 12px rgba(58, 18, 52, 0.06), 0 1px 3px rgba(58, 18, 52, 0.04);
+  --shadow-phone: 0 50px 100px -20px rgba(58, 18, 52, 0.25), 0 30px 60px -30px rgba(58, 18, 52, 0.3);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink-900);
+  line-height: 1.5;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 88% 0%, rgba(184, 34, 140, 0.06), transparent 40%),
+    radial-gradient(circle at 4% 12%, rgba(91, 44, 95, 0.05), transparent 36%);
+}
+[lang="ar"], [lang="ar"] * { font-family: var(--font-arabic); }
+[lang="ar"] { line-height: 1.6; }
+
+.page { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 48px 32px 96px; }
+
+/* HEADER */
+.brand-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 24px; }
+.brand-identity { display: flex; align-items: center; gap: 20px; }
+.brand-logo { width: 48px; height: 48px; }
+.brand-name-wrap { display: flex; flex-direction: column; gap: 2px; }
+.brand-name { font-family: var(--font-display); font-weight: 500; font-size: 24px; letter-spacing: -0.02em; color: var(--aubergine-900); line-height: 1; }
+.brand-tagline { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-500); font-weight: 500; }
+.brand-meta { display: flex; align-items: center; gap: 24px; }
+.screen-stamp { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.screen-stamp .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-300); font-weight: 500; }
+.screen-stamp .val { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--terracotta-700); }
+.locale-switch { display: flex; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 9999px; padding: 4px; box-shadow: var(--shadow-sm); }
+.locale-switch button { border: 0; background: transparent; padding: 8px 18px; border-radius: 9999px; font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-500); cursor: pointer; }
+.locale-switch button.active { background: var(--aubergine-700); color: var(--paper); }
+
+/* EDITORIAL HEAD */
+.editorial-head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 48px; margin-bottom: 44px; padding-bottom: 32px; border-bottom: 1px solid var(--sand-100); }
+.editorial-head .label { font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--terracotta-700); margin-bottom: 12px; }
+.editorial-head h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(38px, 5vw, 64px); line-height: 0.98; letter-spacing: -0.035em; color: var(--aubergine-900); max-width: 16ch; }
+.editorial-head h1 em { font-style: italic; color: var(--magenta-500); }
+[lang="ar"] .editorial-head h1 { font-weight: 700; letter-spacing: 0; line-height: 1.15; }
+.editorial-head .colophon { font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); letter-spacing: 0.02em; text-align: end; line-height: 1.7; }
+.editorial-head .colophon strong { color: var(--aubergine-700); }
+[lang="ar"] .editorial-head .colophon { font-family: var(--font-arabic); }
+
+/* COMPOSITION */
+.composition { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+@media (max-width: 980px) { .composition { grid-template-columns: 1fr; gap: 48px; } .phone { transform: scale(0.9); transform-origin: top center; } }
+
+.phone-stage { display: flex; justify-content: center; position: relative; padding: 24px 0; }
+.phone-stage::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 58% 48% at 50% 26%, rgba(91, 44, 95, 0.08), transparent 62%); z-index: 0; }
+.phone { position: relative; width: 396px; height: 836px; background: var(--ink-900); border-radius: 54px; padding: 12px; box-shadow: var(--shadow-phone); z-index: 1; }
+.phone::before { content: ''; position: absolute; top: 12px; inset-inline: 0; margin-inline: auto; width: 108px; height: 29px; background: var(--ink-900); border-radius: 0 0 18px 18px; z-index: 100; }
+.phone-screen { width: 100%; height: 100%; background: var(--cream); border-radius: 43px; overflow-y: auto; overflow-x: hidden; position: relative; }
+.phone-screen::-webkit-scrollbar { display: none; }
+
+.status-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 30px 6px; font-size: 14px; font-weight: 600; color: var(--paper); position: absolute; top: 0; inset-inline: 0; z-index: 6; }
+.status-bar .icons { display: flex; gap: 6px; align-items: center; }
+.status-bar svg { width: 17px; height: 17px; }
+
+/* ---------- HERO ---------- */
+.op-hero {
+  position: relative; height: 214px; overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(58, 18, 52, 0.22) 0%, rgba(58, 18, 52, 0.16) 40%, rgba(58, 18, 52, 0.84) 100%),
+    linear-gradient(140deg, var(--terracotta-500), var(--terracotta-700) 52%, var(--aubergine-700));
+}
+.op-hero::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 86 L20 58 L32 86 Z M32 86 L44 58 L56 86 Z M56 86 L68 58 L80 86 Z' fill='rgba(255,255,255,0.055)'/%3E%3C/svg%3E");
+  background-size: 280px; background-position: bottom center; background-repeat: no-repeat;
+}
+.op-hero-btn {
+  position: absolute; top: 50px; width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(253, 251, 247, 0.94); display: flex; align-items: center; justify-content: center;
+  border: 0; z-index: 3; box-shadow: var(--shadow-sm); cursor: pointer;
+}
+.op-hero-btn svg { width: 17px; height: 17px; color: var(--aubergine-900); }
+.op-hero-btn.back { inset-inline-start: 18px; }
+.op-hero-btn.fav { inset-inline-end: 18px; }
+.op-hero-btn.fav svg { color: var(--magenta-500); fill: var(--magenta-500); }
+[dir="rtl"] .op-hero-btn.back svg { transform: scaleX(-1); }
+
+.op-hero-foot { position: absolute; inset-inline: 20px; bottom: 16px; z-index: 2; text-align: start; }
+.op-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(253, 251, 247, 0.2); backdrop-filter: blur(6px);
+  border: 1px solid rgba(253, 251, 247, 0.34);
+  color: var(--paper); font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 4px 11px; border-radius: 9999px; margin-bottom: 9px;
+}
+[lang="ar"] .op-badge { letter-spacing: 0; text-transform: none; font-size: 11.5px; }
+.op-name { font-family: var(--font-display); font-weight: 500; font-size: 28px; line-height: 1.06; letter-spacing: -0.025em; color: var(--paper); }
+[lang="ar"] .op-name { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.op-kicker { font-size: 11.5px; color: rgba(253, 251, 247, 0.86); margin-top: 5px; }
+[lang="ar"] .op-kicker { font-size: 12.5px; }
+
+/* ---------- OPERATOR STRIP ---------- */
+.opr {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: var(--paper); border-bottom: 1px solid var(--sand-100);
+  padding: 12px 18px 13px; text-align: start;
+}
+.opr-ic { width: 28px; height: 28px; border-radius: 9px; background: var(--terracotta-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.opr-ic svg { width: 15px; height: 15px; color: var(--terracotta-700); }
+.opr-txt { flex: 1; min-width: 0; }
+.opr-t { font-size: 12px; font-weight: 600; color: var(--aubergine-900); line-height: 1.35; }
+[lang="ar"] .opr-t { font-size: 12.5px; }
+.opr-s { font-size: 11px; color: var(--ink-500); margin-top: 2px; line-height: 1.45; }
+[lang="ar"] .opr-s { font-size: 12px; }
+
+/* ---------- TABS ---------- */
+.op-tabs { display: flex; gap: 4px; padding: 10px 14px 0; background: var(--paper); border-bottom: 1px solid var(--sand-100); }
+.op-tab {
+  flex: 1; border: 0; background: transparent; cursor: pointer;
+  font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--ink-500);
+  padding: 9px 2px 11px; position: relative; white-space: nowrap;
+}
+[lang="ar"] .op-tab { font-family: var(--font-arabic); font-size: 12.5px; }
+.op-tab.on { color: var(--aubergine-900); font-weight: 700; }
+.op-tab.on::after {
+  content: ''; position: absolute; inset-inline: 8px; bottom: -1px; height: 2.5px;
+  background: var(--magenta-500); border-radius: 3px 3px 0 0;
+}
+
+/* ---------- TAB BODY ---------- */
+.op-body { padding: 14px 18px 16px; }
+.op-sect { margin-bottom: 18px; }
+.op-sect-title { font-family: var(--font-display); font-weight: 500; font-size: 16.5px; letter-spacing: -0.015em; color: var(--aubergine-900); margin-bottom: 4px; }
+[lang="ar"] .op-sect-title { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.op-sect-hint { font-size: 11px; color: var(--ink-500); margin-bottom: 10px; }
+[lang="ar"] .op-sect-hint { font-size: 12px; }
+
+/* SEGMENTED SWITCH */
+.seg { display: flex; gap: 4px; background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 13px; padding: 4px; margin-bottom: 14px; }
+.seg-item {
+  flex: 1; text-align: center; padding: 9px 4px; border-radius: 10px; border: 0; cursor: pointer;
+  font-family: var(--font-body); font-size: 12px; font-weight: 600; color: var(--ink-500); background: transparent;
+}
+[lang="ar"] .seg-item { font-family: var(--font-arabic); font-size: 12.5px; }
+.seg-item.on { background: var(--aubergine-700); color: var(--paper); box-shadow: var(--shadow-sm); }
+
+/* SERVICE ROWS */
+.sv-row {
+  display: flex; align-items: center; gap: 11px; padding: 11px 12px;
+  background: var(--paper); border: 1px solid var(--sand-100); border-radius: 14px; margin-bottom: 8px;
+}
+.sv-row.on { border-color: var(--aubergine-700); background: var(--aubergine-100); }
+.sv-txt { flex: 1; min-width: 0; text-align: start; }
+.sv-n { font-family: var(--font-display); font-weight: 500; font-size: 14px; letter-spacing: -0.015em; color: var(--aubergine-900); line-height: 1.25; }
+[lang="ar"] .sv-n { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.sv-meta { display: flex; align-items: center; gap: 5px; margin-top: 4px; }
+.sv-meta svg { width: 12px; height: 12px; color: var(--terracotta-700); flex-shrink: 0; }
+.sv-d { font-size: 10.5px; color: var(--ink-500); }
+[lang="ar"] .sv-d { font-size: 11.5px; }
+.sv-price { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--aubergine-900); flex-shrink: 0; }
+.sv-price .ccy { font-size: 9.5px; color: var(--ink-500); font-weight: 500; margin-inline-end: 3px; }
+.sv-tog {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; cursor: pointer;
+  border: 1.5px solid var(--sand-100); background: var(--sand-50);
+  display: flex; align-items: center; justify-content: center;
+}
+.sv-tog svg { width: 14px; height: 14px; color: var(--aubergine-700); }
+.sv-tog.on { background: var(--aubergine-700); border-color: var(--aubergine-700); }
+.sv-tog.on svg { color: var(--paper); }
+
+/* APPOINTMENT */
+.appt { background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 16px; padding: 13px 14px 14px; }
+.appt-t { font-size: 12.5px; font-weight: 600; color: var(--aubergine-900); margin-bottom: 10px; text-align: start; }
+[lang="ar"] .appt-t { font-size: 13px; }
+.appt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.fld { background: var(--paper); border: 1px solid var(--sand-100); border-radius: 12px; padding: 9px 11px; display: flex; align-items: center; gap: 9px; text-align: start; }
+.fld-ic { width: 28px; height: 28px; border-radius: 8px; background: var(--terracotta-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.fld-ic svg { width: 14px; height: 14px; color: var(--terracotta-700); }
+.fld-body { min-width: 0; }
+.fld-l { font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-500); font-weight: 600; margin-bottom: 2px; }
+[lang="ar"] .fld-l { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.fld-v { font-size: 12px; font-weight: 600; color: var(--aubergine-900); line-height: 1.3; }
+.fld-v.mono { font-family: var(--font-mono); font-size: 12.5px; }
+.appt-hint { font-size: 10.5px; color: var(--ink-500); margin-top: 9px; text-align: start; line-height: 1.5; }
+[lang="ar"] .appt-hint { font-size: 11.5px; }
+
+/* RUNNING TOTAL */
+.tot {
+  display: flex; align-items: center; gap: 12px; margin-top: 12px;
+  background: var(--aubergine-100); border: 1px solid rgba(74, 25, 66, 0.12);
+  border-radius: 14px; padding: 11px 13px; text-align: start;
+}
+.tot-ic { width: 28px; height: 28px; border-radius: 9px; background: var(--aubergine-700); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.tot-ic svg { width: 14px; height: 14px; color: var(--paper); }
+.tot-txt { flex: 1; min-width: 0; }
+.tot-l { font-size: 12px; font-weight: 600; color: var(--aubergine-900); }
+[lang="ar"] .tot-l { font-size: 12.5px; }
+.tot-s { font-size: 10.5px; color: var(--ink-500); margin-top: 1px; }
+[lang="ar"] .tot-s { font-size: 11.5px; }
+.tot-v { font-family: var(--font-mono); font-size: 15px; font-weight: 600; color: var(--aubergine-900); flex-shrink: 0; }
+.tot-v .ccy { font-size: 10px; color: var(--ink-500); font-weight: 500; margin-inline-end: 3px; }
+
+/* ---------- OTHER TABS PREVIEW ---------- */
+.more { border-top: 1px solid var(--sand-100); padding: 15px 18px 18px; background: var(--sand-50); }
+.more-h { font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-500); font-weight: 600; margin-bottom: 11px; text-align: start; }
+[lang="ar"] .more-h { letter-spacing: 0; text-transform: none; font-size: 11.5px; }
+.more-card { background: var(--paper); border: 1px solid var(--sand-100); border-radius: 14px; padding: 11px 13px; margin-bottom: 8px; text-align: start; }
+.more-card:last-child { margin-bottom: 0; }
+.more-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.more-top svg { width: 13px; height: 13px; color: var(--terracotta-700); flex-shrink: 0; }
+.more-l { flex: 1; min-width: 0; font-size: 11.5px; font-weight: 600; color: var(--aubergine-900); }
+[lang="ar"] .more-l { font-size: 12px; }
+.open-pill {
+  display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0;
+  background: rgba(90, 140, 95, 0.14); color: var(--success);
+  font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 9999px;
+}
+[lang="ar"] .open-pill { font-size: 11px; }
+.open-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); box-shadow: 0 0 0 3px rgba(90, 140, 95, 0.18); }
+.hrs-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 5px 0; border-top: 1px solid var(--sand-100); }
+.hrs-d { font-size: 11.5px; color: var(--ink-700); }
+[lang="ar"] .hrs-d { font-size: 12px; }
+.hrs-v { font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; color: var(--aubergine-900); }
+.loc-line { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.loc-v { font-size: 11.5px; color: var(--ink-700); line-height: 1.4; }
+[lang="ar"] .loc-v { font-size: 12px; }
+.loc-cta { display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; border: 0; background: transparent; cursor: pointer; font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--magenta-500); padding: 0; }
+[lang="ar"] .loc-cta { font-family: var(--font-arabic); font-size: 11.5px; }
+.loc-cta svg { width: 12px; height: 12px; }
+[dir="rtl"] .loc-cta svg { transform: scaleX(-1); }
+.abt-v { font-size: 11.5px; color: var(--ink-700); line-height: 1.55; }
+[lang="ar"] .abt-v { font-size: 12px; }
+.abt-more { margin-top: 7px; }
+.gal-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.gal-tile { position: relative; aspect-ratio: 1 / 1; border-radius: 9px; overflow: hidden; }
+.gal-tile::after {
+  content: ''; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 86 L20 58 L32 86 Z M32 86 L44 58 L56 86 Z M56 86 L68 58 L80 86 Z' fill='rgba(255,255,255,0.18)'/%3E%3C/svg%3E");
+  background-size: 60px; background-position: bottom center; background-repeat: no-repeat;
+}
+.gal-tile.g1 { background: linear-gradient(140deg, var(--terracotta-500), var(--terracotta-700)); }
+.gal-tile.g2 { background: linear-gradient(140deg, var(--aubergine-300), var(--aubergine-700)); }
+.gal-tile.g3 { background: linear-gradient(140deg, var(--terracotta-700), var(--aubergine-700)); }
+.gal-tile.g4 { background: linear-gradient(140deg, var(--terracotta-300), var(--terracotta-700)); }
+.rev-line { display: flex; align-items: center; gap: 7px; }
+.rev-line .star { color: var(--terracotta-500); font-size: 13px; }
+.rev-v { font-size: 11.5px; color: var(--ink-700); }
+[lang="ar"] .rev-v { font-size: 12px; }
+
+/* ---------- STICKY BAR ---------- */
+.op-cta { position: sticky; bottom: 0; background: var(--paper); border-top: 1px solid var(--sand-100); padding: 12px 18px 22px; display: flex; align-items: center; gap: 13px; box-shadow: 0 -8px 24px rgba(58, 18, 52, 0.06); z-index: 5; }
+.cta-sum { flex-shrink: 0; text-align: start; }
+.cta-l { font-size: 10.5px; color: var(--ink-500); }
+[lang="ar"] .cta-l { font-size: 11.5px; }
+.cta-v { font-family: var(--font-display); font-weight: 500; font-size: 19px; color: var(--aubergine-900); letter-spacing: -0.02em; line-height: 1.2; }
+.cta-v .ccy { font-family: var(--font-mono); font-size: 10px; color: var(--ink-500); margin-inline-end: 3px; }
+.cta-btn { flex: 1; background: var(--magenta-500); color: var(--paper); border: 0; border-radius: 12px; padding: 13px 14px; font-family: var(--font-body); font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 7px; cursor: pointer; }
+[lang="ar"] .cta-btn { font-family: var(--font-arabic); }
+.cta-btn svg { width: 15px; height: 15px; }
+[dir="rtl"] .cta-btn svg { transform: scaleX(-1); }
+
+/* keep numerals in mono even in Arabic */
+[lang="ar"] .sv-price, [lang="ar"] .tot-v, [lang="ar"] .cta-v, [lang="ar"] .hrs-v, [lang="ar"] .fld-v.mono { font-family: var(--font-mono); }
+
+/* SIDE PANEL */
+.side-panel { position: sticky; top: 32px; padding-top: 24px; }
+.panel-h { font-family: var(--font-display); font-weight: 500; font-size: 32px; letter-spacing: -0.025em; color: var(--aubergine-900); margin-bottom: 8px; line-height: 1.05; }
+[lang="ar"] .panel-h { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; line-height: 1.25; }
+.panel-h em { font-style: italic; color: var(--magenta-500); }
+.panel-lede { font-size: 15px; line-height: 1.65; color: var(--ink-500); max-width: 52ch; margin-bottom: 28px; }
+.principle-list { list-style: none; display: flex; flex-direction: column; gap: 18px; margin-bottom: 28px; }
+.principle-list li { padding-inline-start: 32px; position: relative; }
+.principle-list li::before { content: ''; position: absolute; inset-inline-start: 0; top: 4px; width: 16px; height: 16px; background: linear-gradient(135deg, var(--terracotta-500), var(--magenta-500)); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.principle-list li strong { display: block; font-family: var(--font-display); font-weight: 500; font-size: 16px; letter-spacing: -0.01em; color: var(--aubergine-900); margin-bottom: 4px; }
+[lang="ar"] .principle-list li strong { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.principle-list li p { font-size: 13px; line-height: 1.55; color: var(--ink-700); }
+.tech-callout { background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 14px; padding: 18px; }
+.tech-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta-700); font-weight: 600; margin-bottom: 8px; }
+[lang="ar"] .tech-label { letter-spacing: 0; text-transform: none; font-size: 12px; }
+.tech-body { font-size: 13px; line-height: 1.6; color: var(--ink-700); }
+
+.footnote { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--sand-100); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); }
+[lang="ar"] .footnote { font-family: var(--font-arabic); }
+.footnote .accent { color: var(--magenta-500); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="brand-bar">
+    <div class="brand-identity">
+      <svg class="brand-logo" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#5B2C5F"/>
+            <stop offset="100%" stop-color="#B8228C"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="44" r="36" fill="url(#brandGrad)"/>
+        <circle cx="50" cy="44" r="22" fill="#FDFBF7"/>
+        <path d="M28 74 L36 60 L44 74 Z M44 74 L52 60 L60 74 Z M60 74 L68 60 L76 74 Z" fill="#FDFBF7"/>
+      </svg>
+      <div class="brand-name-wrap">
+        <div class="brand-name">Escalé</div>
+        <div class="brand-tagline">Design System · v0.1</div>
+      </div>
+    </div>
+    <div class="brand-meta">
+      <div class="screen-stamp">
+        <div class="lbl">Screen 27</div>
+        <div class="val">Outlet Profile</div>
+      </div>
+      <div class="locale-switch">
+        <button id="btnEn" class="active" onclick="setLocale('en')">EN</button>
+        <button id="btnAr" onclick="setLocale('ar')">ع</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="editorial-head" id="editorialHead">
+    <div>
+      <div class="label" id="eh-label">Screen 27 / Outlet Profile</div>
+      <h1><span id="eh-1">A shop inside</span> <em id="eh-2">the hotel.</em></h1>
+    </div>
+    <div class="colophon">
+      <div><strong id="cl-1">One place —</strong> <span id="cl-1b">many services</span></div>
+      <div><strong id="cl-2">Hotel-run or</strong> <span id="cl-2b">independent</span></div>
+      <div><strong id="cl-3">The page screens 24–26 hang off</strong></div>
+      <div style="margin-top:8px; opacity:0.6;" id="cl-date">New screen · 9 August 2026</div>
+    </div>
+  </section>
+
+  <div class="composition" id="composition">
+
+    <!-- ============ PHONE ============ -->
+    <div class="phone-stage">
+      <div class="phone">
+        <div class="phone-screen">
+
+          <div class="status-bar">
+            <span>9:41</span>
+            <span class="icons">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 17h2v4H2zm5-4h2v8H7zm5-4h2v12h-2zm5-4h2v16h-2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.7 6 0 9l12 15L24 9c-2.7-3-7-5-12-5z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="18" height="10" rx="2.5"/><rect x="4" y="9" width="12" height="6" rx="1" fill="currentColor"/><path d="M22 10v4" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+
+          <!-- HERO -->
+          <div class="op-hero">
+            <button class="op-hero-btn back" aria-label="Back">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button class="op-hero-btn fav" aria-label="Save">
+              <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>
+            </button>
+            <div class="op-hero-foot">
+              <span class="op-badge" id="op-badge">Independent · inside the hotel</span>
+              <div class="op-name" id="op-name">Studio Kamal</div>
+              <div class="op-kicker" id="op-kicker">Men's grooming &amp; hair · inside Beit Zamalek, Cairo</div>
+            </div>
+          </div>
+
+          <!-- OPERATOR STRIP -->
+          <div class="opr">
+            <span class="opr-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M10 21v-6h4v6"/></svg>
+            </span>
+            <div class="opr-txt">
+              <div class="opr-t" id="opr-t">Run by Studio Kamal, not by Beit Zamalek</div>
+              <div class="opr-s" id="opr-s">You book and pay through Escalé, exactly like any hotel service.</div>
+            </div>
+          </div>
+
+          <!-- TABS -->
+          <div class="op-tabs">
+            <button class="op-tab" id="op-tab-1">Info</button>
+            <button class="op-tab on" id="op-tab-2">Services</button>
+            <button class="op-tab" id="op-tab-3">Gallery</button>
+            <button class="op-tab" id="op-tab-4">Reviews</button>
+          </div>
+
+          <!-- TAB BODY: SERVICES -->
+          <div class="op-body">
+
+            <div class="seg">
+              <button class="seg-item on" id="seg-1">Services</button>
+              <button class="seg-item" id="seg-2">Offers</button>
+            </div>
+
+            <div class="op-sect">
+              <div class="op-sect-title" id="sv-head">Choose what you need</div>
+              <div class="op-sect-hint" id="sv-hint">Pick one or more, then set a time.</div>
+
+              <div class="sv-row on">
+                <div class="sv-txt">
+                  <div class="sv-n" id="sv-1-n">Haircut</div>
+                  <div class="sv-meta">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg>
+                    <span class="sv-d" id="sv-1-d">45 min</span>
+                  </div>
+                </div>
+                <span class="sv-price"><span class="ccy">EGP</span>350</span>
+                <button class="sv-tog on" aria-label="Selected">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+              </div>
+
+              <div class="sv-row on">
+                <div class="sv-txt">
+                  <div class="sv-n" id="sv-2-n">Beard shaping</div>
+                  <div class="sv-meta">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg>
+                    <span class="sv-d" id="sv-2-d">20 min</span>
+                  </div>
+                </div>
+                <span class="sv-price"><span class="ccy">EGP</span>150</span>
+                <button class="sv-tog on" aria-label="Selected">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+              </div>
+
+              <div class="sv-row">
+                <div class="sv-txt">
+                  <div class="sv-n" id="sv-3-n">Hot-towel shave</div>
+                  <div class="sv-meta">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg>
+                    <span class="sv-d" id="sv-3-d">30 min</span>
+                  </div>
+                </div>
+                <span class="sv-price"><span class="ccy">EGP</span>220</span>
+                <button class="sv-tog" aria-label="Add">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </button>
+              </div>
+
+              <div class="sv-row">
+                <div class="sv-txt">
+                  <div class="sv-n" id="sv-4-n">Hair treatment</div>
+                  <div class="sv-meta">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg>
+                    <span class="sv-d" id="sv-4-d">60 min</span>
+                  </div>
+                </div>
+                <span class="sv-price"><span class="ccy">EGP</span>480</span>
+                <button class="sv-tog" aria-label="Add">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </button>
+              </div>
+
+              <div class="sv-row">
+                <div class="sv-txt">
+                  <div class="sv-n" id="sv-5-n">Kids cut · under 12</div>
+                  <div class="sv-meta">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg>
+                    <span class="sv-d" id="sv-5-d">30 min</span>
+                  </div>
+                </div>
+                <span class="sv-price"><span class="ccy">EGP</span>200</span>
+                <button class="sv-tog" aria-label="Add">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- APPOINTMENT -->
+            <div class="appt">
+              <div class="appt-t" id="appt-t">When would you like to come?</div>
+              <div class="appt-grid">
+                <div class="fld">
+                  <span class="fld-ic">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke-linecap="round"/></svg>
+                  </span>
+                  <div class="fld-body">
+                    <div class="fld-l" id="appt-d-l">Date</div>
+                    <div class="fld-v" id="appt-d-v">Sat, 15 Aug 2026</div>
+                  </div>
+                </div>
+                <div class="fld">
+                  <span class="fld-ic">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg>
+                  </span>
+                  <div class="fld-body">
+                    <div class="fld-l" id="appt-t-l">Time</div>
+                    <div class="fld-v mono">18:30</div>
+                  </div>
+                </div>
+              </div>
+              <div class="appt-hint" id="appt-hint">The studio confirms your slot in a few minutes. Free to change up to 2 hours before.</div>
+            </div>
+
+            <!-- RUNNING TOTAL -->
+            <div class="tot">
+              <span class="tot-ic">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h12"/></svg>
+              </span>
+              <div class="tot-txt">
+                <div class="tot-l" id="tot-l">2 services · 65 min</div>
+                <div class="tot-s" id="tot-s">The total moves as you pick.</div>
+              </div>
+              <span class="tot-v"><span class="ccy">EGP</span>500</span>
+            </div>
+
+          </div>
+
+          <!-- OTHER TABS PREVIEW -->
+          <div class="more">
+            <div class="more-h" id="more-h">Also on this page</div>
+
+            <div class="more-card">
+              <div class="more-top">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
+                <span class="more-l" id="abt-l">About the studio</span>
+              </div>
+              <p class="abt-v" id="abt-v">A Cairo barbershop since 1998, and on the mezzanine here since the hotel opened. Six chairs, classic cuts, hot towels, and a beard team that has looked after the same guests for years.</p>
+              <div class="abt-more">
+                <button class="loc-cta">
+                  <span id="abt-cta">Read more</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="more-card">
+              <div class="more-top">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg>
+                <span class="more-l" id="hrs-l">Opening hours</span>
+                <span class="open-pill"><span class="open-dot"></span><span id="hrs-open">Open now</span></span>
+              </div>
+              <div class="hrs-row">
+                <span class="hrs-d" id="hrs-1-d">Sat – Thu</span>
+                <span class="hrs-v">09:00 – 22:00</span>
+              </div>
+              <div class="hrs-row">
+                <span class="hrs-d" id="hrs-2-d">Friday</span>
+                <span class="hrs-v">14:00 – 22:00</span>
+              </div>
+            </div>
+
+            <div class="more-card">
+              <div class="more-top">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span class="more-l" id="loc-l">Where it is</span>
+              </div>
+              <div class="loc-line">
+                <span class="loc-v" id="loc-v">Mezzanine floor · next to the lobby lounge</span>
+                <button class="loc-cta">
+                  <span id="loc-cta">Get directions</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="more-card">
+              <div class="more-top">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-6 8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="more-l" id="gal-l">Work gallery</span>
+                <span class="hrs-v" id="gal-s">24 photos</span>
+              </div>
+              <div class="gal-strip">
+                <span class="gal-tile g1"></span>
+                <span class="gal-tile g2"></span>
+                <span class="gal-tile g3"></span>
+                <span class="gal-tile g4"></span>
+              </div>
+            </div>
+
+            <div class="more-card">
+              <div class="more-top">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <span class="more-l" id="rev-l">What guests say</span>
+              </div>
+              <div class="rev-line">
+                <span class="star">★</span>
+                <span class="rev-v" id="rev-v">4.8 out of 5 · 126 guest reviews</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- STICKY BAR -->
+          <div class="op-cta">
+            <div class="cta-sum">
+              <div class="cta-l" id="cta-l">Total</div>
+              <div class="cta-v"><span class="ccy">EGP</span>500</div>
+            </div>
+            <button class="cta-btn">
+              <span id="cta-btn-t">Book appointment</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SIDE PANEL ============ -->
+    <aside class="side-panel" id="sidePanel">
+      <h2 class="panel-h"><span id="ph-1">A shop inside</span> <em id="ph-1em">the hotel.</em></h2>
+      <p class="panel-lede" id="ph-lede">Every service in the app lives somewhere — a restaurant, a spa, a salon, a maintenance desk. That place is what this page is about, and the services hang off it. Some places belong to the hotel. Some are separate businesses renting space inside it. The guest shouldn't have to work out which.</p>
+
+      <ul class="principle-list">
+        <li>
+          <strong id="p1-t">The place first, then its services</strong>
+          <p id="p1-d">A haircut, a massage, a table — each one belongs to a place inside the hotel. That place has a name, a page, and a price list. This screen is that page.</p>
+        </li>
+        <li>
+          <strong id="p2-t">The hotel's own, or someone else's</strong>
+          <p id="p2-d">Some places are run by the hotel itself. Others are known names renting space inside it, like this studio. We say so plainly at the top, and everything else stays the same — same app, same booking, same total.</p>
+        </li>
+        <li>
+          <strong id="p3-t">Some things need a time, some don't</strong>
+          <p id="p3-d">A towel goes up whenever the guest asks. A haircut takes a chair and a person for an hour, so it needs a date and a time. That's why this screen asks for both and a towel request doesn't.</p>
+        </li>
+        <li>
+          <strong id="p4-t">Its own hours, photos and reviews</strong>
+          <p id="p4-d">The hotel is open all night; the studio closes at 22:00. Guests rate the studio, not the hotel. So the hours, the work photos and the reviews sit here and belong to this place alone.</p>
+        </li>
+        <li>
+          <strong id="p5-t">The cost is visible before the yes</strong>
+          <p id="p5-d">Every service shows its price, and the total at the bottom moves with each pick. Nobody sits in the chair and then discovers the bill.</p>
+        </li>
+      </ul>
+
+      <div class="tech-callout">
+        <div class="tech-label" id="tech-l">A note for the hotel</div>
+        <p class="tech-body" id="tech-b">The hotel enters each place once — name, hours, location, photos and price list — and says whether it runs the place itself or an outside business does. Orders for an outside business reach that business directly, and the hotel still sees them. Two things are still open for you to decide: who collects the money, and whether "charge it to my room" is allowed for outside businesses.</p>
+      </div>
+    </aside>
+
+  </div>
+
+  <footer class="footnote" id="footnote">
+    <span id="ft-1">© Escalé · Screen 27 of 28 · New — Outlet Profile</span>
+    <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
+  </footer>
+
+</div>
+
+<script>
+const t = {
+  en: {
+    ehLabel: "Screen 27 / Outlet Profile",
+    eh1: "A shop inside", eh2: "the hotel.",
+    cl1: "One place —", cl1b: "many services",
+    cl2: "Hotel-run or", cl2b: "independent",
+    cl3: "The page screens 24–26 hang off",
+    clDate: "New screen · 9 August 2026",
+
+    opBadge: "Independent · inside the hotel",
+    opName: "Studio Kamal",
+    opKicker: "Men's grooming & hair · inside Beit Zamalek, Cairo",
+
+    oprT: "Run by Studio Kamal, not by Beit Zamalek",
+    oprS: "You book and pay through Escalé, exactly like any hotel service.",
+
+    tab1: "Info", tab2: "Services", tab3: "Gallery", tab4: "Reviews",
+    seg1: "Services", seg2: "Offers",
+
+    svHead: "Choose what you need",
+    svHint: "Pick one or more, then set a time.",
+    sv1n: "Haircut", sv1d: "45 min",
+    sv2n: "Beard shaping", sv2d: "20 min",
+    sv3n: "Hot-towel shave", sv3d: "30 min",
+    sv4n: "Hair treatment", sv4d: "60 min",
+    sv5n: "Kids cut · under 12", sv5d: "30 min",
+
+    apptT: "When would you like to come?",
+    apptDl: "Date", apptDv: "Sat, 15 Aug 2026",
+    apptTl: "Time",
+    apptHint: "The studio confirms your slot in a few minutes. Free to change up to 2 hours before.",
+
+    totL: "2 services · 65 min",
+    totS: "The total moves as you pick.",
+
+    moreH: "Also on this page",
+    abtL: "About the studio",
+    abtV: "A Cairo barbershop since 1998, and on the mezzanine here since the hotel opened. Six chairs, classic cuts, hot towels, and a beard team that has looked after the same guests for years.",
+    abtCta: "Read more",
+    hrsL: "Opening hours", hrsOpen: "Open now",
+    hrs1d: "Sat – Thu", hrs2d: "Friday",
+    locL: "Where it is",
+    locV: "Mezzanine floor · next to the lobby lounge",
+    locCta: "Get directions",
+    galL: "Work gallery", galS: "24 photos",
+    revL: "What guests say",
+    revV: "4.8 out of 5 · 126 guest reviews",
+
+    ctaL: "Total",
+    ctaBtnT: "Book appointment",
+
+    ph1: "A shop inside", ph1em: "the hotel.",
+    phLede: "Every service in the app lives somewhere — a restaurant, a spa, a salon, a maintenance desk. That place is what this page is about, and the services hang off it. Some places belong to the hotel. Some are separate businesses renting space inside it. The guest shouldn't have to work out which.",
+    p1t: "The place first, then its services",
+    p1d: "A haircut, a massage, a table — each one belongs to a place inside the hotel. That place has a name, a page, and a price list. This screen is that page.",
+    p2t: "The hotel's own, or someone else's",
+    p2d: "Some places are run by the hotel itself. Others are known names renting space inside it, like this studio. We say so plainly at the top, and everything else stays the same — same app, same booking, same total.",
+    p3t: "Some things need a time, some don't",
+    p3d: "A towel goes up whenever the guest asks. A haircut takes a chair and a person for an hour, so it needs a date and a time. That's why this screen asks for both and a towel request doesn't.",
+    p4t: "Its own hours, photos and reviews",
+    p4d: "The hotel is open all night; the studio closes at 22:00. Guests rate the studio, not the hotel. So the hours, the work photos and the reviews sit here and belong to this place alone.",
+    p5t: "The cost is visible before the yes",
+    p5d: "Every service shows its price, and the total at the bottom moves with each pick. Nobody sits in the chair and then discovers the bill.",
+    techL: "A note for the hotel",
+    techB: "The hotel enters each place once — name, hours, location, photos and price list — and says whether it runs the place itself or an outside business does. Orders for an outside business reach that business directly, and the hotel still sees them. Two things are still open for you to decide: who collects the money, and whether “charge it to my room” is allowed for outside businesses.",
+    ft1: "© Escalé · Screen 27 of 28 · New — Outlet Profile"
+  },
+  ar: {
+    ehLabel: "الشاشة 27 / صفحة المكان",
+    eh1: "محل جوّه", eh2: "الفندق.",
+    cl1: "مكان واحد —", cl1b: "خدمات كتير",
+    cl2: "بتاع الفندق أو", cl2b: "مستقل",
+    cl3: "الصفحة اللي شاشات 24–26 متعلقة بيها",
+    clDate: "شاشة جديدة · 9 أغسطس 2026",
+
+    opBadge: "مشغّل مستقل · جوّه الفندق",
+    opName: "استوديو كمال",
+    opKicker: "حلاقة وعناية للرجال · جوّه بيت الزمالك، القاهرة",
+
+    oprT: "المكان ده بيديره استوديو كمال، مش بيت الزمالك",
+    oprS: "بتحجز وتدفع من خلال إسكالي، بالظبط زي أي خدمة من الفندق.",
+
+    tab1: "معلومات", tab2: "الخدمات", tab3: "معرض الأعمال", tab4: "المراجعات",
+    seg1: "الخدمات", seg2: "العروض",
+
+    svHead: "اختار اللي محتاجه",
+    svHint: "اختار خدمة أو أكتر، وبعدين حدّد الميعاد.",
+    sv1n: "قص شعر", sv1d: "45 دقيقة",
+    sv2n: "تحديد دقن", sv2d: "20 دقيقة",
+    sv3n: "حلاقة بفوطة سخنة", sv3d: "30 دقيقة",
+    sv4n: "علاج للشعر", sv4d: "60 دقيقة",
+    sv5n: "قص شعر للأطفال · تحت 12 سنة", sv5d: "30 دقيقة",
+
+    apptT: "عايز تيجي إمتى؟",
+    apptDl: "التاريخ", apptDv: "السبت، 15 أغسطس 2026",
+    apptTl: "الميعاد",
+    apptHint: "الاستوديو بيأكّد الميعاد خلال دقايق. وتقدر تغيّره من غير رسوم لحد ساعتين قبله.",
+
+    totL: "خدمتين · 65 دقيقة",
+    totS: "الإجمالي بيتغيّر مع كل اختيار.",
+
+    moreH: "كمان في الصفحة دي",
+    abtL: "عن الاستوديو",
+    abtV: "محل حلاقة قاهري من سنة 1998، وموجود في الميزانين هنا من أول ما الفندق فتح. ستة كراسي، قصّات كلاسيك، فوط سخنة، وفريق دقن بيتابع نفس الضيوف من سنين.",
+    abtCta: "اقرا المزيد",
+    hrsL: "مواعيد العمل", hrsOpen: "مفتوح دلوقتي",
+    hrs1d: "السبت – الخميس", hrs2d: "الجمعة",
+    locL: "المكان فين",
+    locV: "الميزانين · جنب صالة اللوبي",
+    locCta: "أحصل على الاتجاهات",
+    galL: "معرض الأعمال", galS: "24 صورة",
+    revL: "الضيوف بيقولوا إيه",
+    revV: "4.8 من 5 · 126 مراجعة من الضيوف",
+
+    ctaL: "الإجمالي",
+    ctaBtnT: "احجز الميعاد",
+
+    ph1: "محل جوّه", ph1em: "الفندق.",
+    phLede: "كل خدمة في التطبيق ليها مكان — مطعم، سبا، صالون، أو مكتب صيانة. المكان ده هو موضوع الصفحة دي، والخدمات كلها متعلقة بيه. في أماكن بتاعة الفندق نفسه، وفي أماكن شغّالة مستقلة ومستأجرة جوّه الفندق. والضيف مش لازم يقعد يحلّل مين مين.",
+    p1t: "المكان الأول، وبعدين خدماته",
+    p1d: "قصة الشعر، المساج، الترابيزة — كل واحدة تابعة لمكان جوّه الفندق. والمكان ليه اسم وصفحة وقايمة أسعار. والشاشة دي هي الصفحة دي.",
+    p2t: "بتاع الفندق، أو بتاع حد تاني",
+    p2d: "في أماكن الفندق بيديرها بنفسه، وفي أماكن أسامي معروفة مستأجرة جوّه الفندق، زي الاستوديو ده. بنقولها بوضوح فوق، وكل حاجة تانية زي ما هي — نفس التطبيق، نفس الحجز، نفس الإجمالي.",
+    p3t: "في حاجات محتاجة ميعاد، وحاجات لأ",
+    p3d: "الفوطة بتطلع للغرفة في أي وقت الضيف يطلبها. لكن قصة الشعر بتاخد كرسي وشخص لمدة ساعة، فمحتاجة تاريخ وميعاد. عشان كده الشاشة دي بتسأل عن الاتنين، وطلب الفوطة لأ.",
+    p4t: "مواعيده وصوره وتقييماته لوحده",
+    p4d: "الفندق فاتح طول الليل، لكن الاستوديو بيقفل 22:00. والضيوف بيقيّموا الاستوديو، مش الفندق. عشان كده المواعيد وصور الشغل والمراجعات موجودين هنا وبيخصوا المكان ده لوحده.",
+    p5t: "السعر باين قبل الموافقة",
+    p5d: "كل خدمة سعرها مكتوب، والإجمالي تحت بيتحرك مع كل اختيار. محدش يقعد على الكرسي وبعدين يكتشف الحساب.",
+    techL: "ملاحظة للفندق",
+    techB: "الفندق بيسجّل كل مكان مرة واحدة — الاسم، المواعيد، الموقع، الصور، وقايمة الأسعار — ويقول إذا كان بيشغّله بنفسه ولا شغّالة من بره. طلبات الشغّالة اللي من بره بتوصلها هي على طول، والفندق برضه بيشوفها. وفاضل حاجتين مفتوحين قدامك: مين اللي بيستلم الفلوس، وهل «على حساب الغرفة» متاح للشغّالات اللي من بره.",
+    ft1: "© إسكالي · الشاشة 27 من 28 · جديدة — صفحة المكان"
+  }
+};
+
+function setLocale(loc) {
+  const tt = t[loc];
+  const isRtl = loc === 'ar';
+
+  document.getElementById('btnEn').classList.toggle('active', loc === 'en');
+  document.getElementById('btnAr').classList.toggle('active', loc === 'ar');
+  ['editorialHead', 'composition', 'sidePanel', 'footnote'].forEach(function (id) {
+    const el = document.getElementById(id);
+    el.setAttribute('lang', loc);
+    el.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+  });
+
+  const set = function (id, val) { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+  set('eh-label', tt.ehLabel);
+  set('eh-1', tt.eh1); set('eh-2', tt.eh2);
+  set('cl-1', tt.cl1); set('cl-1b', tt.cl1b);
+  set('cl-2', tt.cl2); set('cl-2b', tt.cl2b);
+  set('cl-3', tt.cl3); set('cl-date', tt.clDate);
+
+  set('op-badge', tt.opBadge);
+  set('op-name', tt.opName);
+  set('op-kicker', tt.opKicker);
+
+  set('opr-t', tt.oprT); set('opr-s', tt.oprS);
+
+  for (let i = 1; i <= 4; i++) set('op-tab-' + i, tt['tab' + i]);
+  set('seg-1', tt.seg1); set('seg-2', tt.seg2);
+
+  set('sv-head', tt.svHead); set('sv-hint', tt.svHint);
+  for (let i = 1; i <= 5; i++) { set('sv-' + i + '-n', tt['sv' + i + 'n']); set('sv-' + i + '-d', tt['sv' + i + 'd']); }
+
+  set('appt-t', tt.apptT);
+  set('appt-d-l', tt.apptDl); set('appt-d-v', tt.apptDv);
+  set('appt-t-l', tt.apptTl);
+  set('appt-hint', tt.apptHint);
+
+  set('tot-l', tt.totL); set('tot-s', tt.totS);
+
+  set('more-h', tt.moreH);
+  set('abt-l', tt.abtL); set('abt-v', tt.abtV); set('abt-cta', tt.abtCta);
+  set('hrs-l', tt.hrsL); set('hrs-open', tt.hrsOpen);
+  set('hrs-1-d', tt.hrs1d); set('hrs-2-d', tt.hrs2d);
+  set('loc-l', tt.locL); set('loc-v', tt.locV); set('loc-cta', tt.locCta);
+  set('gal-l', tt.galL); set('gal-s', tt.galS);
+  set('rev-l', tt.revL); set('rev-v', tt.revV);
+
+  set('cta-l', tt.ctaL);
+  set('cta-btn-t', tt.ctaBtnT);
+
+  set('ph-1', tt.ph1); set('ph-1em', tt.ph1em); set('ph-lede', tt.phLede);
+  for (let i = 1; i <= 5; i++) { set('p' + i + '-t', tt['p' + i + 't']); set('p' + i + '-d', tt['p' + i + 'd']); }
+  set('tech-l', tt.techL); set('tech-b', tt.techB);
+  set('ft-1', tt.ft1);
+}
+</script>
+
+</body>
+</html>

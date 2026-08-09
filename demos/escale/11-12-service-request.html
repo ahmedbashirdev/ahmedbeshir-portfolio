@@ -362,6 +362,59 @@ body::before {
   opacity: 0.8;
 }
 
+/* Search + filter row (restores the legacy hub's labelled search) */
+.svc-search-block { margin-bottom: 22px; }
+.svc-search-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  margin-bottom: 6px;
+  padding-inline-start: 2px;
+}
+[lang="ar"] .svc-search-label { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.svc-search-row { display: flex; align-items: center; gap: 8px; }
+.svc-search {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--paper);
+  border: 1px solid var(--sand-100);
+  border-radius: 12px;
+  padding: 9px 12px;
+  box-shadow: var(--shadow-sm);
+}
+.svc-search svg { width: 15px; height: 15px; color: var(--ink-300); flex-shrink: 0; }
+.svc-search-input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  outline: none;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  color: var(--ink-900);
+  text-align: start;
+}
+[lang="ar"] .svc-search-input { font-family: var(--font-arabic); font-size: 13px; }
+.svc-search-input::placeholder { color: var(--ink-300); opacity: 1; }
+.svc-filter-btn {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: var(--paper);
+  border: 1px solid var(--sand-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+.svc-filter-btn svg { width: 17px; height: 17px; color: var(--aubergine-700); }
+
 /* Section labels */
 .sect-row {
   display: flex;
@@ -780,13 +833,17 @@ body::before {
   font-size: 18px;
   color: var(--aubergine-900);
   letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
 }
 .cost-total-val .ccy {
   font-family: var(--font-mono);
   font-size: 10px;
   color: var(--ink-500);
-  margin-inline-end: 3px;
 }
+/* Arabic writes the amount first, then the currency — reorder, don't re-author */
+[lang="ar"] .cost-total-val .ccy { order: 2; font-family: var(--font-arabic); font-size: 11px; }
 
 /* ETA banner */
 .eta-banner {
@@ -923,6 +980,129 @@ body::before {
 .footnote .accent { color: var(--magenta-500); font-weight: 600; }
 .cat-tile-detail { font-size: 9.5px; font-weight: 500; color: var(--terracotta-700); margin-top: 3px; }
 [lang="ar"] .cat-tile-detail { font-size: 11px; }
+
+/* ============================================
+   SECOND CATEGORY LEVEL (D14 · gap G4)
+   A category is not a leaf: it opens into
+   sub-services, or into named outlets.
+   ============================================ */
+.cat-expanded {
+  background: var(--paper);
+  border: 1px solid var(--sand-100);
+  border-radius: 16px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+.cat-expanded.open {
+  border-color: var(--aubergine-300);
+  box-shadow: var(--shadow-md);
+}
+.cat-expanded-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: start;
+}
+.cat-expanded-chev {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--sand-50);
+  border: 1px solid var(--sand-100);
+  color: var(--aubergine-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cat-expanded-chev svg { width: 12px; height: 12px; }
+
+.sub-hint {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--terracotta-700);
+  margin: 11px 0 6px;
+  padding-inline-start: 2px;
+}
+[lang="ar"] .sub-hint { font-size: 11px; }
+
+.sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.sub-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--sand-50);
+  border: 1px solid var(--sand-100);
+  border-radius: 10px;
+  padding: 8px 9px;
+  text-align: start;
+}
+.sub-chip-ic {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: var(--paper);
+  border: 1px solid var(--sand-100);
+  color: var(--terracotta-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.sub-chip-ic svg { width: 13px; height: 13px; }
+.sub-chip-body { flex: 1; min-width: 0; }
+.sub-chip-name { display: block; font-size: 11.5px; font-weight: 600; color: var(--aubergine-900); line-height: 1.15; }
+.sub-chip-meta { display: block; font-size: 9.5px; color: var(--ink-500); margin-top: 1px; }
+[lang="ar"] .sub-chip-meta { font-size: 10.5px; }
+
+/* Named outlets inside a category (D14 · gap G1) */
+.outlet-list { display: flex; flex-direction: column; gap: 6px; }
+.outlet-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--sand-50);
+  border: 1px solid var(--sand-100);
+  border-radius: 12px;
+  padding: 8px 10px;
+}
+.outlet-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--paper);
+  flex-shrink: 0;
+}
+.outlet-logo.og-1 { background: linear-gradient(135deg, var(--terracotta-500), var(--terracotta-700)); }
+.outlet-logo.og-2 { background: linear-gradient(135deg, var(--magenta-300), var(--aubergine-500)); }
+.outlet-logo svg { width: 16px; height: 16px; }
+.outlet-body { flex: 1; min-width: 0; }
+.outlet-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 12.5px;
+  letter-spacing: -0.01em;
+  color: var(--aubergine-900);
+  line-height: 1.15;
+}
+[lang="ar"] .outlet-name { font-weight: 700; letter-spacing: 0; }
+.outlet-meta { font-size: 10px; color: var(--ink-500); margin-top: 1px; }
+[lang="ar"] .outlet-meta { font-size: 11px; }
+.outlet-tag {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 9999px;
+  background: var(--aubergine-100);
+  color: var(--aubergine-700);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.outlet-tag.indep { background: var(--terracotta-100); color: var(--terracotta-700); }
+[lang="ar"] .outlet-tag { font-size: 10px; }
 </style>
 </head>
 <body>
@@ -965,7 +1145,7 @@ body::before {
       <h1><span id="eh-1">The hotel</span> <em id="eh-2">at your fingertips.</em></h1>
     </div>
     <div class="colophon">
-      <div><strong>Catalog</strong> · 6 categories, featured carousel</div>
+      <div><strong>Catalog</strong> · search, filter, 10 categories, featured carousel</div>
       <div><strong>Composer</strong> · items, time, notes, cost</div>
       <div><strong>ETA</strong> visible before submit</div>
       <div>Routes to <strong>Staff task</strong> automatically</div>
@@ -1001,7 +1181,7 @@ body::before {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
             </button>
             <div class="nav-title" id="s1-navtitle">Services</div>
-            <button class="nav-action-btn">
+            <button class="nav-action-btn" id="s1-navsearch" aria-label="Search services" title="Search services">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </button>
           </div>
@@ -1021,6 +1201,20 @@ body::before {
               <div class="quick-context-text">
                 <div class="qc-line-1" id="qc-l1">Room 204 · Garden Suite</div>
                 <div class="qc-line-2" id="qc-l2">Service charges added to your folio</div>
+              </div>
+            </div>
+
+            <!-- SEARCH + FILTER -->
+            <div class="svc-search-block">
+              <div class="svc-search-label" id="s1-search-label">Search services</div>
+              <div class="svc-search-row">
+                <label class="svc-search" for="s1-search-input">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  <input class="svc-search-input" id="s1-search-input" type="text" autocomplete="off" placeholder="A dish, a treatment, a place…" aria-label="Search services">
+                </label>
+                <button class="svc-filter-btn" id="s1-filter-btn" aria-label="Filter" title="Filter">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+                </button>
               </div>
             </div>
 
@@ -1057,31 +1251,108 @@ body::before {
             <!-- CATEGORIES -->
             <div class="sect-row">
               <h3 class="sect-title" id="sect-cat">All categories</h3>
+              <span class="sect-action" id="action-cat">Each opens into services</span>
             </div>
 
-            <div class="cat-grid">
-              <button class="cat-tile">
+            <!-- LEVEL 2 — a category opens into named outlets (D14 · G1) -->
+            <div class="cat-expanded open">
+              <div class="cat-expanded-head">
                 <div class="cat-tile-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
                 </div>
                 <div class="cat-tile-body">
-                  <div class="cat-tile-name" id="cat-1-n">Room service</div>
-                  <div class="cat-tile-count" id="cat-1-c">24 items · 15 min</div>
-                  <div class="cat-tile-detail" id="cat-1-d">Open until midnight · from SAR 90</div>
+                  <div class="cat-tile-name" id="cat-1-n">Dining</div>
+                  <div class="cat-tile-count" id="cat-1-c">2 outlets · 24 items</div>
+                  <div class="cat-tile-detail" id="cat-1-d">Open until 01:00 · from SAR 90</div>
                 </div>
-              </button>
+                <span class="cat-expanded-chev">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+                </span>
+              </div>
 
-              <button class="cat-tile">
+              <div class="sub-hint" id="dine-hint">Choose the outlet</div>
+              <div class="outlet-list">
+                <div class="outlet-row">
+                  <div class="outlet-logo og-1">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7a2 2 0 0 0 4 0V2M5 11v11M12 2v20M12 8c0-3.3 1.6-6 3.5-6S19 4.7 19 8s-1.6 5-3.5 5"/></svg>
+                  </div>
+                  <div class="outlet-body">
+                    <div class="outlet-name" id="out-1-n">Al-Nakheel Grill</div>
+                    <div class="outlet-meta" id="out-1-m">Levantine grill · 12:00–01:00 · in-room or dine-in</div>
+                  </div>
+                  <span class="outlet-tag" id="out-1-tag">Hotel-run</span>
+                </div>
+                <div class="outlet-row">
+                  <div class="outlet-logo og-2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><line x1="6" y1="2" x2="6" y2="5"/><line x1="10" y1="2" x2="10" y2="5"/></svg>
+                  </div>
+                  <div class="outlet-body">
+                    <div class="outlet-name" id="out-2-n">Café Sidra</div>
+                    <div class="outlet-meta" id="out-2-m">Coffee &amp; pastries · 06:00–23:00 · lobby level</div>
+                  </div>
+                  <span class="outlet-tag indep" id="out-2-tag">Independent</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- LEVEL 2 — a category opens into sub-services (D14 · G4) -->
+            <div class="cat-expanded open">
+              <div class="cat-expanded-head">
                 <div class="cat-tile-icon alt">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6l3 0M6 6l0 16M3 22l18 0M9 22l0-7M14 15l0 7M21 22l0-16M21 6l-3 0M9 11l5 0M14 6l0 5"/></svg>
                 </div>
                 <div class="cat-tile-body">
                   <div class="cat-tile-name" id="cat-2-n">Housekeeping</div>
-                  <div class="cat-tile-count" id="cat-2-c">9 services</div>
+                  <div class="cat-tile-count" id="cat-2-c">4 services</div>
                   <div class="cat-tile-detail" id="cat-2-d">Anytime · free</div>
                 </div>
-              </button>
+                <span class="cat-expanded-chev">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+                </span>
+              </div>
 
+              <div class="sub-hint" id="hk-hint">Choose the service you need</div>
+              <div class="sub-grid">
+                <button class="sub-chip">
+                  <span class="sub-chip-ic">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="5"/><path d="M4 8h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M7 8V5h10v3"/></svg>
+                  </span>
+                  <span class="sub-chip-body">
+                    <span class="sub-chip-name" id="sub-1-n">Laundry</span>
+                    <span class="sub-chip-meta" id="sub-1-m">Back same day · priced</span>
+                  </span>
+                </button>
+                <button class="sub-chip">
+                  <span class="sub-chip-ic">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3l7 7-9 9H5v-7z"/><path d="M9 8l7 7"/></svg>
+                  </span>
+                  <span class="sub-chip-body">
+                    <span class="sub-chip-name" id="sub-2-n">Room cleaning</span>
+                    <span class="sub-chip-meta" id="sub-2-m">In 30 min · free</span>
+                  </span>
+                </button>
+                <button class="sub-chip">
+                  <span class="sub-chip-ic">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V9a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v11"/><path d="M4 14h16"/><path d="M8 5V3h8v2"/></svg>
+                  </span>
+                  <span class="sub-chip-body">
+                    <span class="sub-chip-name" id="sub-3-n">Amenity request</span>
+                    <span class="sub-chip-meta" id="sub-3-m">Towels, slippers · free</span>
+                  </span>
+                </button>
+                <button class="sub-chip">
+                  <span class="sub-chip-ic">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V8a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v10"/><path d="M3 13h18M6 18v2M18 18v2"/></svg>
+                  </span>
+                  <span class="sub-chip-body">
+                    <span class="sub-chip-name" id="sub-4-n">Linen change</span>
+                    <span class="sub-chip-meta" id="sub-4-m">Today or tomorrow · free</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <div class="cat-grid">
               <button class="cat-tile">
                 <div class="cat-tile-icon alt2">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13M9 9l12-2M6 18l-4-1 8-2v3M6 18a3 3 0 1 1-3-3"/></svg>
@@ -1123,6 +1394,52 @@ body::before {
                   <div class="cat-tile-name" id="cat-6-n">Maintenance</div>
                   <div class="cat-tile-count" id="cat-6-c">Report an issue</div>
                   <div class="cat-tile-detail" id="cat-6-d">Urgent · 15-min response</div>
+                </div>
+              </button>
+
+              <!-- Transport — entry point to screen 26 -->
+              <button class="cat-tile">
+                <div class="cat-tile-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3v-5l2-5h14l2 5v5h-2"/><path d="M3 12h18"/><path d="M9.4 17h5.2"/><circle cx="7.2" cy="17" r="1.8"/><circle cx="16.8" cy="17" r="1.8"/></svg>
+                </div>
+                <div class="cat-tile-body">
+                  <div class="cat-tile-name" id="cat-7-n">Transport</div>
+                  <div class="cat-tile-count" id="cat-7-c">Cars & airport transfer</div>
+                  <div class="cat-tile-detail" id="cat-7-d">24 hours · from SAR 150</div>
+                </div>
+              </button>
+
+              <!-- Halls — entry point to screen 25 -->
+              <button class="cat-tile">
+                <div class="cat-tile-icon alt">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21h20"/><path d="M4 21V10M9 21V10M15 21V10M20 21V10"/><path d="M2 10l10-6 10 6z"/></svg>
+                </div>
+                <div class="cat-tile-body">
+                  <div class="cat-tile-name" id="cat-8-n">Halls & events</div>
+                  <div class="cat-tile-count" id="cat-8-c">3 venues</div>
+                  <div class="cat-tile-detail" id="cat-8-d">Book 48 hrs ahead · from SAR 4,000</div>
+                </div>
+              </button>
+
+              <button class="cat-tile">
+                <div class="cat-tile-icon alt2">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M12 11v5"/></svg>
+                </div>
+                <div class="cat-tile-body">
+                  <div class="cat-tile-name" id="cat-9-n">Bellboy</div>
+                  <div class="cat-tile-count" id="cat-9-c">Luggage & deliveries</div>
+                  <div class="cat-tile-detail" id="cat-9-d">Anytime · free</div>
+                </div>
+              </button>
+
+              <button class="cat-tile">
+                <div class="cat-tile-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M2 16h20"/><path d="M6 10V7h6v3"/><path d="M2 20v1M22 20v1"/></svg>
+                </div>
+                <div class="cat-tile-body">
+                  <div class="cat-tile-name" id="cat-10-n">In-room requests</div>
+                  <div class="cat-tile-count" id="cat-10-c">6 quick requests</div>
+                  <div class="cat-tile-detail" id="cat-10-d">Right now · free</div>
                 </div>
               </button>
             </div>
@@ -1203,7 +1520,7 @@ body::before {
                 <div class="menu-item-name" id="mi-1-n">Saudi mezze plate</div>
                 <div class="menu-item-meta" id="mi-1-m">Hummus, baba ghanoush, tabbouleh, fresh bread</div>
               </div>
-              <span class="menu-item-price">SAR 280</span>
+              <span class="menu-item-price" id="mi-1-p">SAR 280</span>
               <div class="stepper">
                 <button class="step-btn">−</button>
                 <span class="step-val">1</span>
@@ -1216,7 +1533,7 @@ body::before {
                 <div class="menu-item-name" id="mi-2-n">Date & camomile tea</div>
                 <div class="menu-item-meta" id="mi-2-m">Pot for two · house blend</div>
               </div>
-              <span class="menu-item-price">SAR 120</span>
+              <span class="menu-item-price" id="mi-2-p">SAR 120</span>
               <div class="stepper">
                 <button class="step-btn">−</button>
                 <span class="step-val">2</span>
@@ -1229,7 +1546,7 @@ body::before {
                 <div class="menu-item-name" id="mi-3-n">Grilled sea bass</div>
                 <div class="menu-item-meta" id="mi-3-m">With saffron rice · 15 min prep</div>
               </div>
-              <span class="menu-item-price">SAR 480</span>
+              <span class="menu-item-price" id="mi-3-p">SAR 480</span>
               <div class="stepper">
                 <button class="step-btn" disabled>−</button>
                 <span class="step-val">0</span>
@@ -1244,7 +1561,7 @@ body::before {
 
             <div class="time-picker">
               <div class="time-chip">
-                <span>Now</span>
+                <span id="tc-1-lbl">Now</span>
               </div>
               <div class="time-chip selected">
                 <span>9:30</span>
@@ -1277,15 +1594,15 @@ body::before {
           <div class="cost-summary">
             <div class="cost-line">
               <span class="lbl" id="cost-1-l">Items (3)</span>
-              <span class="val">SAR 520</span>
+              <span class="val" id="cost-1-v">SAR 520</span>
             </div>
             <div class="cost-line">
               <span class="lbl" id="cost-2-l">Service (10%)</span>
-              <span class="val">SAR 52</span>
+              <span class="val" id="cost-2-v">SAR 52</span>
             </div>
             <div class="cost-total">
               <span class="cost-total-lbl" id="cost-total-l">Added to folio</span>
-              <span class="cost-total-val"><span class="ccy">SAR</span>572</span>
+              <span class="cost-total-val"><span class="ccy" id="cost-total-ccy">SAR</span><span id="cost-total-num">572</span></span>
             </div>
           </div>
 
@@ -1340,11 +1657,21 @@ body::before {
         <h3 id="n6-h">The button says where it goes</h3>
         <p id="n6-p">The button says "Send to kitchen" or "Send to housekeeping", so the guest knows who receives it.</p>
       </div>
+      <div class="note-item">
+        <div class="num">07</div>
+        <h3 id="n7-h">A category is not the end</h3>
+        <p id="n7-p">Housekeeping opens into laundry, room cleaning, amenities and linen — the guest picks the exact service, not a vague department.</p>
+      </div>
+      <div class="note-item">
+        <div class="num">08</div>
+        <h3 id="n8-h">A real place, with a real name</h3>
+        <p id="n8-p">Dining leads to a named restaurant — Al-Nakheel Grill, Café Sidra — and the label says whether the hotel runs it or an independent business inside the hotel does.</p>
+      </div>
     </div>
   </section>
 
   <footer class="footnote">
-    <span>© Escalé · Screens 11-12 of 14</span>
+    <span>© Escalé · Screens 11-12 of 28</span>
     <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
   </footer>
 
@@ -1356,7 +1683,7 @@ const t = {
     ehLabel: "Screens 11 — 12 / Service Request",
     eh1: "The hotel", eh2: "at your fingertips.",
     s1num: "Screen 11", s1title: "Service catalog",
-    s1blurb: "Browse what's available. Featured experiences up top, then categories. Recent requests at the bottom for one-tap reorder.",
+    s1blurb: "Browse what's available. Featured experiences up top, then categories — and every category opens into its own services or named outlets. Recent requests at the bottom for one-tap reorder.",
     s2num: "Screen 12", s2title: "Request composer",
     s2blurb: "Pick the items, choose a time, leave a note. Cost and ETA visible before submit. Routes to the staff queue the second you tap Send.",
     s1navtitle: "Services",
@@ -1364,32 +1691,51 @@ const t = {
     s1sub: "Browse what the hotel offers, or message the concierge.",
     qcL1: "Room 204 · Garden Suite",
     qcL2: "Service charges added to your folio",
+    s1navSearch: "Search services",
+    s1searchLabel: "Search services",
+    s1searchPh: "A dish, a treatment, a place…",
+    s1filter: "Filter",
     sectFeatured: "Editor's picks", actionFeatured: "See all →",
     f1tag: "House signature", f1name: "Bedouin dinner under stars", f1meta: "From 7:30pm · SAR 850",
     f2tag: "In-room", f2name: "Mountain salt massage", f2meta: "60 min · SAR 1,200",
     f3tag: "Local", f3name: "Sunset 4×4 to dunes", f3meta: "2 hrs · SAR 600",
-    sectCat: "All categories",
-    cat1n: "Room service", cat1c: "24 items · 15 min", cat1d: "Open until midnight · from SAR 90",
-    cat2n: "Housekeeping", cat2c: "9 services", cat2d: "Anytime · free",
+    sectCat: "All categories", actionCat: "Each opens into services",
+    cat1n: "Dining", cat1c: "2 outlets · 24 items", cat1d: "Open until 01:00 · from SAR 90",
+    dineHint: "Choose the outlet",
+    out1n: "Al-Nakheel Grill", out1m: "Levantine grill · 12:00–01:00 · in-room or dine-in", out1tag: "Hotel-run",
+    out2n: "Café Sidra", out2m: "Coffee & pastries · 06:00–23:00 · lobby level", out2tag: "Independent",
+    cat2n: "Housekeeping", cat2c: "4 services", cat2d: "Anytime · free",
+    hkHint: "Choose the service you need",
+    sub1n: "Laundry", sub1m: "Back same day · priced",
+    sub2n: "Room cleaning", sub2m: "In 30 min · free",
+    sub3n: "Amenity request", sub3m: "Towels, slippers · free",
+    sub4n: "Linen change", sub4m: "Today or tomorrow · free",
     cat3n: "Spa & wellness", cat3c: "12 treatments", cat3d: "10:00–20:00 · from SAR 600",
     cat4n: "Concierge", cat4c: "Bookings & advice", cat4d: "24 hours · free",
     cat5n: "Excursions", cat5c: "8 experiences", cat5d: "Book a day ahead · from SAR 400",
     cat6n: "Maintenance", cat6c: "Report an issue", cat6d: "Urgent · 15-min response",
+    cat7n: "Transport", cat7c: "Cars & airport transfer", cat7d: "24 hours · from SAR 150",
+    cat8n: "Halls & events", cat8c: "3 venues", cat8d: "Book 48 hrs ahead · from SAR 4,000",
+    cat9n: "Bellboy", cat9c: "Luggage & deliveries", cat9d: "Anytime · free",
+    cat10n: "In-room requests", cat10c: "6 quick requests", cat10d: "Right now · free",
     sectRecent: "Your recent requests",
     rec1n: "Extra pillows", rec1m: "Housekeeping · in progress", rec1t: "35m ago",
     rec2n: "Late breakfast (8am)", rec2m: "Restaurant · delivered", rec2t: "yesterday",
     s2navtitle: "Room service",
     s2tag: "In-room dining", s2htitle: "Tonight's late kitchen",
     s2sectItems: "Choose items", s2sectItemsH: "Available until midnight",
-    mi1n: "Saudi mezze plate", mi1m: "Hummus, baba ghanoush, tabbouleh, fresh bread",
-    mi2n: "Date & camomile tea", mi2m: "Pot for two · house blend",
-    mi3n: "Grilled sea bass", mi3m: "With saffron rice · 15 min prep",
+    mi1n: "Saudi mezze plate", mi1m: "Hummus, baba ghanoush, tabbouleh, fresh bread", mi1p: "SAR 280",
+    mi2n: "Date & camomile tea", mi2m: "Pot for two · house blend", mi2p: "SAR 120",
+    mi3n: "Grilled sea bass", mi3m: "With saffron rice · 15 min prep", mi3p: "SAR 480",
     s2sectTime: "Deliver at",
+    tc1lbl: "Now",
     tc2tag: "in 30 min",
     s2sectNotes: "A note for the kitchen", s2sectNotesOpt: "— optional",
     notesText: "Light salt please, and the tea slightly less sweet than usual.",
     eta1: "Mariam will confirm in 2 min", eta2: "Delivered to Room 204 · 9:30 pm",
-    cost1l: "Items (3)", cost2l: "Service (10%)", costTotalL: "Added to folio",
+    cost1l: "Items (3)", cost1v: "SAR 520",
+    cost2l: "Service (10%)", cost2v: "SAR 52",
+    costTotalL: "Added to folio", costTotalCcy: "SAR", costTotalNum: "572",
     s2cta: "Send to kitchen",
     nh1: "Not just a list.", nh1em: "It feels personal.",
     nhP: "Ordering a service should feel like talking to the front desk — friendly and clear, with a real person on the other side.",
@@ -1404,46 +1750,69 @@ const t = {
     n5h: "A real name, not a department",
     n5p: 'The guest sees "Mariam will confirm in 2 minutes" — a real person, not a machine.',
     n6h: "The button says where it goes",
-    n6p: 'The button says "Send to kitchen" or "Send to housekeeping", so the guest knows who receives it.'
+    n6p: 'The button says "Send to kitchen" or "Send to housekeeping", so the guest knows who receives it.',
+    n7h: "A category is not the end",
+    n7p: "Housekeeping opens into laundry, room cleaning, amenities and linen — the guest picks the exact service, not a vague department.",
+    n8h: "A real place, with a real name",
+    n8p: "Dining leads to a named restaurant — Al-Nakheel Grill, Café Sidra — and the label says whether the hotel runs it or an independent business inside the hotel does."
   },
   ar: {
-    ehLabel: "الشاشات ١١ — ١٢ / طلب خدمة",
+    ehLabel: "الشاشات 11 — 12 / طلب خدمة",
     eh1: "الفندق", eh2: "في أطراف أصابعك.",
-    s1num: "الشاشة ١١", s1title: "كتالوج الخدمات",
-    s1blurb: "تصفّح المتاح. التجارب المميّزة في الأعلى، ثم الفئات. الطلبات الأخيرة في الأسفل لإعادة الطلب بضغطة.",
-    s2num: "الشاشة ١٢", s2title: "إنشاء الطلب",
+    s1num: "الشاشة 11", s1title: "كتالوج الخدمات",
+    s1blurb: "تصفّح المتاح. التجارب المميّزة في الأعلى، بعدها الفئات — وكل فئة بتفتح على خدماتها أو على الأماكن اللي جوّه الفندق كل واحد باسمه. الطلبات الأخيرة في الأسفل لإعادة الطلب بضغطة.",
+    s2num: "الشاشة 12", s2title: "إنشاء الطلب",
     s2blurb: "اختر الأصناف، حدّد الوقت، اترك ملاحظة. السعر والوقت المتوقّع مرئيان قبل الإرسال. يوجَّه للموظف فور الضغط.",
     s1navtitle: "الخدمات",
     s1eb: "في خدمتك", s1h1: "أي شيء لـ", s1h2: "الليلة؟",
     s1sub: "تصفّح ما يقدّمه الفندق، أو راسل الكونسيرج.",
-    qcL1: "غرفة ٢٠٤ · جناح الحديقة",
+    qcL1: "غرفة 204 · جناح الحديقة",
     qcL2: "رسوم الخدمة تُضاف لحسابك",
+    s1navSearch: "دوّر على خدمة",
+    s1searchLabel: "دوّر على خدمة",
+    s1searchPh: "اكتب اسم صنف أو خدمة أو مكان…",
+    s1filter: "فلترة",
     sectFeatured: "اختيارات المحرر", actionFeatured: "عرض الكل ←",
-    f1tag: "توقيع الفندق", f1name: "عشاء بدوي تحت النجوم", f1meta: "من ٧:٣٠ م · ٨٥٠ ر.س",
-    f2tag: "في الغرفة", f2name: "مساج الملح الجبلي", f2meta: "٦٠ دقيقة · ١,٢٠٠ ر.س",
-    f3tag: "محلي", f3name: "غروب على الكثبان بـ ٤×٤", f3meta: "ساعتان · ٦٠٠ ر.س",
-    sectCat: "كل الفئات",
-    cat1n: "خدمة الغرف", cat1c: "٢٤ صنف · ١٥ دقيقة", cat1d: "مفتوح حتى منتصف الليل · من ٩٠ ر.س",
-    cat2n: "تنظيف", cat2c: "٩ خدمات", cat2d: "في أي وقت · مجاناً",
-    cat3n: "سبا وعافية", cat3c: "١٢ علاج", cat3d: "١٠:٠٠–٢٠:٠٠ · من ٦٠٠ ر.س",
-    cat4n: "الكونسيرج", cat4c: "حجوزات ونصائح", cat4d: "٢٤ ساعة · مجاناً",
-    cat5n: "رحلات", cat5c: "٨ تجارب", cat5d: "تُحجز قبلها بيوم · من ٤٠٠ ر.س",
-    cat6n: "صيانة", cat6c: "أبلغ عن مشكلة", cat6d: "عاجل · استجابة خلال ١٥ دقيقة",
+    f1tag: "توقيع الفندق", f1name: "عشاء بدوي تحت النجوم", f1meta: "من 7:30 م · 850 ر.س",
+    f2tag: "في الغرفة", f2name: "مساج الملح الجبلي", f2meta: "60 دقيقة · 1,200 ر.س",
+    f3tag: "محلي", f3name: "غروب على الكثبان بـ 4×4", f3meta: "ساعتان · 600 ر.س",
+    sectCat: "كل الفئات", actionCat: "كل فئة بتفتح على خدماتها",
+    cat1n: "أكل ومشروبات", cat1c: "2 مطاعم · 24 صنف", cat1d: "مفتوح حتى 01:00 · من 90 ر.س",
+    dineHint: "اختار المطعم",
+    out1n: "مطعم النخيل", out1m: "مشويات شامية · 12:00–01:00 · في الغرفة أو في المطعم", out1tag: "تبع الفندق",
+    out2n: "كافيه سِدرة", out2m: "قهوة وحلويات · 06:00–23:00 · في اللوبي", out2tag: "محل مستقل",
+    cat2n: "الإشراف الداخلي", cat2c: "4 خدمات", cat2d: "في أي وقت · مجاناً",
+    hkHint: "اختار الخدمة اللي محتاجها",
+    sub1n: "المغسلة", sub1m: "بترجع نفس اليوم · بمقابل",
+    sub2n: "تنظيف الغرفة", sub2m: "خلال 30 دقيقة · مجاناً",
+    sub3n: "طلب مستلزمات", sub3m: "فوط، شباشب · مجاناً",
+    sub4n: "تغيير المفروشات", sub4m: "النهارده أو بكرة · مجاناً",
+    cat3n: "سبا وعافية", cat3c: "12 علاج", cat3d: "10:00–20:00 · من 600 ر.س",
+    cat4n: "الكونسيرج", cat4c: "حجوزات ونصائح", cat4d: "24 ساعة · مجاناً",
+    cat5n: "رحلات", cat5c: "8 تجارب", cat5d: "تُحجز قبلها بيوم · من 400 ر.س",
+    cat6n: "صيانة", cat6c: "أبلغ عن مشكلة", cat6d: "عاجل · استجابة خلال 15 دقيقة",
+    cat7n: "مواصلات", cat7c: "عربيات وتوصيل للمطار", cat7d: "24 ساعة · من 150 ر.س",
+    cat8n: "قاعات ومناسبات", cat8c: "3 قاعات", cat8d: "احجز قبلها بـ 48 ساعة · من 4,000 ر.س",
+    cat9n: "خدمة الشنط", cat9c: "شنط وتوصيل حاجات", cat9d: "في أي وقت · مجاناً",
+    cat10n: "طلبات الغرفة", cat10c: "6 طلبات سريعة", cat10d: "دلوقتي · مجاناً",
     sectRecent: "طلباتك الأخيرة",
-    rec1n: "وسائد إضافية", rec1m: "تنظيف · جاري", rec1t: "منذ ٣٥ د",
-    rec2n: "فطار متأخّر (٨ ص)", rec2m: "المطعم · تم التسليم", rec2t: "بالأمس",
+    rec1n: "وسائد إضافية", rec1m: "تنظيف · جاري", rec1t: "منذ 35 د",
+    rec2n: "فطار متأخّر (8 ص)", rec2m: "المطعم · تم التسليم", rec2t: "بالأمس",
     s2navtitle: "خدمة الغرف",
     s2tag: "تناول الطعام بالغرفة", s2htitle: "مطبخ ما بعد منتصف الليل",
     s2sectItems: "اختر الأصناف", s2sectItemsH: "متاح حتى منتصف الليل",
-    mi1n: "طبق مزّة سعودي", mi1m: "حمص، بابا غنوج، تبولة، خبز طازج",
-    mi2n: "شاي تمر وبابونج", mi2m: "إبريق لشخصين · خلطة الفندق",
-    mi3n: "قاروص مشوي", mi3m: "مع أرز بالزعفران · ١٥ دقيقة تحضير",
+    mi1n: "طبق مزّة سعودي", mi1m: "حمص، بابا غنوج، تبولة، خبز طازج", mi1p: "280 ر.س",
+    mi2n: "شاي تمر وبابونج", mi2m: "إبريق لشخصين · خلطة الفندق", mi2p: "120 ر.س",
+    mi3n: "قاروص مشوي", mi3m: "مع أرز بالزعفران · 15 دقيقة تحضير", mi3p: "480 ر.س",
     s2sectTime: "التسليم في",
-    tc2tag: "بعد ٣٠ د",
+    tc1lbl: "دلوقتي",
+    tc2tag: "بعد 30 د",
     s2sectNotes: "ملاحظة للمطبخ", s2sectNotesOpt: "— اختياري",
     notesText: "ملح خفيف من فضلك، والشاي أقل تحلية من المعتاد.",
-    eta1: "مريم ستؤكّد خلال دقيقتين", eta2: "التسليم لغرفة ٢٠٤ · ٩:٣٠ م",
-    cost1l: "الأصناف (٣)", cost2l: "الخدمة (١٠٪)", costTotalL: "يُضاف لحسابك",
+    eta1: "مريم ستؤكّد خلال دقيقتين", eta2: "التسليم لغرفة 204 · 9:30 م",
+    cost1l: "الأصناف (3)", cost1v: "520 ر.س",
+    cost2l: "الخدمة (10%)", cost2v: "52 ر.س",
+    costTotalL: "يُضاف لحسابك", costTotalCcy: "ر.س", costTotalNum: "572",
     s2cta: "أرسل للمطبخ",
     nh1: "مش مجرد قائمة.", nh1em: "إحساسه شخصي.",
     nhP: "طلب خدمة لازم يكون إحساسه زي الكلام مع الاستقبال — ودود وواضح، وفي شخص حقيقي على الطرف التاني.",
@@ -1458,7 +1827,11 @@ const t = {
     n5h: "اسم حقيقي، مش قسم",
     n5p: 'الضيف يشوف "مريم هتأكّد خلال دقيقتين" — شخص حقيقي، مش ماكينة.',
     n6h: "الزر بيقول رايح فين",
-    n6p: 'الزر بيقول "أرسل للمطبخ" أو "أرسل للتنظيف"، عشان الضيف يعرف مين هيستلمه.'
+    n6p: 'الزر بيقول "أرسل للمطبخ" أو "أرسل للتنظيف"، عشان الضيف يعرف مين هيستلمه.',
+    n7h: "الفئة مش آخر الطريق",
+    n7p: "التنظيف بيفتح على المغسلة، وتنظيف الغرفة، وطلب المستلزمات، والمفروشات — الضيف يختار الخدمة بالظبط، مش قسم مبهم.",
+    n8h: "مكان حقيقي، وباسمه",
+    n8p: "المطاعم بتوديك لمطعم باسمه — مطعم النخيل، كافيه سِدرة — والعلامة بتوضّح إذا كان الفندق هو اللي بيشغّله ولا محل مستقل جوّه الفندق."
   }
 };
 
@@ -1496,6 +1869,19 @@ function setLocale(loc) {
   document.getElementById('s1-sub').textContent = tt.s1sub;
   document.getElementById('qc-l1').textContent = tt.qcL1;
   document.getElementById('qc-l2').textContent = tt.qcL2;
+
+  // Search + filter
+  const navSearch = document.getElementById('s1-navsearch');
+  navSearch.setAttribute('aria-label', tt.s1navSearch);
+  navSearch.setAttribute('title', tt.s1navSearch);
+  document.getElementById('s1-search-label').textContent = tt.s1searchLabel;
+  const searchInput = document.getElementById('s1-search-input');
+  searchInput.setAttribute('placeholder', tt.s1searchPh);
+  searchInput.setAttribute('aria-label', tt.s1searchLabel);
+  const filterBtn = document.getElementById('s1-filter-btn');
+  filterBtn.setAttribute('aria-label', tt.s1filter);
+  filterBtn.setAttribute('title', tt.s1filter);
+
   document.getElementById('sect-featured').textContent = tt.sectFeatured;
   document.getElementById('action-featured').textContent = tt.actionFeatured;
   document.getElementById('f1-tag').textContent = tt.f1tag;
@@ -1508,10 +1894,26 @@ function setLocale(loc) {
   document.getElementById('f3-name').textContent = tt.f3name;
   document.getElementById('f3-meta').textContent = tt.f3meta;
   document.getElementById('sect-cat').textContent = tt.sectCat;
-  for (let i = 1; i <= 6; i++) {
+  document.getElementById('action-cat').textContent = tt.actionCat;
+  for (let i = 1; i <= 10; i++) {
     document.getElementById(`cat-${i}-n`).textContent = tt[`cat${i}n`];
     document.getElementById(`cat-${i}-c`).textContent = tt[`cat${i}c`];
     document.getElementById(`cat-${i}-d`).textContent = tt[`cat${i}d`];
+  }
+
+  // Level 2 — named outlets under the Dining category (D14 · G1)
+  document.getElementById('dine-hint').textContent = tt.dineHint;
+  for (let i = 1; i <= 2; i++) {
+    document.getElementById(`out-${i}-n`).textContent = tt[`out${i}n`];
+    document.getElementById(`out-${i}-m`).textContent = tt[`out${i}m`];
+    document.getElementById(`out-${i}-tag`).textContent = tt[`out${i}tag`];
+  }
+
+  // Level 2 — sub-services under the Housekeeping category (D14 · G4)
+  document.getElementById('hk-hint').textContent = tt.hkHint;
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById(`sub-${i}-n`).textContent = tt[`sub${i}n`];
+    document.getElementById(`sub-${i}-m`).textContent = tt[`sub${i}m`];
   }
   document.getElementById('sect-recent').textContent = tt.sectRecent;
   document.getElementById('rec-1-n').textContent = tt.rec1n;
@@ -1527,21 +1929,25 @@ function setLocale(loc) {
   document.getElementById('s2-htitle').textContent = tt.s2htitle;
   document.getElementById('s2-sect-items').textContent = tt.s2sectItems;
   document.getElementById('s2-sect-items-h').textContent = tt.s2sectItemsH;
-  document.getElementById('mi-1-n').textContent = tt.mi1n;
-  document.getElementById('mi-1-m').textContent = tt.mi1m;
-  document.getElementById('mi-2-n').textContent = tt.mi2n;
-  document.getElementById('mi-2-m').textContent = tt.mi2m;
-  document.getElementById('mi-3-n').textContent = tt.mi3n;
-  document.getElementById('mi-3-m').textContent = tt.mi3m;
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById(`mi-${i}-n`).textContent = tt[`mi${i}n`];
+    document.getElementById(`mi-${i}-m`).textContent = tt[`mi${i}m`];
+    document.getElementById(`mi-${i}-p`).textContent = tt[`mi${i}p`];
+  }
   document.getElementById('s2-sect-time').textContent = tt.s2sectTime;
+  document.getElementById('tc-1-lbl').textContent = tt.tc1lbl;
   document.getElementById('tc-2-tag').textContent = tt.tc2tag;
   document.getElementById('s2-sect-notes').innerHTML = tt.s2sectNotes + ' <span style="color: var(--ink-300); font-weight: 400; font-style: italic; font-size: 11px;" id="s2-sect-notes-opt">' + tt.s2sectNotesOpt + '</span>';
   document.getElementById('notes-text').textContent = tt.notesText;
   document.getElementById('eta-1').textContent = tt.eta1;
   document.getElementById('eta-2').textContent = tt.eta2;
   document.getElementById('cost-1-l').textContent = tt.cost1l;
+  document.getElementById('cost-1-v').textContent = tt.cost1v;
   document.getElementById('cost-2-l').textContent = tt.cost2l;
+  document.getElementById('cost-2-v').textContent = tt.cost2v;
   document.getElementById('cost-total-l').textContent = tt.costTotalL;
+  document.getElementById('cost-total-ccy').textContent = tt.costTotalCcy;
+  document.getElementById('cost-total-num').textContent = tt.costTotalNum;
   document.getElementById('s2-cta').textContent = tt.s2cta;
 
   // Notes
@@ -1560,6 +1966,10 @@ function setLocale(loc) {
   document.getElementById('n5-p').textContent = tt.n5p;
   document.getElementById('n6-h').textContent = tt.n6h;
   document.getElementById('n6-p').textContent = tt.n6p;
+  document.getElementById('n7-h').textContent = tt.n7h;
+  document.getElementById('n7-p').textContent = tt.n7p;
+  document.getElementById('n8-h').textContent = tt.n8h;
+  document.getElementById('n8-p').textContent = tt.n8p;
 }
 </script>
 

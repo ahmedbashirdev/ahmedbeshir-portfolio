@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Escalé · Transport &amp; Airport Transfer · Design Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..900&family=Geist+Mono:wght@400..600&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --aubergine-900: #3A1234;
+  --aubergine-700: #4A1942;
+  --aubergine-500: #5B2C5F;
+  --aubergine-300: #8E5A8E;
+  --aubergine-100: #EFE3EF;
+  --magenta-500: #B8228C;
+  --magenta-300: #D86CB0;
+  --terracotta-700: #A05A3A;
+  --terracotta-500: #C9956B;
+  --terracotta-300: #E2BC9C;
+  --terracotta-100: #F5E8DC;
+  --ink-900: #1C1410;
+  --ink-700: #3D332D;
+  --ink-500: #6B5D54;
+  --ink-300: #A89A8E;
+  --sand-100: #F0E9DF;
+  --sand-50: #F7F2E9;
+  --cream: #FAF7F2;
+  --paper: #FDFBF7;
+  --success: #5A8C5F;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Geist', -apple-system, sans-serif;
+  --font-arabic: 'Tajawal', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
+  --shadow-sm: 0 1px 2px rgba(58, 18, 52, 0.04);
+  --shadow-md: 0 4px 12px rgba(58, 18, 52, 0.06), 0 1px 3px rgba(58, 18, 52, 0.04);
+  --shadow-phone: 0 50px 100px -20px rgba(58, 18, 52, 0.25), 0 30px 60px -30px rgba(58, 18, 52, 0.3);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink-900);
+  line-height: 1.5;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 88% 0%, rgba(184, 34, 140, 0.06), transparent 40%),
+    radial-gradient(circle at 4% 12%, rgba(91, 44, 95, 0.05), transparent 36%);
+}
+[lang="ar"], [lang="ar"] * { font-family: var(--font-arabic); }
+[lang="ar"] { line-height: 1.6; }
+
+.page { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 48px 32px 96px; }
+
+/* HEADER */
+.brand-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 24px; }
+.brand-identity { display: flex; align-items: center; gap: 20px; }
+.brand-logo { width: 48px; height: 48px; }
+.brand-name-wrap { display: flex; flex-direction: column; gap: 2px; }
+.brand-name { font-family: var(--font-display); font-weight: 500; font-size: 24px; letter-spacing: -0.02em; color: var(--aubergine-900); line-height: 1; }
+.brand-tagline { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-500); font-weight: 500; }
+.brand-meta { display: flex; align-items: center; gap: 24px; }
+.screen-stamp { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.screen-stamp .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-300); font-weight: 500; }
+.screen-stamp .val { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--terracotta-700); }
+.locale-switch { display: flex; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 9999px; padding: 4px; box-shadow: var(--shadow-sm); }
+.locale-switch button { border: 0; background: transparent; padding: 8px 18px; border-radius: 9999px; font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-500); cursor: pointer; }
+.locale-switch button.active { background: var(--aubergine-700); color: var(--paper); }
+
+/* EDITORIAL HEAD */
+.editorial-head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 48px; margin-bottom: 44px; padding-bottom: 32px; border-bottom: 1px solid var(--sand-100); }
+.editorial-head .label { font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--terracotta-700); margin-bottom: 12px; }
+.editorial-head h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(38px, 5vw, 64px); line-height: 0.98; letter-spacing: -0.035em; color: var(--aubergine-900); max-width: 16ch; }
+.editorial-head h1 em { font-style: italic; color: var(--magenta-500); }
+[lang="ar"] .editorial-head h1 { font-weight: 700; letter-spacing: 0; line-height: 1.15; }
+.editorial-head .colophon { font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); letter-spacing: 0.02em; text-align: end; line-height: 1.7; }
+.editorial-head .colophon strong { color: var(--aubergine-700); }
+[lang="ar"] .editorial-head .colophon { font-family: var(--font-arabic); }
+
+/* COMPOSITION */
+.composition { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+@media (max-width: 980px) { .composition { grid-template-columns: 1fr; gap: 48px; } .phone { transform: scale(0.9); transform-origin: top center; } }
+
+.phone-stage { display: flex; justify-content: center; position: relative; padding: 24px 0; }
+.phone-stage::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 58% 48% at 50% 26%, rgba(91, 44, 95, 0.08), transparent 62%); z-index: 0; }
+.phone { position: relative; width: 396px; height: 836px; background: var(--ink-900); border-radius: 54px; padding: 12px; box-shadow: var(--shadow-phone); z-index: 1; }
+.phone::before { content: ''; position: absolute; top: 12px; inset-inline: 0; margin-inline: auto; width: 108px; height: 29px; background: var(--ink-900); border-radius: 0 0 18px 18px; z-index: 100; }
+.phone-screen { width: 100%; height: 100%; background: var(--cream); border-radius: 43px; overflow-y: auto; overflow-x: hidden; position: relative; }
+.phone-screen::-webkit-scrollbar { display: none; }
+
+.status-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 30px 6px; font-size: 14px; font-weight: 600; color: var(--paper); position: absolute; top: 0; inset-inline: 0; z-index: 6; }
+.status-bar .icons { display: flex; gap: 6px; align-items: center; }
+.status-bar svg { width: 17px; height: 17px; }
+
+/* TOP BAR */
+.tr-top {
+  position: relative; overflow: hidden; padding: 52px 20px 20px;
+  background: linear-gradient(140deg, var(--aubergine-700), var(--aubergine-500) 58%, var(--terracotta-700));
+}
+.tr-top::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 86 L20 58 L32 86 Z M32 86 L44 58 L56 86 Z M56 86 L68 58 L80 86 Z' fill='rgba(255,255,255,0.06)'/%3E%3C/svg%3E");
+  background-size: 220px; background-position: bottom center; background-repeat: no-repeat;
+}
+.tr-top-row { display: flex; align-items: center; gap: 13px; position: relative; z-index: 2; }
+.tr-back {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; border: 0; cursor: pointer;
+  background: rgba(253, 251, 247, 0.16); display: flex; align-items: center; justify-content: center;
+}
+.tr-back svg { width: 17px; height: 17px; color: var(--paper); }
+[dir="rtl"] .tr-back svg { transform: scaleX(-1); }
+.tr-title { font-family: var(--font-display); font-weight: 500; font-size: 24px; letter-spacing: -0.02em; color: var(--paper); line-height: 1.1; }
+[lang="ar"] .tr-title { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.tr-sub { font-family: var(--font-display); font-style: italic; font-size: 12px; color: rgba(253, 251, 247, 0.82); margin-top: 2px; }
+[lang="ar"] .tr-sub { font-family: var(--font-arabic); font-style: normal; }
+
+/* BODY */
+.tr-body { padding: 18px 18px 14px; }
+.tr-sect { margin-bottom: 20px; }
+.tr-sect-title { font-family: var(--font-display); font-weight: 500; font-size: 17px; letter-spacing: -0.015em; color: var(--aubergine-900); margin-bottom: 9px; }
+[lang="ar"] .tr-sect-title { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.tr-sect-hint { font-size: 11.5px; color: var(--ink-500); margin-top: -5px; margin-bottom: 10px; }
+
+/* SEGMENTED CONTROL */
+.seg { display: flex; gap: 4px; background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 13px; padding: 4px; }
+.seg-item {
+  flex: 1; text-align: center; padding: 10px 4px; border-radius: 10px; border: 0; cursor: pointer;
+  font-family: var(--font-body); font-size: 12px; font-weight: 600; color: var(--ink-500); background: transparent;
+}
+[lang="ar"] .seg-item { font-family: var(--font-arabic); font-size: 12.5px; }
+.seg-item.on { background: var(--aubergine-700); color: var(--paper); box-shadow: var(--shadow-sm); }
+
+/* ROUTE */
+.route { position: relative; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 14px; padding: 2px 13px; }
+.route-row { display: flex; align-items: center; gap: 12px; padding: 11px 0; padding-inline-end: 40px; }
+.route-row + .route-row { border-top: 1px solid var(--sand-100); }
+.route-dot { width: 11px; height: 11px; border-radius: 50%; border: 2.5px solid var(--aubergine-500); flex-shrink: 0; }
+.route-dot.end { border-radius: 3px; border-color: var(--magenta-500); background: var(--magenta-500); }
+.route-txt { flex: 1; min-width: 0; }
+.fld-l { font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-500); font-weight: 600; margin-bottom: 3px; }
+[lang="ar"] .fld-l { letter-spacing: 0; text-transform: none; font-size: 11px; }
+.fld-v { font-size: 12.5px; font-weight: 500; color: var(--aubergine-900); line-height: 1.35; }
+.route-swap {
+  position: absolute; inset-inline-end: 11px; top: 50%; transform: translateY(-50%);
+  width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--sand-100); cursor: pointer;
+  background: var(--aubergine-100); display: flex; align-items: center; justify-content: center;
+}
+.route-swap svg { width: 15px; height: 15px; color: var(--aubergine-700); }
+
+/* FIELD GRID */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 9px; }
+.fld { background: var(--paper); border: 1px solid var(--sand-100); border-radius: 13px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; }
+.fld-ic { width: 30px; height: 30px; border-radius: 9px; background: var(--terracotta-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.fld-ic svg { width: 15px; height: 15px; color: var(--terracotta-700); }
+.fld-body { min-width: 0; }
+.fld-mono { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--aubergine-900); }
+
+/* PASSENGERS */
+.pax { margin-top: 9px; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 13px; padding: 11px 13px; display: flex; align-items: center; gap: 12px; }
+.pax-txt { flex: 1; min-width: 0; }
+.pax-l { font-size: 12.5px; font-weight: 600; color: var(--aubergine-900); }
+.pax-h { font-size: 10.5px; color: var(--ink-500); margin-top: 1px; }
+.stepper { display: flex; align-items: center; gap: 11px; flex-shrink: 0; }
+.step-btn { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--sand-100); background: var(--sand-50); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.step-btn svg { width: 14px; height: 14px; color: var(--aubergine-700); }
+.step-btn.plus { background: var(--aubergine-700); border-color: var(--aubergine-700); }
+.step-btn.plus svg { color: var(--paper); }
+.step-val { font-family: var(--font-mono); font-size: 15px; font-weight: 600; color: var(--aubergine-900); min-width: 18px; text-align: center; }
+
+/* VEHICLE CARDS */
+.veh { display: flex; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 16px; overflow: hidden; margin-bottom: 9px; }
+.veh.selected { border-color: var(--aubergine-700); box-shadow: 0 0 0 2px rgba(74, 25, 66, 0.14); }
+.veh.muted { opacity: 0.62; }
+.veh-img { position: relative; width: 108px; flex-shrink: 0; }
+.veh-img::after {
+  content: ''; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 86 L20 58 L32 86 Z M32 86 L44 58 L56 86 Z M56 86 L68 58 L80 86 Z' fill='rgba(255,255,255,0.16)'/%3E%3C/svg%3E");
+  background-size: 92px; background-position: bottom center; background-repeat: no-repeat;
+}
+.veh-img.g1 { background: linear-gradient(150deg, var(--terracotta-500), var(--terracotta-700) 58%, var(--aubergine-700)); }
+.veh-img.g2 { background: linear-gradient(150deg, var(--aubergine-500), var(--aubergine-900) 56%, var(--magenta-500)); }
+.veh-img.g3 { background: linear-gradient(150deg, var(--terracotta-300), var(--terracotta-700) 52%, var(--aubergine-500)); }
+.veh-fav {
+  position: absolute; inset-inline-end: 7px; top: 7px; z-index: 2; cursor: pointer;
+  width: 25px; height: 25px; border-radius: 50%; border: 0;
+  background: rgba(253, 251, 247, 0.92); display: flex; align-items: center; justify-content: center;
+}
+.veh-fav svg { width: 13px; height: 13px; color: var(--ink-500); }
+.veh-fav.on svg { color: var(--magenta-500); }
+.veh-info { flex: 1; min-width: 0; padding: 11px 13px; display: flex; flex-direction: column; gap: 7px; }
+.veh-head { display: flex; align-items: flex-start; gap: 7px; flex-wrap: wrap; }
+.veh-name { font-family: var(--font-display); font-weight: 500; font-size: 14px; letter-spacing: -0.01em; color: var(--aubergine-900); line-height: 1.2; }
+[lang="ar"] .veh-name { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.veh-tag { font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 9999px; color: var(--magenta-500); background: rgba(184, 34, 140, 0.1); white-space: nowrap; }
+[lang="ar"] .veh-tag { font-size: 10.5px; }
+.veh-tag.warn { color: var(--terracotta-700); background: rgba(201, 149, 107, 0.18); }
+.veh-meta { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.veh-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; color: var(--ink-500); }
+.veh-chip svg { width: 12px; height: 12px; color: var(--terracotta-500); flex-shrink: 0; }
+.veh-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 1px; }
+.veh-price { font-family: var(--font-mono); font-size: 13.5px; font-weight: 600; color: var(--aubergine-900); }
+.veh-rate { font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; color: var(--ink-500); }
+.veh-rate .star { color: var(--terracotta-500); }
+.veh-check { width: 19px; height: 19px; border-radius: 50%; background: var(--aubergine-700); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.veh-check svg { width: 11px; height: 11px; color: var(--paper); }
+
+/* NOTES */
+.notes-box { background: var(--paper); border: 1px solid var(--sand-100); border-radius: 13px; padding: 11px 13px; min-height: 66px; }
+.notes-v { font-size: 12.5px; color: var(--ink-700); line-height: 1.5; }
+.notes-caret { display: inline-block; width: 1.5px; height: 13px; background: var(--magenta-500); vertical-align: -2px; margin-inline-start: 2px; }
+
+/* STICKY CTA */
+.tr-cta { position: sticky; bottom: 0; background: var(--paper); border-top: 1px solid var(--sand-100); padding: 11px 18px 20px; box-shadow: 0 -8px 24px rgba(58, 18, 52, 0.06); }
+.cta-fine { font-size: 10.5px; color: var(--ink-500); text-align: start; margin-bottom: 9px; display: flex; align-items: center; gap: 6px; }
+.cta-fine svg { width: 12px; height: 12px; color: var(--terracotta-700); flex-shrink: 0; }
+.cta-row { display: flex; align-items: center; gap: 13px; }
+.cta-price { flex-shrink: 0; }
+.cta-l { font-size: 10px; color: var(--ink-500); }
+[lang="ar"] .cta-l { font-size: 11px; }
+.cta-v { font-family: var(--font-display); font-weight: 500; font-size: 19px; color: var(--aubergine-900); letter-spacing: -0.02em; }
+.cta-v .ccy { font-family: var(--font-mono); font-size: 10px; color: var(--ink-500); margin-inline-end: 3px; }
+.cta-btn { flex: 1; background: var(--magenta-500); color: var(--paper); border: 0; border-radius: 12px; padding: 13px 14px; font-family: var(--font-body); font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 7px; cursor: pointer; }
+[lang="ar"] .cta-btn { font-family: var(--font-arabic); }
+.cta-btn svg { width: 15px; height: 15px; }
+[dir="rtl"] .cta-btn svg { transform: scaleX(-1); }
+
+/* SIDE PANEL */
+.side-panel { position: sticky; top: 32px; padding-top: 24px; }
+.panel-h { font-family: var(--font-display); font-weight: 500; font-size: 32px; letter-spacing: -0.025em; color: var(--aubergine-900); margin-bottom: 8px; line-height: 1.05; }
+[lang="ar"] .panel-h { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; line-height: 1.25; }
+.panel-h em { font-style: italic; color: var(--magenta-500); }
+.panel-lede { font-size: 15px; line-height: 1.65; color: var(--ink-500); max-width: 52ch; margin-bottom: 28px; }
+.principle-list { list-style: none; display: flex; flex-direction: column; gap: 18px; margin-bottom: 28px; }
+.principle-list li { padding-inline-start: 32px; position: relative; }
+.principle-list li::before { content: ''; position: absolute; inset-inline-start: 0; top: 4px; width: 16px; height: 16px; background: linear-gradient(135deg, var(--terracotta-500), var(--magenta-500)); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.principle-list li strong { display: block; font-family: var(--font-display); font-weight: 500; font-size: 16px; letter-spacing: -0.01em; color: var(--aubergine-900); margin-bottom: 4px; }
+[lang="ar"] .principle-list li strong { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.principle-list li p { font-size: 13px; line-height: 1.55; color: var(--ink-700); }
+.tech-callout { background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 14px; padding: 18px; }
+.tech-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta-700); font-weight: 600; margin-bottom: 8px; }
+[lang="ar"] .tech-label { letter-spacing: 0; text-transform: none; font-size: 12px; }
+.tech-body { font-size: 13px; line-height: 1.6; color: var(--ink-700); }
+
+.footnote { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--sand-100); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); }
+[lang="ar"] .footnote { font-family: var(--font-arabic); }
+.footnote .accent { color: var(--magenta-500); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="brand-bar">
+    <div class="brand-identity">
+      <svg class="brand-logo" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#5B2C5F"/>
+            <stop offset="100%" stop-color="#B8228C"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="44" r="36" fill="url(#brandGrad)"/>
+        <circle cx="50" cy="44" r="22" fill="#FDFBF7"/>
+        <path d="M28 74 L36 60 L44 74 Z M44 74 L52 60 L60 74 Z M60 74 L68 60 L76 74 Z" fill="#FDFBF7"/>
+      </svg>
+      <div class="brand-name-wrap">
+        <div class="brand-name">Escalé</div>
+        <div class="brand-tagline">Design System · v0.1</div>
+      </div>
+    </div>
+    <div class="brand-meta">
+      <div class="screen-stamp">
+        <div class="lbl">Screen 26</div>
+        <div class="val">Transport</div>
+      </div>
+      <div class="locale-switch">
+        <button id="btnEn" class="active" onclick="setLocale('en')">EN</button>
+        <button id="btnAr" onclick="setLocale('ar')">ع</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="editorial-head" id="editorialHead">
+    <div>
+      <div class="label" id="eh-label">Screen 26 / Transport &amp; Airport Transfer</div>
+      <h1><span id="eh-1">Say where,</span> <em id="eh-2">then pick the car.</em></h1>
+    </div>
+    <div class="colophon">
+      <div><strong id="cl-1">Two old screens —</strong> <span id="cl-1b">one flow</span></div>
+      <div><strong id="cl-2">Covers</strong> <span id="cl-2b">gaps G6 &amp; G7</span></div>
+      <div><strong id="cl-3">A car becomes a bookable unit</strong></div>
+      <div style="margin-top:8px; opacity:0.6;" id="cl-date">New screen · 9 Aug 2026</div>
+    </div>
+  </section>
+
+  <div class="composition" id="composition">
+
+    <!-- ============ PHONE ============ -->
+    <div class="phone-stage">
+      <div class="phone">
+        <div class="phone-screen">
+
+          <div class="status-bar">
+            <span>9:41</span>
+            <span class="icons">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 17h2v4H2zm5-4h2v8H7zm5-4h2v12h-2zm5-4h2v16h-2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.7 6 0 9l12 15L24 9c-2.7-3-7-5-12-5z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="18" height="10" rx="2.5"/><rect x="4" y="9" width="12" height="6" rx="1" fill="currentColor"/><path d="M22 10v4" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+
+          <!-- TOP BAR -->
+          <div class="tr-top">
+            <div class="tr-top-row">
+              <button class="tr-back" aria-label="Back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <div>
+                <div class="tr-title" id="tb-title">Transport</div>
+                <div class="tr-sub" id="tb-sub">Dar Amwaj Sahl Hasheesh · Red Sea</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tr-body">
+
+            <!-- TRIP TYPE -->
+            <div class="tr-sect">
+              <div class="tr-sect-title" id="sec-trip">Trip type</div>
+              <div class="seg">
+                <button class="seg-item" id="seg-1">Going</button>
+                <button class="seg-item" id="seg-2">Coming back</button>
+                <button class="seg-item on" id="seg-3">Both ways</button>
+              </div>
+
+              <!-- ROUTE -->
+              <div class="route" style="margin-top:9px;">
+                <div class="route-row">
+                  <span class="route-dot"></span>
+                  <div class="route-txt">
+                    <div class="fld-l" id="f1-l">Pickup</div>
+                    <div class="fld-v" id="f1-v">Dar Amwaj Resort · Main lobby</div>
+                  </div>
+                </div>
+                <div class="route-row">
+                  <span class="route-dot end"></span>
+                  <div class="route-txt">
+                    <div class="fld-l" id="f2-l">Destination</div>
+                    <div class="fld-v" id="f2-v">Hurghada International Airport (HRG)</div>
+                  </div>
+                </div>
+                <button class="route-swap" aria-label="Swap pickup and destination">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 4 17 20"/><polyline points="13 16 17 20 21 16"/><polyline points="7 20 7 4"/><polyline points="3 8 7 4 11 8"/></svg>
+                </button>
+              </div>
+
+              <!-- DATE + TIME -->
+              <div class="grid2">
+                <div class="fld">
+                  <span class="fld-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke-linecap="round"/></svg></span>
+                  <div class="fld-body">
+                    <div class="fld-l" id="f3-l">Date</div>
+                    <div class="fld-mono" id="f3-v">12 Sep 2026</div>
+                  </div>
+                </div>
+                <div class="fld">
+                  <span class="fld-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg></span>
+                  <div class="fld-body">
+                    <div class="fld-l" id="f4-l">Pickup time</div>
+                    <div class="fld-mono">14:30</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PASSENGERS -->
+              <div class="pax">
+                <div class="pax-txt">
+                  <div class="pax-l" id="pax-l">Passengers</div>
+                  <div class="pax-h" id="pax-h">Seats must fit everyone</div>
+                </div>
+                <div class="stepper">
+                  <button class="step-btn" aria-label="Fewer passengers">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  </button>
+                  <span class="step-val">5</span>
+                  <button class="step-btn plus" aria-label="More passengers">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- VEHICLES -->
+            <div class="tr-sect">
+              <div class="tr-sect-title" id="sec-veh">Choose your vehicle</div>
+              <div class="tr-sect-hint" id="sec-veh-h">Prices shown for both ways · 5 passengers</div>
+
+              <!-- CARD 1 -->
+              <div class="veh muted">
+                <div class="veh-img g1">
+                  <button class="veh-fav" aria-label="Save vehicle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>
+                  </button>
+                </div>
+                <div class="veh-info">
+                  <div class="veh-head">
+                    <span class="veh-name" id="v1-n">Sedan · Mercedes E-Class</span>
+                    <span class="veh-tag warn" id="v1-tag">Not enough seats</span>
+                  </div>
+                  <div class="veh-meta">
+                    <span class="veh-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18v-6a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v6"/><path d="M3 18h18"/><path d="M8 9V6h8v3"/></svg><span id="v1-seats">4 seats</span></span>
+                    <span class="veh-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="14" rx="2"/><path d="M9 7V4h6v3"/></svg><span id="v1-bags">2 bags</span></span>
+                    <span class="veh-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span id="v1-dur">45 min</span></span>
+                  </div>
+                  <div class="veh-foot">
+                    <span class="veh-price">EGP 1,400</span>
+                    <span class="veh-rate"><span class="star">★</span> 4.8</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 2 — SELECTED -->
+              <div class="veh selected">
+                <div class="veh-img g2">
+                  <button class="veh-fav on" aria-label="Saved vehicle">
+                    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>
+                  </button>
+                </div>
+                <div class="veh-info">
+                  <div class="veh-head">
+                    <span class="veh-name" id="v2-n">Van · 7 seats</span>
+                    <span class="veh-tag" id="v2-tag">Most chosen</span>
+                  </div>
+                  <div class="veh-meta">
+                    <span class="veh-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18v-6a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v6"/><path d="M3 18h18"/><path d="M8 9V6h8v3"/></svg><span id="v2-seats">7 seats</span></span>
+                    <span class="veh-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="14" rx="2"/><path d="M9 7V4h6v3"/></svg><span id="v2-bags">6 bags</span></span>
+                    <span class="veh-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span id="v2-dur">45 min</span></span>
+                  </div>
+                  <div class="veh-foot">
+                    <span class="veh-price">EGP 1,900</span>
+                    <span class="veh-rate"><span class="star">★</span> 4.9</span>
+                    <span class="veh-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 3 -->
+              <div class="veh">
+                <div class="veh-img g3">
+                  <button class="veh-fav" aria-label="Save vehicle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>
+                  </button>
+                </div>
+                <div class="veh-info">
+                  <div class="veh-head">
+                    <span class="veh-name" id="v3-n">Minibus · 16 seats</span>
+                  </div>
+                  <div class="veh-meta">
+                    <span class="veh-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18v-6a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v6"/><path d="M3 18h18"/><path d="M8 9V6h8v3"/></svg><span id="v3-seats">16 seats</span></span>
+                    <span class="veh-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="14" rx="2"/><path d="M9 7V4h6v3"/></svg><span id="v3-bags">14 bags</span></span>
+                    <span class="veh-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span id="v3-dur">50 min</span></span>
+                  </div>
+                  <div class="veh-foot">
+                    <span class="veh-price">EGP 2,600</span>
+                    <span class="veh-rate"><span class="star">★</span> 4.7</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- NOTES -->
+            <div class="tr-sect">
+              <div class="tr-sect-title" id="notes-l">Notes for the driver</div>
+              <div class="notes-box">
+                <span class="notes-v" id="notes-v">Two large suitcases and a child seat, please.</span><span class="notes-caret"></span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- STICKY CTA -->
+          <div class="tr-cta">
+            <div class="cta-fine">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span id="cta-fine">The hotel confirms the fare before a driver is assigned.</span>
+            </div>
+            <div class="cta-row">
+              <div class="cta-price">
+                <div class="cta-l" id="cta-l">Total · both ways</div>
+                <div class="cta-v"><span class="ccy">EGP</span>1,900</div>
+              </div>
+              <button class="cta-btn">
+                <span id="cta-btn-t">Request transfer</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SIDE PANEL ============ -->
+    <aside class="side-panel" id="sidePanel">
+      <h2 class="panel-h"><span id="ph-1">Say where,</span> <em id="ph-1em">then pick the car.</em></h2>
+      <p class="panel-lede" id="ph-lede">The old app asked for the trip on one screen and showed the cars on another, with nothing linking them. Here it is one flow: describe the trip, then choose from the cars that can actually take you.</p>
+
+      <ul class="principle-list">
+        <li>
+          <strong id="p1-t">Going, coming back, or both</strong>
+          <p id="p1-d">The price follows the trip type. Both ways is two drives, so it costs more than one. Asking first means every price on the screen is the real price for this guest.</p>
+        </li>
+        <li>
+          <strong id="p2-t">The trip first, the car second</strong>
+          <p id="p2-d">The number of passengers decides which cars are even possible — five people do not fit in a sedan. So the guest describes the trip first, and the screen then answers with the fleet. A car that is too small is not hidden: it stays on the list, greyed out, with the reason written on it, so the guest can see it exists and why it is not an option today.</p>
+        </li>
+        <li>
+          <strong id="p3-t">A car is booked, not ordered</strong>
+          <p id="p3-d">A vehicle works like a hall: one unit, held for a window of time. Two guests cannot take the same car at the same hour, so the car is held the moment the transfer is confirmed.</p>
+        </li>
+        <li>
+          <strong id="p4-t">Airport runs live on the clock</strong>
+          <p id="p4-d">A flight does not wait. The date and the pickup time are required, and the hotel adds its own margin for traffic on the road to Hurghada.</p>
+        </li>
+        <li>
+          <strong id="p5-t">The hotel confirms the fare</strong>
+          <p id="p5-d">The price on the card is what the hotel published. The request goes to the transport desk, which confirms the fare and only then assigns a driver — so nobody is surprised at the door.</p>
+        </li>
+      </ul>
+
+      <div class="tech-callout">
+        <div class="tech-label" id="tech-l">A note for the hotel</div>
+        <p class="tech-body" id="tech-b">The hotel enters its fleet once — each car with its seats, luggage space, photo, and price per route. Escalé keeps the calendar, so a car already out on a transfer stops showing as free. Two screens from the old app become one, and the transport desk reads the whole request in a single card.</p>
+      </div>
+    </aside>
+
+  </div>
+
+  <footer class="footnote" id="footnote">
+    <span id="ft-1">© Escalé · Screen 26 of 28 · New — Transport &amp; Transfer</span>
+    <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
+  </footer>
+
+</div>
+
+<script>
+const t = {
+  en: {
+    ehLabel: "Screen 26 / Transport & Airport Transfer",
+    eh1: "Say where,", eh2: "then pick the car.",
+    cl1: "Two old screens —", cl1b: "one flow",
+    cl2: "Covers", cl2b: "gaps G6 & G7",
+    cl3: "A car becomes a bookable unit",
+    clDate: "New screen · 9 Aug 2026",
+
+    tbTitle: "Transport",
+    tbSub: "Dar Amwaj Sahl Hasheesh · Red Sea",
+
+    secTrip: "Trip type",
+    seg1: "Going", seg2: "Coming back", seg3: "Both ways",
+
+    f1l: "Pickup", f1v: "Dar Amwaj Resort · Main lobby",
+    f2l: "Destination", f2v: "Hurghada International Airport (HRG)",
+    f3l: "Date", f3v: "12 Sep 2026",
+    f4l: "Pickup time",
+    paxL: "Passengers", paxH: "Seats must fit everyone",
+
+    secVeh: "Choose your vehicle",
+    secVehH: "Prices shown for both ways · 5 passengers",
+    v1n: "Sedan · Mercedes E-Class", v1tag: "Not enough seats",
+    v1seats: "4 seats", v1bags: "2 bags", v1dur: "45 min",
+    v2n: "Van · 7 seats", v2tag: "Most chosen",
+    v2seats: "7 seats", v2bags: "6 bags", v2dur: "45 min",
+    v3n: "Minibus · 16 seats",
+    v3seats: "16 seats", v3bags: "14 bags", v3dur: "50 min",
+
+    notesL: "Notes for the driver",
+    notesV: "Two large suitcases and a child seat, please.",
+
+    ctaFine: "The hotel confirms the fare before a driver is assigned.",
+    ctaL: "Total · both ways",
+    ctaBtnT: "Request transfer",
+
+    ph1: "Say where,", ph1em: "then pick the car.",
+    phLede: "The old app asked for the trip on one screen and showed the cars on another, with nothing linking them. Here it is one flow: describe the trip, then choose from the cars that can actually take you.",
+    p1t: "Going, coming back, or both",
+    p1d: "The price follows the trip type. Both ways is two drives, so it costs more than one. Asking first means every price on the screen is the real price for this guest.",
+    p2t: "The trip first, the car second",
+    p2d: "The number of passengers decides which cars are even possible — five people do not fit in a sedan. So the guest describes the trip first, and the screen then answers with the fleet. A car that is too small is not hidden: it stays on the list, greyed out, with the reason written on it, so the guest can see it exists and why it is not an option today.",
+    p3t: "A car is booked, not ordered",
+    p3d: "A vehicle works like a hall: one unit, held for a window of time. Two guests cannot take the same car at the same hour, so the car is held the moment the transfer is confirmed.",
+    p4t: "Airport runs live on the clock",
+    p4d: "A flight does not wait. The date and the pickup time are required, and the hotel adds its own margin for traffic on the road to Hurghada.",
+    p5t: "The hotel confirms the fare",
+    p5d: "The price on the card is what the hotel published. The request goes to the transport desk, which confirms the fare and only then assigns a driver — so nobody is surprised at the door.",
+    techL: "A note for the hotel",
+    techB: "The hotel enters its fleet once — each car with its seats, luggage space, photo, and price per route. Escalé keeps the calendar, so a car already out on a transfer stops showing as free. Two screens from the old app become one, and the transport desk reads the whole request in a single card.",
+    ft1: "© Escalé · Screen 26 of 28 · New — Transport & Transfer"
+  },
+  ar: {
+    ehLabel: "الشاشة 26 / المواصلات والتوصيل للمطار",
+    eh1: "قول رايح فين،", eh2: "وبعدين اختار العربية.",
+    cl1: "شاشتين قديمة —", cl1b: "مسار واحد",
+    cl2: "بتغطّي", cl2b: "الفجوتين G6 و G7",
+    cl3: "العربية بقت وحدة بتتحجز",
+    clDate: "شاشة جديدة · 9 أغسطس 2026",
+
+    tbTitle: "المواصلات",
+    tbSub: "دار أمواج سهل حشيش · البحر الأحمر",
+
+    secTrip: "نوع الرحلة",
+    seg1: "رايح", seg2: "جاي", seg3: "رايح وجاي",
+
+    f1l: "مكان الركوب", f1v: "منتجع دار أمواج · اللوبي الرئيسي",
+    f2l: "رايح فين", f2v: "مطار الغردقة الدولي (HRG)",
+    f3l: "التاريخ", f3v: "12 سبتمبر 2026",
+    f4l: "ميعاد الركوب",
+    paxL: "عدد الركاب", paxH: "المقاعد لازم تكفي الكل",
+
+    secVeh: "اختار عربيتك",
+    secVehH: "الأسعار لرحلة رايح وجاي · 5 ركاب",
+    v1n: "سيدان · مرسيدس E-Class", v1tag: "المقاعد مش كفاية",
+    v1seats: "4 مقاعد", v1bags: "شنطتين", v1dur: "45 دقيقة",
+    v2n: "فان · 7 مقاعد", v2tag: "الأكثر اختياراً",
+    v2seats: "7 مقاعد", v2bags: "6 شنط", v2dur: "45 دقيقة",
+    v3n: "ميني باص · 16 مقعد",
+    v3seats: "16 مقعد", v3bags: "14 شنطة", v3dur: "50 دقيقة",
+
+    notesL: "ملاحظات للسواق",
+    notesV: "شنطتين كبار ومقعد أطفال لو سمحت.",
+
+    ctaFine: "الفندق بيأكّد السعر قبل ما يحدّد السواق.",
+    ctaL: "الإجمالي · رايح وجاي",
+    ctaBtnT: "اطلب التوصيلة",
+
+    ph1: "قول رايح فين،", ph1em: "وبعدين اختار العربية.",
+    phLede: "التطبيق القديم كان بيسأل عن الرحلة في شاشة، ويوري العربيات في شاشة تانية، ومفيش حاجة رابطة بينهم. هنا كله مسار واحد: احكي رحلتك، وبعدين اختار من العربيات اللي تقدر فعلاً توصّلك.",
+    p1t: "رايح، أو جاي، أو الاتنين",
+    p1d: "السعر بيمشي مع نوع الرحلة. رايح وجاي دي رحلتين، فبتكلّف أكتر من واحدة. إننا نسأل الأول معناه إن كل سعر على الشاشة هو السعر الحقيقي للضيف ده.",
+    p2t: "الرحلة الأول، والعربية بعدها",
+    p2d: "عدد الركاب هو اللي بيحدد العربيات اللي أصلاً تنفع — خمس أشخاص مش هيقعدوا في سيدان. عشان كده الضيف بيحكي رحلته الأول، وبعدين الشاشة بترد عليه بالعربيات المتاحة. والعربية اللي مقاعدها مش كفاية مش بتختفي: بتفضل في القايمة بلون باهت ومكتوب عليها السبب، عشان الضيف يشوفها ويفهم ليه مش خيار النهارده.",
+    p3t: "العربية بتتحجز، مش بتتطلب",
+    p3d: "العربية زي القاعة: وحدة واحدة بتتحجز لفترة معينة. مستحيل ضيفين ياخدوا نفس العربية في نفس الساعة، عشان كده العربية بتتحجز أول ما التوصيلة تتأكّد.",
+    p4t: "رحلات المطار ماشية بالساعة",
+    p4d: "الطيارة مش بتستنى. التاريخ وميعاد الركوب مطلوبين، والفندق بيزوّد هامش من عنده للزحمة على طريق الغردقة.",
+    p5t: "الفندق هو اللي بيأكّد السعر",
+    p5d: "السعر المكتوب على الكارت هو اللي الفندق نشره. الطلب بيروح لمكتب المواصلات، اللي بيأكّد السعر وبعدين بس بيحدّد السواق — فمحدش بيتفاجئ عند الباب.",
+    techL: "ملاحظة للفندق",
+    techB: "الفندق بيسجّل عربياته مرة واحدة — كل عربية بمقاعدها ومساحة الشنط وصورتها وسعرها لكل خط. وإسكالي بيمسك التقويم، فالعربية اللي بره في توصيلة بتبطّل تظهر فاضية. شاشتين من التطبيق القديم بقوا واحدة، ومكتب المواصلات بيقرا الطلب كله في كارت واحد.",
+    ft1: "© إسكالي · الشاشة 26 من 28 · جديدة — المواصلات والتوصيل"
+  }
+};
+
+function setLocale(loc) {
+  const tt = t[loc];
+  const isRtl = loc === 'ar';
+
+  document.getElementById('btnEn').classList.toggle('active', loc === 'en');
+  document.getElementById('btnAr').classList.toggle('active', loc === 'ar');
+  ['editorialHead', 'composition', 'sidePanel', 'footnote'].forEach(function (id) {
+    const el = document.getElementById(id);
+    el.setAttribute('lang', loc);
+    el.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+  });
+
+  const set = function (id, val) { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+  set('eh-label', tt.ehLabel);
+  set('eh-1', tt.eh1); set('eh-2', tt.eh2);
+  set('cl-1', tt.cl1); set('cl-1b', tt.cl1b);
+  set('cl-2', tt.cl2); set('cl-2b', tt.cl2b);
+  set('cl-3', tt.cl3); set('cl-date', tt.clDate);
+
+  set('tb-title', tt.tbTitle);
+  set('tb-sub', tt.tbSub);
+
+  set('sec-trip', tt.secTrip);
+  set('seg-1', tt.seg1); set('seg-2', tt.seg2); set('seg-3', tt.seg3);
+
+  set('f1-l', tt.f1l); set('f1-v', tt.f1v);
+  set('f2-l', tt.f2l); set('f2-v', tt.f2v);
+  set('f3-l', tt.f3l); set('f3-v', tt.f3v);
+  set('f4-l', tt.f4l);
+  set('pax-l', tt.paxL); set('pax-h', tt.paxH);
+
+  set('sec-veh', tt.secVeh);
+  set('sec-veh-h', tt.secVehH);
+  for (let i = 1; i <= 3; i++) {
+    set('v' + i + '-n', tt['v' + i + 'n']);
+    set('v' + i + '-seats', tt['v' + i + 'seats']);
+    set('v' + i + '-bags', tt['v' + i + 'bags']);
+    set('v' + i + '-dur', tt['v' + i + 'dur']);
+  }
+  set('v1-tag', tt.v1tag);
+  set('v2-tag', tt.v2tag);
+
+  set('notes-l', tt.notesL);
+  set('notes-v', tt.notesV);
+
+  set('cta-fine', tt.ctaFine);
+  set('cta-l', tt.ctaL);
+  set('cta-btn-t', tt.ctaBtnT);
+
+  set('ph-1', tt.ph1); set('ph-1em', tt.ph1em); set('ph-lede', tt.phLede);
+  for (let i = 1; i <= 5; i++) { set('p' + i + '-t', tt['p' + i + 't']); set('p' + i + '-d', tt['p' + i + 'd']); }
+  set('tech-l', tt.techL); set('tech-b', tt.techB);
+  set('ft-1', tt.ft1);
+}
+</script>
+
+</body>
+</html>

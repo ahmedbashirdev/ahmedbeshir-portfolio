@@ -4,7 +4,7 @@ This file gives Claude Code (and any AI assistant) the context it needs to be pr
 
 ## 1. Project Overview
 
-**Escalé** is a multi-tenant hospitality platform that unifies hotel booking with in-stay guest services. Four product surfaces share one backend:
+**Escalé** is a multi-tenant hospitality platform that unifies hotel booking with in-stay guest services. **Target markets: Egypt and the Gulf (GCC), together** — neither is a sole "launch market"; built multi-market (the wider region can follow), so keep market-specific concerns (payment rails, compliance, locale) pluggable per market, never hard-coded. Four product surfaces share one backend:
 
 | Surface | Stack | Audience |
 |---------|-------|----------|
@@ -37,11 +37,11 @@ This file gives Claude Code (and any AI assistant) the context it needs to be pr
 | Server state | TanStack Query |
 | Client state | Zustand |
 | Auth | Better Auth + JWT (RBAC) |
-| Payments | Paymob (EG) + Stripe (intl) |
+| Payments | Pluggable per market. Egypt: Paymob / Fawry (cards, Meeza, mobile wallets). Gulf: mada, Apple Pay, STC Pay (+ Tabby/Tamara BNPL). Stripe for international cards. |
 | File storage | Cloudflare R2 |
 | AI | Claude API (via `packages/ai`) |
 | Email | Resend |
-| SMS | Twilio (intl) / Vodafone Bulk (EG) |
+| SMS | Pluggable per market: Unifonic (Gulf), a local aggregator (Egypt), Twilio (international) |
 | Push | Expo Push Notifications |
 | Monitoring | Sentry + PostHog |
 | Monorepo | Turborepo + pnpm workspaces |
@@ -126,6 +126,32 @@ SUBMITTED → ASSIGNED → IN_PROGRESS → COMPLETED
                                   ↘ CANCELLED
 ```
 
+Requests are time-tracked against an SLA, and the guest can post live comments on a request while it is in progress — comments are visible to hotel management. Because guest, staff, and management all see the request live, accountability is built in. See decision D13 in `DOCUMENTATION.md`.
+
+Departments that need a delivery leg (room service) use the optional `stage` field — `PREPARING → READY → OUT_FOR_DELIVERY → DELIVERED` — **inside** `IN_PROGRESS`. `stage` is presentation detail; it is never a substitute for a status transition, and `BookingService`-style transition validation applies only to `status`.
+
+### 4.4a In-hotel outlets and service orders
+
+A service belongs to a **`ServiceOutlet`** — a restaurant, spa, salon, halls complex, or transport desk that sits inside one hotel. An outlet is either `HOTEL_OPERATED` or a `CONCESSION` (an independent business leasing space inside the property). The guest journey is identical for both; only settlement differs. Never attach a catalog item straight to a `Hotel` when an outlet exists.
+
+`ServiceRequest` is the single order model for every shape of service request. `type` selects which field groups apply:
+
+| `type` | Used for | Field groups that apply |
+|--------|----------|-------------------------|
+| `INSTANT` | "extra towels" | none beyond the basics |
+| `ORDER` | restaurant, minibar | `lines`, money totals |
+| `APPOINTMENT` | spa, salon, maintenance visit | `scheduledFor`, `scheduledEndAt`, `lines` |
+| `ASSET_BOOKING` | a hall, a cabana | `AssetReservation`, `scheduledFor/EndAt` |
+| `TRANSFER` | a vehicle trip | `tripType`, `destination`, `passengers` |
+
+Rules:
+- **Line items are snapshots.** `ServiceRequestLine.nameSnapshot` and `unitPrice` are copied at order time. Never resolve a past order's price or name through the live catalog.
+- **Totals are computed server-side**, never trusted from the client, and always `Decimal`.
+- **A `BookableAsset` can be held by one reservation at a time.** Overlap is prevented by a Postgres exclusion constraint in `packages/db/migrations/asset_overlap.sql`, not by an application-level read-then-write.
+- `ServiceRequest.userId` is **nullable** — an OTA/walk-in guest or an external visitor (D7) orders with `guestName` + `guestPhone`. Exactly one of the two identifications must be present; enforce it in the service layer.
+
+See decision D14 in `DOCUMENTATION.md` and `services-gap-analysis.md`.
+
 ### 4.5 Room Operational Status
 
 ```
@@ -133,6 +159,14 @@ VACANT_CLEAN ↔ VACANT_DIRTY ↔ OCCUPIED ↔ INSPECTED
                                        ↓
                                   OUT_OF_ORDER ↔ OUT_OF_SERVICE
 ```
+
+### 4.6 Online check-in & digital key
+
+Guests can complete **check-in before arrival** — identity verification, guest details, room assignment — and receive the QR digital key in advance, so on arrival they go straight to their room. The digital-key door-open event is a trigger for the `CONFIRMED → CHECKED_IN` booking transition and fires an operations-dashboard notification that the room is now occupied. The digital key itself is a smart-lock vendor integration, not built in-house. See decisions D9 and D11 in `DOCUMENTATION.md`.
+
+### 4.7 Live chat
+
+Real-time in-app messaging across three channels: guest ↔ staff, guest ↔ hotel management, and management ↔ staff. Threads are hotel-scoped (`hotelId` mandatory). Messages are user-generated content (single language, optional `language`). See decision D12 in `DOCUMENTATION.md`.
 
 ---
 
@@ -152,7 +186,7 @@ There are three content categories. Each is stored differently:
 
 **1. Curated content (admin-entered, must support all locales the hotel offers)**
 
-Hotel info, room type names/descriptions, service names, rate plan names, amenity names, service category names. Stored in dedicated translation tables:
+Hotel info, room type names/descriptions, service names, rate plan names, amenity names, service category names, **outlet names/descriptions, menu section names, bookable asset names, offer titles**. Stored in dedicated translation tables:
 
 ```prisma
 model HotelTranslation {
@@ -217,7 +251,7 @@ The `dir` attribute is set at the HTML root from the active locale. RTL locales 
 ### Dates & times
 - All timestamps stored in **UTC**.
 - `Booking.checkInDate` / `checkOutDate` are `Date` (no time) — they're hotel calendar dates, not moments.
-- Each hotel has its own `timezone` (IANA, e.g., `Africa/Cairo`). Display in the hotel's timezone for staff, user's timezone for guests.
+- Each hotel has its own `timezone` (IANA, e.g., `Africa/Cairo`, `Asia/Riyadh`). Display in the hotel's timezone for staff, user's timezone for guests.
 
 ### IDs
 - Primary keys: `String @id @default(cuid())`
@@ -385,4 +419,19 @@ Env vars are documented in `.env.example`. Use **Doppler** or **1Password CLI** 
 - **RatePlan** — A priced offering tied to a RoomType (BAR, NRF, packages, B2B-only)
 - **MealPlan** — Room-only, BB, HB, FB, All-Inclusive
 - **PMS** — Property Management System (what hotels use internally)
-- **Nafath** — Saudi national identity service (planned integration, not MVP)
+*Gulf market:*
+
+- **Nafath** — Saudi national digital-identity service (planned integration; relevant for online check-in / guest verification)
+- **ZATCA / Fatoora** — Saudi mandatory e-invoicing (Zakat, Tax and Customs Authority). Planned integration if the platform issues invoices
+- **Shomoos** — Saudi Ministry of Interior platform for hospitality establishments to register guests. Planned integration
+- **PDPL** — Saudi Personal Data Protection Law (regulator: SDAIA). Governs handling of guest data
+- **mada** — Saudi national debit-card network; the essential local payment rail
+
+*Egypt market:*
+
+- **Meeza** — Egypt's national card scheme; widely held, accept it alongside Visa/Mastercard
+- **Paymob / Fawry** — the two main Egyptian payment gateways (cards, Meeza, mobile wallets, cash/reference codes)
+- **ETA** — Egyptian Tax Authority; runs the mandatory e-invoice (B2B) and e-receipt (B2C) systems
+- **InstaPay** — Egypt's bank-to-bank instant payment network (consumer app)
+
+Integration approach and 2026 cost figures for both markets are documented in `integrations.md`.

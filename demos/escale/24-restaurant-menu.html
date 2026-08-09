@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Escalé · Restaurant Menu &amp; Cart · Design Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..900&family=Geist+Mono:wght@400..600&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --aubergine-900: #3A1234;
+  --aubergine-700: #4A1942;
+  --aubergine-500: #5B2C5F;
+  --aubergine-300: #8E5A8E;
+  --aubergine-100: #EFE3EF;
+  --magenta-500: #B8228C;
+  --magenta-300: #D86CB0;
+  --terracotta-700: #A05A3A;
+  --terracotta-500: #C9956B;
+  --terracotta-300: #E2BC9C;
+  --terracotta-100: #F5E8DC;
+  --ink-900: #1C1410;
+  --ink-700: #3D332D;
+  --ink-500: #6B5D54;
+  --ink-300: #A89A8E;
+  --sand-100: #F0E9DF;
+  --sand-50: #F7F2E9;
+  --cream: #FAF7F2;
+  --paper: #FDFBF7;
+  --success: #5A8C5F;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Geist', -apple-system, sans-serif;
+  --font-arabic: 'Tajawal', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
+  --shadow-sm: 0 1px 2px rgba(58, 18, 52, 0.04);
+  --shadow-md: 0 4px 12px rgba(58, 18, 52, 0.06), 0 1px 3px rgba(58, 18, 52, 0.04);
+  --shadow-phone: 0 50px 100px -20px rgba(58, 18, 52, 0.25), 0 30px 60px -30px rgba(58, 18, 52, 0.3);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink-900);
+  line-height: 1.5;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 88% 0%, rgba(184, 34, 140, 0.06), transparent 40%),
+    radial-gradient(circle at 4% 12%, rgba(91, 44, 95, 0.05), transparent 36%);
+}
+[lang="ar"], [lang="ar"] * { font-family: var(--font-arabic); }
+[lang="ar"] { line-height: 1.6; }
+
+.page { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 48px 32px 96px; }
+
+/* HEADER */
+.brand-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 24px; }
+.brand-identity { display: flex; align-items: center; gap: 20px; }
+.brand-logo { width: 48px; height: 48px; }
+.brand-name-wrap { display: flex; flex-direction: column; gap: 2px; }
+.brand-name { font-family: var(--font-display); font-weight: 500; font-size: 24px; letter-spacing: -0.02em; color: var(--aubergine-900); line-height: 1; }
+.brand-tagline { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-500); font-weight: 500; }
+.brand-meta { display: flex; align-items: center; gap: 24px; }
+.screen-stamp { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.screen-stamp .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-300); font-weight: 500; }
+.screen-stamp .val { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--terracotta-700); }
+.locale-switch { display: flex; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 9999px; padding: 4px; box-shadow: var(--shadow-sm); }
+.locale-switch button { border: 0; background: transparent; padding: 8px 18px; border-radius: 9999px; font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-500); cursor: pointer; }
+.locale-switch button.active { background: var(--aubergine-700); color: var(--paper); }
+
+/* EDITORIAL HEAD */
+.editorial-head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 48px; margin-bottom: 44px; padding-bottom: 32px; border-bottom: 1px solid var(--sand-100); }
+.editorial-head .label { font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--terracotta-700); margin-bottom: 12px; }
+.editorial-head h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(38px, 5vw, 64px); line-height: 0.98; letter-spacing: -0.035em; color: var(--aubergine-900); max-width: 16ch; }
+.editorial-head h1 em { font-style: italic; color: var(--magenta-500); }
+[lang="ar"] .editorial-head h1 { font-weight: 700; letter-spacing: 0; line-height: 1.15; }
+.editorial-head .colophon { font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); letter-spacing: 0.02em; text-align: end; line-height: 1.7; }
+.editorial-head .colophon strong { color: var(--aubergine-700); }
+[lang="ar"] .editorial-head .colophon { font-family: var(--font-arabic); }
+
+/* COMPOSITION */
+.composition { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+@media (max-width: 980px) { .composition { grid-template-columns: 1fr; gap: 48px; } .phone { transform: scale(0.9); transform-origin: top center; } }
+
+.phone-stage { display: flex; justify-content: center; position: relative; padding: 24px 0; }
+.phone-stage::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 58% 48% at 50% 26%, rgba(91, 44, 95, 0.08), transparent 62%); z-index: 0; }
+.phone { position: relative; width: 396px; height: 836px; background: var(--ink-900); border-radius: 54px; padding: 12px; box-shadow: var(--shadow-phone); z-index: 1; }
+.phone::before { content: ''; position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 108px; height: 29px; background: var(--ink-900); border-radius: 0 0 18px 18px; z-index: 100; }
+.phone-screen { width: 100%; height: 100%; background: var(--cream); border-radius: 43px; overflow-y: auto; overflow-x: hidden; position: relative; }
+.phone-screen::-webkit-scrollbar { display: none; }
+
+.status-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 30px 6px; font-size: 14px; font-weight: 600; color: var(--paper); position: absolute; top: 0; left: 0; right: 0; z-index: 6; }
+.status-bar .icons { display: flex; gap: 6px; align-items: center; }
+.status-bar svg { width: 17px; height: 17px; }
+
+/* ---------- OUTLET TOP BAR ---------- */
+.rm-top {
+  position: relative; padding: 52px 18px 16px;
+  background:
+    linear-gradient(180deg, rgba(58, 18, 52, 0.22) 0%, rgba(58, 18, 52, 0.05) 46%, rgba(58, 18, 52, 0.34) 100%),
+    linear-gradient(135deg, var(--terracotta-700), var(--aubergine-700) 62%, var(--aubergine-900));
+  display: flex; align-items: center; gap: 12px; overflow: hidden;
+}
+.rm-top::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 86 L20 58 L32 86 Z M32 86 L44 58 L56 86 Z M56 86 L68 58 L80 86 Z' fill='rgba(255,255,255,0.06)'/%3E%3C/svg%3E");
+  background-size: 210px; background-position: bottom center; background-repeat: no-repeat;
+}
+.rm-icon-btn {
+  width: 36px; height: 36px; border-radius: 50%; border: 0; flex-shrink: 0;
+  background: rgba(253, 251, 247, 0.16); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2;
+}
+.rm-icon-btn svg { width: 17px; height: 17px; color: var(--paper); }
+[dir="rtl"] .rm-icon-btn.back svg { transform: scaleX(-1); }
+.rm-icon-btn.fav svg { fill: none; }
+
+.rm-id { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; z-index: 2; }
+.rm-mark { width: 38px; height: 38px; flex-shrink: 0; border-radius: 11px; background: var(--paper); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); }
+.rm-mark svg { width: 24px; height: 24px; }
+.rm-id-text { min-width: 0; text-align: start; }
+.rm-name { display: block; font-family: var(--font-display); font-weight: 500; font-size: 19px; line-height: 1.1; letter-spacing: -0.02em; color: var(--paper); }
+[lang="ar"] .rm-name { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.rm-kicker { display: block; font-size: 10.5px; color: rgba(253, 251, 247, 0.78); margin-top: 2px; }
+[lang="ar"] .rm-kicker { font-size: 11.5px; }
+
+/* ---------- OUTLET STRIP ---------- */
+.rm-strip { background: var(--paper); border-bottom: 1px solid var(--sand-100); padding: 11px 18px 12px; }
+.rm-facts { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; }
+.fact { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--ink-700); }
+[lang="ar"] .fact { font-size: 12px; }
+.fact svg { width: 12px; height: 12px; color: var(--terracotta-700); flex-shrink: 0; }
+.fact .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); box-shadow: 0 0 0 3px rgba(90, 140, 95, 0.16); flex-shrink: 0; }
+.fact .star { color: var(--terracotta-500); font-size: 11px; }
+.fact-v { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--aubergine-900); }
+.fact-sep { width: 1px; height: 12px; background: var(--sand-100); }
+
+.rm-charge {
+  margin-top: 10px; display: flex; align-items: center; gap: 10px;
+  background: var(--aubergine-100); border: 1px solid rgba(74, 25, 66, 0.1);
+  border-radius: 12px; padding: 9px 11px; cursor: pointer; width: 100%; text-align: start;
+}
+.rm-charge-ic { width: 26px; height: 26px; border-radius: 8px; background: var(--aubergine-700); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.rm-charge-ic svg { width: 14px; height: 14px; color: var(--paper); }
+.rm-charge-text { flex: 1; min-width: 0; }
+.rm-charge-t { display: block; font-size: 12px; font-weight: 600; color: var(--aubergine-900); }
+.rm-charge-s { display: block; font-size: 10.5px; color: var(--ink-500); margin-top: 1px; }
+[lang="ar"] .rm-charge-s { font-size: 11.5px; }
+.rm-charge-chev { width: 14px; height: 14px; color: var(--aubergine-500); flex-shrink: 0; }
+[dir="rtl"] .rm-charge-chev { transform: scaleX(-1); }
+
+/* ---------- SECTION TABS ---------- */
+.rm-tabs { display: flex; gap: 7px; padding: 12px 18px 4px; overflow-x: auto; scrollbar-width: none; }
+.rm-tabs::-webkit-scrollbar { display: none; }
+.rm-tab {
+  flex-shrink: 0; border: 1px solid var(--sand-100); background: var(--paper);
+  border-radius: 9999px; padding: 7px 14px; font-family: var(--font-body); font-size: 12px;
+  font-weight: 500; color: var(--ink-700); cursor: pointer; white-space: nowrap;
+  transition: background 250ms var(--ease-out);
+}
+[lang="ar"] .rm-tab { font-family: var(--font-arabic); font-size: 12.5px; }
+.rm-tab.active { background: var(--aubergine-700); border-color: var(--aubergine-700); color: var(--paper); }
+.rm-tab.offer { color: var(--magenta-500); border-color: rgba(184, 34, 140, 0.28); background: rgba(184, 34, 140, 0.06); }
+
+/* ---------- MENU LIST ---------- */
+.rm-list { padding: 14px 18px 18px; }
+.rm-list-head { font-family: var(--font-display); font-weight: 500; font-size: 16px; letter-spacing: -0.015em; color: var(--aubergine-900); margin-bottom: 11px; }
+[lang="ar"] .rm-list-head { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+
+.mi-card { display: flex; gap: 12px; background: var(--paper); border: 1px solid var(--sand-100); border-radius: 16px; padding: 11px; margin-bottom: 10px; box-shadow: var(--shadow-sm); }
+.mi-img { position: relative; width: 88px; height: 88px; flex-shrink: 0; border-radius: 12px; overflow: hidden; }
+.mi-img::after {
+  content: ''; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 86 L20 58 L32 86 Z M32 86 L44 58 L56 86 Z M56 86 L68 58 L80 86 Z' fill='rgba(255,255,255,0.16)'/%3E%3C/svg%3E");
+  background-size: 78px; background-position: bottom center; background-repeat: no-repeat;
+}
+.mi-img.g1 { background: linear-gradient(140deg, var(--terracotta-500), var(--terracotta-700)); }
+.mi-img.g2 { background: linear-gradient(140deg, var(--aubergine-300), var(--aubergine-700)); }
+.mi-img.g3 { background: linear-gradient(140deg, var(--terracotta-700), var(--aubergine-700)); }
+.mi-img.g4 { background: linear-gradient(140deg, var(--terracotta-300), var(--terracotta-700)); }
+.mi-badge {
+  position: absolute; inset-block-start: 6px; inset-inline-start: 6px; z-index: 2;
+  background: var(--magenta-500); color: var(--paper); font-family: var(--font-mono);
+  font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 6px; letter-spacing: 0.01em;
+}
+
+.mi-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.mi-head { display: flex; align-items: flex-start; gap: 8px; }
+.mi-name { flex: 1; min-width: 0; font-family: var(--font-display); font-weight: 500; font-size: 14.5px; line-height: 1.2; letter-spacing: -0.015em; color: var(--aubergine-900); }
+[lang="ar"] .mi-name { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; font-size: 14px; }
+.mi-fav { width: 26px; height: 26px; border-radius: 50%; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; margin-block-start: -3px; }
+.mi-fav svg { width: 16px; height: 16px; color: var(--ink-300); fill: none; }
+.mi-fav.on svg { color: var(--magenta-500); fill: var(--magenta-500); }
+.mi-desc { font-size: 11.5px; line-height: 1.45; color: var(--ink-500); margin-top: 3px; }
+[lang="ar"] .mi-desc { font-size: 12px; }
+.mi-time { display: flex; align-items: center; gap: 5px; margin-top: 6px; font-size: 10.5px; color: var(--ink-700); }
+[lang="ar"] .mi-time { font-size: 11.5px; }
+.mi-time svg { width: 12px; height: 12px; color: var(--terracotta-700); flex-shrink: 0; }
+.mi-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 8px; }
+.mi-prices { display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap; }
+.mi-price { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--aubergine-900); }
+.mi-price .ccy { font-size: 10px; color: var(--ink-500); margin-inline-end: 3px; font-weight: 500; }
+.mi-was { font-family: var(--font-mono); font-size: 11px; color: var(--ink-300); text-decoration: line-through; }
+
+.mi-add {
+  border: 0; background: var(--aubergine-700); color: var(--paper); border-radius: 9999px;
+  padding: 7px 14px; font-family: var(--font-body); font-size: 11.5px; font-weight: 600;
+  display: flex; align-items: center; gap: 5px; cursor: pointer; flex-shrink: 0;
+}
+[lang="ar"] .mi-add { font-family: var(--font-arabic); font-size: 12px; }
+.mi-add svg { width: 12px; height: 12px; }
+
+.mi-step { display: flex; align-items: center; gap: 2px; background: var(--aubergine-100); border-radius: 9999px; padding: 3px; flex-shrink: 0; }
+.mi-step button { width: 26px; height: 26px; border-radius: 50%; border: 0; background: var(--paper); color: var(--aubergine-700); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: var(--shadow-sm); }
+.mi-step button svg { width: 12px; height: 12px; }
+.st-q { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--aubergine-900); min-width: 24px; text-align: center; }
+
+/* ---------- STICKY CART ---------- */
+.rm-cart { position: sticky; bottom: 0; background: var(--paper); border-top: 1px solid var(--sand-100); padding: 12px 18px 22px; display: flex; align-items: center; gap: 13px; box-shadow: 0 -8px 24px rgba(58, 18, 52, 0.06); z-index: 5; }
+.cart-sum { flex-shrink: 0; }
+.cart-count { font-size: 10.5px; color: var(--ink-500); }
+[lang="ar"] .cart-count { font-size: 11.5px; }
+.cart-v { font-family: var(--font-display); font-weight: 500; font-size: 19px; color: var(--aubergine-900); letter-spacing: -0.02em; line-height: 1.2; }
+.cart-v .ccy { font-family: var(--font-mono); font-size: 10px; color: var(--ink-500); margin-inline-end: 3px; }
+.cart-btn { flex: 1; background: var(--magenta-500); color: var(--paper); border: 0; border-radius: 12px; padding: 13px 14px; font-family: var(--font-body); font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 7px; cursor: pointer; }
+[lang="ar"] .cart-btn { font-family: var(--font-arabic); }
+.cart-btn svg { width: 15px; height: 15px; }
+[dir="rtl"] .cart-btn svg { transform: scaleX(-1); }
+
+/* keep numerals in mono even in Arabic */
+[lang="ar"] .mi-price, [lang="ar"] .mi-was, [lang="ar"] .cart-v, [lang="ar"] .st-q, [lang="ar"] .fact-v, [lang="ar"] .mi-badge { font-family: var(--font-mono); }
+
+/* SIDE PANEL */
+.side-panel { position: sticky; top: 32px; padding-top: 24px; }
+.panel-h { font-family: var(--font-display); font-weight: 500; font-size: 32px; letter-spacing: -0.025em; color: var(--aubergine-900); margin-bottom: 8px; line-height: 1.05; }
+[lang="ar"] .panel-h { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; line-height: 1.25; }
+.panel-h em { font-style: italic; color: var(--magenta-500); }
+.panel-lede { font-size: 15px; line-height: 1.65; color: var(--ink-500); max-width: 52ch; margin-bottom: 28px; }
+.principle-list { list-style: none; display: flex; flex-direction: column; gap: 18px; margin-bottom: 28px; }
+.principle-list li { padding-inline-start: 32px; position: relative; }
+.principle-list li::before { content: ''; position: absolute; inset-inline-start: 0; top: 4px; width: 16px; height: 16px; background: linear-gradient(135deg, var(--terracotta-500), var(--magenta-500)); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.principle-list li strong { display: block; font-family: var(--font-display); font-weight: 500; font-size: 16px; letter-spacing: -0.01em; color: var(--aubergine-900); margin-bottom: 4px; }
+[lang="ar"] .principle-list li strong { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
+.principle-list li p { font-size: 13px; line-height: 1.55; color: var(--ink-700); }
+.tech-callout { background: var(--sand-50); border: 1px solid var(--sand-100); border-radius: 14px; padding: 18px; }
+.tech-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta-700); font-weight: 600; margin-bottom: 8px; }
+[lang="ar"] .tech-label { letter-spacing: 0; text-transform: none; font-size: 12px; }
+.tech-body { font-size: 13px; line-height: 1.6; color: var(--ink-700); }
+
+.footnote { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--sand-100); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); }
+[lang="ar"] .footnote { font-family: var(--font-arabic); }
+.footnote .accent { color: var(--magenta-500); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="brand-bar">
+    <div class="brand-identity">
+      <svg class="brand-logo" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#5B2C5F"/>
+            <stop offset="100%" stop-color="#B8228C"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="44" r="36" fill="url(#brandGrad)"/>
+        <circle cx="50" cy="44" r="22" fill="#FDFBF7"/>
+        <path d="M28 74 L36 60 L44 74 Z M44 74 L52 60 L60 74 Z M60 74 L68 60 L76 74 Z" fill="#FDFBF7"/>
+      </svg>
+      <div class="brand-name-wrap">
+        <div class="brand-name">Escalé</div>
+        <div class="brand-tagline">Design System · v0.1</div>
+      </div>
+    </div>
+    <div class="brand-meta">
+      <div class="screen-stamp">
+        <div class="lbl">Screen 24</div>
+        <div class="val">Restaurant Menu &amp; Cart</div>
+      </div>
+      <div class="locale-switch">
+        <button id="btnEn" class="active" onclick="setLocale('en')">EN</button>
+        <button id="btnAr" onclick="setLocale('ar')">ع</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="editorial-head" id="editorialHead">
+    <div>
+      <div class="label" id="eh-label">Screen 24 / Restaurant Menu &amp; Cart</div>
+      <h1><span id="eh-1">Order it,</span> <em id="eh-2">don't describe it.</em></h1>
+    </div>
+    <div class="colophon">
+      <div><strong id="cl-1">A real cart —</strong> <span id="cl-1b">lines and a total</span></div>
+      <div><strong id="cl-2">Replaces</strong> <span id="cl-2b">the old restaurant page</span></div>
+      <div><strong id="cl-3">Covers gaps G2, G3, G8, G9</strong></div>
+      <div style="margin-top:8px; opacity:0.6;" id="cl-date">New screen · 9 August 2026</div>
+    </div>
+  </section>
+
+  <div class="composition" id="composition">
+
+    <!-- ============ PHONE ============ -->
+    <div class="phone-stage">
+      <div class="phone">
+        <div class="phone-screen">
+
+          <div class="status-bar">
+            <span>9:41</span>
+            <span class="icons">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 17h2v4H2zm5-4h2v8H7zm5-4h2v12h-2zm5-4h2v16h-2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.7 6 0 9l12 15L24 9c-2.7-3-7-5-12-5z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="18" height="10" rx="2.5"/><rect x="4" y="9" width="12" height="6" rx="1" fill="currentColor"/><path d="M22 10v4" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+
+          <!-- OUTLET TOP BAR -->
+          <div class="rm-top">
+            <button class="rm-icon-btn back" aria-label="Back">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div class="rm-id">
+              <span class="rm-mark" aria-hidden="true">
+                <svg viewBox="0 0 100 100">
+                  <defs>
+                    <linearGradient id="outletGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#A05A3A"/>
+                      <stop offset="100%" stop-color="#4A1942"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="50" cy="42" r="30" fill="url(#outletGrad)"/>
+                  <circle cx="50" cy="42" r="17" fill="#FDFBF7"/>
+                  <path d="M26 78 L34 62 L42 78 Z M42 78 L50 62 L58 78 Z M58 78 L66 62 L74 78 Z" fill="url(#outletGrad)"/>
+                </svg>
+              </span>
+              <span class="rm-id-text">
+                <span class="rm-name" id="rm-name">Bab Al Nile</span>
+                <span class="rm-kicker" id="rm-kicker">Hotel restaurant · inside Beit Zamalek, Cairo</span>
+              </span>
+            </div>
+            <button class="rm-icon-btn fav" aria-label="Favourite">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>
+            </button>
+          </div>
+
+          <!-- OUTLET STRIP -->
+          <div class="rm-strip">
+            <div class="rm-facts">
+              <span class="fact"><span class="dot"></span><span id="rm-open">Open now · 12:00–01:00</span></span>
+              <span class="fact-sep"></span>
+              <span class="fact">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg>
+                <span id="rm-prep">Usually 30 min</span>
+              </span>
+              <span class="fact-sep"></span>
+              <span class="fact"><span class="star">★</span><span class="fact-v">4.7</span></span>
+            </div>
+            <button class="rm-charge">
+              <span class="rm-charge-ic">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20" stroke-linecap="round"/></svg>
+              </span>
+              <span class="rm-charge-text">
+                <span class="rm-charge-t" id="rm-charge">Charge to room 312</span>
+                <span class="rm-charge-s" id="rm-charge-sub">Or pay in the app — tap to change</span>
+              </span>
+              <svg class="rm-charge-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+            </button>
+          </div>
+
+          <!-- SECTION TABS -->
+          <div class="rm-tabs">
+            <button class="rm-tab active" id="tab-1">All</button>
+            <button class="rm-tab offer" id="tab-2">Today's offers</button>
+            <button class="rm-tab" id="tab-3">Mezze</button>
+            <button class="rm-tab" id="tab-4">Grills</button>
+            <button class="rm-tab" id="tab-5">Pizza</button>
+            <button class="rm-tab" id="tab-6">Desserts</button>
+          </div>
+
+          <!-- MENU LIST -->
+          <div class="rm-list">
+            <div class="rm-list-head" id="list-head">Popular tonight</div>
+
+            <!-- ITEM 1 -->
+            <article class="mi-card">
+              <div class="mi-img g1"></div>
+              <div class="mi-body">
+                <div class="mi-head">
+                  <h3 class="mi-name" id="mi-1-n">Grilled sea bass</h3>
+                  <button class="mi-fav" aria-label="Favourite">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>
+                  </button>
+                </div>
+                <p class="mi-desc" id="mi-1-d">Whole fish over charcoal, with cumin, lemon and tahini</p>
+                <div class="mi-time">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg>
+                  <span id="mi-1-t">25–30 min</span>
+                </div>
+                <div class="mi-foot">
+                  <div class="mi-prices"><span class="mi-price"><span class="ccy">EGP</span>420</span></div>
+                  <div class="mi-step">
+                    <button aria-label="Remove one"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                    <span class="st-q">1</span>
+                    <button aria-label="Add one"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- ITEM 2 — offer -->
+            <article class="mi-card">
+              <div class="mi-img g2"><span class="mi-badge">-15%</span></div>
+              <div class="mi-body">
+                <div class="mi-head">
+                  <h3 class="mi-name" id="mi-2-n">Mezze plate for two</h3>
+                  <button class="mi-fav on" aria-label="Favourite">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>
+                  </button>
+                </div>
+                <p class="mi-desc" id="mi-2-d">Nine cold dishes with warm baladi bread</p>
+                <div class="mi-time">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg>
+                  <span id="mi-2-t">15–20 min</span>
+                </div>
+                <div class="mi-foot">
+                  <div class="mi-prices">
+                    <span class="mi-price"><span class="ccy">EGP</span>260</span>
+                    <span class="mi-was">EGP 305</span>
+                  </div>
+                  <div class="mi-step">
+                    <button aria-label="Remove one"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                    <span class="st-q">1</span>
+                    <button aria-label="Add one"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- ITEM 3 -->
+            <article class="mi-card">
+              <div class="mi-img g3"></div>
+              <div class="mi-body">
+                <div class="mi-head">
+                  <h3 class="mi-name" id="mi-3-n">Mixed charcoal grill</h3>
+                  <button class="mi-fav" aria-label="Favourite">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>
+                  </button>
+                </div>
+                <p class="mi-desc" id="mi-3-d">Kofta, lamb chops and chicken, with rice and salad</p>
+                <div class="mi-time">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg>
+                  <span id="mi-3-t">35–40 min</span>
+                </div>
+                <div class="mi-foot">
+                  <div class="mi-prices"><span class="mi-price"><span class="ccy">EGP</span>460</span></div>
+                  <button class="mi-add">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    <span id="mi-3-add">Add</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <!-- ITEM 4 -->
+            <article class="mi-card">
+              <div class="mi-img g4"></div>
+              <div class="mi-body">
+                <div class="mi-head">
+                  <h3 class="mi-name" id="mi-4-n">Om Ali</h3>
+                  <button class="mi-fav" aria-label="Favourite">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>
+                  </button>
+                </div>
+                <p class="mi-desc" id="mi-4-d">Served warm, with cream and toasted nuts</p>
+                <div class="mi-time">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg>
+                  <span id="mi-4-t">20 min</span>
+                </div>
+                <div class="mi-foot">
+                  <div class="mi-prices"><span class="mi-price"><span class="ccy">EGP</span>95</span></div>
+                  <button class="mi-add">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    <span id="mi-4-add">Add</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- STICKY CART -->
+          <div class="rm-cart">
+            <div class="cart-sum">
+              <div class="cart-count" id="cart-count">2 items · ready in 30 min</div>
+              <div class="cart-v"><span class="ccy">EGP</span>680</div>
+            </div>
+            <button class="cart-btn">
+              <span id="cart-btn-t">Review order</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SIDE PANEL ============ -->
+    <aside class="side-panel" id="sidePanel">
+      <h2 class="panel-h"><span id="ph-1">A menu that</span> <em id="ph-1em">takes the order.</em></h2>
+      <p class="panel-lede" id="ph-lede">The old app had a restaurant page, but the order at the end of it was still a message someone had to read, price by hand, and hope they got right. This screen treats a food order as what it is — a bill being built, one dish at a time.</p>
+
+      <ul class="principle-list">
+        <li>
+          <strong id="p1-t">An order carries money</strong>
+          <p id="p1-d">The guest is buying food, so the app has to count. Every dish is its own line with a quantity and a price, and the lines add up to one total the kitchen and the front desk both see. A free-text request cannot do that.</p>
+        </li>
+        <li>
+          <strong id="p2-t">The waiting time is on the dish</strong>
+          <p id="p2-d">People often choose by how long they can wait, not only by what they like. Putting 25–30 minutes on the card sets the expectation before the order is placed, and saves a phone call after it.</p>
+        </li>
+        <li>
+          <strong id="p3-t">Sections keep a long menu short</strong>
+          <p id="p3-d">A restaurant can have a hundred dishes. The row of tabs at the top cuts the menu into groups the hotel names itself — mezze, grills, desserts — so the guest scrolls a little instead of a lot.</p>
+        </li>
+        <li>
+          <strong id="p4-t">The discount comes from an offer</strong>
+          <p id="p4-d">The hotel creates an offer — 15% off this dish, on these dates. The old price and the new one come from it, so nobody edits a price by hand, and the same offer appears in the offers feed as well.</p>
+        </li>
+        <li>
+          <strong id="p5-t">Room charge or card, per outlet</strong>
+          <p id="p5-d">Some outlets add the bill to the room; others take payment in the app. The hotel chooses this for each outlet, and the guest sees only the one that applies — here, room 312.</p>
+        </li>
+      </ul>
+
+      <div class="tech-callout">
+        <div class="tech-label" id="tech-l">A note for the hotel</div>
+        <p class="tech-body" id="tech-b">The menu is written once from the dashboard — sections, dishes, waiting times, prices, and offers — and it is the same list the kitchen sees when an order arrives. Because every order carries its own total, the sales figures in the restaurant dashboard come straight from the orders. Nothing is typed twice.</p>
+      </div>
+    </aside>
+
+  </div>
+
+  <footer class="footnote" id="footnote">
+    <span id="ft-1">© Escalé · Screen 24 of 28 · New — Restaurant Menu &amp; Cart</span>
+    <span>Toggle <span class="accent">EN ⇄ ع</span> in header</span>
+  </footer>
+
+</div>
+
+<script>
+const t = {
+  en: {
+    ehLabel: "Screen 24 / Restaurant Menu & Cart",
+    eh1: "Order it,", eh2: "don't describe it.",
+    cl1: "A real cart —", cl1b: "lines and a total",
+    cl2: "Replaces", cl2b: "the old restaurant page",
+    cl3: "Covers gaps G2, G3, G8, G9",
+    clDate: "New screen · 9 August 2026",
+
+    rmName: "Bab Al Nile",
+    rmKicker: "Hotel restaurant · inside Beit Zamalek, Cairo",
+    rmOpen: "Open now · 12:00–01:00",
+    rmPrep: "Usually 30 min",
+    rmCharge: "Charge to room 312",
+    rmChargeSub: "Or pay in the app — tap to change",
+
+    tab1: "All", tab2: "Today's offers", tab3: "Mezze",
+    tab4: "Grills", tab5: "Pizza", tab6: "Desserts",
+
+    listHead: "Popular tonight",
+
+    mi1n: "Grilled sea bass",
+    mi1d: "Whole fish over charcoal, with cumin, lemon and tahini",
+    mi1t: "25–30 min",
+    mi2n: "Mezze plate for two",
+    mi2d: "Nine cold dishes with warm baladi bread",
+    mi2t: "15–20 min",
+    mi3n: "Mixed charcoal grill",
+    mi3d: "Kofta, lamb chops and chicken, with rice and salad",
+    mi3t: "35–40 min",
+    mi3add: "Add",
+    mi4n: "Om Ali",
+    mi4d: "Served warm, with cream and toasted nuts",
+    mi4t: "20 min",
+    mi4add: "Add",
+
+    cartCount: "2 items · ready in 30 min",
+    cartBtnT: "Review order",
+
+    ph1: "A menu that", ph1em: "takes the order.",
+    phLede: "The old app had a restaurant page, but the order at the end of it was still a message someone had to read, price by hand, and hope they got right. This screen treats a food order as what it is — a bill being built, one dish at a time.",
+    p1t: "An order carries money",
+    p1d: "The guest is buying food, so the app has to count. Every dish is its own line with a quantity and a price, and the lines add up to one total the kitchen and the front desk both see. A free-text request cannot do that.",
+    p2t: "The waiting time is on the dish",
+    p2d: "People often choose by how long they can wait, not only by what they like. Putting 25–30 minutes on the card sets the expectation before the order is placed, and saves a phone call after it.",
+    p3t: "Sections keep a long menu short",
+    p3d: "A restaurant can have a hundred dishes. The row of tabs at the top cuts the menu into groups the hotel names itself — mezze, grills, desserts — so the guest scrolls a little instead of a lot.",
+    p4t: "The discount comes from an offer",
+    p4d: "The hotel creates an offer — 15% off this dish, on these dates. The old price and the new one come from it, so nobody edits a price by hand, and the same offer appears in the offers feed as well.",
+    p5t: "Room charge or card, per outlet",
+    p5d: "Some outlets add the bill to the room; others take payment in the app. The hotel chooses this for each outlet, and the guest sees only the one that applies — here, room 312.",
+    techL: "A note for the hotel",
+    techB: "The menu is written once from the dashboard — sections, dishes, waiting times, prices, and offers — and it is the same list the kitchen sees when an order arrives. Because every order carries its own total, the sales figures in the restaurant dashboard come straight from the orders. Nothing is typed twice.",
+    ft1: "© Escalé · Screen 24 of 28 · New — Restaurant Menu & Cart"
+  },
+  ar: {
+    ehLabel: "الشاشة 24 / قائمة المطعم والسلة",
+    eh1: "اطلبه،", eh2: "من غير ما توصفه.",
+    cl1: "سلة حقيقية —", cl1b: "أصناف وإجمالي",
+    cl2: "بتحلّ محل", cl2b: "صفحة المطعم القديمة",
+    cl3: "بتغطّي الفجوات G2 وG3 وG8 وG9",
+    clDate: "شاشة جديدة · 9 أغسطس 2026",
+
+    rmName: "باب النيل",
+    rmKicker: "مطعم الفندق · جوّه بيت الزمالك، القاهرة",
+    rmOpen: "مفتوح دلوقتي · 12:00–01:00",
+    rmPrep: "التحضير عادةً 30 دقيقة",
+    rmCharge: "على حساب الغرفة 312",
+    rmChargeSub: "أو ادفع من التطبيق — اضغط عشان تغيّر",
+
+    tab1: "الكل", tab2: "عروض النهارده", tab3: "مقبلات",
+    tab4: "مشاوي", tab5: "بيتزا", tab6: "حلويات",
+
+    listHead: "الأكتر طلباً الليلة",
+
+    mi1n: "سمك قاروص مشوي",
+    mi1d: "سمكة كاملة على الفحم، مع كمون وليمون وطحينة",
+    mi1t: "25–30 دقيقة",
+    mi2n: "طبق مقبلات لشخصين",
+    mi2d: "تسع أطباق باردة مع عيش بلدي سخن",
+    mi2t: "15–20 دقيقة",
+    mi3n: "مشاوي مشكّلة على الفحم",
+    mi3d: "كفتة وريش ضاني وفراخ، مع رز وسلطة",
+    mi3t: "35–40 دقيقة",
+    mi3add: "ضيفه",
+    mi4n: "أم علي",
+    mi4d: "بتتقدّم سخنة، مع قشطة ومكسّرات محمّصة",
+    mi4t: "20 دقيقة",
+    mi4add: "ضيفه",
+
+    cartCount: "صنفين · جاهزين خلال 30 دقيقة",
+    cartBtnT: "راجع الطلب",
+
+    ph1: "قايمة", ph1em: "بتاخد الطلب.",
+    phLede: "التطبيق القديم كان فيه صفحة للمطعم، بس الطلب في آخرها فضل رسالة لازم حد يقراها ويحسب سعرها بإيده ويتمنى إنه فهمها صح. الشاشة دي بتتعامل مع طلب الأكل زي ما هو بالظبط — فاتورة بتتبني، طبق ورا طبق.",
+    p1t: "الطلب فيه فلوس",
+    p1d: "الضيف بيشتري أكل، يبقى التطبيق لازم يحسب. كل طبق سطر لوحده بكميته وسعره، والأسطر بتتجمع في إجمالي واحد يشوفه المطبخ والاستقبال مع بعض. الطلب المكتوب كلام سايب مش هيعمل ده.",
+    p2t: "وقت الانتظار مكتوب على الطبق",
+    p2d: "ناس كتير بتختار على أد الوقت اللي تقدر تستناه، مش على أد اللي نفسها فيه بس. لما نكتب 25–30 دقيقة على الكارت، الضيف بيبقى عارف قبل ما يطلب، وده بيوفّر مكالمة بعدين.",
+    p3t: "الأقسام بتقصّر القايمة الطويلة",
+    p3d: "المطعم ممكن يكون فيه مية طبق. صف الأقسام اللي فوق بيقسّم القايمة لمجموعات الفندق هو اللي بيسمّيها — مقبلات، مشاوي، حلويات — فالضيف ينزل شوية بدل ما ينزل كتير.",
+    p4t: "الخصم بييجي من عرض",
+    p4d: "الفندق بيعمل عرض — خصم 15% على الطبق ده، في التواريخ دي. السعر القديم والجديد بييجوا منه، فمحدش بيعدّل سعر بإيده، ونفس العرض بيظهر في شاشة العروض كمان.",
+    p5t: "حساب الغرفة أو الكارت، لكل مكان",
+    p5d: "في أماكن بتضيف الحساب على الغرفة، وفي أماكن بتاخد الفلوس في التطبيق. الفندق بيختار ده لكل مكان لوحده، والضيف بيشوف الخيار اللي يخصّه بس — هنا، الغرفة 312.",
+    techL: "ملاحظة للفندق",
+    techB: "القايمة بتتكتب مرة واحدة من لوحة التحكم — الأقسام، الأطباق، أوقات التحضير، الأسعار، والعروض — وهي نفس القايمة اللي المطبخ بيشوفها لما يوصل الطلب. ولإن كل طلب شايل إجماليه، أرقام المبيعات في لوحة المطعم بتيجي من الطلبات على طول. مفيش حاجة بتتكتب مرتين.",
+    ft1: "© إسكالي · الشاشة 24 من 28 · جديدة — قائمة المطعم والسلة"
+  }
+};
+
+function setLocale(loc) {
+  const tt = t[loc];
+  const isRtl = loc === 'ar';
+
+  document.getElementById('btnEn').classList.toggle('active', loc === 'en');
+  document.getElementById('btnAr').classList.toggle('active', loc === 'ar');
+  ['editorialHead', 'composition', 'sidePanel', 'footnote'].forEach(function (id) {
+    const el = document.getElementById(id);
+    el.setAttribute('lang', loc);
+    el.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+  });
+
+  const set = function (id, val) { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+  set('eh-label', tt.ehLabel);
+  set('eh-1', tt.eh1); set('eh-2', tt.eh2);
+  set('cl-1', tt.cl1); set('cl-1b', tt.cl1b);
+  set('cl-2', tt.cl2); set('cl-2b', tt.cl2b);
+  set('cl-3', tt.cl3); set('cl-date', tt.clDate);
+
+  set('rm-name', tt.rmName);
+  set('rm-kicker', tt.rmKicker);
+  set('rm-open', tt.rmOpen);
+  set('rm-prep', tt.rmPrep);
+  set('rm-charge', tt.rmCharge);
+  set('rm-charge-sub', tt.rmChargeSub);
+
+  for (let i = 1; i <= 6; i++) set('tab-' + i, tt['tab' + i]);
+
+  set('list-head', tt.listHead);
+
+  for (let i = 1; i <= 4; i++) {
+    set('mi-' + i + '-n', tt['mi' + i + 'n']);
+    set('mi-' + i + '-d', tt['mi' + i + 'd']);
+    set('mi-' + i + '-t', tt['mi' + i + 't']);
+  }
+  set('mi-3-add', tt.mi3add);
+  set('mi-4-add', tt.mi4add);
+
+  set('cart-count', tt.cartCount);
+  set('cart-btn-t', tt.cartBtnT);
+
+  set('ph-1', tt.ph1); set('ph-1em', tt.ph1em); set('ph-lede', tt.phLede);
+  for (let i = 1; i <= 5; i++) { set('p' + i + '-t', tt['p' + i + 't']); set('p' + i + '-d', tt['p' + i + 'd']); }
+  set('tech-l', tt.techL); set('tech-b', tt.techB);
+  set('ft-1', tt.ft1);
+}
+</script>
+
+</body>
+</html>
