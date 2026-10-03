@@ -621,6 +621,16 @@
   .project--feature p { font-size:15.5px; }
   @media (max-width: 860px) { .projects-grid .project--feature { grid-template-columns:1fr; } .project--feature .project-thumb { aspect-ratio:16/10; min-height:0; } .project--feature .project-body { padding:22px 24px; } .project--feature h3 { font-size:20px; } }
   .contact-card { background:var(--ink) !important; }
+  /* tech banner: logo | name over description; stacked rows on phones */
+  .tech-item { display:grid !important; grid-template-columns:auto 1fr; grid-template-areas:"logo name" "logo desc"; column-gap:12px; row-gap:2px; align-items:center; text-align:start; }
+  .tech-item .tech-logo { grid-area:logo; width:38px; height:38px; }
+  .tech-item small { grid-area:desc; display:block; }
+  @media (max-width: 640px) {
+    .tech-banner { justify-content:flex-start !important; gap:14px !important; }
+    .tech-banner-label { width:100%; text-align:start; }
+    .tech-item { width:100%; }
+    .tech-item[style] { margin:0 !important; padding-top:4px; border-top:1px solid var(--line); width:100%; }
+  }
   /* ===== Mirqat section ===== */
   .mirqat { background:var(--bg-soft); }
   .mirqat-grid { display:grid; grid-template-columns:1.05fr 1fr; gap:48px; align-items:center; }
