@@ -587,6 +587,27 @@
   .project--feature p { font-size:15.5px; }
   @media (max-width: 860px) { .projects-grid .project--feature { grid-template-columns:1fr; } .project--feature .project-thumb { aspect-ratio:16/10; min-height:0; } .project--feature .project-body { padding:22px 24px; } .project--feature h3 { font-size:20px; } }
   .contact-card { background:var(--ink) !important; }
+  /* ===== Mirqat section ===== */
+  .mirqat { background:var(--bg-soft); }
+  .mirqat-grid { display:grid; grid-template-columns:1.05fr 1fr; gap:48px; align-items:center; }
+  .mirqat-kicker { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+  .mirqat h2 { font-size:clamp(30px,4vw,44px); letter-spacing:-0.02em; margin-bottom:14px; }
+  .mirqat .lede { font-size:17px; color:var(--ink-soft); margin-bottom:24px; max-width:560px; }
+  .mirqat-features { list-style:none; margin:0 0 26px; padding:0; display:grid; gap:10px; }
+  .mirqat-features li { position:relative; padding-inline-start:20px; font-size:15px; line-height:1.55; color:var(--ink-soft); }
+  .mirqat-features li::before { content:''; position:absolute; inset-inline-start:0; top:8px; width:8px; height:8px; border-radius:50%; background:var(--accent); }
+  .mirqat-features li strong { color:var(--ink); }
+  .mirqat-stats { display:flex; flex-wrap:wrap; gap:10px 22px; margin:0 0 28px; padding:16px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .mirqat-stats div { font-size:13px; color:var(--muted); }
+  .mirqat-stats b { display:block; font-size:20px; color:var(--ink); font-weight:800; letter-spacing:-0.02em; }
+  .mirqat-actions { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  .mirqat-note { font-size:13px; color:var(--muted); margin-top:14px; }
+  .mirqat-visual { position:relative; }
+  .mirqat-visual .shot { border-radius:14px; overflow:hidden; border:1px solid var(--line); box-shadow:var(--shadow-lg); background:var(--bg-card); }
+  .mirqat-visual .shot img { display:block; width:100%; height:auto; }
+  .mirqat-visual .phone { position:absolute; bottom:-24px; inset-inline-start:-18px; width:30%; border-radius:18px; overflow:hidden; border:1px solid var(--line); box-shadow:var(--shadow-lg); background:var(--bg-card); }
+  .mirqat-visual .phone img { display:block; width:100%; height:auto; }
+  @media (max-width: 900px) { .mirqat-grid { grid-template-columns:1fr; gap:36px; } .mirqat-visual .phone { width:34%; bottom:-16px; inset-inline-start:-6px; } }
   /* theme v2.1 — dark-mode fixes (badges, tags, brand chips) */
   .tech-logo.shopify { background:#4f7d33 !important; color:#fff; }
   .tech-logo.laravel { background:#FF2D20 !important; color:#fff; }
@@ -606,6 +627,7 @@
     <div class="nav-links" id="navLinks">
       <a href="#services">الخدمات</a>
       <a href="#projects">المشاريع</a>
+      <a href="#mirqat">مِرْقَاة</a>
       <a href="#process">طريقة العمل</a>
       <a href="#experience">الخبرة</a>
       <a href="#faq">أسئلة شائعة</a>
@@ -825,11 +847,12 @@
       <p>فنادق ومؤتمرات ومعهد وتجّار دفع عند الاستلام وعلامات Shopify. كل بطاقة تقول ما المشكلة، وما الذي بُني، وأين يقف النظام اليوم.</p>
     </div>
     <div class="filter-bar reveal" role="tablist">
-      <button class="filter-btn active" data-filter="all">الكل <span class="count">10</span></button>
+      <button class="filter-btn active" data-filter="all">الكل <span class="count">11</span></button>
       <button class="filter-btn" data-filter="shopify"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>متاجر Shopify <span class="count">5</span></button>
-      <button class="filter-btn" data-filter="platforms"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>منصات وتطبيقات <span class="count">5</span></button>
+      <button class="filter-btn" data-filter="platforms"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>منصات وتطبيقات <span class="count">6</span></button>
     </div>
     <div class="projects-grid" id="projectsGrid">
+      <a href="https://tashabuh-quran.vercel.app/" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge python">مشروع شخصي · مجاني</span><img src="../images/mirqat-home.jpg" alt="الصفحة الرئيسية لمِرْقَاة — المستوى والسلسلة ونسبة الإتقان والمصحف في أرقام" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">منتج خاص · يعمل مباشرةً · مجاني للجميع</span><h3>مِرْقَاة — متشابهات القرآن الكريم</h3><p>أداة لحفظة القرآن لضبط المتشابهات: فهرس لكل عبارة متكررة (تطابق حرفي، تشابه بالجذر، اختلاف ترتيب)، مقارنة آيات كلمةً بكلمة، تسميع مع تحدٍّ موقوت من عشرة أسئلة، دفتر أخطاء بمفاتيح التفريق، ومستويات ونقاط وسلسلة أيام. نص حفص وجذور قاعدة صرف القرآن، في صفحة واحدة سريعة تعمل على أي هاتف.</p><div class="project-stack"><span>Vanilla JS</span><span>صفحة واحدة</span><span>مصحف حفص</span><span>Quranic Arabic Corpus</span><span>Vercel</span></div></div></a>
       <div class="project reveal project--feature" data-type="platforms"><div class="project-thumb"><span class="platform-badge laravel">Laravel · Livewire · Flutter</span><img src="../images/arabajam.jpg" alt="لوحة تحكم عرب وعجم — المؤتمرات المباشرة والمترجمون المتصلون وتنبيهات النظام" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">عرب وعجم للترجمة · بيئة تجريبية حيّة · ما قبل الإطلاق</span><h3>عرب وعجم — منصة الترجمة الفورية ولغة الإشارة للمؤتمرات</h3><p><strong>قبل:</strong> مترجمون وقاعات وعروض أسعار وتحصيل يُدار كله بالهاتف وجداول Excel. <strong>ما بُني:</strong> منصة إدارة (المؤتمرات، غرفة التحكم، المراقبة المباشرة، المترجمون، عروض الأسعار والفواتير، المالية، التقارير، الصلاحيات) مع API وتطبيق Flutter للمترجمين والحضور. <strong>الحالة:</strong> ٩ خدمات، ٥٣٥ اختباراً آلياً على CI، ونشر محمي؛ يتبقّى تكامل الدفع ومزوّدي الترجمة قبل الإطلاق.</p><div class="project-stack"><span>Laravel 12</span><span>Livewire 3</span><span>PostgreSQL</span><span>Flutter</span><span>CI/CD</span><span>عربي/إنجليزي</span></div></div></div>
       <a href="https://escalehotelsys.com" target="_blank" rel="noopener" class="project reveal project--feature" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge python">متعدد الفنادق · ويب + تطبيقات موبايل</span><img src="../images/escale-live.jpg" alt="موقع حجز Escalé — استكشاف الفنادق في مصر والخليج" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Escalé · مصر والخليج · مكتمل · جاهز للإطلاق · بانتظار أول فندق</span><h3>Escalé — منصة تشغيل الفنادق</h3><p><strong>المشكلة:</strong> طلبات النزلاء تضيع بين الاستقبال والهاوس كيبينج والمطعم، وكل فندق يعمل على مجموعات واتساب خاصة به. <strong>ما بُني:</strong> منصة واحدة متعددة الفنادق بخمسة تطبيقات — تطبيق موبايل للنزيل وتطبيق موبايل للموظفين (iOS/Android)، لوحة إدارة الفندق، موقع الحجز، وبوابة شركات السياحة: طلبات خدمة بتتبّع SLA، تسجيل وصول أونلاين، محادثة مباشرة، قاعات ومطاعم ونقل، مالية وسجلات تدقيق. بالعربية والإنجليزية بالكامل. <strong>الحالة:</strong> الإنتاج منشور بـ CI واختبارات end-to-end آلية؛ الخطوة التالية أول فندق تجريبي.</p><div class="project-stack"><span>TypeScript</span><span>PostgreSQL · Prisma</span><span>Redis</span><span>Meilisearch</span><span>تطبيقات موبايل · iOS/Android</span><span>عربي/إنجليزي</span></div></div></a>
       <div class="project reveal project--feature" data-type="platforms"><div class="project-thumb"><span class="platform-badge laravel">Laravel · Telegram · LiveKit</span><img src="../images/iqra.jpg" alt="لوحة تحكم الإقراء — المشايخ والطلاب والفترات النشطة وحضور الحلقات" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">معهد لإقراء القرآن · مكتمل · تجربة ما قبل الإطلاق</span><h3>الإقراء — منصة حلقات إقراء القرآن عن بُعد</h3><p><strong>قبل:</strong> معهد يوزّع الطلاب على المشايخ ويجدول الحلقات ويتابع الحضور بالمكالمات وجداول Excel. <strong>ما بُني:</strong> لوحة إدارة توزّع الطلاب على المشايخ، بوت تليجرام يربط كل مستخدم بكود من ٦ أرقام ويرسل التذكيرات وأزرار الحضور، حلقات صوتية مباشرة في المتصفح مع تسجيل من السيرفر، مراجعات جودة، اختبار قبول، ووحدة مالية (رسوم الحلقات، أرباح المعلم، الاسترداد، الصرف، التقارير الشهرية). <strong>الحالة:</strong> مكتمل وفي تجربة ما قبل الإطلاق مع المعهد.</p><div class="project-stack"><span>Laravel 11</span><span>Telegram Bot</span><span>LiveKit</span><span>Tailwind RTL</span><span>Scheduler</span><span>Docker</span></div></div></div>
@@ -841,6 +864,40 @@
       <a href="https://thecoringinstitute.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel · Filament</span><img src="../images/coring.jpg" alt="معاينة منصة Coring Institute" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">بُني أثناء عملي في Twindix · من الصفر · مباشر</span><h3>Coring Institute — منصة تدريب ثنائية اللغة</h3><p>منصة تدريب كاملة بنيتُها من الصفر على <span dir="ltr">Laravel 11 + Filament</span>. موقع تسويقي بصفحات خدمات ومدرّبين، تدفّق حجز متكامل، وتكامل حقيقي مع <span dir="ltr">Zoom + Google Calendar</span> يُنشئ الاجتماعات تلقائياً بعد التأكيد.</p><div class="project-stack"><span>Laravel 11</span><span>Filament 3</span><span>Tailwind RTL</span><span>Zoom OAuth</span><span>Google Calendar</span><span>Spatie</span></div></div></a>
       <a href="https://soyoula.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel</span><img src="../images/soyoula.jpg" alt="معاينة لوحة التاجر في منصة سيولة" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">من الصفر · منشور · بانتظار أول التجّار</span><h3>سيولة (Soyoula) — منصة تسويق بالعمولة ودفع عند الاستلام</h3><p>منصة دفع عند الاستلام وتسويق بالعمولة للمنطقة بثلاث بوابات (أدمن، تاجر، مسوّق): سير اعتماد للمنتجات، تسعير ذاتي للمسوّق بحساب ربح لحظي، محافظ بقواعد سحب، ومعالجة الطلبات الفاشلة بإعادة محاولات تلقائية — مع نظام تصميم Figma بأكثر من ٦٠ شاشة.</p><div class="project-stack"><span>Laravel</span><span>Livewire</span><span>RTL</span><span>Figma</span></div></div></a>
       <div class="project cta-tile reveal" data-type="cta"><h3>مشروعك ممكن يكون التالي</h3><p>متجر Shopify، منصة Laravel، أو أتمتة توفّر على فريقك ساعات — كلّمني نحدد النطاق.</p><a class="btn" href="#contact">اطلب احكِ لي عن مشروعك</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="mirqat" class="mirqat">
+  <div class="container">
+    <div class="mirqat-grid">
+      <div class="reveal">
+        <span class="mirqat-kicker">أداة مجانية · لحفظة القرآن</span>
+        <h2>مِرْقَاة — اضبط <span class="grad">متشابهات القرآن</span>.</h2>
+        <p class="lede">كل حافظ يعرف الفخّ: آيتان تبدآن بالكلمات نفسها وتنتهيان مختلفتين. مِرْقَاة تفهرس كل عبارة تكرّرت في القرآن، وتريك مواضعها والكلمة الفارقة بينها، ثم تسمّعك في هذه المواضع تحديداً. مجانية، في المتصفح، بلا تسجيل.</p>
+        <ul class="mirqat-features">
+          <li><strong>تصفّح المتشابهات</strong> — تطابق حرفي، تشابه بالجذر، اختلاف ترتيب، وانفرادات السورة، مع بحث بالسورة وبالجذر.</li>
+          <li><strong>مقارنة الآيات كلمةً بكلمة</strong> — الآيات المتقاربة متقابلة مع إبراز الزيادة والنقص والإبدال.</li>
+          <li><strong>التسميع</strong> — تقرأ الموضع وتختار الكلمة التي تليه في هذا الموضع بالذات؛ تدريب مفتوح، أو تحدٍّ موقوت من عشرة أسئلة على المصحف كله.</li>
+          <li><strong>صلّح غلطاتك</strong> — كل متشابهة أخطأت فيها تُجمع مع مفاتيح آلية للتفريق، وحقل تكتب فيه ضابطك الخاص.</li>
+          <li><strong>مستويات ونقاط وسلسلة أيام</strong> — نسبة إتقان، سلسلة يومية، ومستويات من «مبتدئ» فصاعداً. تقدّمك محفوظ على جهازك.</li>
+        </ul>
+        <div class="mirqat-stats">
+          <div><b>٩,٥٣٦</b> متشابهة حرفية</div>
+          <div><b>٩,٨٥٣</b> متشابهة بالجذر</div>
+          <div><b>٣٦٩</b> مجموعة آيات متقاربة</div>
+          <div><b>١,٧٩١</b> سؤال تسميع</div>
+        </div>
+        <div class="mirqat-actions">
+          <a href="https://tashabuh-quran.vercel.app/" target="_blank" rel="noopener" class="btn">افتح مِرْقَاة — مجاناً ←</a>
+          <a href="https://wa.me/?text=%D8%AC%D8%B1%D9%91%D8%A8%20%D9%85%D9%90%D8%B1%D9%92%D9%82%D9%8E%D8%A7%D8%A9%20%D9%84%D8%B6%D8%A8%D8%B7%20%D9%85%D8%AA%D8%B4%D8%A7%D8%A8%D9%87%D8%A7%D8%AA%20%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86%3A%20https://tashabuh-quran.vercel.app/" target="_blank" rel="noopener" class="btn ghost">شاركها مع حافظ</a>
+        </div>
+        <p class="mirqat-note">النص من مصحف حفص، والجذور من قاعدة صرف القرآن (Quranic Arabic Corpus). مشروع شخصي أبنيه وأطوّره بنفسي — إن كنت تحفّظ أو تحفظ، يسعدني أن أسمع ما الذي يجعلها أنفع لك.</p>
+      </div>
+      <div class="mirqat-visual reveal">
+        <div class="shot"><img src="../images/mirqat-tasmee.jpg" alt="وضع التسميع في مِرْقَاة — اختر الكلمة التي تلي الموضع المظلَّل" width="1440" height="900" loading="lazy" decoding="async"/></div>
+        <div class="phone"><img src="../images/mirqat-mobile.jpg" alt="مِرْقَاة على الهاتف — الصفحة الرئيسية بالمستوى والسلسلة ونسبة الإتقان" width="585" height="1266" loading="lazy" decoding="async"/></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1035,6 +1092,7 @@
         <ul>
           <li><a href="#why">لماذا تختارني</a></li>
           <li><a href="#projects">المشاريع</a></li>
+          <li><a href="#mirqat">مِرْقَاة (أداة مجانية للقرآن)</a></li>
           <li><a href="#process">طريقة العمل</a></li>
           <li><a href="#faq">أسئلة شائعة</a></li>
           <li><a href="../index.html" hreflang="en">English</a></li>

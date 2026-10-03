@@ -621,6 +621,27 @@
   .project--feature p { font-size:15.5px; }
   @media (max-width: 860px) { .projects-grid .project--feature { grid-template-columns:1fr; } .project--feature .project-thumb { aspect-ratio:16/10; min-height:0; } .project--feature .project-body { padding:22px 24px; } .project--feature h3 { font-size:20px; } }
   .contact-card { background:var(--ink) !important; }
+  /* ===== Mirqat section ===== */
+  .mirqat { background:var(--bg-soft); }
+  .mirqat-grid { display:grid; grid-template-columns:1.05fr 1fr; gap:48px; align-items:center; }
+  .mirqat-kicker { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+  .mirqat h2 { font-size:clamp(30px,4vw,44px); letter-spacing:-0.02em; margin-bottom:14px; }
+  .mirqat .lede { font-size:17px; color:var(--ink-soft); margin-bottom:24px; max-width:560px; }
+  .mirqat-features { list-style:none; margin:0 0 26px; padding:0; display:grid; gap:10px; }
+  .mirqat-features li { position:relative; padding-inline-start:20px; font-size:15px; line-height:1.55; color:var(--ink-soft); }
+  .mirqat-features li::before { content:''; position:absolute; inset-inline-start:0; top:8px; width:8px; height:8px; border-radius:50%; background:var(--accent); }
+  .mirqat-features li strong { color:var(--ink); }
+  .mirqat-stats { display:flex; flex-wrap:wrap; gap:10px 22px; margin:0 0 28px; padding:16px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .mirqat-stats div { font-size:13px; color:var(--muted); }
+  .mirqat-stats b { display:block; font-size:20px; color:var(--ink); font-weight:800; letter-spacing:-0.02em; }
+  .mirqat-actions { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  .mirqat-note { font-size:13px; color:var(--muted); margin-top:14px; }
+  .mirqat-visual { position:relative; }
+  .mirqat-visual .shot { border-radius:14px; overflow:hidden; border:1px solid var(--line); box-shadow:var(--shadow-lg); background:var(--bg-card); }
+  .mirqat-visual .shot img { display:block; width:100%; height:auto; }
+  .mirqat-visual .phone { position:absolute; bottom:-24px; inset-inline-start:-18px; width:30%; border-radius:18px; overflow:hidden; border:1px solid var(--line); box-shadow:var(--shadow-lg); background:var(--bg-card); }
+  .mirqat-visual .phone img { display:block; width:100%; height:auto; }
+  @media (max-width: 900px) { .mirqat-grid { grid-template-columns:1fr; gap:36px; } .mirqat-visual .phone { width:34%; bottom:-16px; inset-inline-start:-6px; } }
   /* theme v2.1 — dark-mode fixes (badges, tags, brand chips) */
   .tech-logo.shopify { background:#4f7d33 !important; color:#fff; }
   .tech-logo.laravel { background:#FF2D20 !important; color:#fff; }
@@ -638,7 +659,7 @@
   <div class="container nav-inner">
     <a href="#" class="brand"><span class="brand-mark">AB</span>Ahmed Beshir</a>
     <div class="nav-links" id="navLinks">
-      <a href="#services">Services</a><a href="#projects">Projects</a>
+      <a href="#services">Services</a><a href="#projects">Projects</a><a href="#mirqat">Mirqat</a>
       <a href="#process">Process</a>
       <a href="#experience">Experience</a><a href="#faq">FAQ</a>
       <a href="#contact" class="btn magnetic"><span class="magnetic-inner">Contact</span></a>
@@ -859,11 +880,12 @@
       <p>Hotels, conferences, an institute, COD sellers and Shopify brands. Each card says what the problem was, what was built, and where the system stands today.</p>
     </div>
     <div class="filter-bar reveal" role="tablist">
-      <button class="filter-btn active" data-filter="all">All <span class="count">10</span></button>
+      <button class="filter-btn active" data-filter="all">All <span class="count">11</span></button>
       <button class="filter-btn" data-filter="shopify"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>Shopify stores <span class="count">5</span></button>
-      <button class="filter-btn" data-filter="platforms"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>Platforms &amp; apps <span class="count">5</span></button>
+      <button class="filter-btn" data-filter="platforms"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>Platforms &amp; apps <span class="count">6</span></button>
     </div>
     <div class="projects-grid" id="projectsGrid">
+      <a href="https://tashabuh-quran.vercel.app/" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge python">Personal project · Free</span><img src="images/mirqat-home.jpg" alt="Mirqat home — levels, streak, mastery and the Qur'an in numbers" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Own product · Live · Free for everyone</span><h3>Mirqat — Similar Verses of the Qur'an</h3><p>A tool for memorizers to master the mutashabihat: an index of every repeated phrase (literal, same-root, different order), word-by-word verse comparison, a recitation drill with a timed 10-question challenge, a mistakes notebook with distinguishing keys, and levels, points and streaks. Hafs text and Quranic Arabic Corpus roots, all in a single fast page that works on any phone.</p><div class="project-stack"><span>Vanilla JS</span><span>Single-page app</span><span>Hafs text</span><span>Quranic Arabic Corpus</span><span>Vercel</span></div></div></a>
       <div class="project reveal project--feature" data-type="platforms"><div class="project-thumb"><span class="platform-badge laravel">Laravel · Livewire · Flutter</span><img src="images/arabajam.jpg" alt="Arab Wajam admin dashboard — live conferences, connected interpreters, response-time budget and system alerts" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Arab Wajam Translation · Staging live · Pre-launch</span><h3>Arab Wajam — Live Interpretation &amp; Sign-Language Platform for Conferences</h3><p><strong>Before:</strong> interpreters, conference rooms, client quotes and collections managed by phone and spreadsheets. <strong>Built:</strong> an admin platform (conferences, control room, live monitor, interpreter roster, quotes and invoices, finance, reports, permissions) plus an API and a Flutter app for interpreters and attendees. <strong>Where it stands:</strong> 9 services, 535 automated tests on CI, protected deploys; payment and translation-provider integrations are the last step before launch.</p><div class="project-stack"><span>Laravel 12</span><span>Livewire 3</span><span>PostgreSQL</span><span>Flutter</span><span>CI/CD</span><span>AR/EN</span></div></div></div>
       <a href="https://escalehotelsys.com" target="_blank" rel="noopener" class="project reveal project--feature" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge python">Multi-tenant · Web + mobile apps</span><img src="images/escale-live.jpg" alt="Escalé public booking site — part of a platform with guest and staff mobile apps, hotel admin and a B2B portal" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Escalé · Egypt &amp; the Gulf · Built · Launch-ready · Pilot pending</span><h3>Escalé — Hotel Operations Platform</h3><p><strong>The problem:</strong> guest requests get lost between reception, housekeeping and the restaurant, and every hotel runs on its own WhatsApp groups. <strong>Built:</strong> one multi-hotel platform with five apps — a guest mobile app and a staff mobile app (iOS/Android), the hotel admin panel, a public booking site and a B2B agency portal: service requests with SLA tracking, online check-in, live chat, halls, restaurants and transport, finance and audit logs. Arabic and English throughout. <strong>Where it stands:</strong> production is deployed with CI and automated end-to-end tests; the first pilot hotel is next.</p><div class="project-stack"><span>TypeScript</span><span>PostgreSQL · Prisma</span><span>Redis</span><span>Meilisearch</span><span>Mobile apps · iOS/Android</span><span>AR/EN</span></div></div></a>
       <div class="project reveal project--feature" data-type="platforms"><div class="project-thumb"><span class="platform-badge laravel">Laravel · Telegram · LiveKit</span><img src="images/iqra.jpg" alt="Iqraa admin dashboard — sheikhs, students, active periods and session attendance" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Quran recitation institute · Built · Pre-launch trial</span><h3>Iqraa — Remote Quran Recitation Circles Platform</h3><p><strong>Before:</strong> an institute matching sheikhs with students, scheduling sessions and chasing attendance over phone calls and spreadsheets. <strong>Built:</strong> an admin panel that distributes students to sheikhs, a Telegram bot that links each user with a 6-digit code and sends reminders and attendance buttons, live audio sessions in the browser with server-side recording, quality reviews, admission quizzes, and a finance module (session fees, teacher earnings, refunds, payouts, monthly reports). <strong>Where it stands:</strong> complete and in pre-launch trial with the institute.</p><div class="project-stack"><span>Laravel 11</span><span>Telegram Bot</span><span>LiveKit</span><span>Tailwind RTL</span><span>Scheduler</span><span>Docker</span></div></div></div>
@@ -875,6 +897,40 @@
       <a href="https://thecoringinstitute.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel · Filament</span><img src="images/coring.jpg" alt="Coring Institute bilingual coaching platform preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Built while at Twindix · From scratch · Live</span><h3>Coring Institute — Bilingual Coaching Platform</h3><p>Full bilingual (AR/EN) coaching platform built from scratch on Laravel 11 + Filament. Public marketing site with services and coach profiles, end-to-end booking flow, and a real Zoom + Google Calendar integration that auto-creates meetings on confirmation.</p><div class="project-stack"><span>Laravel 11</span><span>Filament 3</span><span>Tailwind RTL</span><span>Zoom OAuth</span><span>Google Calendar</span><span>Spatie</span></div></div></a>
       <a href="https://soyoula.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge laravel">Laravel</span><img src="images/soyoula.jpg" alt="Soyoula affiliate platform merchant dashboard preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">From scratch · Launched · Awaiting first merchants</span><h3>Soyoula — COD &amp; Affiliate Platform</h3><p>Cash-on-delivery + affiliate marketing platform for MENA with three portals (admin, merchant, marketer): product approval workflow, marketer self-pricing with live profit calculation, wallets with payout rules, and failed-order handling with automatic retries — backed by a 60+ screen Figma design system.</p><div class="project-stack"><span>Laravel</span><span>Livewire</span><span>RTL</span><span>Figma</span></div></div></a>
       <div class="project cta-tile reveal" data-type="cta"><h3>Your project could be next</h3><p>Shopify storefront, Laravel platform, or an automation that saves your team hours — let's scope it.</p><a class="btn" href="#contact">Tell me about your project →</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="mirqat" class="mirqat">
+  <div class="container">
+    <div class="mirqat-grid">
+      <div class="reveal">
+        <span class="mirqat-kicker">Free tool · For Qur'an memorizers</span>
+        <h2>Mirqat — master the <span class="grad">similar verses</span> of the Qur'an.</h2>
+        <p class="lede">Every memorizer knows the trap: two verses that start the same and end differently. Mirqat indexes every repeated phrase in the Qur'an, shows where each one occurs and the word that tells them apart, then drills you on exactly those spots. Free, in the browser, no sign-up.</p>
+        <ul class="mirqat-features">
+          <li><strong>Browse the similarities</strong> — literal matches, same-root matches, different word order, and phrases unique to one surah, filterable by surah and root.</li>
+          <li><strong>Compare verses word by word</strong> — close verses side by side with additions, omissions and substitutions highlighted.</li>
+          <li><strong>Recite (tasmee&#x2BF;)</strong> — read a passage and pick the word that follows it in that exact position; open practice, or a 10-question timed challenge across the whole Qur'an.</li>
+          <li><strong>Fix your mistakes</strong> — every similarity you got wrong is collected with auto-extracted distinguishing keys, plus a field for your own rule.</li>
+          <li><strong>Levels, points and streaks</strong> — mastery percentage, daily streak and levels from beginner upward. Progress is saved on your device.</li>
+        </ul>
+        <div class="mirqat-stats">
+          <div><b>9,536</b> literal similarities</div>
+          <div><b>9,853</b> same-root similarities</div>
+          <div><b>369</b> groups of close verses</div>
+          <div><b>1,791</b> recitation questions</div>
+        </div>
+        <div class="mirqat-actions">
+          <a href="https://tashabuh-quran.vercel.app/" target="_blank" rel="noopener" class="btn">Open Mirqat — it's free →</a>
+          <a href="https://wa.me/?text=%D8%AC%D8%B1%D9%91%D8%A8%20%D9%85%D9%90%D8%B1%D9%92%D9%82%D9%8E%D8%A7%D8%A9%20%D9%84%D8%B6%D8%A8%D8%B7%20%D9%85%D8%AA%D8%B4%D8%A7%D8%A8%D9%87%D8%A7%D8%AA%20%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86%3A%20https://tashabuh-quran.vercel.app/" target="_blank" rel="noopener" class="btn ghost">Share with a memorizer</a>
+        </div>
+        <p class="mirqat-note">Text from the Hafs mushaf; roots from the Quranic Arabic Corpus. Built and maintained by me as a personal project — if you teach or memorize, I'd love to hear what would make it more useful.</p>
+      </div>
+      <div class="mirqat-visual reveal">
+        <div class="shot"><img src="images/mirqat-tasmee.jpg" alt="Mirqat recitation mode — pick the word that follows the highlighted position" width="1440" height="900" loading="lazy" decoding="async"/></div>
+        <div class="phone"><img src="images/mirqat-mobile.jpg" alt="Mirqat on a phone — home screen with level, streak and mastery" width="585" height="1266" loading="lazy" decoding="async"/></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1075,6 +1131,7 @@
         <ul>
           <li><a href="#why">Why work with me</a></li>
           <li><a href="#projects">Projects</a></li>
+          <li><a href="#mirqat">Mirqat (free Qur'an tool)</a></li>
           <li><a href="#process">Process</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="ar/index.html" hreflang="ar">العربية</a></li>
