@@ -6,3 +6,7 @@ node_modules/
 .idea/
 *.log
 .wrangler/
+
+# Claude-generated docs — never publish
+Claude outputs/
+.claude/
