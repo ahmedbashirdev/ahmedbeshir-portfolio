@@ -47,9 +47,9 @@
       "alternateName": "أحمد بشير",
       "url": "https://ahmedbeshir.com/",
       "image": "https://ahmedbeshir.com/images/ahmed.jpg",
-      "jobTitle": "Senior Web Developer — Shopify & Laravel Specialist",
+      "jobTitle": "Software developer — operations systems and bilingual Shopify stores for businesses in Egypt and the Gulf",
       "knowsLanguage": ["en", "ar"],
-      "knowsAbout": ["Shopify", "Liquid", "Laravel", "Filament", "PHP", "REST APIs", "Bilingual AR/EN", "RTL", "MENA E-commerce"],
+      "knowsAbout": ["Custom operations platforms", "Laravel", "Livewire", "Shopify", "Liquid", "Multi-branch inventory and POS", "Hotel operations systems", "Telegram bots", "API integration and automation", "Bilingual AR/EN", "RTL", "Egypt and Gulf markets"],
       "address": { "@type": "PostalAddress", "addressLocality": "Cairo", "addressCountry": "EG" },
       "email": "info@ahmedbeshir.com",
       "telephone": "+20-109-080-1084",
@@ -61,12 +61,12 @@
     {
       "@type": "ProfessionalService",
       "@id": "https://ahmedbeshir.com/#service",
-      "name": "Ahmed Beshir — Shopify & Laravel Development",
+      "name": "Ahmed Beshir — Operations systems & Shopify for running businesses",
       "url": "https://ahmedbeshir.com/",
       "image": "https://ahmedbeshir.com/images/og-image.jpg",
-      "priceRange": "$$",
       "areaServed": ["Egypt", "Saudi Arabia", "United Arab Emirates", "MENA", "Worldwide"],
-      "serviceType": ["Shopify development", "Laravel development", "API integration", "Bilingual AR/EN storefronts"],
+      "serviceType": ["Custom operations platforms (Laravel)", "Shopify stores that run as a sales operation", "Customer, staff and partner apps", "Integrations and automation"],
+      "audience": { "@type": "BusinessAudience", "name": "Businesses in Egypt and the Gulf with a running operation" },
       "provider": { "@id": "https://ahmedbeshir.com/#person" },
       "address": { "@type": "PostalAddress", "addressLocality": "Cairo", "addressCountry": "EG" }
     },
@@ -74,9 +74,80 @@
       "@type": "WebSite",
       "@id": "https://ahmedbeshir.com/#website",
       "url": "https://ahmedbeshir.com/",
-      "name": "Ahmed Beshir — Senior Web Developer",
+      "name": "Ahmed Beshir — Software that runs your business",
       "inLanguage": ["en", "ar"],
       "publisher": { "@id": "https://ahmedbeshir.com/#person" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ahmedbeshir.com/#faq",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does a project start?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "With a short call about your operation and the problem you want solved. If it's a fit, you get a written scope, a fixed price and a start date — then we book the slot. I work from Cairo (GMT+2 / GMT+3 DST) and keep communication on WhatsApp or email during the project."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you price?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "One fixed number for the whole scope — no hourly rate and no surprises. The price follows the size of the problem and the system that solves it, not the number of pages or screens. You get it in writing after the first call."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you work with startups or new ideas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Rarely. My work is most useful for businesses that already run an operation and know what it costs them. If you\\'re still validating an idea, a lighter setup usually serves you better — and I\\'ll say so on the first call."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a typical project take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the scope. A Shopify operations project is usually a few weeks; a custom platform is a few months, delivered in milestones you can start using early. You get the timeline in writing together with the scope."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do payments work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A 50% deposit on signing and 50% on delivery; larger projects are split across milestones. You get a simple written agreement covering scope, timeline and payment terms — bank transfer or InstaPay."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's included after launch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every project includes a 2-week post-launch window for bug fixes and small tweaks at no extra cost. After that, I offer monthly retainers or pay-per-task — whichever fits how often you need changes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you work alone or with a team?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most projects I deliver end-to-end on my own — that's why I can move fast. For larger builds I bring in trusted designers / QA / DevOps as needed, but you always have one point of contact: me."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if my project isn't Shopify or Laravel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "I also work with WordPress, Magento, PrestaShop, and Python (Telegram bots, automations). If a tool isn't a fit for what you need, I'll tell you upfront — even if it means recommending someone else."
+          }
+        }
+      ]
     }
   ]
 }
@@ -518,6 +589,40 @@
   .brand { view-transition-name: brand; }
   .hero h1 { view-transition-name: hero-title; }
   .lang-switch { view-transition-name: lang-switch; }
+
+  /* ===== theme v2 (Oct 2026): one accent, neutrals, no marquee/glow ===== */
+  :root { --brand-1:#0f4c5c; --brand-2:#0f4c5c; --brand-3:#0f4c5c; --brand-4:#0f4c5c; --brand-5:#0f4c5c; --accent:#0f4c5c;
+    --grad-hero:linear-gradient(135deg,#0b3a47,#0f4c5c); --grad-accent:linear-gradient(135deg,#0f4c5c,#0f4c5c);
+    --grad-shopify:linear-gradient(135deg,#0f4c5c,#0f4c5c); --grad-laravel:linear-gradient(135deg,#0f4c5c,#0f4c5c);
+    --shadow:0 6px 18px rgba(11,16,39,.06); --shadow-lg:0 18px 44px rgba(11,16,39,.10); }
+  [data-theme="dark"] { --accent:#6cc3d5; --brand-1:#6cc3d5; --brand-2:#6cc3d5; --grad-accent:linear-gradient(135deg,#1b6f82,#1b6f82); --grad-shopify:linear-gradient(135deg,#1b6f82,#1b6f82); --grad-laravel:linear-gradient(135deg,#1b6f82,#1b6f82); }
+  .hero::before { display:none !important; }
+  .hero h1 .grad { background:none !important; -webkit-text-fill-color:var(--accent) !important; color:var(--accent); }
+  .bento-stat .num { background:none !important; -webkit-text-fill-color:var(--ink) !important; color:var(--ink); }
+  .btn:not(.ghost):not(.ghost-light):not(.primary-cta):not(.whatsapp-cta) { background:var(--accent) !important; }
+  .btn:hover { box-shadow:0 8px 20px rgba(15,76,92,.22) !important; filter:none !important; }
+  .service::after { display:none !important; }
+  .service { --svc-color:var(--accent); }
+  .service-icon, .why-card-icon { background:color-mix(in srgb, var(--accent) 12%, transparent) !important; color:var(--accent) !important; box-shadow:none !important; }
+  .platform-badge { box-shadow:none !important; }
+  .platform-badge.laravel, .platform-badge.python, .platform-badge.shopify { background:var(--ink) !important; }
+  .hero-code, .stack-marquee, .eyebrow-dot { display:none !important; }
+  .hero-shot { width:100%; max-width:540px; border-radius:14px; overflow:hidden; border:1px solid var(--line); box-shadow:var(--shadow-lg); background:var(--bg-card); }
+  .hero-shot img { display:block; width:100%; height:auto; }
+  .hero-shot figcaption { font-size:12px; color:var(--muted); padding:10px 14px; border-top:1px solid var(--line); }
+  .marquee { mask-image:none !important; -webkit-mask-image:none !important; }
+  .marquee-track { animation:none !important; width:auto !important; flex-wrap:wrap; justify-content:center; gap:12px 28px !important; padding:0 24px; }
+  .marquee-track [aria-hidden="true"] { display:none !important; }
+  .projects-grid .project--feature { grid-column:1 / -1; display:grid; grid-template-columns:1.15fr 1fr; }
+  .project--feature .project-thumb { aspect-ratio:auto; min-height:360px; }
+  .project--feature .project-thumb img { width:100%; height:100%; object-fit:cover; object-position:top; }
+  .project--feature .project-body { padding:32px 36px; }
+  .project--feature h3 { font-size:24px; line-height:1.25; }
+  .project--feature p { font-size:15.5px; }
+  @media (max-width: 860px) { .projects-grid .project--feature { grid-template-columns:1fr; } .project--feature .project-thumb { aspect-ratio:16/10; min-height:0; } .project--feature .project-body { padding:22px 24px; } .project--feature h3 { font-size:20px; } }
+  .contact-card { background:var(--ink) !important; }
+  .hero-portrait { box-shadow:var(--shadow-lg) !important; transform:none !important; border-radius:20px; }
+  .hero-portrait:hover { transform:none !important; }
 </style>
 </head>
 <body>
@@ -567,9 +672,8 @@
       <div class="hero-portrait-wrap reveal">
         <div class="portrait-anchor">
           <div class="hero-portrait"><img src="images/ahmed.jpg" alt="Ahmed Beshir — senior web developer in Cairo" width="380" height="380" fetchpriority="high" decoding="async"/></div>
-          <span class="hero-badge tr"><span class="chip shopify">S</span> Shopify expert</span>
-          <span class="hero-badge bl"><span class="chip laravel">L</span> Laravel specialist</span>
         </div>
+        <figure class="hero-shot reveal"><img src="images/arabajam.jpg" alt="Arab Wajam admin dashboard — one of the operations platforms built by Ahmed Beshir" width="1440" height="900" loading="eager" decoding="async"/><figcaption>Arab Wajam · admin dashboard (demo data)</figcaption></figure>
         <div class="hero-code reveal" id="heroCode" aria-label="Sample code from Coring Institute project">
           <div class="hero-code-bar">
             <div class="hero-code-dots"><span></span><span></span><span></span></div>
@@ -752,9 +856,9 @@
       <button class="filter-btn" data-filter="platforms"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>Platforms &amp; apps <span class="count">5</span></button>
     </div>
     <div class="projects-grid" id="projectsGrid">
-      <div class="project reveal" data-type="platforms"><div class="project-thumb"><span class="platform-badge laravel">Laravel · Livewire · Flutter</span><img src="images/arabajam.jpg" alt="Arab Wajam admin dashboard — live conferences, connected interpreters, response-time budget and system alerts" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Arab Wajam Translation · Staging live · Pre-launch</span><h3>Arab Wajam — Live Interpretation &amp; Sign-Language Platform for Conferences</h3><p><strong>Before:</strong> interpreters, conference rooms, client quotes and collections managed by phone and spreadsheets. <strong>Built:</strong> an admin platform (conferences, control room, live monitor, interpreter roster, quotes and invoices, finance, reports, permissions) plus an API and a Flutter app for interpreters and attendees. <strong>Where it stands:</strong> 9 services, 535 automated tests on CI, protected deploys; payment and translation-provider integrations are the last step before launch.</p><div class="project-stack"><span>Laravel 12</span><span>Livewire 3</span><span>PostgreSQL</span><span>Flutter</span><span>CI/CD</span><span>AR/EN</span></div></div></div>
-      <a href="https://escalehotelsys.com" target="_blank" rel="noopener" class="project reveal" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge python">Multi-tenant · 5 apps</span><img src="images/escale-live.jpg" alt="Escalé public booking site — hotel discovery across Egypt and the Gulf" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Escalé · Egypt &amp; the Gulf · Built · Launch-ready · Pilot pending</span><h3>Escalé — Hotel Operations Platform</h3><p><strong>The problem:</strong> guest requests get lost between reception, housekeeping and the restaurant, and every hotel runs on its own WhatsApp groups. <strong>Built:</strong> one multi-hotel platform with five apps — guest app, staff app, hotel admin, public booking site and a B2B agency portal: service requests with SLA tracking, online check-in, live chat, halls, restaurants and transport, finance and audit logs. Arabic and English throughout. <strong>Where it stands:</strong> production is deployed with CI and automated end-to-end tests; the first pilot hotel is next.</p><div class="project-stack"><span>TypeScript</span><span>PostgreSQL · Prisma</span><span>Redis</span><span>Meilisearch</span><span>Monorepo · 5 apps</span><span>AR/EN</span></div></div></a>
-      <div class="project reveal" data-type="platforms"><div class="project-thumb"><span class="platform-badge laravel">Laravel · Telegram · LiveKit</span><img src="images/iqra.jpg" alt="Iqraa admin dashboard — sheikhs, students, active periods and session attendance" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Quran recitation institute · Built · Pre-launch trial</span><h3>Iqraa — Remote Quran Recitation Circles Platform</h3><p><strong>Before:</strong> an institute matching sheikhs with students, scheduling sessions and chasing attendance over phone calls and spreadsheets. <strong>Built:</strong> an admin panel that distributes students to sheikhs, a Telegram bot that links each user with a 6-digit code and sends reminders and attendance buttons, live audio sessions in the browser with server-side recording, quality reviews, admission quizzes, and a finance module (session fees, teacher earnings, refunds, payouts, monthly reports). <strong>Where it stands:</strong> complete and in pre-launch trial with the institute.</p><div class="project-stack"><span>Laravel 11</span><span>Telegram Bot</span><span>LiveKit</span><span>Tailwind RTL</span><span>Scheduler</span><span>Docker</span></div></div></div>
+      <div class="project reveal project--feature" data-type="platforms"><div class="project-thumb"><span class="platform-badge laravel">Laravel · Livewire · Flutter</span><img src="images/arabajam.jpg" alt="Arab Wajam admin dashboard — live conferences, connected interpreters, response-time budget and system alerts" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Arab Wajam Translation · Staging live · Pre-launch</span><h3>Arab Wajam — Live Interpretation &amp; Sign-Language Platform for Conferences</h3><p><strong>Before:</strong> interpreters, conference rooms, client quotes and collections managed by phone and spreadsheets. <strong>Built:</strong> an admin platform (conferences, control room, live monitor, interpreter roster, quotes and invoices, finance, reports, permissions) plus an API and a Flutter app for interpreters and attendees. <strong>Where it stands:</strong> 9 services, 535 automated tests on CI, protected deploys; payment and translation-provider integrations are the last step before launch.</p><div class="project-stack"><span>Laravel 12</span><span>Livewire 3</span><span>PostgreSQL</span><span>Flutter</span><span>CI/CD</span><span>AR/EN</span></div></div></div>
+      <a href="https://escalehotelsys.com" target="_blank" rel="noopener" class="project reveal project--feature" data-type="platforms" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge python">Multi-tenant · 5 apps</span><img src="images/escale-live.jpg" alt="Escalé public booking site — hotel discovery across Egypt and the Gulf" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Escalé · Egypt &amp; the Gulf · Built · Launch-ready · Pilot pending</span><h3>Escalé — Hotel Operations Platform</h3><p><strong>The problem:</strong> guest requests get lost between reception, housekeeping and the restaurant, and every hotel runs on its own WhatsApp groups. <strong>Built:</strong> one multi-hotel platform with five apps — guest app, staff app, hotel admin, public booking site and a B2B agency portal: service requests with SLA tracking, online check-in, live chat, halls, restaurants and transport, finance and audit logs. Arabic and English throughout. <strong>Where it stands:</strong> production is deployed with CI and automated end-to-end tests; the first pilot hotel is next.</p><div class="project-stack"><span>TypeScript</span><span>PostgreSQL · Prisma</span><span>Redis</span><span>Meilisearch</span><span>Monorepo · 5 apps</span><span>AR/EN</span></div></div></a>
+      <div class="project reveal project--feature" data-type="platforms"><div class="project-thumb"><span class="platform-badge laravel">Laravel · Telegram · LiveKit</span><img src="images/iqra.jpg" alt="Iqraa admin dashboard — sheikhs, students, active periods and session attendance" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Quran recitation institute · Built · Pre-launch trial</span><h3>Iqraa — Remote Quran Recitation Circles Platform</h3><p><strong>Before:</strong> an institute matching sheikhs with students, scheduling sessions and chasing attendance over phone calls and spreadsheets. <strong>Built:</strong> an admin panel that distributes students to sheikhs, a Telegram bot that links each user with a 6-digit code and sends reminders and attendance buttons, live audio sessions in the browser with server-side recording, quality reviews, admission quizzes, and a finance module (session fees, teacher earnings, refunds, payouts, monthly reports). <strong>Where it stands:</strong> complete and in pre-launch trial with the institute.</p><div class="project-stack"><span>Laravel 11</span><span>Telegram Bot</span><span>LiveKit</span><span>Tailwind RTL</span><span>Scheduler</span><span>Docker</span></div></div></div>
       <a href="https://biostream.bio" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/biostream.jpg" alt="Biostream Shopify storefront preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Bilingual AR/EN · Live</span><h3>Biostream</h3><p>Full theme rebuild for a bilingual health-tech storefront with RTL/LTR switching, localized navigation, and optimized product pages.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>RTL</span><span>i18n</span></div></div></a>
       <a href="https://thecatchofficial.com" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/thecatch.jpg" alt="The Catch Official bilingual Shopify store preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Bilingual AR/EN · Live</span><h3>The Catch Official</h3><p>New Shopify store delivered end-to-end with a custom bilingual theme, checkout tweaks, and a responsive, conversion-focused UI.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>JavaScript</span><span>Responsive</span></div></div></a>
       <a href="https://khyootmasrya.com" target="_blank" rel="noopener" class="project reveal" data-type="shopify" style="text-decoration:none;color:inherit"><div class="project-thumb"><span class="platform-badge shopify">Shopify</span><img src="images/khyoot.jpg" alt="Khyoot Masrya Egyptian apparel Shopify store preview" loading="lazy" decoding="async"/></div><div class="project-body"><span class="tag">Bilingual AR/EN · Live · New</span><h3>Khyoot Masrya</h3><p>A freshly launched Shopify store for an Egyptian apparel brand — custom theme, Arabic-first UX, men's / women's / kids / home categories, and a clean conversion flow.</p><div class="project-stack"><span>Shopify</span><span>Liquid</span><span>RTL</span><span>Apparel</span></div></div></a>
